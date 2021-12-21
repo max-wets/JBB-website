@@ -1,6 +1,9 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "es6",
+    "typeRoots": [
+      "./node_modules/@types"
+    ],
     "lib": [
       "dom",
       "dom.iterable",
@@ -18,7 +21,8 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "experimentalDecorators": true,
-    "emitDecoratorMetadata": true
+    "emitDecoratorMetadata": true,
+    "incremental": true
   },
   "exclude": [
     "node_modules"

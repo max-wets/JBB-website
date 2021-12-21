@@ -1,0 +1,63 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito&family=Tangerine&display=swap');
+
+.header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  padding-top: 25px;
+  z-index: 40;
+}
+
+.row {
+    width: 100%;
+    max-width: 80rem;
+    margin-right: auto;
+    margin-left: auto;
+    display: flex;
+    flex-flow: row wrap;
+}
+
+@media only screen and (min-width: 640px) {
+    .row {
+        padding: 0 35px;
+    }
+}
+
+.small {
+    flex: 0 0 3.3333333333%;
+    min-width: 33.333333333%;
+}
+
+.column {
+    display: flex;
+    align-items: center;
+    box-sizing: inherit;
+}
+
+@media print, screen and (min-width: 40em) {
+    .column {
+        padding-right: 0.94rem;
+        padding-left: 0.94rem;
+    }
+}
+
+.logowrapper {
+    margin: 0 auto;
+    padding: 10px 0;
+    display: inline-flex;
+}
+
+@media only screen and (min-width: 1024px) {
+    .logo-wrapper {
+        padding: 30px 0;
+    }
+}
+
+.logo {
+    font-family: 'Nunito', sans-serif;
+    font-family: 'Tangerine', cursive;
+    color: #D93644;
+    font-weight: 600;
+}
+
