@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useRef } from "react";
 import {
   Icon,
+  Button,
   useDisclosure,
   IconButton,
   Drawer,
@@ -12,7 +13,12 @@ import {
   DrawerOverlay,
   DrawerContent,
   DrawerCloseButton,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
 } from "@chakra-ui/react";
+import { SearchIcon, ChevronDownIcon } from "@chakra-ui/icons";
 import { GiHamburgerMenu } from "react-icons/gi";
 
 function MainNavigation() {
@@ -66,10 +72,41 @@ function MainNavigation() {
           className={`${classes.small} ${classes.column}`}
           style={{ flexFlow: "row-reverse" }}
         >
-          div2
+          <div className={classes.secondaryarea}>
+            <div className={classes.rightcontainers}>
+              <IconButton
+                aria-label="Search database"
+                colorScheme="white"
+                color="black"
+                size="sm"
+                icon={<SearchIcon w={4} h={4} />}
+              />
+            </div>
+            <div className={classes.rightcontainers}>
+              <Menu>
+                <MenuButton
+                  colorScheme="white"
+                  color="black"
+                  size="sm"
+                  as={Button}
+                  rightIcon={<ChevronDownIcon w={5} h={5} paddingTop={1} />}
+                  // _focus={{ boxShadow: "none" }}
+                >
+                  <p style={{ fontSize: "16px" }}>SUIVRE</p>
+                </MenuButton>
+                <MenuList>
+                  <MenuItem>YOUTUBE</MenuItem>
+                </MenuList>
+              </Menu>
+            </div>
+          </div>
         </div>
       </div>
-      <div className={classes.row}></div>
+      <div className={classes.row}>
+        <div className={`${classes.large} ${classes.column}`}>
+          <div className={classes.navbar}></div>
+        </div>
+      </div>
     </header>
   );
 }
