@@ -1,4 +1,4 @@
-import classes from "./Header.module.css";
+import classes from "./StickyHeader.module.css";
 import Link from "next/link";
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import {
