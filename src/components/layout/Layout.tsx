@@ -1,5 +1,6 @@
 import React from "react";
 import MainNavigation from "./MainNavigation";
+import Footer from "./Footer";
 import classes from "./Layout.module.css";
 
 type Props = {
@@ -11,6 +12,7 @@ function Layout({ children }: Props) {
     <div>
       <MainNavigation />
       {children && <main className={classes.main}>{children}</main>}
+      <Footer />
     </div>
   );
 }

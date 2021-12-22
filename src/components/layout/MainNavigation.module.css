@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito&family=Tangerine&display=swap');
 
+
 .header {
   width: 100%;
   display: flex;
@@ -99,9 +100,13 @@
     line-height: 1;
 }
 
-.fullmenu li p, .drawermenu li p {
+.fullmenu li button p, .drawermenu li p {
     font-size: 14px;
     font-weight: 500;
+}
+
+.fullmenu li p:hover, .drawermenu li p:hover, .menuhover:hover {
+    color: #D93644;
 }
 
 .fullmenu > li + li {

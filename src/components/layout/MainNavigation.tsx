@@ -91,6 +91,7 @@ function MainNavigation() {
                           minH="32px"
                           _focus={{ boxShadow: "none" }}
                           _hover={{ backgroundColor: "white" }}
+                          className={classes.menuhover}
                         >
                           <p>MES FORMATIONS</p>
                           <AccordionIcon />
@@ -206,6 +207,7 @@ function MainNavigation() {
                   size="sm"
                   as={Button}
                   rightIcon={<ChevronDownIcon w={5} h={5} paddingTop={1} />}
+                  className={classes.menuhover}
                   // _focus={{ boxShadow: "none" }}
                 >
                   <p style={{ fontSize: "16px" }}>SUIVRE</p>
@@ -250,6 +252,7 @@ function MainNavigation() {
                         colorScheme="white"
                         color="black"
                         rightIcon={<ChevronDownIcon />}
+                        className={classes.menuhover}
                       >
                         <p>MES FORMATIONS</p>
                       </MenuButton>
