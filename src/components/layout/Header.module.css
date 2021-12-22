@@ -1,0 +1,104 @@
+.header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  z-index: 40;
+  background-color: white;
+  transition: 0.6s ease;
+}
+
+.hide {
+    top: -6rem;
+}
+
+.row {
+    width: 100%;
+    margin-right: auto;
+    margin-left: auto;
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+}
+
+.row div:first-child {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@media only screen and (min-width: 640px) {
+    .row {
+        padding: 0 35px;
+    }
+}
+
+.column {
+    display: flex;
+    align-items: center;
+    box-sizing: inherit;
+}
+
+@media print, screen and (min-width: 40em) {
+    .column {
+        padding-right: 0.94rem;
+        padding-left: 0.94rem;
+    }
+}
+
+.large {
+    flex: 0 0 100;
+    min-width: 100%;
+}
+
+.navbar {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    min-height: 60px;
+    align-items: center;
+    border-top: 1px solid #e9e9e9;
+}
+
+.fullmenu {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    line-height: 1;
+}
+
+.fullmenu li button p, .drawermenu li p {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.fullmenu li p:hover, .drawermenu li p:hover, .menuhover:hover {
+    color: #D93644;
+}
+
+.fullmenu > li + li {
+    margin-left: 30px;
+}
+
+.fullmenu li button, .drawermenu li button {
+    padding: 0;
+}
+
+.drawermenu, .accordionlist {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    line-height: 1;
+}
+
+.logo {
+    font-family: 'Nunito', sans-serif;
+    font-family: 'Tangerine', cursive;
+    color: #D93644;
+    font-weight: 600;
+}
