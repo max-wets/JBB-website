@@ -1,0 +1,12 @@
+### Get item categories list
+GET https://jbb-admin.herokuapp.com/api/item-categories
+
+### Get a given item
+GET https://jbb-admin.herokuapp.com/api/items/1
+
+### Get article categories list
+GET https://jbb-admin.herokuapp.com/api/article-categories
+
+### Get a given article
+GET https://jbb-admin.herokuapp.com/api/articles/1
+

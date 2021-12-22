@@ -32,7 +32,7 @@ function Header() {
   const btnRef = useRef();
 
   const controlDirection = useCallback(() => {
-    if (window.scrollY > oldScrollY.current && window.scrollY > 180) {
+    if (window.scrollY > oldScrollY.current) {
       setDirection("down");
     } else if (
       window.scrollY < oldScrollY.current &&
