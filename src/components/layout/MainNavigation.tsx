@@ -17,11 +17,18 @@ import {
   MenuButton,
   MenuList,
   MenuItem,
+  useMediaQuery,
+  Accordion,
+  AccordionItem,
+  AccordionButton,
+  AccordionPanel,
+  AccordionIcon,
 } from "@chakra-ui/react";
 import { SearchIcon, ChevronDownIcon } from "@chakra-ui/icons";
 import { GiHamburgerMenu } from "react-icons/gi";
 
 function MainNavigation() {
+  const [isLargerThan1024] = useMediaQuery("(min-width: 1024px)");
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = useRef();
 
@@ -50,10 +57,119 @@ function MainNavigation() {
               <DrawerHeader
                 className={classes.logo}
                 style={{ fontSize: "34px" }}
+                borderBottomWidth="1px"
               >
                 JBBeauty
               </DrawerHeader>
-              <DrawerBody></DrawerBody>
+              <DrawerBody>
+                <ul className={classes.drawermenu}>
+                  <li>
+                    <Link href="">
+                      <a>
+                        <Button size="sm" colorScheme="white" color="black">
+                          <p>BLOG</p>
+                        </Button>
+                      </a>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="#">
+                      <a>
+                        <Button size="sm" colorScheme="white" color="black">
+                          <p>MES CODES PROMOS</p>
+                        </Button>
+                      </a>
+                    </Link>
+                  </li>
+                  <li>
+                    <Accordion allowToggle>
+                      <AccordionItem style={{ borderWidth: 0 }}>
+                        <AccordionButton
+                          size="sm"
+                          colorScheme="white"
+                          color="black"
+                          minH="32px"
+                          _focus={{ boxShadow: "none" }}
+                          _hover={{ backgroundColor: "white" }}
+                        >
+                          <p>MES FORMATIONS</p>
+                          <AccordionIcon />
+                        </AccordionButton>
+                        <AccordionPanel pb={4}>
+                          <ul className={classes.accordionlist}>
+                            <li>
+                              <Link href="#">
+                                <a>
+                                  <Button
+                                    size="sm"
+                                    colorScheme="white"
+                                    color="black"
+                                  >
+                                    <p>EBOOK</p>
+                                  </Button>
+                                </a>
+                              </Link>
+                            </li>
+                            <li>
+                              <Link href="#">
+                                <a>
+                                  <Button
+                                    size="sm"
+                                    colorScheme="white"
+                                    color="black"
+                                  >
+                                    <p>FORMAT LIVRE</p>
+                                  </Button>
+                                </a>
+                              </Link>
+                            </li>
+                            <li>
+                              <Link href="#">
+                                <a>
+                                  <Button
+                                    size="sm"
+                                    colorScheme="white"
+                                    color="black"
+                                  >
+                                    <p>WEBINAR</p>
+                                  </Button>
+                                </a>
+                              </Link>
+                            </li>
+                          </ul>
+                        </AccordionPanel>
+                      </AccordionItem>
+                    </Accordion>
+                  </li>
+                  <li>
+                    <Link href="#">
+                      <a>
+                        <Button size="sm" colorScheme="white" color="black">
+                          <p>MA SELECTION DE PRODUITS</p>
+                        </Button>
+                      </a>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="#">
+                      <a>
+                        <Button size="sm" colorScheme="white" color="black">
+                          <p>INFORMATIONS</p>
+                        </Button>
+                      </a>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="#">
+                      <a>
+                        <Button size="sm" colorScheme="white" color="black">
+                          <p>SE CONNECTER</p>
+                        </Button>
+                      </a>
+                    </Link>
+                  </li>
+                </ul>
+              </DrawerBody>
             </DrawerContent>
           </Drawer>
         </div>
@@ -102,11 +218,87 @@ function MainNavigation() {
           </div>
         </div>
       </div>
-      <div className={classes.row}>
-        <div className={`${classes.large} ${classes.column}`}>
-          <div className={classes.navbar}></div>
+      {isLargerThan1024 ? (
+        <div className={classes.row}>
+          <div className={`${classes.large} ${classes.column}`}>
+            <div className={classes.navbar}>
+              <nav>
+                <ul className={classes.fullmenu}>
+                  <li>
+                    <Link href="">
+                      <a>
+                        <Button size="sm" colorScheme="white" color="black">
+                          <p>BLOG</p>
+                        </Button>
+                      </a>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="#">
+                      <a>
+                        <Button size="sm" colorScheme="white" color="black">
+                          <p>MES CODES PROMOS</p>
+                        </Button>
+                      </a>
+                    </Link>
+                  </li>
+                  <li>
+                    <Menu>
+                      <MenuButton
+                        as={Button}
+                        size="sm"
+                        colorScheme="white"
+                        color="black"
+                        rightIcon={<ChevronDownIcon />}
+                      >
+                        <p>MES FORMATIONS</p>
+                      </MenuButton>
+                      <MenuList>
+                        <MenuItem minH="30px" ml="8px">
+                          <p>EBOOK</p>
+                        </MenuItem>
+                        <MenuItem minH="30px" ml="8px">
+                          <p>FORMAT LIVRE</p>
+                        </MenuItem>
+                        <MenuItem minH="30px" ml="8px">
+                          <p>WEBINAR</p>
+                        </MenuItem>
+                      </MenuList>
+                    </Menu>
+                  </li>
+                  <li>
+                    <Link href="#">
+                      <a>
+                        <Button size="sm" colorScheme="white" color="black">
+                          <p>MA SELECTION DE PRODUITS</p>
+                        </Button>
+                      </a>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="#">
+                      <a>
+                        <Button size="sm" colorScheme="white" color="black">
+                          <p>INFORMATIONS</p>
+                        </Button>
+                      </a>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="#">
+                      <a>
+                        <Button size="sm" colorScheme="white" color="black">
+                          <p>SE CONNECTER</p>
+                        </Button>
+                      </a>
+                    </Link>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          </div>
         </div>
-      </div>
+      ) : null}
     </header>
   );
 }

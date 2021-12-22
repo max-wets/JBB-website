@@ -91,3 +91,36 @@
     border-top: 1px solid #e9e9e9;
 }
 
+.fullmenu {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    line-height: 1;
+}
+
+.fullmenu li p, .drawermenu li p {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.fullmenu > li + li {
+    margin-left: 30px;
+}
+
+.fullmenu li button, .drawermenu li button {
+    padding: 0;
+}
+
+.drawermenu, .accordionlist {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    line-height: 1;
+}
+
+
+
+
