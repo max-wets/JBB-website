@@ -5,6 +5,8 @@ import { Icon } from "@chakra-ui/react";
 import { BiUser } from "react-icons/bi";
 import { FiClock } from "react-icons/fi";
 import { useEffect } from "react";
+import { BsFolder } from "react-icons/bs";
+import { BiComment } from "react-icons/bi";
 
 export interface Article {
   id: string;
@@ -73,11 +75,26 @@ function BlogArticle(props: Article) {
           </Link>
         </li>
         <li>
-          <Icon as={FiClock} h={6} w={6} size="sm" />
+          <Icon as={FiClock} h={5} w={5} size="sm" mt="2px" />
           <div>{newDate}</div>
         </li>
-        <li></li>
-        <li></li>
+        <li>
+          <Icon as={BsFolder} h={6} w={6} size="sm" />
+          {props.categories.map((category, idx) => (
+            <>
+              <Link href="">
+                <a>{category}</a>
+              </Link>
+              <span>{idx < props.categories.length - 1 ? ", " : null}</span>
+            </>
+          ))}
+        </li>
+        <li>
+          <Icon as={BiComment} h={6} w={6} size="sm" />
+          <Link href="">
+            <a>0 Commentaires</a>
+          </Link>
+        </li>
       </ul>
     </article>
   );
