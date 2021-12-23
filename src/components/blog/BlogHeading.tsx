@@ -15,7 +15,7 @@ function BlogHeading() {
       <div className={classes.container}>
         <h1>Blog</h1>
         <Breadcrumb
-          spacing="4px"
+          spacing="1px"
           separator={<ChevronRightIcon color="gray.500" />}
         >
           <BreadcrumbItem>

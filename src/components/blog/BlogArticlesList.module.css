@@ -1,0 +1,8 @@
+.contentarea {
+    float: left;
+    width: 72%;
+    padding-right: 30px;
+    border-right-width: 1px;
+    border-style: solid;
+    border-color: #e9e9e9;
+}
