@@ -11,14 +11,14 @@ function BlogPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
 
   useEffect(() => {
     setLoadedArticles(props.articles);
-    // console.log(props.articles);
+    console.log(props.articles);
   }, [props.articles]);
 
   return (
     <>
       <BlogHeading />
       <Container w="1200px" maxW="90%" margin="0 auto">
-        <BlogArticlesList />
+        <BlogArticlesList articles={loadedArticles} />
       </Container>
     </>
   );

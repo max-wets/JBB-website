@@ -6,6 +6,10 @@
 
 const nextConfig = {
   swcMinify: true,
+  reactStrictMode: true,
+  images: {
+    domains: ["jbb-admin.herokuapp.com"],
+  },
   // webpack: (config) => {
   //   config.module.rules.push({
   //     test: /\.(png|jpe?g|gif)$/i,

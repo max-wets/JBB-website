@@ -1,0 +1,30 @@
+.blogentryouter {
+    border-bottom: 1px solid #e9e9e9;
+    margin-bottom: 30px;
+    padding-bottom: 30px
+}
+
+.thumbnail {
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.blogentryheader {
+    margin-bottom: 20px;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0.2);
+    opacity: 0;
+    text-align: center;
+    transition: all .3s ease;
+}
+
+.overlay:hover {
+    opacity: 0.1;
+}

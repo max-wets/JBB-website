@@ -14,6 +14,6 @@ GET https://jbb-admin.herokuapp.com/api/articles?populate=%2A
 GET https://jbb-admin.herokuapp.com/api/articles/1?populate=%2A
 
 ### Get article image url
-GET https://jbb-admin.herokuapp.com/uploads/bb_glow_108b99e1bc.jpeg
+GET https://jbb-admin.herokuapp.com/uploads/bb_glow_2a922f8623.jpeg
 
 
