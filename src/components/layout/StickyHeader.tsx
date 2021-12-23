@@ -27,17 +27,14 @@ import { GiHamburgerMenu } from "react-icons/gi";
 
 function Header() {
   const oldScrollY = useRef(0);
-  const [direction, setDirection] = useState("up");
+  const [direction, setDirection] = useState("top");
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = useRef();
 
   const controlDirection = useCallback(() => {
     if (window.scrollY > oldScrollY.current) {
       setDirection("down");
-    } else if (
-      window.scrollY < oldScrollY.current &&
-      oldScrollY.current < 180
-    ) {
+    } else if (window.scrollY < 180) {
       setDirection("top");
     } else {
       setDirection("up");
