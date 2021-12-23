@@ -87,7 +87,7 @@ function Header() {
               <DrawerBody>
                 <ul className={classes.drawermenu}>
                   <li>
-                    <Link href="">
+                    <Link href="/blog">
                       <a>
                         <Button size="sm" colorScheme="white" color="black">
                           <p>BLOG</p>
