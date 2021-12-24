@@ -1,7 +1,7 @@
 import classes from "./BlogArticleItem.module.css";
 import Image from "next/image";
 import Link from "next/link";
-import { Icon } from "@chakra-ui/react";
+import { Icon, Button } from "@chakra-ui/react";
 import { BiUser } from "react-icons/bi";
 import { FiClock } from "react-icons/fi";
 import { useEffect } from "react";
@@ -39,10 +39,6 @@ function BlogArticle(props: Article) {
   const newDate = `${date.getDate()} ${
     mois[date.getMonth()]
   } ${date.getFullYear()}`;
-
-  useEffect(() => {
-    console.log(newDate);
-  }, []);
 
   return (
     <article className={classes.blogentryouter}>
@@ -85,7 +81,9 @@ function BlogArticle(props: Article) {
               <Link href="">
                 <a>{category}</a>
               </Link>
-              <span>{idx < props.categories.length - 1 ? ", " : null}</span>
+              <span style={{ fontSize: "16px" }}>
+                {idx < props.categories.length - 1 ? ", " : null}
+              </span>
             </>
           ))}
         </li>
@@ -96,6 +94,22 @@ function BlogArticle(props: Article) {
           </Link>
         </li>
       </ul>
+      <div className={classes.blogentrysummary}>{props.intro}</div>
+      <div className={classes.blogentryreadmore}>
+        <Link href="">
+          <a>
+            <Button
+              colorScheme="white"
+              color="black"
+              variant="outline"
+              size="md"
+              _hover={{ color: "#D93644" }}
+            >
+              Lire la suite...
+            </Button>
+          </a>
+        </Link>
+      </div>
     </article>
   );
 }

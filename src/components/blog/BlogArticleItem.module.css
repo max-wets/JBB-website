@@ -78,3 +78,7 @@
 .blogentryouter ul li a:hover {
     color: #D93644;
 }
+
+.blogentrysummary {
+    margin-bottom: 20px;
+}
