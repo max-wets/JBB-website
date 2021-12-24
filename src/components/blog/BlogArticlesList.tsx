@@ -2,45 +2,53 @@ import classes from "./BlogArticlesList.module.css";
 import { Article } from "./BlogArticleItem";
 import BlogArticle from "./BlogArticleItem";
 import Pagination from "../pagination/Pagination";
-import { useState, useMemo } from "react";
-import { Container } from "@chakra-ui/react";
+import { useState, useMemo, useEffect } from "react";
+import { Spinner } from "@chakra-ui/react";
 
 let PageSize = 3;
 
-function BlogArticlesList(props: { articles: Article[] }) {
-  const [currentPage, setCurrentPage] = useState(1);
+function BlogArticlesList(props: {
+  articles: Article[];
+  currentPage: number;
+  setCurrentPage: (arg0: any) => any;
+}) {
+  // const { articles, currentPage, setCurrentPage } = props;
 
-  const currentTableData = useMemo(() => {
-    const firstPageIndex = (currentPage - 1) * PageSize;
+  // const [currentData, setCurrentData] = useState([]);
+
+  useEffect(() => {
+    props.setCurrentPage(1);
+  }, []);
+
+  const currentData = useMemo(() => {
+    const firstPageIndex = (props.currentPage - 1) * PageSize;
     const lastPageIndex = firstPageIndex + PageSize;
     return props.articles.slice(firstPageIndex, lastPageIndex);
-  }, [currentPage]);
+  }, [props.currentPage]);
 
   return (
-    <div className={classes.blogcontainer}>
-      <div className={classes.contentarea}>
-        <div>
-          {currentTableData.map((article) => (
-            <BlogArticle
-              key={article.id}
-              id={article.id}
-              title={article.title}
-              description={article.description}
-              issueDate={article.issueDate}
-              imageUrl={article.imageUrl}
-              categories={article.categories}
-              intro={article.intro}
-              videoUrl={article.videoUrl}
-            />
-          ))}
-          <Pagination
-            className={classes.paginationbar}
-            currentPage={currentPage}
-            totalCount={props.articles.length}
-            pageSize={PageSize}
-            onPageChange={(page) => setCurrentPage(page)}
+    <div className={classes.contentarea}>
+      <div>
+        {currentData.map((article) => (
+          <BlogArticle
+            key={article.id}
+            id={article.id}
+            title={article.title}
+            description={article.description}
+            issueDate={article.issueDate}
+            imageUrl={article.imageUrl}
+            categories={article.categories}
+            intro={article.intro}
+            videoUrl={article.videoUrl}
           />
-        </div>
+        ))}
+        <Pagination
+          className={classes.paginationbar}
+          currentPage={props.currentPage}
+          totalCount={props.articles.length}
+          pageSize={PageSize}
+          onPageChange={(page) => props.setCurrentPage(page)}
+        />
       </div>
     </div>
   );

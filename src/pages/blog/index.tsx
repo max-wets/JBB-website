@@ -1,12 +1,15 @@
 import BlogHeading from "../../components/blog/BlogHeading";
 import BlogArticlesList from "../../components/blog/BlogArticlesList";
+import BlogAside from "../../components/blog/BlogAside";
 import { GetStaticProps, InferGetStaticPropsType } from "next";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Article } from "../../components/blog/BlogArticleItem";
+import { Container, Flex, Spinner } from "@chakra-ui/react";
 
 function BlogPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
   const [loadedArticles, setLoadedArticles] = useState<Article[]>([]);
+  const [currentPage, setCurrentPage] = useState(null);
 
   useEffect(() => {
     setLoadedArticles(props.articles);
@@ -16,7 +19,27 @@ function BlogPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <>
       <BlogHeading />
-      <BlogArticlesList articles={loadedArticles} />
+      <Container pt="50px" pb="50px" w="1200px" maxW="90%" margin="0 auto">
+        <>
+          <Flex display={currentPage === null ? "none" : "flex"}>
+            <BlogArticlesList
+              articles={loadedArticles}
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
+            />
+            <BlogAside />
+          </Flex>
+          <Flex
+            display={currentPage !== null ? "none" : "flex"}
+            h="50vh"
+            w="100%"
+            justifyContent="center"
+            alignItems="center"
+          >
+            <Spinner />
+          </Flex>
+        </>
+      </Container>
     </>
   );
 }
