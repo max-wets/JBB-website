@@ -1,6 +1,5 @@
 import BlogHeading from "../../components/blog/BlogHeading";
 import BlogArticlesList from "../../components/blog/BlogArticlesList";
-import { Container } from "@chakra-ui/react";
 import { GetStaticProps, InferGetStaticPropsType } from "next";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -17,9 +16,7 @@ function BlogPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <>
       <BlogHeading />
-      <Container w="1200px" maxW="90%" margin="0 auto">
-        <BlogArticlesList articles={loadedArticles} />
-      </Container>
+      <BlogArticlesList articles={loadedArticles} />
     </>
   );
 }

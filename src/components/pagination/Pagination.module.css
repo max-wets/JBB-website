@@ -13,9 +13,10 @@
     box-sizing: border-box;
     align-items: center;
     letter-spacing: 0.01071em;
-    border-radius: 16px;
+    border-radius: 50%;
+    border: 1px solid rgba(0, 0, 0, 0.15);
     line-height: 1.43;
-    font-size: 13px;
+    font-size: 16px;
     min-width: 32px;
 }
 
@@ -30,7 +31,7 @@
 }
 
 .selected {
-      background-color: rgba(0, 0, 0, 0.08);
+      background-color: rgba(0, 0, 0, 0.04);
 }
 
 .arrow::before {
@@ -45,24 +46,26 @@
         border-top: 0.12em solid rgba(0, 0, 0, 0.87);
 }
 
-.arrow .left {
-        transform: rotate(-135deg) translate(-50%);
+.left {
+        transform: rotate(-135deg) translate(-20%, -15%);
 }
 
-.arrow .left {
-        transform: rotate(45deg);
+.right {
+        transform: rotate(45deg) translate(-10%, -10%);
 }
 
-.arrow .disabled {
+.disabled {
     pointer-events: none;
+    color: gray;
+    background-color: rgba(0, 0, 0, 0.06);
 }
 
-.arrow .disabled .arrow::before {
+.disabled .arrow::before {
     border-right: 0.12em solid rgba(0, 0, 0, 0.43);
     border-top: 0.12em solid rgba(0, 0, 0, 0.43);
 }
 
-.arrow .disabled:hover {
+.disabled:hover {
     background-color: transparent;
     cursor: default;
 }

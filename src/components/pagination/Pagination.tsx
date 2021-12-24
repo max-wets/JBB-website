@@ -48,7 +48,7 @@ const Pagination = (props) => {
       {/* Left navigation arrow */}
       <li
         className={classnames(classes.paginationitem, {
-          disabled: currentPage === 1,
+          [`${classes.disabled}`]: currentPage === 1,
         })}
         onClick={onPrevious}
       >
@@ -68,7 +68,7 @@ const Pagination = (props) => {
         return (
           <li
             className={classnames(classes.paginationitem, {
-              selected: pageNumber === currentPage,
+              [`${classes.selected}`]: pageNumber === currentPage,
             })}
             onClick={() => onPageChange(pageNumber)}
           >
@@ -79,7 +79,7 @@ const Pagination = (props) => {
       {/*  Right Navigation arrow */}
       <li
         className={classnames(classes.paginationitem, {
-          disabled: currentPage === lastPage,
+          [`${classes.disabled}`]: currentPage === lastPage,
         })}
         onClick={onNext}
       >
