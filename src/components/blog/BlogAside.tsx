@@ -16,10 +16,7 @@ import { BsTwitter, BsFacebook, BsInstagram } from "react-icons/bs";
 import { FaRss } from "react-icons/fa";
 import { useState } from "react";
 
-function BlogAside(props: {
-  articles: Article[];
-  activeCategories: Map<String, Number>;
-}) {
+function BlogAside(props: { articles: Article[]; activeCategories: Object }) {
   const api_url = "https://jbb-admin.herokuapp.com";
   const newDate = (date) => {
     const mois = [
@@ -145,7 +142,17 @@ function BlogAside(props: {
             </Formik>
           </div>
         </div>
-        <div className={classes.sidebox}></div>
+        <div className={classes.sidebox}>
+          <h4 className={classes.socialtitle}>Catégories</h4>
+          <div className={classes.blogcategories}>
+            {Object.entries(props.activeCategories).map(([category, qty]) => (
+              <li>
+                <div>{category}</div>
+                <span>{`(${qty})`}</span>
+              </li>
+            ))}
+          </div>
+        </div>
         <div className={classes.sidebox}>
           <h4 className={classes.socialtitle}>Articles récents</h4>
           <ul className={classes.sidebarlist}>
