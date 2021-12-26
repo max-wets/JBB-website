@@ -6,14 +6,28 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Article } from "../../components/blog/BlogArticleItem";
 import { Container, Flex, Spinner } from "@chakra-ui/react";
+import { BsTwitter } from "react-icons/bs";
 
 function BlogPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
   const [loadedArticles, setLoadedArticles] = useState<Article[]>([]);
   const [currentPage, setCurrentPage] = useState(null);
 
   useEffect(() => {
-    setLoadedArticles(props.articles);
-    console.log(props.articles);
+    setLoadedArticles(
+      props.articles.sort((a, b) => {
+        const aDate = new Date(a.issueDate);
+        const bDate = new Date(b.issueDate);
+
+        if (aDate > bDate) {
+          return -1;
+        }
+        if (aDate < bDate) {
+          return 1;
+        }
+        return 0;
+      })
+    );
+    console.log(loadedArticles);
   }, [props.articles]);
 
   return (
@@ -27,7 +41,7 @@ function BlogPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
               currentPage={currentPage}
               setCurrentPage={setCurrentPage}
             />
-            <BlogAside />
+            <BlogAside articles={loadedArticles} />
           </Flex>
           <Flex
             display={currentPage !== null ? "none" : "flex"}

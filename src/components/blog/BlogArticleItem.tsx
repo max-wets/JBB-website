@@ -21,24 +21,27 @@ export interface Article {
 
 function BlogArticle(props: Article) {
   const api_url = "https://jbb-admin.herokuapp.com";
-  const mois = [
-    "Janvier",
-    "Février",
-    "Mars",
-    "Avril",
-    "Mai",
-    "Juin",
-    "Juillet",
-    "Août",
-    "Septembre",
-    "Octobre",
-    "Novembre",
-    "Décembre",
-  ];
-  const date = new Date(props.issueDate);
-  const newDate = `${date.getDate()} ${
-    mois[date.getMonth()]
-  } ${date.getFullYear()}`;
+
+  const newDate = (date) => {
+    const mois = [
+      "Janvier",
+      "Février",
+      "Mars",
+      "Avril",
+      "Mai",
+      "Juin",
+      "Juillet",
+      "Août",
+      "Septembre",
+      "Octobre",
+      "Novembre",
+      "Décembre",
+    ];
+    const nDate = new Date(date);
+    return `${nDate.getDate()} ${
+      mois[nDate.getMonth()]
+    } ${nDate.getFullYear()}`;
+  };
 
   return (
     <article className={classes.blogentryouter}>
@@ -72,7 +75,7 @@ function BlogArticle(props: Article) {
         </li>
         <li>
           <Icon as={FiClock} h={5} w={5} size="sm" mt="2px" />
-          <div>{newDate}</div>
+          <div>{newDate(props.issueDate)}</div>
         </li>
         <li>
           <Icon as={BsFolder} h={6} w={6} size="sm" />
