@@ -12,10 +12,6 @@ function BlogArticlesList(props: {
   currentPage: number;
   setCurrentPage: (arg0: any) => any;
 }) {
-  // const { articles, currentPage, setCurrentPage } = props;
-
-  // const [currentData, setCurrentData] = useState([]);
-
   useEffect(() => {
     props.setCurrentPage(1);
   }, []);
