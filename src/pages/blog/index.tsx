@@ -10,27 +10,39 @@ import { BsTwitter } from "react-icons/bs";
 
 function BlogPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
   const [loadedArticles, setLoadedArticles] = useState<Article[]>([]);
-  //   const [loadedCategories, setLoadedCategories] = useState(new Map());
+  const [selectedCategory, setSelectedCategory] = useState("");
   const [currentPage, setCurrentPage] = useState(null);
 
-  useEffect(() => {
-    setLoadedArticles(
-      props.articles.sort((a, b) => {
-        const aDate = new Date(a.issueDate);
-        const bDate = new Date(b.issueDate);
+  const sortingFn = (a, b) => {
+    const aDate = new Date(a.issueDate);
+    const bDate = new Date(b.issueDate);
 
-        if (aDate > bDate) {
-          return -1;
-        }
-        if (aDate < bDate) {
-          return 1;
-        }
-        return 0;
-      })
-    );
+    if (aDate > bDate) {
+      return -1;
+    }
+    if (aDate < bDate) {
+      return 1;
+    }
+    return 0;
+  };
+
+  useEffect(() => {
+    setLoadedArticles(props.articles.sort(sortingFn));
     console.log(loadedArticles);
     // console.log("categories: ", props.activeCategories);
   }, [props.articles]);
+
+  useEffect(() => {
+    if (selectedCategory !== "Toutes") {
+      const ArticlesByCategory = props.articles
+        .filter((article) => article.categories.includes(selectedCategory))
+        .sort(sortingFn);
+      // console.log(ArticlesByCategory);
+      setLoadedArticles(ArticlesByCategory);
+    } else {
+      setLoadedArticles(props.articles);
+    }
+  }, [selectedCategory]);
 
   return (
     <>
@@ -44,8 +56,9 @@ function BlogPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
               setCurrentPage={setCurrentPage}
             />
             <BlogAside
-              articles={loadedArticles}
+              articles={props.articles}
               activeCategories={props.activeCategories}
+              setSelectedCategory={setSelectedCategory}
             />
           </Flex>
           <Flex

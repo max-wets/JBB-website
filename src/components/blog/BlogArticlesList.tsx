@@ -12,6 +12,13 @@ function BlogArticlesList(props: {
   currentPage: number;
   setCurrentPage: (arg0: any) => any;
 }) {
+  const [loadedArticles, setLoadedArticles] = useState(props.articles);
+
+  useEffect(() => {
+    setLoadedArticles(props.articles);
+    console.log("Blog List articles:", loadedArticles);
+  }, [props.articles]);
+
   useEffect(() => {
     props.setCurrentPage(1);
   }, []);
@@ -19,8 +26,8 @@ function BlogArticlesList(props: {
   const currentData = useMemo(() => {
     const firstPageIndex = (props.currentPage - 1) * PageSize;
     const lastPageIndex = firstPageIndex + PageSize;
-    return props.articles.slice(firstPageIndex, lastPageIndex);
-  }, [props.currentPage]);
+    return loadedArticles.slice(firstPageIndex, lastPageIndex);
+  }, [props.currentPage, loadedArticles]);
 
   return (
     <div className={classes.contentarea}>
@@ -41,7 +48,7 @@ function BlogArticlesList(props: {
         <Pagination
           className={classes.paginationbar}
           currentPage={props.currentPage}
-          totalCount={props.articles.length}
+          totalCount={loadedArticles.length}
           pageSize={PageSize}
           onPageChange={(page) => props.setCurrentPage(page)}
         />

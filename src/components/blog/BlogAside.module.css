@@ -173,3 +173,12 @@
     line-height: 1;
     margin-bottom: 10px;
 }
+
+.blogcategories li > div {
+    cursor: pointer;
+}
+
+.blogcategories li > div:hover {
+    color: #D93644;
+    text-decoration-line: underline;
+}

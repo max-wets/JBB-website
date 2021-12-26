@@ -16,7 +16,11 @@ import { BsTwitter, BsFacebook, BsInstagram } from "react-icons/bs";
 import { FaRss } from "react-icons/fa";
 import { useState } from "react";
 
-function BlogAside(props: { articles: Article[]; activeCategories: Object }) {
+function BlogAside(props: {
+  articles: Article[];
+  activeCategories: Object;
+  setSelectedCategory;
+}) {
   const api_url = "https://jbb-admin.herokuapp.com";
   const newDate = (date) => {
     const mois = [
@@ -39,7 +43,11 @@ function BlogAside(props: { articles: Article[]; activeCategories: Object }) {
     } ${nDate.getFullYear()}`;
   };
 
-  console.log("Blog Aside categories:", props.activeCategories);
+  // console.log("Blog Aside categories:", props.activeCategories);
+
+  const handleClick = (e) => {
+    props.setSelectedCategory(e.target.dataset.category);
+  };
 
   function SideBlogDetail({ article }) {
     return (
@@ -147,18 +155,26 @@ function BlogAside(props: { articles: Article[]; activeCategories: Object }) {
           <div className={classes.blogcategories}>
             {Object.entries(props.activeCategories).map(([category, qty]) => (
               <li>
-                <div>{category}</div>
+                <div data-category={category} onClick={(e) => handleClick(e)}>
+                  {category}
+                </div>
                 <span>{`(${qty})`}</span>
               </li>
             ))}
+            <li>
+              <div data-category="Toutes" onClick={(e) => handleClick(e)}>
+                Toutes catégories
+              </div>
+              <span>{`(${props.articles.length})`}</span>
+            </li>
           </div>
         </div>
         <div className={classes.sidebox}>
           <h4 className={classes.socialtitle}>Articles récents</h4>
           <ul className={classes.sidebarlist}>
-            {/* <SideBlogDetail article={props.articles[0]} />
+            <SideBlogDetail article={props.articles[0]} />
             <SideBlogDetail article={props.articles[1]} />
-            <SideBlogDetail article={props.articles[2]} /> */}
+            <SideBlogDetail article={props.articles[2]} />
           </ul>
         </div>
       </div>
