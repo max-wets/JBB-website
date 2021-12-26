@@ -16,7 +16,10 @@ import { BsTwitter, BsFacebook, BsInstagram } from "react-icons/bs";
 import { FaRss } from "react-icons/fa";
 import { useState } from "react";
 
-function BlogAside(props: { articles: Article[] }) {
+function BlogAside(props: {
+  articles: Article[];
+  activeCategories: Map<String, Number>;
+}) {
   const api_url = "https://jbb-admin.herokuapp.com";
   const newDate = (date) => {
     const mois = [
@@ -39,7 +42,7 @@ function BlogAside(props: { articles: Article[] }) {
     } ${nDate.getFullYear()}`;
   };
 
-  console.log("Blog Aside:", props.articles);
+  console.log("Blog Aside categories:", props.activeCategories);
 
   function SideBlogDetail({ article }) {
     return (
@@ -146,9 +149,9 @@ function BlogAside(props: { articles: Article[] }) {
         <div className={classes.sidebox}>
           <h4 className={classes.socialtitle}>Articles récents</h4>
           <ul className={classes.sidebarlist}>
-            <SideBlogDetail article={props.articles[0]} />
+            {/* <SideBlogDetail article={props.articles[0]} />
             <SideBlogDetail article={props.articles[1]} />
-            <SideBlogDetail article={props.articles[2]} />
+            <SideBlogDetail article={props.articles[2]} /> */}
           </ul>
         </div>
       </div>

@@ -10,6 +10,7 @@ import { BsTwitter } from "react-icons/bs";
 
 function BlogPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
   const [loadedArticles, setLoadedArticles] = useState<Article[]>([]);
+  //   const [loadedCategories, setLoadedCategories] = useState(new Map());
   const [currentPage, setCurrentPage] = useState(null);
 
   useEffect(() => {
@@ -28,6 +29,7 @@ function BlogPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
       })
     );
     console.log(loadedArticles);
+    // console.log("categories: ", props.activeCategories);
   }, [props.articles]);
 
   return (
@@ -41,7 +43,10 @@ function BlogPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
               currentPage={currentPage}
               setCurrentPage={setCurrentPage}
             />
-            <BlogAside articles={loadedArticles} />
+            <BlogAside
+              articles={loadedArticles}
+              activeCategories={props.activeCategories}
+            />
           </Flex>
           <Flex
             display={currentPage !== null ? "none" : "flex"}
@@ -64,7 +69,20 @@ export const getStaticProps: GetStaticProps = async () => {
   );
   const data = res.data.data;
 
-  //   console.log(data);
+  interface Category {
+    [category: string]: number;
+  }
+
+  const activeCategories = {} as Category;
+  data.map((article) =>
+    article.attributes.article_categories.data.map((category) => {
+      const categoryName = category.attributes.name;
+      activeCategories[categoryName]
+        ? (activeCategories[categoryName] += 1)
+        : (activeCategories[categoryName] = 1);
+    })
+  );
+  //   console.log(JSON.stringify(activeCategories));
 
   return {
     props: {
@@ -82,6 +100,7 @@ export const getStaticProps: GetStaticProps = async () => {
           }
         ),
       })),
+      activeCategories: activeCategories,
     },
     revalidate: 3600,
   };
