@@ -9,7 +9,7 @@ function BlogDetailPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
     console.log("Blog detail page data:", props.article);
   }, []);
 
-  return <h1>Blog Detail Page</h1>;
+  return <BlogArticleDetail article={props.article} />;
 }
 
 export const getStaticProps: GetStaticProps = async (context) => {
