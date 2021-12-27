@@ -10,7 +10,7 @@ import { BsTwitter } from "react-icons/bs";
 
 function BlogPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
   const [loadedArticles, setLoadedArticles] = useState<Article[]>([]);
-  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("Toutes");
   const [currentPage, setCurrentPage] = useState(null);
 
   const sortingFn = (a, b) => {
