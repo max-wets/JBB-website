@@ -34,26 +34,28 @@ export const getStaticProps: GetStaticProps = async (context) => {
   const data = res.data.data.sort(sortingFn);
   const article = data.find((article) => article.id === aid);
   const previousArticle =
-    aid > 0 ? data.find((article) => article[aid - 1]) : null;
+    aid > 0 ? data.find((article) => article.id === aid - 1) : null;
   const nextArticle =
-    aid < data.length - 1 ? data.find((article) => article[aid + 1]) : null;
+    aid < data.length - 1
+      ? data.find((article) => article.id === aid + 1)
+      : null;
   const prevNextArticles = [
     previousArticle
       ? {
           id: previousArticle.id,
-          title: previousArticle.title,
+          title: previousArticle.attributes.title,
         }
       : null,
     nextArticle
       ? {
           id: nextArticle.id,
-          title: nextArticle.id,
+          title: nextArticle.attributes.id,
         }
       : null,
   ];
-  const max = data.length - 1;
 
-  function getRecentArticles() {
+  function getRecentArticles(data) {
+    const max = data.length - 1;
     const articles = [];
     let idx = 0;
     while (articles.length < max) {
@@ -65,16 +67,12 @@ export const getStaticProps: GetStaticProps = async (context) => {
           imageUrl: data[idx].attributes.image.data.attributes.url,
         });
       }
-      // } else {
-      //   articles.push("failed");
-      // }
       idx += 1;
     }
     return articles;
   }
 
-  const recentArticles = getRecentArticles();
-  //   console.log("blog detail page data:", data);
+  const recentArticles = getRecentArticles(data);
 
   return {
     props: {
@@ -105,7 +103,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const paths = data.map((article) => ({
     params: { blogArticleId: article.id.toString() },
   }));
-  //   console.log("static paths:", paths);
 
   return { paths, fallback: false };
 };
