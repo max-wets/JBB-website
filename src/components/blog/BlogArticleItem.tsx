@@ -99,7 +99,7 @@ function BlogArticle(props: Article) {
       </ul>
       <div className={classes.blogentrysummary}>{props.intro}</div>
       <div className={classes.blogentryreadmore}>
-        <Link href="">
+        <Link href={`/blog/${props.id.toString()}`}>
           <a>
             <Button
               colorScheme="white"

@@ -1,5 +1,5 @@
 import classes from "./BlogArticleDetail.module.css";
-import { Article } from "./BlogArticleItem";
+import { Article } from "../BlogArticleItem";
 import Image from "next/image";
 import Link from "next/link";
 import { Icon, Button } from "@chakra-ui/react";
