@@ -56,6 +56,21 @@ export const getStaticProps: GetStaticProps = async (context) => {
       : null,
   ];
 
+  function formatData(post) {
+    return {
+      id: post.id.toString(),
+      title: post.attributes.title,
+      intro: post.attributes.intro,
+      description: post.attributes.description,
+      issueDate: post.attributes.publishedAt,
+      videoUrl: post.attributes.Video_URL,
+      imageUrl: post.attributes.image.data.attributes.url,
+      categories: post.attributes.article_categories.data.map((category) => {
+        return category.attributes.name;
+      }),
+    };
+  }
+
   function getRecentArticles(data) {
     const max = data.length - 1;
     const articles = [];
@@ -75,6 +90,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
   }
 
   function getRecommendedArticles(data, article) {
+    let recommendedArticles = [];
     const articleCategories = article.attributes.article_categories.data.map(
       (category) => {
         return category.attributes.name;
@@ -89,24 +105,26 @@ export const getStaticProps: GetStaticProps = async (context) => {
       });
       return hasCategory;
     }
-    const sameCategoryArticles = data
-      .filter(containsCategory)
-      .map((article) => ({
-        id: article.id.toString(),
-        title: article.attributes.title,
-        intro: article.attributes.intro,
-        description: article.attributes.description,
-        issueDate: article.attributes.publishedAt,
-        videoUrl: article.attributes.Video_URL,
-        imageUrl: article.attributes.image.data.attributes.url,
-        categories: article.attributes.article_categories.data.map(
-          (category) => {
-            return category.attributes.name;
-          }
-        ),
-      }));
+    recommendedArticles = data.filter(containsCategory);
+    // return sameCategoryArticles;
 
-    return sameCategoryArticles;
+    if (recommendedArticles.length > 3) {
+      // const slicedArticlesArray = sameCategoryArticles.slice(2);
+      recommendedArticles = recommendedArticles.slice(2);
+    } else if (recommendedArticles.length < 3) {
+      const takenIds = recommendedArticles.reduce((prev, curr) => {
+        return [...prev, ...curr.id];
+      }, []);
+      const availableArticles = data.filter(
+        (article) => article.id !== aid && takenIds.indexOf(article.id) < 0
+      );
+      let i = 0;
+      while (i < 3 - recommendedArticles.length) {
+        recommendedArticles.push(availableArticles[i]);
+        i++;
+      }
+    }
+    return recommendedArticles.map(formatData);
   }
 
   const recentArticles = getRecentArticles(data);
@@ -114,20 +132,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
   return {
     props: {
-      article: {
-        id: article.id.toString(),
-        title: article.attributes.title,
-        intro: article.attributes.intro,
-        description: article.attributes.description,
-        issueDate: article.attributes.publishedAt,
-        videoUrl: article.attributes.Video_URL,
-        imageUrl: article.attributes.image.data.attributes.url,
-        categories: article.attributes.article_categories.data.map(
-          (category) => {
-            return category.attributes.name;
-          }
-        ),
-      },
+      article: formatData(article),
       recentArticles: recentArticles,
       prevNextArticles: prevNextArticles,
       recommendedArticles: recommendedArticles,
