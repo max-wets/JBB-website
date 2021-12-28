@@ -9,6 +9,10 @@ function BlogDetailPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
     console.log("Blog detail page article data:", props.article);
     console.log("Blog detail page prevNext data:", props.prevNextArticles);
     console.log("Blog detail page recent articles data:", props.recentArticles);
+    console.log(
+      "Blog detail page recommended articles data:",
+      props.recommendedArticles
+    );
   }, []);
 
   return <BlogArticleDetail article={props.article} />;
@@ -36,9 +40,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
   const previousArticle =
     aid > 0 ? data.find((article) => article.id === aid - 1) : null;
   const nextArticle =
-    aid < data.length - 1
-      ? data.find((article) => article.id === aid + 1)
-      : null;
+    aid < data.length ? data.find((article) => article.id === aid + 1) : null;
   const prevNextArticles = [
     previousArticle
       ? {
@@ -49,7 +51,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
     nextArticle
       ? {
           id: nextArticle.id,
-          title: nextArticle.attributes.id,
+          title: nextArticle.attributes.title,
         }
       : null,
   ];
@@ -72,7 +74,43 @@ export const getStaticProps: GetStaticProps = async (context) => {
     return articles;
   }
 
+  function getRecommendedArticles(data, article) {
+    const articleCategories = article.attributes.article_categories.data.map(
+      (category) => {
+        return category.attributes.name;
+      }
+    );
+    function containsCategory(post) {
+      let hasCategory = false;
+      post.attributes.article_categories.data.forEach((category) => {
+        if (articleCategories.indexOf(category.attributes.name) > -1) {
+          !hasCategory ? (hasCategory = true) : null;
+        }
+      });
+      return hasCategory;
+    }
+    const sameCategoryArticles = data
+      .filter(containsCategory)
+      .map((article) => ({
+        id: article.id.toString(),
+        title: article.attributes.title,
+        intro: article.attributes.intro,
+        description: article.attributes.description,
+        issueDate: article.attributes.publishedAt,
+        videoUrl: article.attributes.Video_URL,
+        imageUrl: article.attributes.image.data.attributes.url,
+        categories: article.attributes.article_categories.data.map(
+          (category) => {
+            return category.attributes.name;
+          }
+        ),
+      }));
+
+    return sameCategoryArticles;
+  }
+
   const recentArticles = getRecentArticles(data);
+  const recommendedArticles = getRecommendedArticles(data, article);
 
   return {
     props: {
@@ -92,6 +130,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
       },
       recentArticles: recentArticles,
       prevNextArticles: prevNextArticles,
+      recommendedArticles: recommendedArticles,
     },
   };
 };
