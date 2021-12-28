@@ -97,6 +97,8 @@ export const getStaticProps: GetStaticProps = async (context) => {
       }
     );
     function containsCategory(post) {
+      if (post.id === aid) return false;
+
       let hasCategory = false;
       post.attributes.article_categories.data.forEach((category) => {
         if (articleCategories.indexOf(category.attributes.name) > -1) {
@@ -106,14 +108,14 @@ export const getStaticProps: GetStaticProps = async (context) => {
       return hasCategory;
     }
     recommendedArticles = data.filter(containsCategory);
-    // return sameCategoryArticles;
+    // return recommendedArticles;
 
     if (recommendedArticles.length > 3) {
       // const slicedArticlesArray = sameCategoryArticles.slice(2);
       recommendedArticles = recommendedArticles.slice(2);
     } else if (recommendedArticles.length < 3) {
       const takenIds = recommendedArticles.reduce((prev, curr) => {
-        return [...prev, ...curr.id];
+        return [...prev, curr.id];
       }, []);
       const availableArticles = data.filter(
         (article) => article.id !== aid && takenIds.indexOf(article.id) < 0
