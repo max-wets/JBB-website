@@ -1,0 +1,22 @@
+.productctr {
+    display: flex;
+    margin-bottom: 40px;
+    flex-direction: column;
+    text-align: left;
+}
+
+@media screen and (min-width: 40rem) {
+    .productctr {
+        flex: 0 0 33.33333%;
+        max-width: 33.33333%;
+        padding-right: 0.9375rem;
+        padding-left: 0.9375rem;
+    }
+}
+
+.imgctr {
+    position: relative;
+    width: 100%;
+    margin-bottom: 20px;
+    overflow: hidden;
+}
