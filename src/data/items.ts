@@ -1,5 +1,6 @@
 export const itemsList = [
   {
+    id: 1,
     name: "Crème anesthésiante Amazon tube",
     intro: "Crème Anesthésiante en tube de 10gr<br> Agit rapidement.",
     price: 10.0,
@@ -9,6 +10,7 @@ export const itemsList = [
     image: "creme-anesthesiante-amazon-tube.png",
   },
   {
+    id: 2,
     name: "Crème anesthésiante Aliexpress",
     intro: "Crème Anesthésiante en tube 10G<br>Agit rapidement.",
     price: 10.0,
@@ -18,6 +20,7 @@ export const itemsList = [
     image: "creme-anesthesiante-aliexpress.jpeg",
   },
   {
+    id: 3,
     name: "Innotox 50 U Glamderma",
     intro:
       "Innotox 50 unités<br>Utile pour réaliser une séance complète visage.<br>Pensez à prendre 2 bouteilles pour votre retouche.<br>Code promo fournisseur : caroline10 = 10% de remise sur votre commande",
@@ -28,6 +31,7 @@ export const itemsList = [
     image: "innotox-50-u-glamderma.png",
   },
   {
+    id: 4,
     name: "Innotox 50 U May pharm",
     intro:
       "Innotox 50 unités<br>Utile pour réaliser une séance complète visage.<br>Pensez à prendre 2 bouteilles pour votre retouche.",
@@ -38,6 +42,7 @@ export const itemsList = [
     image: "innotox-50-u-may-pharm.png",
   },
   {
+    id: 5,
     name: "Innotox 50 U Acecosm",
     intro:
       "Innotox 50 unités<br>Utile pour réaliser une séance complète visage.<br>Pensez à prendre 2 bouteilles pour votre retouche.",
@@ -48,6 +53,7 @@ export const itemsList = [
     image: "innotox-50-u-acecosm.png",
   },
   {
+    id: 6,
     name: "CC glow lips LFA",
     intro:
       "Le CCGLOW LIPS permet de raviver la couleur de vos lèvres perdues avec l’age ou de colorer les lèvres pendant plusieurs semaines des plus jeunes<br>5 Couleurs au choix<br>1 Tube de 8 ml",
@@ -58,6 +64,7 @@ export const itemsList = [
     image: "cc-glow-lips-lfa.png",
   },
   {
+    id: 7,
     name: "Kit lips glow Epotam",
     intro: "Kit lips glow Epotam",
     price: 399.18,
@@ -67,6 +74,7 @@ export const itemsList = [
     image: "Kit lips glow epotam.png",
   },
   {
+    id: 8,
     name: "Mésothérapie virtuelle Amazon",
     intro: "Matériel professionnel POUR INSITUT DE BEAUTÉ et soins à domicile.",
     price: 424.88,
@@ -76,6 +84,7 @@ export const itemsList = [
     image: "mesotherapie-virtuelle-amazon.png",
   },
   {
+    id: 9,
     name: "Mésothérapie virtuelle Epotam",
     intro: "Matériel professionnel POUR INSITUT DE BEAUTÉ et soins à domicile.",
     price: 1560.9,
@@ -85,6 +94,7 @@ export const itemsList = [
     image: "mesotherapie-virtuelle-epotam.png",
   },
   {
+    id: 10,
     name: "Dermapen TBPHP",
     intro: "Dermapen Eléctrique Amazon",
     price: 64.59,
@@ -94,6 +104,7 @@ export const itemsList = [
     image: "dermapen-tbphp.png",
   },
   {
+    id: 11,
     name: "Dr pen M8 Amazon",
     intro: "Dr Pen M8 Amazon",
     price: 131.95,
@@ -103,6 +114,7 @@ export const itemsList = [
     image: "dr-pen-m8-amazon.png",
   },
   {
+    id: 12,
     name: "Canule 27G x 40mm LFA",
     intro: "officiis iure commodi atque sint<br>ab facilis? Cumque, ratione!",
     price: 86.0,
@@ -112,6 +124,7 @@ export const itemsList = [
     image: "canule-27g-40mm-lfa.png",
   },
   {
+    id: 13,
     name: "Peeling intime Centrale fillers",
     intro: "officiis iure commodi atque sint<br>ab facilis? Cumque, ratione!",
     price: 117.72,
@@ -121,6 +134,7 @@ export const itemsList = [
     image: "peeling-intime-centrale-fillers.png",
   },
   {
+    id: 14,
     name: "Peeling intime LFA",
     intro: "officiis iure commodi atque sint<br>ab facilis? Cumque, ratione!",
     price: 130.8,
@@ -130,6 +144,7 @@ export const itemsList = [
     image: "peeling-intime-lfa.png",
   },
   {
+    id: 15,
     name: "DMAE LFA",
     intro: "officiis iure commodi atque sint<br>ab facilis? Cumque, ratione!",
     price: 34.0,
@@ -139,6 +154,7 @@ export const itemsList = [
     image: "dmae-lfa.jpg",
   },
   {
+    id: 16,
     name: "Dermaroller Aliexpress",
     intro: "officiis iure commodi atque sint<br>ab facilis? Cumque, ratione!",
     price: 8.0,
@@ -148,6 +164,7 @@ export const itemsList = [
     image: "dermaroller-aliexpress.jpg",
   },
   {
+    id: 17,
     name: "DMAE MNV",
     intro: "officiis iure commodi atque sint<br>ab facilis? Cumque, ratione!",
     price: 23.88,
@@ -157,6 +174,7 @@ export const itemsList = [
     image: "dmae-mnv.png",
   },
   {
+    id: 18,
     name: "Infini XL LFA",
     intro: "officiis iure commodi atque sint<br>ab facilis? Cumque, ratione!",
     price: 59.99,
@@ -166,6 +184,7 @@ export const itemsList = [
     image: "infini-xl-lfa.jpg",
   },
   {
+    id: 19,
     name: "Stylage M LFA",
     intro: "officiis iure commodi atque sint<br>ab facilis? Cumque, ratione!",
     price: 127.0,
@@ -175,6 +194,7 @@ export const itemsList = [
     image: "stylage-m-lfa.png",
   },
   {
+    id: 20,
     name: "Hyamira Soft LFA",
     intro: "officiis iure commodi atque sint<br>ab facilis? Cumque, ratione!",
     price: 50.4,
@@ -184,6 +204,7 @@ export const itemsList = [
     image: "hyamira-forte-lfa.png",
   },
   {
+    id: 21,
     name: "Sosum H Acecosm",
     intro: "officiis iure commodi atque sint<br>ab facilis? Cumque, ratione!",
     price: 60.0,
@@ -193,6 +214,7 @@ export const itemsList = [
     image: "sosum-h-acecosm.png",
   },
   {
+    id: 22,
     name: "Regenovue Deep Acecosm",
     intro: "officiis iure commodi atque sint<br>ab facilis? Cumque, ratione!",
     price: 32.0,
@@ -202,6 +224,7 @@ export const itemsList = [
     image: "regenovue-deep-acecosm.png",
   },
   {
+    id: 23,
     name: "Tesoro Implant lidocaine Acecosm",
     intro: "officiis iure commodi atque sint<br>ab facilis? Cumque, ratione!",
     price: 60.0,
@@ -211,6 +234,7 @@ export const itemsList = [
     image: "tesoro-implant-lidocaine-acecosm.png",
   },
   {
+    id: 24,
     name: "Revolax SUB-Q lidocaine Acecosm",
     intro: "officiis iure commodi atque sint<br>ab facilis? Cumque, ratione!",
     price: 30.0,
@@ -220,6 +244,7 @@ export const itemsList = [
     image: "revolax-sub-q-lidocaine-acecosm.png",
   },
   {
+    id: 25,
     name: "derma stamp aliexpress",
     intro: "officiis iure commodi atque sint<br>ab facilis? Cumque, ratione!",
     price: 8.0,
@@ -229,6 +254,7 @@ export const itemsList = [
     image: "derma-stamp-aliexpress.png",
   },
   {
+    id: 26,
     name: "Masque tissu spunlace Epotam",
     intro: "officiis iure commodi atque sint<br>ab facilis? Cumque, ratione!",
     price: 7.87,
@@ -238,6 +264,7 @@ export const itemsList = [
     image: "masque-tissu-spunlace-epotam.png",
   },
   {
+    id: 27,
     name: "Lotion récupératrice 250ml epotam",
     intro: "officiis iure commodi atque sint<br>ab facilis? Cumque, ratione!",
     price: 37.39,
@@ -247,6 +274,7 @@ export const itemsList = [
     image: "lotion-recuperatrice-250ml-epotam.png",
   },
   {
+    id: 28,
     name: "Mesoram Aiguilles 30G 13mm LFA",
     intro: "officiis iure commodi atque sint<br>ab facilis? Cumque, ratione!",
     price: 24.27,
@@ -256,6 +284,7 @@ export const itemsList = [
     image: "mesoram-aiguilles-30g-13mm-lfa.png",
   },
   {
+    id: 29,
     name: "AMMI Aqua 1ml Epotam",
     intro: "officiis iure commodi atque sint<br>ab facilis? Cumque, ratione!",
     price: 84.58,
@@ -265,6 +294,7 @@ export const itemsList = [
     image: "ammi-aqui-1ml-epotam.png",
   },
   {
+    id: 30,
     name: "Stylage Hydro Lfa",
     intro: "officiis iure commodi atque sint<br>ab facilis? Cumque, ratione!",
     price: 42.0,
@@ -274,6 +304,7 @@ export const itemsList = [
     image: "stylage-hydro-lfa.png",
   },
   {
+    id: 31,
     name: "NCTF 135 Centrale fillers",
     intro: "officiis iure commodi atque sint<br>ab facilis? Cumque, ratione!",
     price: 88.74,
@@ -283,6 +314,7 @@ export const itemsList = [
     image: "nctf-135-centrale-fillers.png",
   },
   {
+    id: 32,
     name: "PDO thread Glamderma",
     intro: "officiis iure commodi atque sint<br>ab facilis? Cumque, ratione!",
     price: 120.0,

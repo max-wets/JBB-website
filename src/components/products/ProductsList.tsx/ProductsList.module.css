@@ -1,0 +1,13 @@
+.productlist {
+    max-width: 840px;
+    width: 100%;
+    flex: 1;
+}
+
+@media screen and (min-width: 40rem) {
+    .productlist {
+        max-width: 75%;
+        padding-right: 0.9375rem;
+        padding-left: 0.9375rem;
+    }
+}
