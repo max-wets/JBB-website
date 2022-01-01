@@ -182,3 +182,11 @@
     color: #D93644;
     text-decoration-line: underline;
 }
+
+.pricelabel {
+    font-size: 11px;
+    color: #898989;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 400;
+}

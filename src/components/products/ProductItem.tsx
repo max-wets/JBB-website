@@ -22,9 +22,9 @@ function ProductItem(props: { product }) {
     return formattedNum + "€";
   }
 
-  useEffect(() => {
-    console.log("Product item:", props.product);
-  }, []);
+  // useEffect(() => {
+  //   console.log("Product item:", props.product);
+  // }, []);
 
   return (
     <div key={props.product.id} className={classes.productctr}>

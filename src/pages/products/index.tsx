@@ -33,7 +33,7 @@ function ProductsPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
   useEffect(() => {
     if (selectedCategory !== "Toutes") {
       const ProductsByCategory = props.products
-        .filter((product) => product.categories.includes(selectedCategory))
+        .filter((product) => product.item_categories.includes(selectedCategory))
         .sort(sortingFn);
       // console.log(ArticlesByCategory);
       setLoadedProducts(ProductsByCategory);

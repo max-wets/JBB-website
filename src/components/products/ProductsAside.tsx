@@ -3,18 +3,23 @@ import Link from "next/link";
 import { Field, Form, Formik } from "formik";
 import {
   Icon,
+  Box,
   Button,
   FormControl,
   FormLabel,
   Input,
   InputGroup,
   InputRightElement,
+  RangeSlider,
+  RangeSliderTrack,
+  RangeSliderFilledTrack,
+  RangeSliderThumb,
 } from "@chakra-ui/react";
 import Image from "next/image";
 import ProductItem from "./ProductItem";
 import { BsTwitter, BsFacebook, BsInstagram } from "react-icons/bs";
 import { FaRss } from "react-icons/fa";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Product } from "./ProductsList";
 
 function BlogAside(props: {
@@ -22,7 +27,35 @@ function BlogAside(props: {
   activeCategories: Object;
   setSelectedCategory;
 }) {
+  const [priceRange, setPriceRange] = useState([]);
+  const [priceRangeCurrentValues, setPriceRangeCurrentValues] = useState([
+    0, 200,
+  ]);
   const api_url = "https://jbb-admin.herokuapp.com/";
+
+  function getPriceRange(products) {
+    const priceRangeArr = [];
+    const pricesArr = products.reduce((prev, curr) => {
+      return [...prev, curr.price];
+    }, []);
+    priceRangeArr[0] = Math.min(...pricesArr);
+    priceRangeArr[1] = Math.max(...pricesArr);
+    console.log("prices range array:", priceRangeArr);
+    return priceRangeArr;
+  }
+
+  useEffect(() => {
+    const priceRange = getPriceRange(props.products);
+    setPriceRange(priceRange);
+    // setPriceRangeCurrentValues([
+    //   ((priceRange[1] - priceRange[0]) * 4) / 10,
+    //   ((priceRange[1] - priceRange[0]) * 6) / 10,
+    // ]);
+  }, []);
+
+  useEffect(() => {
+    console.log("price range current values:", priceRangeCurrentValues);
+  }, [priceRangeCurrentValues]);
 
   // console.log("Blog Aside categories:", props.activeCategories);
 
@@ -59,6 +92,27 @@ function BlogAside(props: {
   return (
     <aside className={classes.sidebarctn}>
       <div className={classes.sidebarinner}>
+        <div className={classes.sidebox}>
+          <h4 className={classes.socialtitle}>Filtrer par prix</h4>
+          <RangeSlider
+            defaultValue={[0, 200]}
+            min={priceRange[0]}
+            max={priceRange[1]}
+            step={(priceRange[1] - priceRange[0]) / 10}
+            onChangeEnd={(values) =>
+              setPriceRangeCurrentValues(values.map((val) => Math.round(val)))
+            }
+          >
+            <RangeSliderTrack bg="red.200">
+              <RangeSliderFilledTrack bg="#D93644" />
+            </RangeSliderTrack>
+            <RangeSliderThumb boxSize={6} index={0} />
+            <RangeSliderThumb boxSize={6} index={1} />
+          </RangeSlider>
+          <div
+            className={classes.pricelabel}
+          >{`Prix: ${priceRangeCurrentValues[0]}€ - ${priceRangeCurrentValues[1]}€`}</div>
+        </div>
         <div className={classes.sidebox}>
           <h4 className={classes.socialtitle}>Me suivre</h4>
           <ul className={classes.socialicons}>
