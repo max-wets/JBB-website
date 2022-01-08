@@ -1,8 +1,8 @@
 ### Get item categories list
-GET https://jbb-admin.herokuapp.com/api/item-categories
+GET https://strapi-d6ef.onrender.com/item-categories
 
 ### Get items list 
-GET https://jbb-admin.herokuapp.com/api/items?populate=image
+GET https://strapi-d6ef.onrender.com/items?populate=image
 
 ### Get a given item
 GET https://jbb-admin.herokuapp.com/api/items/1?populate=image
