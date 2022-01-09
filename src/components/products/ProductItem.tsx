@@ -29,7 +29,7 @@ function ProductItem(props: { product }) {
   return (
     <div key={props.product.id} className={classes.productctr}>
       <div className={classes.imgctr}>
-        <Link href="">
+        <Link href={`/products/${props.product.id.toString()}`}>
           <a>
             <Image
               loader={myLoader}
@@ -42,7 +42,7 @@ function ProductItem(props: { product }) {
           </a>
         </Link>
       </div>
-      <Link href="">
+      <Link href={`/products/${props.product.id.toString()}`}>
         <a>
           <h3>{props.product.name}</h3>
         </a>
