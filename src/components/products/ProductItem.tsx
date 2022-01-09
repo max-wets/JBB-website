@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useEffect } from "react";
 
 const myLoader = ({ src }) => {
-  return `../public/${src}`;
+  return `../public/items/${src}`;
 };
 
 function ProductItem(props: { product }) {

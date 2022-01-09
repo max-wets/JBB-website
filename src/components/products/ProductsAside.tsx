@@ -26,6 +26,7 @@ function BlogAside(props: {
   products: Product[];
   activeCategories: Object;
   setSelectedCategory;
+  setFilterRange;
 }) {
   const [priceRange, setPriceRange] = useState([]);
   const [priceRangeCurrentValues, setPriceRangeCurrentValues] = useState([
@@ -65,7 +66,7 @@ function BlogAside(props: {
 
   function SideProductDetail({ product }) {
     return (
-      <li>
+      <li key={product.id}>
         <Link href="">
           <a className={classes.imgctr}>
             <Image
@@ -95,10 +96,10 @@ function BlogAside(props: {
         <div className={classes.sidebox}>
           <h4 className={classes.socialtitle}>Filtrer par prix</h4>
           <RangeSlider
-            defaultValue={[0, 200]}
-            min={priceRange[0]}
+            defaultValue={[0, 300]}
+            min={0}
             max={priceRange[1]}
-            step={(priceRange[1] - priceRange[0]) / 10}
+            // step={(priceRange[1] - priceRange[0]) / 10}
             onChangeEnd={(values) =>
               setPriceRangeCurrentValues(values.map((val) => Math.round(val)))
             }
@@ -109,9 +110,18 @@ function BlogAside(props: {
             <RangeSliderThumb boxSize={6} index={0} />
             <RangeSliderThumb boxSize={6} index={1} />
           </RangeSlider>
-          <div
-            className={classes.pricelabel}
-          >{`Prix: ${priceRangeCurrentValues[0]}€ - ${priceRangeCurrentValues[1]}€`}</div>
+          <div className={classes.filterlowerbox}>
+            <div
+              className={classes.pricelabel}
+            >{`Prix: ${priceRangeCurrentValues[0]}€ - ${priceRangeCurrentValues[1]}€`}</div>
+            <Button
+              size="xs"
+              colorScheme="red"
+              onClick={() => props.setFilterRange(priceRangeCurrentValues)}
+            >
+              Filtrer
+            </Button>
+          </div>
         </div>
         <div className={classes.sidebox}>
           <h4 className={classes.socialtitle}>Me suivre</h4>

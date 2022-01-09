@@ -3,13 +3,16 @@ import { itemsList } from "../../data/items";
 import ProductsList from "../../components/products/ProductsList";
 import ProductsAside from "../../components/products/ProductsAside";
 import { useEffect, useState } from "react";
-import { Container } from "@chakra-ui/react";
+import { Container, Flex, Spinner } from "@chakra-ui/react";
 import ProductsHeading from "../../components/products/ProductsHeading";
 import { Product } from "../../components/products/ProductsList";
 
 function ProductsPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
   const [loadedProducts, setLoadedProducts] = useState<Product[]>([]);
   const [selectedCategory, setSelectedCategory] = useState("Toutes");
+  const [filterRange, setFilterRange] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(null);
 
   const sortingFn = (a, b) => {
     const aDate = new Date(a.issueDate);
@@ -28,6 +31,7 @@ function ProductsPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
     setLoadedProducts(props.products);
     console.log("Products page products:", props.products);
     console.log("Product page active categories:", props.activeCategories);
+    setLoading(false);
   }, []);
 
   useEffect(() => {
@@ -42,16 +46,45 @@ function ProductsPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
     }
   }, [selectedCategory]);
 
+  useEffect(() => {
+    if (filterRange.length > 0) {
+      const productsByPrice = props.products
+        .filter(
+          (product) =>
+            product.price >= filterRange[0] && product.price <= filterRange[1]
+        )
+        .sort(sortingFn);
+      // console.log("products by price:", productsByPrice);
+      setLoadedProducts(productsByPrice);
+    }
+  }, [filterRange]);
+
   return (
     <>
       <ProductsHeading />
       <Container pt="50px" pb="50px" w="1200px" maxW="90%" margin="0 auto">
-        <ProductsList products={loadedProducts} />
-        <ProductsAside
-          products={props.products}
-          activeCategories={props.activeCategories}
-          setSelectedCategory={setSelectedCategory}
-        />
+        <Flex display={loading ? "none" : "flex"}>
+          <ProductsList
+            products={loadedProducts}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+          />
+          <ProductsAside
+            products={props.products}
+            activeCategories={props.activeCategories}
+            setSelectedCategory={setSelectedCategory}
+            setFilterRange={setFilterRange}
+          />
+        </Flex>
+        <Flex
+          display={loading ? "flex" : "none"}
+          h="50vh"
+          w="100%"
+          justifyContent="center"
+          alignItems="center"
+        >
+          <Spinner />
+        </Flex>
       </Container>
     </>
   );

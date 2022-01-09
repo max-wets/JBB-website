@@ -1,12 +1,18 @@
 .productlist {
-    float: right;
-    padding-left: 30px;
-    padding-right: 0;
-    border-left-width: 1px;
-    border-right-width: 0;
-    position: relative;
-    width: 72%;
-    border-style: solid;
-    border-color: #f1f1f1;
+  float: right;
+  padding-left: 30px;
+  padding-right: 0;
+  border-left-width: 1px;
+  border-right-width: 0;
+  position: relative;
+  width: 72%;
+  border-style: solid;
+  border-color: #f1f1f1;
 }
 
+.paginationbar {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 25px;
+}

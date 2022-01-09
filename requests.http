@@ -2,10 +2,10 @@
 GET https://strapi-d6ef.onrender.com/item-categories
 
 ### Get items list 
-GET https://strapi-d6ef.onrender.com/items?populate=image
+GET https://strapi-d6ef.onrender.com/items
 
 ### Get a given item
-GET https://jbb-admin.herokuapp.com/api/items/1?populate=image
+GET https://strapi-d6ef.onrender.com/items/1
 
 ### Get article categories list
 GET https://jbb-admin.herokuapp.com/api/article-categories
