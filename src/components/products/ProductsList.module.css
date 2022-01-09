@@ -1,4 +1,6 @@
 .productlist {
+  display: flex;
+  flex-direction: column;
   float: right;
   padding-left: 30px;
   padding-right: 0;
@@ -15,4 +17,35 @@
   display: flex;
   justify-content: flex-end;
   padding-top: 25px;
+}
+
+.resultcount {
+  float: right;
+  font-size: 12px;
+  line-height: 1;
+  text-transform: uppercase;
+  list-style: none;
+  margin: 0 0 20px;
+  padding: 0;
+}
+
+.resultcount li {
+  float: left;
+}
+
+.resultcount li:not(:first-child) {
+  color: #999;
+}
+
+.resultcount li:not(:first-child):not(:last-child):after {
+  content: "/";
+  color: #999;
+  margin: 0 3px;
+}
+
+.viewtitle {
+  margin-right: 6px;
+  color: #555;
+  letter-spacing: 0.6px;
+  text-transform: capitalize;
 }
