@@ -2,7 +2,7 @@ import classes from "./ProductsList.module.css";
 import ProductItem from "./ProductItem";
 import Pagination from "../pagination/Pagination";
 import { Grid, GridItem, Flex } from "@chakra-ui/react";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 let PageSize = 12;
 
@@ -17,6 +17,8 @@ export interface Product {
 }
 
 function ProductsList(props: { products; currentPage; setCurrentPage }) {
+  const [pageSize, setPageSize] = useState(PageSize);
+
   useEffect(() => {
     console.log("Products list items:");
     props.products.map((product) => {
@@ -29,10 +31,10 @@ function ProductsList(props: { products; currentPage; setCurrentPage }) {
   }, []);
 
   const currentData = useMemo(() => {
-    const firstPageIndex = (props.currentPage - 1) * PageSize;
-    const lastPageIndex = firstPageIndex + PageSize;
+    const firstPageIndex = (props.currentPage - 1) * pageSize;
+    const lastPageIndex = firstPageIndex + pageSize;
     return props.products.slice(firstPageIndex, lastPageIndex);
-  }, [props.currentPage, props.products]);
+  }, [props.currentPage, props.products, pageSize]);
 
   function ViewSelector(props: { productsLength; pageSize }) {
     const nbrOfViews = Math.ceil(props.productsLength / props.pageSize);
@@ -44,9 +46,11 @@ function ProductsList(props: { products; currentPage; setCurrentPage }) {
       <ul className={classes.resultcount}>
         <li className={classes.viewtitle}>Produits par page:</li>
         {views.map((view) => (
-          <li>{view}</li>
+          <li onClick={() => setPageSize(parseInt(view))}>{view}</li>
         ))}
-        <li>Tous</li>
+        <li onClick={() => setPageSize(parseInt(props.productsLength))}>
+          Tous
+        </li>
       </ul>
     );
   }
@@ -70,7 +74,7 @@ function ProductsList(props: { products; currentPage; setCurrentPage }) {
         className={classes.paginationbar}
         currentPage={props.currentPage}
         totalCount={props.products.length}
-        pageSize={PageSize}
+        pageSize={pageSize}
         onPageChange={(page) => props.setCurrentPage(page)}
       />
     </div>

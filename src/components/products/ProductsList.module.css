@@ -31,6 +31,10 @@
 
 .resultcount li {
   float: left;
+  cursor: pointer;
+}
+.resultcount li:not(:first-child):hover {
+  color: #d93644;
 }
 
 .resultcount li:not(:first-child) {
