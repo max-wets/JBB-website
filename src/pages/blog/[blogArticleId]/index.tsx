@@ -2,6 +2,9 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { GetStaticProps, GetStaticPaths, InferGetStaticPropsType } from "next";
 import BlogArticleDetail from "../../../components/blog/blog-detail/BlogArticleDetail";
+import BlogArticleDetailHeading from "../../../components/blog/blog-detail/BlogArticleDetailHeading";
+import BlogArticleAside from "../../../components/blog/blog-detail/BlogArticleAside";
+import { Container, Flex, Spinner } from "@chakra-ui/react";
 import axios from "axios";
 
 function BlogDetailPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
@@ -15,7 +18,17 @@ function BlogDetailPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
     );
   }, []);
 
-  return <BlogArticleDetail article={props.article} />;
+  return (
+    <>
+      <BlogArticleDetailHeading title={props.article.title} />
+      <Container pt="50px" pb="50px" w="1200px" maxW="90%" margin="0 auto">
+        <Flex>
+          <BlogArticleDetail article={props.article} />
+          <BlogArticleAside articles={props.recentArticles} />
+        </Flex>
+      </Container>
+    </>
+  );
 }
 
 export const getStaticProps: GetStaticProps = async (context) => {
