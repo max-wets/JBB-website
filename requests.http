@@ -14,7 +14,10 @@ GET https://jbb-admin.herokuapp.com/api/article-categories
 GET https://jbb-admin.herokuapp.com/api/articles?populate=%2A
 
 ### Get a given article
-GET https://jbb-admin.herokuapp.com/api/articles/1?populate=%2A
+GET https://jbb-admin.herokuapp.com/api/articles/4?populate=%2A
+
+### Get a given article (new)
+GET https://strapi-d6ef.onrender.com/articles/1
 
 ### Get article image url
 GET https://jbb-admin.herokuapp.com/uploads/bb_glow_2a922f8623.jpeg

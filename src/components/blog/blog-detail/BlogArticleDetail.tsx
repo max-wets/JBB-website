@@ -7,6 +7,8 @@ import { BiUser } from "react-icons/bi";
 import { FiClock } from "react-icons/fi";
 import { BsFolder } from "react-icons/bs";
 import { BiComment } from "react-icons/bi";
+import { useState, useEffect } from "react";
+import ReactMarkdown from "react-markdown";
 
 function BlogArticleDetail(props: { article: Article }) {
   const api_url = "https://jbb-admin.herokuapp.com";
@@ -33,7 +35,7 @@ function BlogArticleDetail(props: { article: Article }) {
   };
 
   return (
-    <article>
+    <article className={classes.primary}>
       <div className={classes.thumbnail}>
         <Image
           src={api_url + props.article.imageUrl}
@@ -77,6 +79,9 @@ function BlogArticleDetail(props: { article: Article }) {
             </Link>
           </li>
         </ul>
+        <div className={classes.entrycontent}>
+          <ReactMarkdown children={props.article.description} />
+        </div>
       </div>
     </article>
   );
