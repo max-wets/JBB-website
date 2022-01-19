@@ -17,17 +17,12 @@
     "dompurify": "^2.3.4",
     "formik": "^2.2.9",
     "framer-motion": "^4.1.17",
-    "jsdom": "^19.0.0",
-    "marked": "^4.0.10",
-    "net": "^1.0.2",
     "next": "^12.0.7",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-icons": "^4.3.1",
     "react-markdown": "^8.0.0",
-    "rxjs": "^6.5.5",
-    "sanitize-html": "^2.6.1",
-    "tls": "0.0.1"
+    "rxjs": "^6.5.5"
   },
   "devDependencies": {
     "@babel/core": "^7.13.13",

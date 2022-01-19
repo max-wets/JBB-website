@@ -10,15 +10,15 @@ const nextConfig = {
   images: {
     domains: ["jbb-admin.herokuapp.com"],
   },
-  webpack: (config, { isServer }) => {
-    if (!isServer) {
-      config.node = {
-        net: "empty",
-      };
-    }
+  // webpack: (config, { isServer }) => {
+  //   if (!isServer) {
+  //     config.node = {
+  //       net: "empty",
+  //     };
+  //   }
 
-    return config;
-  },
+  //   return config;
+  // },
   // webpack: (config) => {
   //   config.module.rules.push({
   //     test: /\.(png|jpe?g|gif)$/i,

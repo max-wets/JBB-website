@@ -77,10 +77,15 @@ function BlogPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const res = await axios.get(
-    "https://jbb-admin.herokuapp.com/api/articles?populate=%2A"
-  );
-  const data = res.data.data;
+  // const res = await axios.get(
+  //   "https://jbb-admin.herokuapp.com/api/articles?populate=%2A"
+  // );
+  // const data = res.data.data;
+
+  const res = await axios.get("https://strapi-d6ef.onrender.com/articles");
+  const data = res.data;
+
+  console.dir("blog articles data:", data);
 
   interface Category {
     [category: string]: number;
@@ -88,30 +93,28 @@ export const getStaticProps: GetStaticProps = async () => {
 
   const activeCategories = {} as Category;
   data.map((article) =>
-    article.attributes.article_categories.data.map((category) => {
-      const categoryName = category.attributes.name;
+    article.article_categories.map((category) => {
+      const categoryName = category.Name;
       activeCategories[categoryName]
         ? (activeCategories[categoryName] += 1)
         : (activeCategories[categoryName] = 1);
     })
   );
-  //   console.log(JSON.stringify(activeCategories));
+  console.log(JSON.stringify(activeCategories));
 
   return {
     props: {
       articles: data.map((article) => ({
         id: article.id.toString(),
-        title: article.attributes.title,
-        intro: article.attributes.intro,
-        description: article.attributes.description,
-        issueDate: article.attributes.publishedAt,
-        videoUrl: article.attributes.Video_URL,
-        imageUrl: article.attributes.image.data.attributes.url,
-        categories: article.attributes.article_categories.data.map(
-          (category) => {
-            return category.attributes.name;
-          }
-        ),
+        title: article.Name,
+        intro: article.Intro,
+        description: article.Description,
+        issueDate: article.published_at,
+        videoUrl: article.Video_URL,
+        imageUrl: article.Image.url,
+        categories: article.article_categories.map((category) => {
+          return category.Name;
+        }),
       })),
       activeCategories: activeCategories,
     },

@@ -13,6 +13,9 @@ GET https://jbb-admin.herokuapp.com/api/article-categories
 ### Get articles list
 GET https://jbb-admin.herokuapp.com/api/articles?populate=%2A
 
+### Get articles list (new)
+GET https://strapi-d6ef.onrender.com/articles
+
 ### Get a given article
 GET https://jbb-admin.herokuapp.com/api/articles/4?populate=%2A
 
