@@ -227,7 +227,7 @@ function MainNavigation() {
               <nav>
                 <ul className={classes.fullmenu}>
                   <li>
-                    <Link href="/blog">
+                    <Link href={"/blog"}>
                       <a>
                         <Button size="sm" colorScheme="white" color="black">
                           <p>BLOG</p>
@@ -270,7 +270,7 @@ function MainNavigation() {
                     </Menu>
                   </li>
                   <li>
-                    <Link href="#">
+                    <Link href={"/products"}>
                       <a>
                         <Button size="sm" colorScheme="white" color="black">
                           <p>MA SELECTION DE PRODUITS</p>

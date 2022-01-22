@@ -166,7 +166,7 @@ function Header() {
                     </Accordion>
                   </li>
                   <li>
-                    <Link href="/blog">
+                    <Link href={"/products"}>
                       <a>
                         <Button size="sm" colorScheme="white" color="black">
                           <p>MA SELECTION DE PRODUITS</p>
