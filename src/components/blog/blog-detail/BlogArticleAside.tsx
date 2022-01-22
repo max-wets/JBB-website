@@ -17,7 +17,8 @@ import { FaRss } from "react-icons/fa";
 import { useState } from "react";
 
 function BlogAside(props: { articles: Article[] }) {
-  const api_url = "https://jbb-admin.herokuapp.com";
+  // const api_url = "https://jbb-admin.herokuapp.com";
+
   const newDate = (date) => {
     const mois = [
       "Janvier",
@@ -45,7 +46,7 @@ function BlogAside(props: { articles: Article[] }) {
         <Link href="">
           <a className={classes.imgctr}>
             <Image
-              src={api_url + article.imageUrl}
+              src={article.imageUrl}
               alt={article.title}
               width="100%"
               height="100%"

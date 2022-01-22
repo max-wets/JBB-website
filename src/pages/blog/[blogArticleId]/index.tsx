@@ -33,8 +33,8 @@ function BlogDetailPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
 
 export const getStaticProps: GetStaticProps = async (context) => {
   const sortingFn = (a, b) => {
-    const aDate = new Date(a.attributes.publishedAt);
-    const bDate = new Date(b.attributes.publishedAt);
+    const aDate = new Date(a.published_at);
+    const bDate = new Date(b.published_at);
 
     if (aDate > bDate) {
       return -1;
@@ -45,10 +45,8 @@ export const getStaticProps: GetStaticProps = async (context) => {
     return 0;
   };
   const aid = Number(context.params.blogArticleId);
-  const res = await axios.get(
-    `https://jbb-admin.herokuapp.com/api/articles?populate=%2A`
-  );
-  const data = res.data.data.sort(sortingFn);
+  const res = await axios.get(`https://strapi-d6ef.onrender.com/articles`);
+  const data = res.data.sort(sortingFn);
   const article = data.find((article) => article.id === aid);
   const previousArticle =
     aid > 0 ? data.find((article) => article.id === aid - 1) : null;
@@ -58,13 +56,13 @@ export const getStaticProps: GetStaticProps = async (context) => {
     previousArticle
       ? {
           id: previousArticle.id,
-          title: previousArticle.attributes.title,
+          title: previousArticle.Name,
         }
       : null,
     nextArticle
       ? {
           id: nextArticle.id,
-          title: nextArticle.attributes.title,
+          title: nextArticle.Name,
         }
       : null,
   ];
@@ -72,14 +70,14 @@ export const getStaticProps: GetStaticProps = async (context) => {
   function formatData(post) {
     return {
       id: post.id.toString(),
-      title: post.attributes.title,
-      intro: post.attributes.intro,
-      description: post.attributes.description,
-      issueDate: post.attributes.publishedAt,
-      videoUrl: post.attributes.Video_URL,
-      imageUrl: post.attributes.image.data.attributes.url,
-      categories: post.attributes.article_categories.data.map((category) => {
-        return category.attributes.name;
+      title: post.Name,
+      intro: post.Intro,
+      description: post.Description,
+      issueDate: post.published_at,
+      videoUrl: post.Video_URL,
+      imageUrl: post.Image.url,
+      categories: post.article_categories.map((category) => {
+        return category.Name;
       }),
     };
   }
@@ -92,9 +90,9 @@ export const getStaticProps: GetStaticProps = async (context) => {
       if (data[idx].id != aid) {
         articles.push({
           id: data[idx].id,
-          title: data[idx].attributes.title,
-          issueDate: data[idx].attributes.publishedAt,
-          imageUrl: data[idx].attributes.image.data.attributes.url,
+          title: data[idx].Name,
+          issueDate: data[idx].published_at,
+          imageUrl: data[idx].Image.url,
         });
       }
       idx += 1;
@@ -104,17 +102,15 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
   function getRecommendedArticles(data, article) {
     let recommendedArticles = [];
-    const articleCategories = article.attributes.article_categories.data.map(
-      (category) => {
-        return category.attributes.name;
-      }
-    );
+    const articleCategories = article.article_categories.map((category) => {
+      return category.Name;
+    });
     function containsCategory(post) {
       if (post.id === aid) return false;
 
       let hasCategory = false;
-      post.attributes.article_categories.data.forEach((category) => {
-        if (articleCategories.indexOf(category.attributes.name) > -1) {
+      post.article_categories.forEach((category) => {
+        if (articleCategories.indexOf(category.Name) > -1) {
           !hasCategory ? (hasCategory = true) : null;
         }
       });
@@ -156,8 +152,8 @@ export const getStaticProps: GetStaticProps = async (context) => {
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const res = await axios.get("https://jbb-admin.herokuapp.com/api/articles");
-  const data = res.data.data;
+  const res = await axios.get("https://strapi-d6ef.onrender.com/articles");
+  const data = res.data;
 
   const paths = data.map((article) => ({
     params: { blogArticleId: article.id.toString() },

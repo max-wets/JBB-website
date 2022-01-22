@@ -42,6 +42,7 @@ function BlogArticleDetail(props: { article: Article }) {
           alt={props.article.title}
           width={833}
           height={430}
+          objectFit="contain"
         />
       </div>
       <header>
@@ -80,7 +81,7 @@ function BlogArticleDetail(props: { article: Article }) {
           </li>
         </ul>
         <div className={classes.entrycontent}>
-          <ReactMarkdown children={props.article.description} />
+          <ReactMarkdown>{props.article.description}</ReactMarkdown>
         </div>
       </div>
     </article>
