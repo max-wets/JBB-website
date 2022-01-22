@@ -10,6 +10,19 @@ import { BiComment } from "react-icons/bi";
 import { useState, useEffect } from "react";
 import ReactMarkdown from "react-markdown";
 import VideoEmbed from "./VideoEmbed";
+import {
+  EmailShareButton,
+  EmailIcon,
+  FacebookShareButton,
+  FacebookIcon,
+  TwitterShareButton,
+  TwitterIcon,
+  WhatsappShareButton,
+  WhatsappIcon,
+} from "react-share";
+import { BsTwitter, BsFacebook, BsInstagram } from "react-icons/bs";
+import { MdEmail } from "react-icons/md";
+// import { EmailIcon } from "@chakra-ui/icons";
 
 function BlogArticleDetail(props: { article: Article }) {
   // const api_url = "https://jbb-admin.herokuapp.com";
@@ -85,8 +98,35 @@ function BlogArticleDetail(props: { article: Article }) {
           <ReactMarkdown>{props.article.description}</ReactMarkdown>
         </div>
         {props.article.videoUrl ? (
-          <VideoEmbed source={props.article.videoUrl} />
+          <div style={{ marginTop: "30px" }}>
+            <VideoEmbed source={props.article.videoUrl} />
+          </div>
         ) : null}
+      </div>
+      <div className={classes.entryshare}>
+        <h3>PARTAGER CET ARTICLE</h3>
+        <ul>
+          <li>
+            <EmailShareButton url={window.location.href}>
+              <EmailIcon size={40} borderRadius={6} />
+            </EmailShareButton>
+          </li>
+          <li>
+            <FacebookShareButton url={window.location.href}>
+              <FacebookIcon size={40} borderRadius={6} />
+            </FacebookShareButton>
+          </li>
+          <li>
+            <TwitterShareButton url={window.location.href}>
+              <TwitterIcon size={40} borderRadius={6} />
+            </TwitterShareButton>
+          </li>
+          <li>
+            <WhatsappShareButton url={window.location.href}>
+              <WhatsappIcon size={40} borderRadius={6} />
+            </WhatsappShareButton>
+          </li>
+        </ul>
       </div>
     </article>
   );
