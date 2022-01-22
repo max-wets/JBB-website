@@ -46,7 +46,7 @@ function BlogArticle(props: Article) {
   return (
     <article className={classes.blogentryouter}>
       <div className={classes.thumbnail}>
-        <Link href="">
+        <Link href={`/blog/${props.id}`}>
           <a>
             <Image
               width={833}
@@ -62,7 +62,7 @@ function BlogArticle(props: Article) {
       </div>
       <header className={classes.blogentryheader}>
         <h2>
-          <Link href="">
+          <Link href={`/blog/${props.id}`}>
             <a>{props.title}</a>
           </Link>
         </h2>
