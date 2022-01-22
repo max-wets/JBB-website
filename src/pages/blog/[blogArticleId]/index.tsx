@@ -23,7 +23,11 @@ function BlogDetailPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
       <BlogArticleDetailHeading title={props.article.title} />
       <Container pt="50px" pb="50px" w="1200px" maxW="90%" margin="0 auto">
         <Flex>
-          <BlogArticleDetail article={props.article} />
+          <BlogArticleDetail
+            article={props.article}
+            prevNextArticles={props.prevNextArticles}
+            recommendedArticles={props.recommendedArticles}
+          />
           <BlogArticleAside articles={props.recentArticles} />
         </Flex>
       </Container>

@@ -20,12 +20,16 @@ import {
   WhatsappShareButton,
   WhatsappIcon,
 } from "react-share";
-import { BsTwitter, BsFacebook, BsInstagram } from "react-icons/bs";
-import { MdEmail } from "react-icons/md";
-// import { EmailIcon } from "@chakra-ui/icons";
+import { useRouter } from "next/router";
+import { ArrowLeftIcon, ArrowRightIcon } from "@chakra-ui/icons";
 
-function BlogArticleDetail(props: { article: Article }) {
+function BlogArticleDetail(props: {
+  article: Article;
+  prevNextArticles;
+  recommendedArticles;
+}) {
   // const api_url = "https://jbb-admin.herokuapp.com";
+  const router = useRouter();
 
   const newDate = (date) => {
     const mois = [
@@ -107,27 +111,63 @@ function BlogArticleDetail(props: { article: Article }) {
         <h3>PARTAGER CET ARTICLE</h3>
         <ul>
           <li>
-            <EmailShareButton url={window.location.href}>
+            <EmailShareButton url={router.asPath}>
               <EmailIcon size={40} borderRadius={6} />
             </EmailShareButton>
           </li>
           <li>
-            <FacebookShareButton url={window.location.href}>
+            <FacebookShareButton url={router.asPath}>
               <FacebookIcon size={40} borderRadius={6} />
             </FacebookShareButton>
           </li>
           <li>
-            <TwitterShareButton url={window.location.href}>
+            <TwitterShareButton url={router.asPath}>
               <TwitterIcon size={40} borderRadius={6} />
             </TwitterShareButton>
           </li>
           <li>
-            <WhatsappShareButton url={window.location.href}>
+            <WhatsappShareButton url={router.asPath}>
               <WhatsappIcon size={40} borderRadius={6} />
             </WhatsappShareButton>
           </li>
         </ul>
       </div>
+      <nav className={classes.postnavigation}>
+        {props.prevNextArticles[0] ? (
+          <div className={classes.navprevious}>
+            <Link href={`/blog/${props.prevNextArticles[0].id}`}>
+              <a>
+                <div className={classes.prevtitle}>
+                  <ArrowLeftIcon w={3} h={3} />
+                  <span>Article Précédent</span>
+                </div>
+                <div className={classes.prevtext}>
+                  {props.prevNextArticles[0].title.length > 40
+                    ? props.prevNextArticles[0].title.slice(0, 40) + "..."
+                    : props.prevNextArticles[0].title}
+                </div>
+              </a>
+            </Link>
+          </div>
+        ) : null}
+        {props.prevNextArticles[1] ? (
+          <div className={classes.navnext}>
+            <Link href={`/blog/${props.prevNextArticles[1].id}`}>
+              <a>
+                <div className={classes.nexttitle}>
+                  <ArrowRightIcon w={3} h={3} />
+                  <span>Article Suivant</span>
+                </div>
+                <div className={classes.nexttext}>
+                  {props.prevNextArticles[1].title.length > 40
+                    ? props.prevNextArticles[1].title.slice(0, 40) + "..."
+                    : props.prevNextArticles[1].title}
+                </div>
+              </a>
+            </Link>
+          </div>
+        ) : null}
+      </nav>
     </article>
   );
 }
