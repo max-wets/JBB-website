@@ -85,7 +85,7 @@ export const getStaticProps: GetStaticProps = async () => {
   const res = await axios.get("https://strapi-d6ef.onrender.com/articles");
   const data = res.data;
 
-  console.log("blog articles data:", res.data);
+  // console.log("blog articles data:", res.data);
 
   interface Category {
     [category: string]: number;
@@ -100,7 +100,7 @@ export const getStaticProps: GetStaticProps = async () => {
         : (activeCategories[categoryName] = 1);
     })
   );
-  console.log("active categories to send:", JSON.stringify(activeCategories));
+  // console.log("active categories to send:", JSON.stringify(activeCategories));
 
   const articles = data.map((article) => ({
     id: article.id.toString(),
@@ -115,7 +115,7 @@ export const getStaticProps: GetStaticProps = async () => {
     }),
   }));
 
-  console.log("articles to send:", articles);
+  // console.log("articles to send:", articles);
 
   return {
     props: {

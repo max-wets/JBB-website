@@ -20,7 +20,7 @@ GET https://strapi-d6ef.onrender.com/articles
 GET https://jbb-admin.herokuapp.com/api/articles/4?populate=%2A
 
 ### Get a given article (new)
-GET https://strapi-d6ef.onrender.com/articles/4
+GET https://strapi-d6ef.onrender.com/articles/2
 
 ### Get article image url
 GET https://jbb-admin.herokuapp.com/uploads/bb_glow_2a922f8623.jpeg

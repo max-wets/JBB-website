@@ -9,6 +9,7 @@ import { BsFolder } from "react-icons/bs";
 import { BiComment } from "react-icons/bi";
 import { useState, useEffect } from "react";
 import ReactMarkdown from "react-markdown";
+import VideoEmbed from "./VideoEmbed";
 
 function BlogArticleDetail(props: { article: Article }) {
   // const api_url = "https://jbb-admin.herokuapp.com";
@@ -42,7 +43,7 @@ function BlogArticleDetail(props: { article: Article }) {
           alt={props.article.title}
           width={833}
           height={430}
-          objectFit="contain"
+          objectFit="cover"
         />
       </div>
       <header>
@@ -83,6 +84,9 @@ function BlogArticleDetail(props: { article: Article }) {
         <div className={classes.entrycontent}>
           <ReactMarkdown>{props.article.description}</ReactMarkdown>
         </div>
+        {props.article.videoUrl ? (
+          <VideoEmbed source={props.article.videoUrl} />
+        ) : null}
       </div>
     </article>
   );
