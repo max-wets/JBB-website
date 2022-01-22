@@ -21,7 +21,11 @@ import {
   WhatsappIcon,
 } from "react-share";
 import { useRouter } from "next/router";
-import { ArrowLeftIcon, ArrowRightIcon } from "@chakra-ui/icons";
+import {
+  ArrowLeftIcon,
+  ArrowRightIcon,
+  ChevronRightIcon,
+} from "@chakra-ui/icons";
 
 function BlogArticleDetail(props: {
   article: Article;
@@ -168,6 +172,45 @@ function BlogArticleDetail(props: {
           </div>
         ) : null}
       </nav>
+      <section className={classes.relatedposts}>
+        <div className={classes.relatedpoststitle}>
+          <ChevronRightIcon w={6} h={6} color="#d93644" />
+          <h3>ARTICLES RECOMMANDES</h3>
+        </div>
+        <div className={classes.relatedpostsentry}>
+          {props.recommendedArticles.map((article) => (
+            <article>
+              <div className={classes.thumbnail}>
+                <Link href={`/blog/${article.id}`}>
+                  <a>
+                    <Image
+                      src={article.imageUrl}
+                      alt={article.title}
+                      width={239}
+                      height={124}
+                      objectFit="cover"
+                    />
+                    <span className={classes.overlay}></span>
+                  </a>
+                </Link>
+              </div>
+              <Link href={`/blog/${article.id}`}>
+                <a>
+                  <h3>
+                    {article.title.length > 40
+                      ? article.title.slice(0, 39) + "..."
+                      : article.title}
+                  </h3>
+                </a>
+              </Link>
+              <time className="published" dateTime={article.issueDate}>
+                <Icon as={FiClock} h={3} w={3} size="md" mr="4px" />
+                <div>{newDate(props.article.issueDate)}</div>
+              </time>
+            </article>
+          ))}
+        </div>
+      </section>
     </article>
   );
 }
