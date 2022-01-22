@@ -28,7 +28,7 @@ function BlogPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
 
   useEffect(() => {
     setLoadedArticles(props.articles.sort(sortingFn));
-    console.log(loadedArticles);
+    console.log("loaded articles:", loadedArticles);
     // console.log("categories: ", props.activeCategories);
   }, [props.articles]);
 
@@ -85,7 +85,7 @@ export const getStaticProps: GetStaticProps = async () => {
   const res = await axios.get("https://strapi-d6ef.onrender.com/articles");
   const data = res.data;
 
-  console.dir("blog articles data:", data);
+  console.log("blog articles data:", res.data);
 
   interface Category {
     [category: string]: number;
@@ -100,22 +100,26 @@ export const getStaticProps: GetStaticProps = async () => {
         : (activeCategories[categoryName] = 1);
     })
   );
-  console.log(JSON.stringify(activeCategories));
+  console.log("active categories to send:", JSON.stringify(activeCategories));
+
+  const articles = data.map((article) => ({
+    id: article.id.toString(),
+    title: article.Name,
+    intro: article.Intro,
+    description: article.Description,
+    issueDate: article.published_at,
+    videoUrl: article.Video_URL,
+    imageUrl: article.Image.url,
+    categories: article.article_categories.map((category) => {
+      return category.Name;
+    }),
+  }));
+
+  console.log("articles to send:", articles);
 
   return {
     props: {
-      articles: data.map((article) => ({
-        id: article.id.toString(),
-        title: article.Name,
-        intro: article.Intro,
-        description: article.Description,
-        issueDate: article.published_at,
-        videoUrl: article.Video_URL,
-        imageUrl: article.Image.url,
-        categories: article.article_categories.map((category) => {
-          return category.Name;
-        }),
-      })),
+      articles: articles,
       activeCategories: activeCategories,
     },
     revalidate: 3600,

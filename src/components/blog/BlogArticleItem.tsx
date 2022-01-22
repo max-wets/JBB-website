@@ -20,7 +20,7 @@ export interface Article {
 }
 
 function BlogArticle(props: Article) {
-  const api_url = "https://jbb-admin.herokuapp.com";
+  // const api_url = "https://jbb-admin.herokuapp.com";
 
   const newDate = (date) => {
     const mois = [
@@ -51,9 +51,10 @@ function BlogArticle(props: Article) {
             <Image
               width={833}
               height={430}
-              layout="responsive"
-              src={api_url + props.imageUrl}
+              src={props.imageUrl}
               alt={props.title}
+              layout="responsive"
+              objectFit="cover"
             />
             <span className={classes.overlay}></span>
           </a>

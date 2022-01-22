@@ -11,7 +11,7 @@ import { useState, useEffect } from "react";
 import ReactMarkdown from "react-markdown";
 
 function BlogArticleDetail(props: { article: Article }) {
-  const api_url = "https://jbb-admin.herokuapp.com";
+  // const api_url = "https://jbb-admin.herokuapp.com";
 
   const newDate = (date) => {
     const mois = [
@@ -38,7 +38,7 @@ function BlogArticleDetail(props: { article: Article }) {
     <article className={classes.primary}>
       <div className={classes.thumbnail}>
         <Image
-          src={api_url + props.article.imageUrl}
+          src={props.article.imageUrl}
           alt={props.article.title}
           width={833}
           height={430}
