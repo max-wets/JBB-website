@@ -23,6 +23,41 @@ function ProductDetail(props: {
     return formattedNum + "€";
   }
 
+  function RelatedProduct({ product }) {
+    return (
+      <li className={classes.listentry}>
+        <div className={classes.productinner}>
+          <div className={classes.thumbnail}>
+            <Link href={`/products/${product.id}`}>
+              <a>
+                <Image
+                  src={product.Image.url}
+                  alt={product.Name}
+                  height={294}
+                  width={235}
+                  objectFit="contain"
+                />
+                <span className={classes.overlay}></span>
+              </a>
+            </Link>
+          </div>
+          <div className={classes.productname}>
+            <h2>
+              <Link href={`/products/${product.id}`}>
+                <a>{product.Name}</a>
+              </Link>
+            </h2>
+          </div>
+          <div className={classes.pricewrap}>
+            <span style={{ fontSize: "18px" }} className={classes.price}>
+              {priceFormat(product.Price)}
+            </span>
+          </div>
+        </div>
+      </li>
+    );
+  }
+
   return (
     <article className={classes.entrycontent}>
       <div className={classes.prevnextctr}>
@@ -47,39 +82,57 @@ function ProductDetail(props: {
           </li>
         </ul>
       </div>
-      <div className={classes.productimg}>
-        <Image
-          src={props.product.Image.url}
-          alt={props.product.Name}
-          width={370}
-          height={370}
-          objectFit="cover"
-        />
-      </div>
-      <div className={classes.summary}>
-        <h2>{props.product.Name.toLowerCase()}</h2>
-        <p className={classes.price}>{priceFormat(props.product.Price)}</p>
-        <div className={classes.intro}>
-          <p>
-            <ReactMarkdown>{props.product.Intro}</ReactMarkdown>
-          </p>
+      <div className={classes.prodctr}>
+        <div className={classes.productimg}>
+          <Image
+            src={props.product.Image.url}
+            alt={props.product.Name}
+            width={370}
+            height={370}
+            objectFit="cover"
+          />
         </div>
-        <div className={classes.categories}>
-          <div>
-            <span>Categories: </span>
-            {props.product.item_categories.map((category, idx) => (
-              <>
-                <Link href="">
-                  <a>{category.Name}</a>
-                </Link>
-                <span style={{ fontSize: "16px" }}>
-                  {idx < props.product.item_categories.length - 1 ? ", " : null}
-                </span>
-              </>
-            ))}
+        <div className={classes.summary}>
+          <h2>{props.product.Name.toLowerCase()}</h2>
+          <p className={classes.price}>{priceFormat(props.product.Price)}</p>
+          <div className={classes.intro}>
+            <p>
+              <ReactMarkdown>{props.product.Intro}</ReactMarkdown>
+            </p>
+          </div>
+          <div className={classes.categories}>
+            <div>
+              <span>Categories: </span>
+              {props.product.item_categories.map((category, idx) => (
+                <>
+                  <Link href="">
+                    <a>{category.Name}</a>
+                  </Link>
+                  <span style={{ fontSize: "16px" }}>
+                    {idx < props.product.item_categories.length - 1
+                      ? ", "
+                      : null}
+                  </span>
+                </>
+              ))}
+            </div>
           </div>
         </div>
       </div>
+      <div className={classes.description}>
+        <p>
+          <h2>Description</h2>
+          <ReactMarkdown>{props.product.Description}</ReactMarkdown>
+        </p>
+      </div>
+      <section className={classes.relatedproducts}>
+        <h2>Produits associés</h2>
+        <ul className={classes.productslist}>
+          {props.recommendedProducts.map((product) => (
+            <RelatedProduct product={product} />
+          ))}
+        </ul>
+      </section>
     </article>
   );
 }

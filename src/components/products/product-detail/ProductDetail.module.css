@@ -2,6 +2,9 @@
   margin-bottom: 20px;
   position: relative;
   float: none;
+  padding-left: 30px;
+  border-left: solid 1px #e9e9e9;
+  width: 72%;
 }
 
 .productimg {
@@ -67,6 +70,11 @@
   background-color: #d93644;
 }
 
+.prodctr {
+  display: flex;
+  flex-direction: row;
+}
+
 .price {
   font-size: 30px;
   line-height: 30px;
@@ -99,4 +107,85 @@
 
 .categories a:hover {
   color: #d93644;
+}
+
+.description {
+  margin: 1.5em 0 0;
+}
+
+.description h2 {
+  margin: 20px 0;
+  font-size: 18px;
+  font-weight: 400;
+  color: #333;
+}
+
+.relatedproducts {
+  margin-top: 70px;
+}
+
+.relatedproducts h2 {
+  margin: 0 0 15px;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 1.4;
+  color: #333;
+}
+
+.productslist {
+  margin: 0;
+  list-style: none;
+  padding: 0;
+}
+
+.listentry {
+  width: 33.33%;
+  float: left;
+  margin: 0 0 1.25rem;
+  padding: 0 0 0.625rem;
+}
+
+.productinner {
+  text-align: center;
+  position: relative;
+}
+
+.thumbnail {
+  position: relative;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0.2);
+  opacity: 0;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.overlay:hover {
+  opacity: 0.1;
+}
+
+.productname {
+  margin-bottom: 12px;
+  line-height: 1;
+}
+
+.productname h2 {
+  font-size: 14px;
+  line-height: 1.5;
+  color: #333;
+}
+
+.productname h2:hover {
+  color: #d93644;
+}
+
+.pricewrap {
+  margin-bottom: 12px;
+  line-height: 1;
 }
