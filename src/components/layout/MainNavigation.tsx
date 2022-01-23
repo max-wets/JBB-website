@@ -73,7 +73,7 @@ function MainNavigation() {
                       </a>
                     </Link>
                   </li>
-                  <li>
+                  {/* <li>
                     <Link href="#">
                       <a>
                         <Button size="sm" colorScheme="white" color="black">
@@ -81,8 +81,8 @@ function MainNavigation() {
                         </Button>
                       </a>
                     </Link>
-                  </li>
-                  <li>
+                  </li> */}
+                  {/* <li>
                     <Accordion allowToggle>
                       <AccordionItem style={{ borderWidth: 0 }}>
                         <AccordionButton
@@ -142,17 +142,17 @@ function MainNavigation() {
                         </AccordionPanel>
                       </AccordionItem>
                     </Accordion>
-                  </li>
+                  </li> */}
                   <li>
                     <Link href="/products">
                       <a>
                         <Button size="sm" colorScheme="white" color="black">
-                          <p>MA SELECTION DE PRODUITS</p>
+                          <p>PRODUITS</p>
                         </Button>
                       </a>
                     </Link>
                   </li>
-                  <li>
+                  {/* <li>
                     <Link href="#">
                       <a>
                         <Button size="sm" colorScheme="white" color="black">
@@ -160,7 +160,7 @@ function MainNavigation() {
                         </Button>
                       </a>
                     </Link>
-                  </li>
+                  </li> */}
                   <li>
                     <Link href="#">
                       <a>
@@ -238,7 +238,7 @@ function MainNavigation() {
                       </a>
                     </Link>
                   </li>
-                  <li>
+                  {/* <li>
                     <Link href="#">
                       <a>
                         <Button size="sm" colorScheme="white" color="black">
@@ -246,8 +246,8 @@ function MainNavigation() {
                         </Button>
                       </a>
                     </Link>
-                  </li>
-                  <li>
+                  </li> */}
+                  {/* <li>
                     <Menu>
                       <MenuButton
                         as={Button}
@@ -271,17 +271,17 @@ function MainNavigation() {
                         </MenuItem>
                       </MenuList>
                     </Menu>
-                  </li>
+                  </li> */}
                   <li>
                     <Link href={"/products"}>
                       <a>
                         <Button size="sm" colorScheme="white" color="black">
-                          <p>MA SELECTION DE PRODUITS</p>
+                          <p>PRODUITS</p>
                         </Button>
                       </a>
                     </Link>
                   </li>
-                  <li>
+                  {/* <li>
                     <Link href="#">
                       <a>
                         <Button size="sm" colorScheme="white" color="black">
@@ -289,7 +289,7 @@ function MainNavigation() {
                         </Button>
                       </a>
                     </Link>
-                  </li>
+                  </li> */}
                   <li>
                     <Link href="#">
                       <a>
