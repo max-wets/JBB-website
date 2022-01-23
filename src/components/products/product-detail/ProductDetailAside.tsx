@@ -39,7 +39,7 @@ function BlogAside(props: { relatedArticles }) {
   function SideBlogDetail({ article }) {
     return (
       <li>
-        <Link href="">
+        <Link href={`/blog/${article.id}`}>
           <a className={classes.imgctr}>
             <Image
               src={article.imageUrl}
@@ -51,7 +51,7 @@ function BlogAside(props: { relatedArticles }) {
           </a>
         </Link>
         <div className={classes.recentpostdetails}>
-          <Link href="">
+          <Link href={`/blog/${article.id}`}>
             <a>{article.title}</a>
           </Link>
           <div>
@@ -139,7 +139,7 @@ function BlogAside(props: { relatedArticles }) {
         </div>
         {props.relatedArticles.length > 0 ? (
           <div className={classes.sidebox}>
-            <h4 className={classes.socialtitle}>J'en parle ici</h4>
+            <h4 className={classes.socialtitle}>Articles recommandés</h4>
             <ul className={classes.sidebarlist}>
               {props.relatedArticles.map((article) => (
                 <SideBlogDetail article={article} />

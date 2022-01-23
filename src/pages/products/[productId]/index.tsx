@@ -23,7 +23,11 @@ function ProductDetailPage(
       <Container pt="50px" pb="50px" w="1200px" maxW="90%" margin="0 auto">
         <Flex>
           <ProductDetailAside relatedArticles={props.relatedArticles} />
-          <ProductDetail />
+          <ProductDetail
+            product={props.product}
+            prevNextProducts={props.prevNextProducts}
+            recommendedProducts={props.recommendedProducts}
+          />
         </Flex>
       </Container>
     </>
