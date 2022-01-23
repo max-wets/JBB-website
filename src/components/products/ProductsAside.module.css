@@ -126,6 +126,8 @@
 
 .recentarticledetails > div > div {
   display: inline-block;
+  color: #57bf6d;
+  font-size: 14px;
 }
 
 .recentarticledetails a:hover {

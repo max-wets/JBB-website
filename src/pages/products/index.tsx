@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { Container, Flex, Spinner } from "@chakra-ui/react";
 import ProductsHeading from "../../components/products/ProductsHeading";
 import { Product } from "../../components/products/ProductsList";
+import axios from "axios";
 
 function ProductsPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
   const [loadedProducts, setLoadedProducts] = useState<Product[]>([]);
@@ -93,13 +94,29 @@ function ProductsPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
 export default ProductsPage;
 
 export const getStaticProps: GetStaticProps = async () => {
+  const res = await axios.get("https://strapi-d6ef.onrender.com/items");
+  const data = res.data;
+
+  const products = data.map((article) => ({
+    id: article.id.toString(),
+    name: article.Name,
+    intro: article.Intro,
+    description: article.Description,
+    price: article.Price,
+    issueDate: article.published_at,
+    imageUrl: article.Image.url,
+    categories: article.item_categories.map((category) => {
+      return category.Name;
+    }),
+  }));
+
   interface Category {
     [category: string]: number;
   }
 
   const activeCategories = {} as Category;
-  itemsList.map((article) =>
-    article.item_categories.map((category) => {
+  products.map((article) =>
+    article.categories.map((category) => {
       activeCategories[category]
         ? (activeCategories[category] += 1)
         : (activeCategories[category] = 1);
@@ -107,7 +124,7 @@ export const getStaticProps: GetStaticProps = async () => {
   );
   return {
     props: {
-      products: itemsList,
+      products: products,
       activeCategories: activeCategories,
     },
     revalidate: 3600,

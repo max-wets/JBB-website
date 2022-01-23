@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { GetStaticProps, GetStaticPaths, InferGetStaticPropsType } from "next";
-import ProductDetail from "../../../components/products/ProductDetail";
+import ProductDetail from "../../../components/products/product-detail/ProductDetail";
 import axios from "axios";
 import { itemsList } from "../../../data/items";
 
@@ -10,6 +10,8 @@ function ProductDetailPage(
 ) {
   useEffect(() => {
     console.log("product detail:", props.product);
+    console.log("prev next products:", props.prevNextProducts);
+    console.log("recommended products:", props.recommendedProducts);
   }, []);
   return <ProductDetail />;
 }
@@ -17,9 +19,79 @@ function ProductDetailPage(
 export const getStaticProps: GetStaticProps = async (context) => {
   const pid = Number(context.params.productId);
 
+  const res = await axios.get(`https://strapi-d6ef.onrender.com/items`);
+  const data = res.data;
+
+  const product = data.filter((item) => item.id === pid)[0];
+
+  const previousProduct =
+    pid > 0 ? data.find((item) => item.id === pid - 1) : null;
+  const nextProduct =
+    pid < data.length ? data.find((item) => item.id === pid + 1) : null;
+
+  const prevNextProducts = [
+    previousProduct
+      ? {
+          id: previousProduct.id,
+          title: previousProduct.Name,
+          imageUrl: previousProduct.Image.url,
+        }
+      : null,
+    nextProduct
+      ? {
+          id: nextProduct.id,
+          title: nextProduct.Name,
+          imageUrl: nextProduct.Image.url,
+        }
+      : null,
+  ];
+
+  function getRecommendedProducts(data, product) {
+    let recommendedProducts = [];
+    // console.log("product:", product);
+    const productCategories = product.item_categories.map((category) => {
+      return category.Name;
+    });
+    function containsCategory(item) {
+      if (item.id === pid) return false;
+
+      let hasCategory = false;
+      item.item_categories.forEach((category) => {
+        if (productCategories.indexOf(category.Name) > -1) {
+          !hasCategory ? (hasCategory = true) : null;
+        }
+      });
+      return hasCategory;
+    }
+    recommendedProducts = data.filter(containsCategory);
+    // return recommendedProducts;
+
+    if (recommendedProducts.length > 3) {
+      // const slicedArticlesArray = sameCategoryArticles.slice(2);
+      recommendedProducts = recommendedProducts.slice(2);
+    } else if (recommendedProducts.length < 3) {
+      const takenIds = recommendedProducts.reduce((prev, curr) => {
+        return [...prev, curr.id];
+      }, []);
+      const availableProducts = data.filter(
+        (product) => product.id !== pid && takenIds.indexOf(product.id) < 0
+      );
+      let i = 0;
+      while (i < 3 - recommendedProducts.length) {
+        recommendedProducts.push(availableProducts[i]);
+        i++;
+      }
+    }
+    return recommendedProducts;
+  }
+
+  const recommendedProducts = getRecommendedProducts(data, product);
+
   return {
     props: {
-      product: itemsList.filter((item) => item.id === pid)[0],
+      product: product,
+      prevNextProducts: prevNextProducts,
+      recommendedProducts: recommendedProducts,
     },
   };
 };

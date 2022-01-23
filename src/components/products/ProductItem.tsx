@@ -32,8 +32,7 @@ function ProductItem(props: { product }) {
         <Link href={`/products/${props.product.id.toString()}`}>
           <a>
             <Image
-              loader={myLoader}
-              src={props.product.image}
+              src={props.product.imageUrl}
               alt={props.product.name}
               width={300}
               height={300}

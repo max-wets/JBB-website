@@ -32,7 +32,7 @@ function BlogAside(props: {
   const [priceRangeCurrentValues, setPriceRangeCurrentValues] = useState([
     0, 200,
   ]);
-  const api_url = "https://jbb-admin.herokuapp.com/";
+  // const api_url = "https://jbb-admin.herokuapp.com/";
 
   function getPriceRange(products) {
     const priceRangeArr = [];
@@ -64,13 +64,26 @@ function BlogAside(props: {
     props.setSelectedCategory(e.target.dataset.category);
   };
 
+  function priceFormat(num) {
+    let formattedNum;
+
+    if (!num.toString().includes(".")) {
+      formattedNum = num + ",00";
+    } else {
+      const splitArr = num.toString().split(".");
+      Number(splitArr[1]) < 10 ? (splitArr[1] = splitArr[1] + "0") : null;
+      formattedNum = splitArr.join(",");
+    }
+    return formattedNum + "€";
+  }
+
   function SideProductDetail({ product }) {
     return (
       <li key={product.id}>
-        <Link href="">
+        <Link href={`/products/${product.id}`}>
           <a className={classes.imgctr}>
             <Image
-              src={api_url + product.image}
+              src={product.imageUrl}
               alt={product.name}
               width="100%"
               height="100%"
@@ -79,11 +92,11 @@ function BlogAside(props: {
           </a>
         </Link>
         <div className={classes.recentarticledetails}>
-          <Link href="">
+          <Link href={`/products/${product.id}`}>
             <a>{product.name}</a>
           </Link>
           <div>
-            <div>{product.price}</div>
+            <div>{priceFormat(product.price)}</div>
           </div>
         </div>
       </li>
@@ -213,7 +226,7 @@ function BlogAside(props: {
           </div>
         </div>
         <div className={classes.sidebox}>
-          <h4 className={classes.socialtitle}>Articles récents</h4>
+          <h4 className={classes.socialtitle}>Produits récents</h4>
           <ul className={classes.sidebarlist}>
             <SideProductDetail product={props.products[0]} />
             <SideProductDetail product={props.products[1]} />

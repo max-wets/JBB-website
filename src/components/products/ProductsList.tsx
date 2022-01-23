@@ -13,7 +13,7 @@ export interface Product {
   price: number;
   description: string;
   item_categories: string[];
-  image: string;
+  imageUrl: string;
 }
 
 function ProductsList(props: { products; currentPage; setCurrentPage }) {
@@ -65,7 +65,7 @@ function ProductsList(props: { products; currentPage; setCurrentPage }) {
       </Flex>
       <Grid templateColumns="repeat(3, 1fr)" gap={6}>
         {currentData.map((product) => (
-          <GridItem w="100%" bg="gray.200">
+          <GridItem w="100%" border="1px solid #e9e9e9">
             <ProductItem product={product} />
           </GridItem>
         ))}
