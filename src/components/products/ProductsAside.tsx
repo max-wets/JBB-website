@@ -30,7 +30,7 @@ function BlogAside(props: {
 }) {
   const [priceRange, setPriceRange] = useState([]);
   const [priceRangeCurrentValues, setPriceRangeCurrentValues] = useState([
-    0, 200,
+    0, 20,
   ]);
   // const api_url = "https://jbb-admin.herokuapp.com/";
 
@@ -109,7 +109,7 @@ function BlogAside(props: {
         <div className={classes.sidebox}>
           <h4 className={classes.socialtitle}>Filtrer par prix</h4>
           <RangeSlider
-            defaultValue={[0, 300]}
+            defaultValue={[0, 20]}
             min={0}
             max={priceRange[1]}
             // step={(priceRange[1] - priceRange[0]) / 10}
