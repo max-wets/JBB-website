@@ -29,6 +29,7 @@ import { GiHamburgerMenu } from "react-icons/gi";
 
 function MainNavigation() {
   const [isLargerThan1024] = useMediaQuery("(min-width: 1024px)");
+  const [isLargerThan750] = useMediaQuery("(min-width: 750px)");
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = useRef();
 
@@ -199,24 +200,26 @@ function MainNavigation() {
                 icon={<SearchIcon w={4} h={4} />}
               />
             </div>
-            <div className={classes.rightcontainers}>
-              <Menu>
-                <MenuButton
-                  colorScheme="white"
-                  color="black"
-                  size="sm"
-                  as={Button}
-                  rightIcon={<ChevronDownIcon w={5} h={5} paddingTop={1} />}
-                  className={classes.menuhover}
-                  // _focus={{ boxShadow: "none" }}
-                >
-                  <p style={{ fontSize: "16px" }}>SUIVRE</p>
-                </MenuButton>
-                <MenuList>
-                  <MenuItem>YOUTUBE</MenuItem>
-                </MenuList>
-              </Menu>
-            </div>
+            {isLargerThan750 ? (
+              <div className={classes.rightcontainers}>
+                <Menu>
+                  <MenuButton
+                    colorScheme="white"
+                    color="black"
+                    size="sm"
+                    as={Button}
+                    rightIcon={<ChevronDownIcon w={5} h={5} paddingTop={1} />}
+                    className={classes.menuhover}
+                    // _focus={{ boxShadow: "none" }}
+                  >
+                    <p style={{ fontSize: "16px" }}>SUIVRE</p>
+                  </MenuButton>
+                  <MenuList>
+                    <MenuItem>YOUTUBE</MenuItem>
+                  </MenuList>
+                </Menu>
+              </div>
+            ) : null}
           </div>
         </div>
       </div>

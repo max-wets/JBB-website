@@ -13,44 +13,49 @@ import {
 } from "@chakra-ui/react";
 import { AiFillYoutube, AiFillFacebook } from "react-icons/ai";
 import { BsFacebook } from "react-icons/bs";
+import { useMediaQuery } from "@chakra-ui/react";
 
 function Footer() {
+  const [isLargerThan750] = useMediaQuery("(min-width: 750px)");
+
   return (
     <footer>
       <div>
         <div className={classes.footertop}>
           <div className={classes.container}>
-            <div className={classes.footerbox}>
-              <Formik
-                initialValues={{ email: "" }}
-                onSubmit={() => console.log("email submitted")}
-              >
-                {(props) => (
-                  <Form>
-                    <Field name="email">
-                      {({ field, form }) => (
-                        <FormControl>
-                          <FormLabel htmlFor="email" />
-                          <InputGroup size="md">
-                            <Input
-                              {...field}
-                              variant="filled"
-                              id="email"
-                              placeholder="Saisissez votre adresse mail ici"
-                            />
-                            <InputRightElement width="4.5rem">
-                              <Button colorScheme="blackAlpha" type="submit">
-                                Envoyer
-                              </Button>
-                            </InputRightElement>
-                          </InputGroup>
-                        </FormControl>
-                      )}
-                    </Field>
-                  </Form>
-                )}
-              </Formik>
-            </div>
+            {isLargerThan750 ? (
+              <div className={classes.footerbox}>
+                <Formik
+                  initialValues={{ email: "" }}
+                  onSubmit={() => console.log("email submitted")}
+                >
+                  {(props) => (
+                    <Form>
+                      <Field name="email">
+                        {({ field, form }) => (
+                          <FormControl>
+                            <FormLabel htmlFor="email" />
+                            <InputGroup size="md">
+                              <Input
+                                {...field}
+                                variant="filled"
+                                id="email"
+                                placeholder="Saisissez votre adresse mail ici"
+                              />
+                              <InputRightElement width="4.5rem">
+                                <Button colorScheme="blackAlpha" type="submit">
+                                  Envoyer
+                                </Button>
+                              </InputRightElement>
+                            </InputGroup>
+                          </FormControl>
+                        )}
+                      </Field>
+                    </Form>
+                  )}
+                </Formik>
+              </div>
+            ) : null}
             <div className={classes.footerbox}>
               <div>
                 <Link href="">

@@ -95,7 +95,7 @@ function Header() {
                       </a>
                     </Link>
                   </li>
-                  <li>
+                  {/* <li>
                     <Link href="#">
                       <a>
                         <Button size="sm" colorScheme="white" color="black">
@@ -103,8 +103,8 @@ function Header() {
                         </Button>
                       </a>
                     </Link>
-                  </li>
-                  <li>
+                  </li> */}
+                  {/* <li>
                     <Accordion allowToggle>
                       <AccordionItem style={{ borderWidth: 0 }}>
                         <AccordionButton
@@ -164,17 +164,17 @@ function Header() {
                         </AccordionPanel>
                       </AccordionItem>
                     </Accordion>
-                  </li>
+                  </li> */}
                   <li>
                     <Link href={"/products"}>
                       <a>
                         <Button size="sm" colorScheme="white" color="black">
-                          <p>MA SELECTION DE PRODUITS</p>
+                          <p>PRODUITS</p>
                         </Button>
                       </a>
                     </Link>
                   </li>
-                  <li>
+                  {/* <li>
                     <Link href="#">
                       <a>
                         <Button size="sm" colorScheme="white" color="black">
@@ -182,7 +182,7 @@ function Header() {
                         </Button>
                       </a>
                     </Link>
-                  </li>
+                  </li> */}
                   <li>
                     <Link href="#">
                       <a>
@@ -210,7 +210,7 @@ function Header() {
                     </a>
                   </Link>
                 </li>
-                <li>
+                {/* <li>
                   <Link href="#">
                     <a>
                       <Button size="sm" colorScheme="white" color="black">
@@ -218,8 +218,8 @@ function Header() {
                       </Button>
                     </a>
                   </Link>
-                </li>
-                <li>
+                </li> */}
+                {/* <li>
                   <Menu>
                     <MenuButton
                       as={Button}
@@ -243,17 +243,17 @@ function Header() {
                       </MenuItem>
                     </MenuList>
                   </Menu>
-                </li>
+                </li> */}
                 <li>
                   <Link href="#">
                     <a>
                       <Button size="sm" colorScheme="white" color="black">
-                        <p>MA SELECTION DE PRODUITS</p>
+                        <p>PRODUITS</p>
                       </Button>
                     </a>
                   </Link>
                 </li>
-                <li>
+                {/* <li>
                   <Link href="#">
                     <a>
                       <Button size="sm" colorScheme="white" color="black">
@@ -261,7 +261,7 @@ function Header() {
                       </Button>
                     </a>
                   </Link>
-                </li>
+                </li> */}
                 <li>
                   <Link href="#">
                     <a>

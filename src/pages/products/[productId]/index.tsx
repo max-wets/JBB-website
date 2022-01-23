@@ -7,10 +7,13 @@ import ProductDetailAside from "../../../components/products/product-detail/Prod
 import axios from "axios";
 import { itemsList } from "../../../data/items";
 import { Container, Flex, Spinner } from "@chakra-ui/react";
+import { useMediaQuery } from "@chakra-ui/react";
 
 function ProductDetailPage(
   props: InferGetStaticPropsType<typeof getStaticProps>
 ) {
+  const [isLargerThan950] = useMediaQuery("(min-width: 950px)");
+
   useEffect(() => {
     console.log("product detail:", props.product);
     console.log("prev next products:", props.prevNextProducts);
@@ -22,7 +25,9 @@ function ProductDetailPage(
       <ProductDetailHeading name={props.product.Name} />
       <Container pt="50px" pb="50px" w="1200px" maxW="90%" margin="0 auto">
         <Flex>
-          <ProductDetailAside relatedArticles={props.relatedArticles} />
+          {isLargerThan950 ? (
+            <ProductDetailAside relatedArticles={props.relatedArticles} />
+          ) : null}
           <ProductDetail
             product={props.product}
             prevNextProducts={props.prevNextProducts}

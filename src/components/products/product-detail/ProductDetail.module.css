@@ -7,6 +7,19 @@
   width: 72%;
 }
 
+@media only screen and (max-width: 950px) {
+  .entrycontent {
+    width: 100%;
+    padding-left: 0px;
+    border-left-color: white;
+  }
+}
+
+.prodctr {
+  display: flex;
+  flex-direction: row;
+}
+
 .productimg {
   position: relative;
   float: left;
@@ -18,6 +31,18 @@
   float: right;
   width: 44%;
   margin-bottom: 36px;
+}
+
+@media only screen and (max-width: 600px) {
+  .productimg,
+  .summary {
+    float: none;
+    width: 100%;
+  }
+
+  .prodctr {
+    flex-direction: column;
+  }
 }
 
 .summary h2 {
@@ -34,6 +59,7 @@
   position: absolute;
   top: 0;
   right: 0;
+  z-index: 3;
 }
 
 .prevnextctr ul {
@@ -68,11 +94,6 @@
 .prevnextctr ul li a:hover {
   color: white;
   background-color: #d93644;
-}
-
-.prodctr {
-  display: flex;
-  flex-direction: row;
 }
 
 .price {

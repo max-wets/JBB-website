@@ -62,24 +62,28 @@ function ProductDetail(props: {
     <article className={classes.entrycontent}>
       <div className={classes.prevnextctr}>
         <ul>
-          <li>
-            <Link href={`/blog/${props.prevNextProducts[0].id}`}>
-              <a>
-                <Tooltip label={props.prevNextProducts[0].title}>
-                  <ChevronLeftIcon w={5} h={5} />
-                </Tooltip>
-              </a>
-            </Link>
-          </li>
-          <li>
-            <Link href={`/blog/${props.prevNextProducts[1].id}`}>
-              <a>
-                <Tooltip label={props.prevNextProducts[1].title}>
-                  <ChevronRightIcon w={5} h={5} />
-                </Tooltip>
-              </a>
-            </Link>
-          </li>
+          {props.prevNextProducts[0] ? (
+            <li>
+              <Link href={`/products/${props.prevNextProducts[0].id}`}>
+                <a>
+                  <Tooltip label={props.prevNextProducts[0].title}>
+                    <ChevronLeftIcon w={5} h={5} />
+                  </Tooltip>
+                </a>
+              </Link>
+            </li>
+          ) : null}
+          {props.prevNextProducts[1] ? (
+            <li>
+              <Link href={`/products/${props.prevNextProducts[1].id}`}>
+                <a>
+                  <Tooltip label={props.prevNextProducts[1].title}>
+                    <ChevronRightIcon w={5} h={5} />
+                  </Tooltip>
+                </a>
+              </Link>
+            </li>
+          ) : null}
         </ul>
       </div>
       <div className={classes.prodctr}>
