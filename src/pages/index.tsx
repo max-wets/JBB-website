@@ -1,10 +1,8 @@
+import HomeComponent from "../components/home/HomeComponent";
+
 const Home = (props) => {
   // const number = useRandomNumber();
-  return (
-    <div style={{ height: "100vh" }}>
-      <h1>Home Page</h1>
-    </div>
-  );
+  return <HomeComponent />;
 };
 
 export default Home;
