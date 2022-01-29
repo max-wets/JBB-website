@@ -1,7 +1,7 @@
 import classes from "./ProductsList.module.css";
 import ProductItem from "./ProductItem";
 import Pagination from "../pagination/Pagination";
-import { Grid, GridItem, Flex } from "@chakra-ui/react";
+import { Grid, GridItem, Flex, useMediaQuery } from "@chakra-ui/react";
 import { useEffect, useMemo, useState } from "react";
 
 let PageSize = 12;
@@ -16,7 +16,12 @@ export interface Product {
   imageUrl: string;
 }
 
-function ProductsList(props: { products; currentPage; setCurrentPage }) {
+function ProductsList(props: {
+  products;
+  currentPage;
+  setCurrentPage;
+  isLargerThan500;
+}) {
   const [pageSize, setPageSize] = useState(PageSize);
 
   useEffect(() => {
@@ -63,7 +68,12 @@ function ProductsList(props: { products; currentPage; setCurrentPage }) {
           pageSize={PageSize}
         />
       </Flex>
-      <Grid templateColumns="repeat(3, 1fr)" gap={6}>
+      <Grid
+        templateColumns={
+          props.isLargerThan500 ? "repeat(3, 1fr)" : "repeat(1, 1fr)"
+        }
+        gap={6}
+      >
         {currentData.map((product) => (
           <GridItem w="100%" border="1px solid #e9e9e9">
             <ProductItem product={product} />

@@ -3,7 +3,7 @@ import { itemsList } from "../../data/items";
 import ProductsList from "../../components/products/ProductsList";
 import ProductsAside from "../../components/products/ProductsAside";
 import { useEffect, useState } from "react";
-import { Container, Flex, Spinner } from "@chakra-ui/react";
+import { Container, Flex, Spinner, useMediaQuery } from "@chakra-ui/react";
 import ProductsHeading from "../../components/products/ProductsHeading";
 import { Product } from "../../components/products/ProductsList";
 import axios from "axios";
@@ -14,6 +14,8 @@ function ProductsPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
   const [filterRange, setFilterRange] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(null);
+  const [isLargerThan960] = useMediaQuery("(min-width: 960px)");
+  const [isLargerThan500] = useMediaQuery("(min-width: 500px)");
 
   const sortingFn = (a, b) => {
     const aDate = new Date(a.issueDate);
@@ -64,11 +66,15 @@ function ProductsPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
     <>
       <ProductsHeading />
       <Container pt="50px" pb="50px" w="1200px" maxW="90%" margin="0 auto">
-        <Flex display={loading ? "none" : "flex"}>
+        <Flex
+          display={loading ? "none" : "flex"}
+          flexDirection={isLargerThan960 ? "row" : "column"}
+        >
           <ProductsList
             products={loadedProducts}
             currentPage={currentPage}
             setCurrentPage={setCurrentPage}
+            isLargerThan500={isLargerThan500}
           />
           <ProductsAside
             products={props.products}

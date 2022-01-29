@@ -2,7 +2,7 @@ import classes from "./BlogArticleDetail.module.css";
 import { Article } from "../BlogArticleItem";
 import Image from "next/image";
 import Link from "next/link";
-import { Icon, Button } from "@chakra-ui/react";
+import { Icon, useMediaQuery } from "@chakra-ui/react";
 import { BiUser } from "react-icons/bi";
 import { FiClock } from "react-icons/fi";
 import { BsFolder } from "react-icons/bs";
@@ -34,6 +34,7 @@ function BlogArticleDetail(props: {
 }) {
   // const api_url = "https://jbb-admin.herokuapp.com";
   const router = useRouter();
+  const [isLargerThan750] = useMediaQuery("(min-width: 750px)");
 
   const newDate = (date) => {
     const mois = [
@@ -186,8 +187,8 @@ function BlogArticleDetail(props: {
                     <Image
                       src={article.imageUrl}
                       alt={article.title}
-                      width={239}
-                      height={124}
+                      width={isLargerThan750 ? 239 : 667}
+                      height={isLargerThan750 ? 124 : 347}
                       objectFit="cover"
                     />
                     <span className={classes.overlay}></span>

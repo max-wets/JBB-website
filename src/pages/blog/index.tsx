@@ -5,13 +5,14 @@ import { GetStaticProps, InferGetStaticPropsType } from "next";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Article } from "../../components/blog/BlogArticleItem";
-import { Container, Flex, Spinner } from "@chakra-ui/react";
+import { Container, Flex, Spinner, useMediaQuery } from "@chakra-ui/react";
 import { BsTwitter } from "react-icons/bs";
 
 function BlogPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
   const [loadedArticles, setLoadedArticles] = useState<Article[]>([]);
   const [selectedCategory, setSelectedCategory] = useState("Toutes");
   const [currentPage, setCurrentPage] = useState(null);
+  const [isLargerThan960] = useMediaQuery("(min-width: 960px)");
 
   const sortingFn = (a, b) => {
     const aDate = new Date(a.issueDate);
@@ -49,7 +50,10 @@ function BlogPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
       <BlogHeading />
       <Container pt="50px" pb="50px" w="1200px" maxW="90%" margin="0 auto">
         <>
-          <Flex display={currentPage === null ? "none" : "flex"}>
+          <Flex
+            display={currentPage === null ? "none" : "flex"}
+            flexDirection={isLargerThan960 ? "row" : "column"}
+          >
             <BlogArticlesList
               articles={loadedArticles}
               currentPage={currentPage}

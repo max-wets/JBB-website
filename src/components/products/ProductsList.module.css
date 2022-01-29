@@ -12,6 +12,12 @@
   border-color: #f1f1f1;
 }
 
+@media only screen and (max-width: 960px) {
+  .productlist {
+    width: 100%;
+  }
+}
+
 .paginationbar {
   width: 100%;
   display: flex;

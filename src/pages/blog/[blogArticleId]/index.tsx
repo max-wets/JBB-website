@@ -4,10 +4,12 @@ import { GetStaticProps, GetStaticPaths, InferGetStaticPropsType } from "next";
 import BlogArticleDetail from "../../../components/blog/blog-detail/BlogArticleDetail";
 import BlogArticleDetailHeading from "../../../components/blog/blog-detail/BlogArticleDetailHeading";
 import BlogArticleAside from "../../../components/blog/blog-detail/BlogArticleAside";
-import { Container, Flex, Spinner } from "@chakra-ui/react";
+import { Container, Flex, useMediaQuery } from "@chakra-ui/react";
 import axios from "axios";
 
 function BlogDetailPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
+  const [isLargerThan960] = useMediaQuery("(min-width: 960px)");
+
   useEffect(() => {
     console.log("Blog detail page article data:", props.article);
     console.log("Blog detail page prevNext data:", props.prevNextArticles);
@@ -22,7 +24,7 @@ function BlogDetailPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
     <>
       <BlogArticleDetailHeading title={props.article.title} />
       <Container pt="50px" pb="50px" w="1200px" maxW="90%" margin="0 auto">
-        <Flex>
+        <Flex flexDirection={isLargerThan960 ? "row" : "column"}>
           <BlogArticleDetail
             article={props.article}
             prevNextArticles={props.prevNextArticles}

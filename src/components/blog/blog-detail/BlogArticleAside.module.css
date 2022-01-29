@@ -5,6 +5,12 @@
   width: 28%;
 }
 
+@media only screen and (max-width: 960px) {
+  .sidebarctn {
+    width: 100%;
+  }
+}
+
 .sidebarinner {
   display: flex;
   flex-direction: column;
