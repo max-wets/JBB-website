@@ -84,3 +84,48 @@
   text-shadow: 1px 1px 1px #494848;
   position: relative;
 }
+
+.recentproducts {
+  padding: 70px 0 50px;
+  position: relative;
+}
+
+.rpcolumn {
+  max-width: 1220px;
+  display: flex;
+  margin-right: auto;
+  margin-left: auto;
+  position: relative;
+}
+
+.rprow {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+
+.rpheading,
+.rpdividerctr {
+  text-align: center;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.rpheading h2 {
+  color: #212121;
+  font-size: 30px;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.rpdivider div {
+  width: 8%;
+  margin: 0 auto;
+  border-top: 1px solid gray;
+}
+
+.productsctr {
+  width: 100%;
+}
