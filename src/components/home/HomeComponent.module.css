@@ -85,12 +85,14 @@
   position: relative;
 }
 
-.recentproducts {
+.recentproducts,
+.recentarticles {
   padding: 70px 0 50px;
   position: relative;
 }
 
-.rpcolumn {
+.rpcolumn,
+.racolumn {
   max-width: 1220px;
   display: flex;
   margin-right: auto;
@@ -98,7 +100,8 @@
   position: relative;
 }
 
-.rprow {
+.rprow,
+.rarow {
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -106,13 +109,16 @@
 }
 
 .rpheading,
-.rpdividerctr {
+.rpdividerctr,
+.raheading,
+.radividerctr {
   text-align: center;
   margin-bottom: 20px;
   width: 100%;
 }
 
-.rpheading h2 {
+.rpheading h2,
+.raheading h2 {
   color: #212121;
   font-size: 30px;
   font-weight: 400;
@@ -120,12 +126,100 @@
   letter-spacing: 1px;
 }
 
-.rpdivider div {
+.rpdivider div,
+.radivider div {
   width: 8%;
   margin: 0 auto;
   border-top: 1px solid gray;
 }
 
-.productsctr {
+.productsctr,
+.articlesctr {
   width: 100%;
+}
+
+.articlectr {
+  text-align: center;
+}
+
+.thumbnail {
+  position: relative;
+  margin-bottom: 25px;
+}
+
+.details {
+  padding: 0 20px 20px;
+}
+
+.meta {
+  color: #aaa;
+  background-color: #f0eff0;
+  list-style: none;
+  margin: 0;
+  padding: 5px 20px;
+  font-size: 13px;
+  display: inline-block;
+  width: 100%;
+}
+
+.meta li:first-child {
+  float: left;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  text-align: center;
+  transition: all 0.3s ease-in-out;
+  z-index: 2;
+}
+
+.overlaybtn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -16px;
+  margin-left: -75px;
+  min-width: 150px;
+  padding: 10px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #fff;
+  border: 1px solid #fff;
+  z-index: 2;
+  border-radius: 30px;
+  transition: all 0.3s ease;
+}
+
+.overlay:hover {
+  opacity: 1;
+}
+
+.overlaybtn:hover {
+  background-color: #fff;
+  color: #333;
+}
+
+.details h2 {
+  font-size: 18px;
+  font-weight: 400;
+  margin: 0 0 15px;
+  color: #333;
+  line-height: 1.4;
+  transition: all 0.2s ease;
+}
+
+.details h2:hover {
+  color: #d93644;
 }
