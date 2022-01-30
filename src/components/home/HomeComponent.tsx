@@ -9,6 +9,10 @@ import { FiClock } from "react-icons/fi";
 import { BiComment } from "react-icons/bi";
 
 function HomeComponent(props: { recentProducts; recentArticles }) {
+  const [isLargerThan1000] = useMediaQuery("(min-width: 1000px)");
+  const [isLargerThan750] = useMediaQuery("(min-width: 750px)");
+  const [isLargerThan480] = useMediaQuery("(min-width: 480px)");
+
   useEffect(() => {
     console.log("recent products:", props.recentProducts);
     console.log("recent articles:", props.recentArticles);
@@ -129,7 +133,16 @@ function HomeComponent(props: { recentProducts; recentArticles }) {
                   </div>
                 </div>
                 <div className={classes.productsctr}>
-                  <Grid templateColumns="repeat(4, 1fr)" gap={4}>
+                  <Grid
+                    templateColumns={
+                      isLargerThan750
+                        ? "repeat(4, 1fr)"
+                        : isLargerThan480
+                        ? "repeat(3, 1fr)"
+                        : "repeat(1, 1fr)"
+                    }
+                    gap={4}
+                  >
                     {props.recentProducts.map((product) => (
                       <GridItem w="100%" border="1px solid #e9e9e9">
                         <ProductItem product={product} />
@@ -152,7 +165,16 @@ function HomeComponent(props: { recentProducts; recentArticles }) {
                   </div>
                 </div>
                 <div className={classes.articlesctr}>
-                  <Grid templateColumns="repeat(3, 1fr)" gap={4}>
+                  <Grid
+                    templateColumns={
+                      isLargerThan1000
+                        ? "repeat(3, 1fr)"
+                        : isLargerThan750
+                        ? "repeat(2, 2fr)"
+                        : "repeat(1, 1fr)"
+                    }
+                    gap={4}
+                  >
                     {props.recentArticles.map((article) => (
                       <GridItem
                         w="100%"
