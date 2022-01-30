@@ -192,13 +192,17 @@ function MainNavigation() {
         >
           <div className={classes.secondaryarea}>
             <div className={classes.rightcontainers}>
-              <IconButton
-                aria-label="Search database"
-                colorScheme="white"
-                color="black"
-                size="sm"
-                icon={<SearchIcon w={4} h={4} />}
-              />
+              <Link href={"/search"}>
+                <a>
+                  <IconButton
+                    aria-label="Search database"
+                    colorScheme="white"
+                    color="black"
+                    size="sm"
+                    icon={<SearchIcon w={4} h={4} />}
+                  />
+                </a>
+              </Link>
             </div>
             {isLargerThan750 ? (
               <div className={classes.rightcontainers}>

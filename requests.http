@@ -26,3 +26,8 @@ GET https://strapi-d6ef.onrender.com/articles/2
 GET https://jbb-admin.herokuapp.com/uploads/bb_glow_2a922f8623.jpeg
 
 
+### Feed algolia products search index
+GET http://localhost:3000/api/products-index
+
+### Feed algolia articles search index
+GET http://localhost:3000/api/articles-index
