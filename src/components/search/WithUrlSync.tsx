@@ -13,6 +13,8 @@ const WithUrlSync = (App) => {
     qs.parse(window.location.search.slice(1))
   );
 
+  const { setTimeout, clearTimeout } = window;
+
   const onPopState = (state) => setSearchState(state || null);
 
   useEffect(() => {
@@ -24,7 +26,10 @@ const WithUrlSync = (App) => {
   }, []);
 
   const onSearchStateChange = (searchState) => {
-    const debouncedSetState = setTimeout(() => {
+    let debouncedSetState;
+    clearTimeout(debouncedSetState);
+
+    debouncedSetState = setTimeout(() => {
       window.history.pushState(
         searchState,
         null,
