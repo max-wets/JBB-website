@@ -31,3 +31,27 @@ GET http://localhost:3000/api/products-index
 
 ### Feed algolia articles search index
 GET http://localhost:3000/api/articles-index
+
+
+######## AUTHENTICATION ########
+### Create user
+POST https://strapi-d6ef.onrender.com/auth/local/register
+Content-Type: application/json
+
+{
+    "username": "Max",
+    "identifier": "wetsmaxime@gmail.com",
+    "password": "max123"
+}
+
+### Sign in as a registered user
+POST https://strapi-d6ef.onrender.com/auth/local
+Content-Type: application/json
+
+{
+    "identifier": "wetsmaxime@gmail.com",
+    "password": "max123"
+}
+
+### Get users
+GET https://strapi-d6ef.onrender.com/users
