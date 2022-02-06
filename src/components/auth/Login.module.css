@@ -1,0 +1,105 @@
+.container {
+  padding-top: 50px;
+  padding-bottom: 50px;
+  width: 1200px;
+  margin: 0 auto;
+}
+
+@media only screen and (max-width: 959px) {
+  .container {
+    width: 90%;
+  }
+}
+
+.contentarea {
+  margin-bottom: 40px;
+  position: relative;
+  width: 100%;
+  float: left;
+}
+
+.heading {
+  text-align: center;
+  font-size: 35px;
+  margin-bottom: 35px;
+}
+
+.formwrap {
+  width: 560px;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 20px;
+  border-width: 2px;
+  border-style: solid;
+  border-color: #eaeaea;
+}
+
+.formwrap p {
+  padding: 3px 0;
+  margin: 0 0 20px;
+  width: 100%;
+}
+
+.formwrap p:nth-child(4) {
+  display: flex;
+  width: 70%;
+  font-size: 14px;
+  justify-content: flex-end;
+  padding-bottom: 15px;
+  text-align: center;
+  margin: auto;
+}
+
+.formwrap p:nth-child(4):active {
+  color: blueviolet;
+}
+
+.formwrap p:nth-child(4):hover {
+  color: #d93644;
+}
+
+.formwrap p:last-child {
+  line-height: 42px;
+  text-align: center;
+  margin: 0;
+}
+
+.formwrap p:last-child a {
+  text-decoration: underline;
+  color: blue;
+}
+
+.formwrap p:last-child a:active {
+  color: blueviolet;
+}
+
+.formwrap label {
+  display: block;
+  margin: 0 0 5px;
+}
+
+.formwrap input {
+  min-height: 40px;
+  width: 100%;
+  font-size: 14px;
+  line-height: 1.8;
+  padding: 6px 12px;
+  background-color: transparent;
+  color: #333;
+  border: 1px solid #ddd;
+}
+
+.formwrap button {
+  width: 70%;
+  display: block;
+  margin: auto;
+  padding: 8px 0;
+  background-color: #d93644;
+  color: white;
+  text-transform: uppercase;
+  transition: 0.3s;
+}
+
+.formwrap button:hover {
+  background-color: #da5762;
+}

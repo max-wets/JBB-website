@@ -298,7 +298,11 @@ function MainNavigation() {
                     <Link href="#">
                       <a>
                         <Button size="sm" colorScheme="white" color="black">
-                          <p>SE CONNECTER</p>
+                          <Link href={`/login`}>
+                            <a>
+                              <p>SE CONNECTER</p>
+                            </a>
+                          </Link>
                         </Button>
                       </a>
                     </Link>

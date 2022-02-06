@@ -184,7 +184,7 @@ function Header() {
                     </Link>
                   </li> */}
                   <li>
-                    <Link href="#">
+                    <Link href={`/login`}>
                       <a>
                         <Button size="sm" colorScheme="white" color="black">
                           <p>SE CONNECTER</p>
