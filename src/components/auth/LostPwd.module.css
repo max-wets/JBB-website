@@ -29,48 +29,12 @@
   max-width: 100%;
   margin: 0 auto;
   padding: 20px;
-  border-width: 2px;
-  border-style: solid;
-  border-color: #eaeaea;
 }
 
 .formwrap p {
   padding: 3px 0;
   margin: 0 0 20px;
   width: 100%;
-}
-
-.lostpassword {
-  display: flex;
-  width: 70%;
-  font-size: 14px;
-  justify-content: flex-end;
-  padding-bottom: 15px;
-  text-align: center;
-  margin: auto;
-}
-
-.lostpassword:active {
-  color: blueviolet;
-}
-
-.lostpassword:hover {
-  color: #d93644;
-}
-
-.formwrap p:last-child {
-  line-height: 42px;
-  text-align: center;
-  margin: 0;
-}
-
-.formwrap p:last-child a {
-  text-decoration: underline;
-  color: blue;
-}
-
-.formwrap p:last-child a:active {
-  color: blueviolet;
 }
 
 .formwrap label {

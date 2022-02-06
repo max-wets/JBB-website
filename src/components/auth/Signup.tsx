@@ -6,12 +6,12 @@ interface Errors {
   [key: string]: any;
 }
 
-function Login() {
+function Signup() {
   return (
     <div className={classes.container}>
       <div className={classes.contentarea}>
         <div className={classes.heading}>
-          <h2>Connexion</h2>
+          <h2>Inscription</h2>
         </div>
         <div className={classes.formwrap}>
           <Formik
@@ -47,17 +47,12 @@ function Login() {
                   <ErrorMessage name="password" component="div" />
                 </p>
                 <button type="submit" disabled={isSubmitting}>
-                  Se connecter
+                  S'inscrire
                 </button>
-                <p className={classes.lostpassword} style={{ width: "85%" }}>
-                  <Link href={`/login/lost-password`}>
-                    <a>Mot de passe oublié ?</a>
-                  </Link>
-                </p>
                 <p>
-                  Pas encore inscrit ?{" "}
-                  <Link href={`/signup`}>
-                    <a>S'enregistrer</a>
+                  Déjà inscrit ?{" "}
+                  <Link href={`/login`}>
+                    <a> Se connecter</a>
                   </Link>
                 </p>
               </Form>
@@ -69,4 +64,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default Signup;
