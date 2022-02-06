@@ -1,5 +1,5 @@
 .container {
-  padding-top: 50px;
+  padding-top: 30px;
   padding-bottom: 50px;
   width: 1200px;
   margin: 0 auto;
@@ -16,12 +16,6 @@
   position: relative;
   width: 100%;
   float: left;
-}
-
-.heading {
-  text-align: center;
-  font-size: 35px;
-  margin-bottom: 35px;
 }
 
 .formwrap {

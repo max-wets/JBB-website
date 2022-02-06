@@ -10,9 +10,6 @@ function Signup() {
   return (
     <div className={classes.container}>
       <div className={classes.contentarea}>
-        <div className={classes.heading}>
-          <h2>Mot de passe perdu</h2>
-        </div>
         <div className={classes.formwrap}>
           <p>
             Vous avez oublié votre mot de passe ? Veuillez entrer votre adresse
