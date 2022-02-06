@@ -6,7 +6,7 @@ interface Errors {
   [key: string]: any;
 }
 
-function Login() {
+function Login({ crsfToken }) {
   return (
     <div className={classes.container}>
       <div className={classes.contentarea}>
@@ -27,16 +27,27 @@ function Login() {
               }
               return errors;
             }}
-            onSubmit={(values, { setSubmitting }) => {
-              setTimeout(() => {
-                alert(JSON.stringify(values, null, 2));
-                setSubmitting(false);
-              }, 400);
+            onSubmit={async (values, { setSubmitting }) => {
+              const res = await fetch("/api/auth/callback/credentials", {
+                method: "POST",
+                body: JSON.stringify(values, null, 2),
+              });
+              // setTimeout(() => {
+              //   alert(JSON.stringify(values, null, 2));
+              //   setSubmitting(false);
+              // }, 400);
+              console.log(res);
+              setSubmitting(false);
             }}
           >
             {({ isSubmitting }) => (
               <Form>
                 <p>
+                  <input
+                    name="crsfToken"
+                    type="hidden"
+                    defaultValue={crsfToken}
+                  />
                   <label htmlFor="email">Email</label>
                   <Field type="email" name="email" />
                   <ErrorMessage name="email" component="div" />

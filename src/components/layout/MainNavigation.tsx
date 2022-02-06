@@ -298,7 +298,7 @@ function MainNavigation() {
                     <Link href="#">
                       <a>
                         <Button size="sm" colorScheme="white" color="black">
-                          <Link href={`/login`}>
+                          <Link href={`/auth/credentials-sign`}>
                             <a>
                               <p>SE CONNECTER</p>
                             </a>

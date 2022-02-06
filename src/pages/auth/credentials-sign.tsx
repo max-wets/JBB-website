@@ -2,7 +2,7 @@ import Login from "../../components/auth/Login";
 import LoginHeading from "../../components/auth/LoginHeading";
 import { getCsrfToken } from "next-auth/react";
 
-function LoginPage(props: { crsfToken }) {
+function SignInPage(props: { crsfToken }) {
   return (
     <>
       <LoginHeading />
@@ -11,7 +11,7 @@ function LoginPage(props: { crsfToken }) {
   );
 }
 
-export default LoginPage;
+export default SignInPage;
 
 export async function getServerSideProps(context) {
   return {
