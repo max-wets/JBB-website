@@ -25,9 +25,9 @@ const options = {
           headers: { "Content-Type": "application/json" },
         });
         const user = await res.json();
-        console.log("back end user:", user);
 
         if (res.ok && user) {
+          console.log("back end user:", user);
           return user;
         }
 
