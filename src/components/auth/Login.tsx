@@ -1,12 +1,18 @@
 import classes from "./Login.module.css";
 import Link from "next/link";
+import { useState } from "react";
+import { useRouter } from "next/router";
 import { Field, Form, Formik, ErrorMessage } from "formik";
+import { signIn, getCsrfToken } from "next-auth/react";
 
 interface Errors {
   [key: string]: any;
 }
 
 function Login({ crsfToken }) {
+  const router = useRouter();
+  const [error, setError] = useState(null);
+
   return (
     <div className={classes.container}>
       <div className={classes.contentarea}>
@@ -28,26 +34,30 @@ function Login({ crsfToken }) {
               return errors;
             }}
             onSubmit={async (values, { setSubmitting }) => {
-              const res = await fetch("/api/auth/callback/credentials", {
-                method: "POST",
-                body: JSON.stringify(values, null, 2),
+              const res = await signIn("credentials", {
+                redirect: false,
+                email: values.email,
+                password: values.password,
+                callbackUrl: `${window.location.origin}`,
               });
-              // setTimeout(() => {
-              //   alert(JSON.stringify(values, null, 2));
-              //   setSubmitting(false);
-              // }, 400);
-              console.log(res);
+              if (res?.error) {
+                setError(res.error);
+              } else {
+                setError(null);
+              }
+              if (res.url) router.push(res.url);
               setSubmitting(false);
             }}
           >
-            {({ isSubmitting }) => (
-              <Form>
+            {(formik) => (
+              <form onSubmit={formik.handleSubmit}>
                 <p>
                   <input
                     name="crsfToken"
                     type="hidden"
                     defaultValue={crsfToken}
                   />
+                  <p>{error}</p>
                   <label htmlFor="email">Email</label>
                   <Field type="email" name="email" />
                   <ErrorMessage name="email" component="div" />
@@ -57,8 +67,10 @@ function Login({ crsfToken }) {
                   <Field type="password" name="password" />
                   <ErrorMessage name="password" component="div" />
                 </p>
-                <button type="submit" disabled={isSubmitting}>
-                  Se connecter
+                <button type="submit">
+                  {formik.isSubmitting
+                    ? "Veuillez patienter..."
+                    : "Se connecter"}
                 </button>
                 <p className={classes.lostpassword} style={{ width: "85%" }}>
                   <Link href={`/login/lost-password`}>
@@ -71,7 +83,7 @@ function Login({ crsfToken }) {
                     <a>S'enregistrer</a>
                   </Link>
                 </p>
-              </Form>
+              </form>
             )}
           </Formik>
         </div>

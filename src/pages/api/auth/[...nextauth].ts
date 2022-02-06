@@ -35,9 +35,9 @@ const options = {
       },
     }),
   ],
-  //   pages: {
-  //     signIn: "/auth/credentials-sign",
-  //   },
+  pages: {
+    signIn: "/auth/signin",
+  },
   session: {
     jwt: true,
     maxAge: 30 * 24 * 60 * 60, // 30 days
