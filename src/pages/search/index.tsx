@@ -1,5 +1,7 @@
+import SearchApp from "../../components/search/SearchApp";
+
 const SearchPage = () => {
-  return <h1>Search page</h1>;
+  return <SearchApp />;
 };
 
 export default SearchPage;

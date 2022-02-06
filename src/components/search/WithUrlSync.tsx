@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback } from "react";
 import qs from "qs";
 
 const updateAfter = 700;
@@ -9,9 +9,11 @@ const searchStateToUrl = (searchState: any): string | URL => {
 };
 
 const WithUrlSync = (App) => {
-  const [searchState, setSearchState] = useState(
-    qs.parse(window.location.search.slice(1))
-  );
+  const [searchState, setSearchState] = useState(undefined);
+
+  useEffect(() => {
+    setSearchState(qs.parse(window.location.search.slice(1)));
+  }, []);
 
   const { setTimeout, clearTimeout } = window;
 
@@ -41,10 +43,12 @@ const WithUrlSync = (App) => {
   };
 
   return (
-    <App
+    <WithUrlSync
       searchState={searchState}
       onSearchStateChange={onSearchStateChange}
       createUrl={searchStateToUrl}
     />
   );
 };
+
+export default WithUrlSync;
