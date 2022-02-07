@@ -170,7 +170,10 @@ export const getStaticProps: GetStaticProps = async (context) => {
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const paths = itemsList.map((item) => ({
+  const res = await axios.get(`https://strapi-d6ef.onrender.com/items`);
+  const data = res.data;
+
+  const paths = data.map((item) => ({
     params: { productId: item.id.toString() },
   }));
 
