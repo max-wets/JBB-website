@@ -26,6 +26,7 @@ import {
   ArrowRightIcon,
   ChevronRightIcon,
 } from "@chakra-ui/icons";
+import { useSession } from "next-auth/react";
 
 function BlogArticleDetail(props: {
   article: Article;
@@ -35,6 +36,13 @@ function BlogArticleDetail(props: {
   // const api_url = "https://jbb-admin.herokuapp.com";
   const router = useRouter();
   const [isLargerThan750] = useMediaQuery("(min-width: 750px)");
+  const { data: session } = useSession();
+
+  useEffect(() => {
+    if (session) {
+      console.log("user session:", session);
+    } else console.log("no user session");
+  }, []);
 
   const newDate = (date) => {
     const mois = [

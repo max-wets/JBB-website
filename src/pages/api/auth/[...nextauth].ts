@@ -26,8 +26,11 @@ const options = {
         });
         const user = await res.json();
 
+        if (!res.ok) {
+          throw new Error(user.exception);
+        }
+        // If no error and we have user data, return it
         if (res.ok && user) {
-          console.log("back end user:", user);
           return user;
         }
 
@@ -35,14 +38,36 @@ const options = {
       },
     }),
   ],
+  secret: process.env.JWT_SECRET,
   pages: {
     signIn: "/auth/signin",
   },
-  session: {
-    jwt: true,
-    maxAge: 30 * 24 * 60 * 60, // 30 days
+  callbacks: {
+    async jwt({ token, user, account }) {
+      if (account && user) {
+        console.log("token:", token);
+        console.log("user:", user);
+        console.log("account:", account);
+
+        return {
+          ...token,
+          id: user.user.id,
+          name: user.user.username,
+          email: user.user.email,
+          accessToken: user.jwt,
+        };
+      }
+
+      return token;
+    },
+
+    async session({ session, token }) {
+      session.user.accessToken = token.accessToken;
+      console.log("session:", session);
+
+      return session;
+    },
   },
-  debug: true,
 };
 
 export default (req, res) => NextAuth(req, res, options);
