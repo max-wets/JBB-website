@@ -1,16 +1,18 @@
+import classes from "./CustomSearchBox.module.css";
 import { connectSearchBox } from "react-instantsearch-dom";
 
 function SearchBox({ refine }) {
   return (
-    <form action="" role="search">
-      <label htmlFor="algolia_search">Search articles</label>
-      <input
-        id="algolia_search"
-        type="search"
-        placeholder="javascript tutorial"
-        onChange={(e) => refine(e.currentTarget.value)}
-      />
-    </form>
+    <div className={classes.searchbox}>
+      <form action="" role="search">
+        <input
+          className={classes.searchboxinput}
+          type="search"
+          placeholder="Chercher un article..."
+          onChange={(e) => refine(e.currentTarget.value)}
+        />
+      </form>
+    </div>
   );
 }
 

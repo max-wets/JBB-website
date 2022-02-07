@@ -1,3 +1,4 @@
+import classes from "./SearchApp.module.css";
 import algoliasearch from "algoliasearch";
 import { InstantSearch, SearchBox, Hits } from "react-instantsearch-dom";
 import CustomSearchBox from "./CustomSearchBox";
@@ -12,7 +13,10 @@ export default function Search() {
   return (
     <>
       <InstantSearch searchClient={searchClient} indexName="jbb_articles">
-        <CustomSearchBox />
+        <header className={classes.header}>
+          <p className={classes.headertitle}>Que cherchez-vous ?</p>
+          <CustomSearchBox />
+        </header>
         <CustomHits />
       </InstantSearch>
     </>

@@ -1,0 +1,19 @@
+.searchbox {
+  height: 64px;
+  width: 740px;
+}
+
+.searchbox form {
+  position: relative;
+}
+
+.searchboxinput {
+  background-color: #fff;
+  color: #333;
+  border-radius: 8px;
+  box-shadow: 0 4px 48px 0 rgb(0 0 0 / 20%);
+  min-height: 54px;
+  width: 100%;
+  height: 64px;
+  padding: 4px 48px 0 64px;
+}
