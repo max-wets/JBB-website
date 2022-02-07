@@ -137,7 +137,7 @@ function HomeComponent(props: { recentProducts; recentArticles }) {
                     templateColumns={
                       isLargerThan750
                         ? "repeat(4, 1fr)"
-                        : isLargerThan480
+                        : isLargerThan480 && !isLargerThan750
                         ? "repeat(3, 1fr)"
                         : "repeat(1, 1fr)"
                     }
@@ -169,7 +169,7 @@ function HomeComponent(props: { recentProducts; recentArticles }) {
                     templateColumns={
                       isLargerThan1000
                         ? "repeat(3, 1fr)"
-                        : isLargerThan750
+                        : isLargerThan750 && !isLargerThan1000
                         ? "repeat(2, 2fr)"
                         : "repeat(1, 1fr)"
                     }
