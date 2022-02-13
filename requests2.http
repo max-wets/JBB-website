@@ -1,0 +1,17 @@
+### Get item categories list
+GET https://jbbeauty-cms.herokuapp.com/api/item-categories
+
+### Get items list 
+GET https://jbbeauty-cms.herokuapp.com/api/items?populate=%2A
+
+### Get a given item
+GET https://jbbeauty-cms.herokuapp.com/api/items/1?populate=%2A
+
+### Get article categories list
+GET https://jbbeauty-cms.herokuapp.com/api/article-categories
+
+### Get articles list
+GET https://jbbeauty-cms.herokuapp.com/api/articles?populate=%2A
+
+### Get a given article
+GET https://jbbeauty-cms.herokuapp.com/api/articles/4?populate=%2A
