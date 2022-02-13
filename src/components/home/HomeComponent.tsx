@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import bgPicture from "../../public/home/bg-picture.jpg";
 import ProductItem from "../products/ProductItem";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Grid, GridItem, useMediaQuery, Tooltip, Icon } from "@chakra-ui/react";
 import { FiClock } from "react-icons/fi";
 import { BiComment } from "react-icons/bi";
@@ -11,12 +11,25 @@ import { BiComment } from "react-icons/bi";
 function HomeComponent(props: { recentProducts; recentArticles }) {
   const [isLargerThan1000] = useMediaQuery("(min-width: 1000px)");
   const [isLargerThan750] = useMediaQuery("(min-width: 750px)");
-  const [isLargerThan480] = useMediaQuery("(min-width: 480px)");
+  const [serverRendering, setServerRendering] = useState(true);
 
   useEffect(() => {
     console.log("recent products:", props.recentProducts);
     console.log("recent articles:", props.recentArticles);
+    setServerRendering(false);
   }, []);
+
+  function determineItemGridDisplay() {
+    if (isLargerThan1000) return "repeat(4, 1fr)";
+    if (isLargerThan750) return "repeat(3, 1fr)";
+    return "repeat(1, 1fr)";
+  }
+
+  function determineArticleGridDisplay() {
+    if (isLargerThan1000) return "repeat(3, 1fr)";
+    if (isLargerThan750) return "repeat(2, 1fr)";
+    return "repeat(1, 1fr)";
+  }
 
   const newDate = (date) => {
     const mois = [
@@ -135,11 +148,9 @@ function HomeComponent(props: { recentProducts; recentArticles }) {
                 <div className={classes.productsctr}>
                   <Grid
                     templateColumns={
-                      isLargerThan750
+                      serverRendering
                         ? "repeat(4, 1fr)"
-                        : isLargerThan480
-                        ? "repeat(3, 1fr)"
-                        : "repeat(1, 1fr)"
+                        : determineItemGridDisplay()
                     }
                     gap={4}
                   >
@@ -167,11 +178,9 @@ function HomeComponent(props: { recentProducts; recentArticles }) {
                 <div className={classes.articlesctr}>
                   <Grid
                     templateColumns={
-                      isLargerThan1000
-                        ? "repeat(3, 1fr)"
-                        : isLargerThan750
-                        ? "repeat(2, 2fr)"
-                        : "repeat(1, 1fr)"
+                      serverRendering
+                        ? "repeat(3, 3fr)"
+                        : determineArticleGridDisplay()
                     }
                     gap={4}
                   >
