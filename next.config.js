@@ -10,6 +10,9 @@ const nextConfig = {
   images: {
     domains: ["jbb-admin.herokuapp.com", "res.cloudinary.com"],
   },
+  env: {
+    publicUrl: "http://localhost:3000",
+  },
   // webpack: (config, { isServer }) => {
   //   if (!isServer) {
   //     config.node = {

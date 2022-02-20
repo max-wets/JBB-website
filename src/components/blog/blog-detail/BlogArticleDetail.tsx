@@ -28,6 +28,8 @@ import {
 } from "@chakra-ui/icons";
 import { useSession } from "next-auth/react";
 
+const APP_URL = process.env.NEXT_PUBLIC_APP_URL;
+
 function BlogArticleDetail(props: {
   article: Article;
   prevNextArticles;
@@ -39,6 +41,8 @@ function BlogArticleDetail(props: {
   const { data: session } = useSession();
 
   useEffect(() => {
+    console.log(APP_URL);
+    console.log(router);
     if (session) {
       console.log("user session:", session);
     } else console.log("no user session");
@@ -124,22 +128,35 @@ function BlogArticleDetail(props: {
         <h3>PARTAGER CET ARTICLE</h3>
         <ul>
           <li>
-            <EmailShareButton url={router.asPath}>
+            <EmailShareButton
+              url={APP_URL + router.asPath}
+              subject="Pour vous, un article de Julie Baronnie Beauty"
+              body={`Voici un article à partager sur le thème suivant: ${props.article.title} \n\n`}
+            >
               <EmailIcon size={40} borderRadius={6} />
             </EmailShareButton>
           </li>
           <li>
-            <FacebookShareButton url={router.asPath}>
+            <FacebookShareButton
+              url={APP_URL + router.asPath}
+              quote={`Voici un article à lire sur le thème suivant: ${props.article.title} \n\n`}
+            >
               <FacebookIcon size={40} borderRadius={6} />
             </FacebookShareButton>
           </li>
           <li>
-            <TwitterShareButton url={router.asPath}>
+            <TwitterShareButton
+              url={APP_URL + router.asPath}
+              title={`Voici un article à lire sur le thème suivant: ${props.article.title} \n\n`}
+            >
               <TwitterIcon size={40} borderRadius={6} />
             </TwitterShareButton>
           </li>
           <li>
-            <WhatsappShareButton url={router.asPath}>
+            <WhatsappShareButton
+              url={APP_URL + router.asPath}
+              title={`Voici un article à lire sur le thème suivant: ${props.article.title} \n\n`}
+            >
               <WhatsappIcon size={40} borderRadius={6} />
             </WhatsappShareButton>
           </li>
