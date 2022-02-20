@@ -11,11 +11,11 @@ const theme = extendTheme({
 function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   return (
     <ChakraProvider theme={theme}>
-      <Layout>
-        <SessionProvider session={session}>
+      <SessionProvider session={session}>
+        <Layout>
           <Component {...pageProps} />
-        </SessionProvider>
-      </Layout>
+        </Layout>
+      </SessionProvider>
     </ChakraProvider>
   );
 }

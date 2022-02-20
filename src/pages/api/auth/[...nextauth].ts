@@ -41,6 +41,7 @@ const options = {
   secret: process.env.JWT_SECRET,
   pages: {
     signIn: "/auth/signin",
+    error: "/auth/signin",
   },
   callbacks: {
     async jwt({ token, user, account }) {

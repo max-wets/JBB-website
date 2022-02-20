@@ -1,6 +1,6 @@
 import classes from "./MainNavigation.module.css";
 import Link from "next/link";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import {
   Icon,
   Button,
@@ -26,12 +26,15 @@ import {
 } from "@chakra-ui/react";
 import { SearchIcon, ChevronDownIcon } from "@chakra-ui/icons";
 import { GiHamburgerMenu } from "react-icons/gi";
+import { useSession } from "next-auth/react";
+import { signOut } from "next-auth/react";
 
 function MainNavigation() {
   const [isLargerThan1024] = useMediaQuery("(min-width: 1024px)");
   const [isLargerThan750] = useMediaQuery("(min-width: 750px)");
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = useRef();
+  const { data: session, status } = useSession();
 
   return (
     <header className={classes.header}>
@@ -73,76 +76,6 @@ function MainNavigation() {
                       </a>
                     </Link>
                   </li>
-                  {/* <li>
-                    <Link href="#">
-                      <a>
-                        <Button size="sm" colorScheme="white" color="black">
-                          <p>MES CODES PROMOS</p>
-                        </Button>
-                      </a>
-                    </Link>
-                  </li> */}
-                  {/* <li>
-                    <Accordion allowToggle>
-                      <AccordionItem style={{ borderWidth: 0 }}>
-                        <AccordionButton
-                          size="sm"
-                          colorScheme="white"
-                          color="black"
-                          minH="32px"
-                          _focus={{ boxShadow: "none" }}
-                          _hover={{ backgroundColor: "white" }}
-                          className={classes.menuhover}
-                        >
-                          <p>MES FORMATIONS</p>
-                          <AccordionIcon />
-                        </AccordionButton>
-                        <AccordionPanel pb={4}>
-                          <ul className={classes.accordionlist}>
-                            <li>
-                              <Link href="#">
-                                <a>
-                                  <Button
-                                    size="sm"
-                                    colorScheme="white"
-                                    color="black"
-                                  >
-                                    <p>EBOOK</p>
-                                  </Button>
-                                </a>
-                              </Link>
-                            </li>
-                            <li>
-                              <Link href="#">
-                                <a>
-                                  <Button
-                                    size="sm"
-                                    colorScheme="white"
-                                    color="black"
-                                  >
-                                    <p>FORMAT LIVRE</p>
-                                  </Button>
-                                </a>
-                              </Link>
-                            </li>
-                            <li>
-                              <Link href="#">
-                                <a>
-                                  <Button
-                                    size="sm"
-                                    colorScheme="white"
-                                    color="black"
-                                  >
-                                    <p>WEBINAR</p>
-                                  </Button>
-                                </a>
-                              </Link>
-                            </li>
-                          </ul>
-                        </AccordionPanel>
-                      </AccordionItem>
-                    </Accordion>
-                  </li> */}
                   <li>
                     <Link href="/products">
                       <a>
@@ -152,15 +85,6 @@ function MainNavigation() {
                       </a>
                     </Link>
                   </li>
-                  {/* <li>
-                    <Link href="#">
-                      <a>
-                        <Button size="sm" colorScheme="white" color="black">
-                          <p>INFORMATIONS</p>
-                        </Button>
-                      </a>
-                    </Link>
-                  </li> */}
                   <li>
                     <Link href="#">
                       <a>
@@ -242,40 +166,6 @@ function MainNavigation() {
                       </a>
                     </Link>
                   </li>
-                  {/* <li>
-                    <Link href="#">
-                      <a>
-                        <Button size="sm" colorScheme="white" color="black">
-                          <p>MES CODES PROMOS</p>
-                        </Button>
-                      </a>
-                    </Link>
-                  </li> */}
-                  {/* <li>
-                    <Menu>
-                      <MenuButton
-                        as={Button}
-                        size="sm"
-                        colorScheme="white"
-                        color="black"
-                        rightIcon={<ChevronDownIcon />}
-                        className={classes.menuhover}
-                      >
-                        <p>MES FORMATIONS</p>
-                      </MenuButton>
-                      <MenuList>
-                        <MenuItem minH="30px" ml="8px">
-                          <p>EBOOK</p>
-                        </MenuItem>
-                        <MenuItem minH="30px" ml="8px">
-                          <p>FORMAT LIVRE</p>
-                        </MenuItem>
-                        <MenuItem minH="30px" ml="8px">
-                          <p>WEBINAR</p>
-                        </MenuItem>
-                      </MenuList>
-                    </Menu>
-                  </li> */}
                   <li>
                     <Link href={"/products"}>
                       <a>
@@ -285,27 +175,25 @@ function MainNavigation() {
                       </a>
                     </Link>
                   </li>
-                  {/* <li>
-                    <Link href="#">
-                      <a>
-                        <Button size="sm" colorScheme="white" color="black">
-                          <p>INFORMATIONS</p>
-                        </Button>
-                      </a>
-                    </Link>
-                  </li> */}
                   <li>
-                    <Link href="#">
-                      <a>
-                        <Button size="sm" colorScheme="white" color="black">
-                          <Link href={`/auth/signin`}>
-                            <a>
-                              <p>SE CONNECTER</p>
-                            </a>
-                          </Link>
-                        </Button>
-                      </a>
-                    </Link>
+                    {status === "authenticated" ? (
+                      <Button
+                        size="sm"
+                        colorScheme="white"
+                        color="black"
+                        onClick={() => signOut({ redirect: false })}
+                      >
+                        <p>SE DECONNECTER</p>
+                      </Button>
+                    ) : (
+                      <Button size="sm" colorScheme="white" color="black">
+                        <Link href={"/auth/signin"}>
+                          <a>
+                            <p>SE CONNECTER</p>
+                          </a>
+                        </Link>
+                      </Button>
+                    )}
                   </li>
                 </ul>
               </nav>
