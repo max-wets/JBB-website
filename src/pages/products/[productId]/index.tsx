@@ -42,8 +42,10 @@ function ProductDetailPage(
 export const getStaticProps: GetStaticProps = async (context) => {
   const pid = Number(context.params.productId);
 
-  const res = await axios.get(`https://strapi-d6ef.onrender.com/items`);
-  const data = res.data;
+  const res = await axios.get(
+    `https://jbbeauty-cms.herokuapp.com/api/items?populate=%2A`
+  );
+  const data = res.data.data;
 
   const product = data.filter((item) => item.id === pid)[0];
 
@@ -56,15 +58,15 @@ export const getStaticProps: GetStaticProps = async (context) => {
     previousProduct
       ? {
           id: previousProduct.id,
-          title: previousProduct.Name,
-          imageUrl: previousProduct.Image.url,
+          title: previousProduct.attributes.Name,
+          imageUrl: previousProduct.attributes.Image.data.url,
         }
       : null,
     nextProduct
       ? {
           id: nextProduct.id,
-          title: nextProduct.Name,
-          imageUrl: nextProduct.Image.url,
+          title: nextProduct.attributes.Name,
+          imageUrl: nextProduct.attributes.Image.data.url,
         }
       : null,
   ];
@@ -79,8 +81,8 @@ export const getStaticProps: GetStaticProps = async (context) => {
       if (item.id === pid) return false;
 
       let hasCategory = false;
-      item.item_categories.forEach((category) => {
-        if (productCategories.indexOf(category.Name) > -1) {
+      item.attributes.item_categories.data.forEach((category) => {
+        if (productCategories.indexOf(category.attributes.Name) > -1) {
           !hasCategory ? (hasCategory = true) : null;
         }
       });
@@ -112,8 +114,10 @@ export const getStaticProps: GetStaticProps = async (context) => {
     let relatedPosts = [];
 
     try {
-      const res = await axios.get("https://strapi-d6ef.onrender.com/articles");
-      const data = res.data;
+      const res = await axios.get(
+        "https://jbbeauty-cms.herokuapp.com/api/items?populate=%2A"
+      );
+      const data = res.data.data;
 
       // console.log("data:", data);
 
@@ -123,8 +127,8 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
       function containsCategory(post) {
         let hasCategory = false;
-        post.article_categories.forEach((category) => {
-          if (productCategories.indexOf(category.Name) > -1) {
+        post.attributes.article_categories.data.forEach((category) => {
+          if (productCategories.indexOf(category.attributes.Name) > -1) {
             !hasCategory ? (hasCategory = true) : null;
           }
         });
@@ -134,14 +138,14 @@ export const getStaticProps: GetStaticProps = async (context) => {
       function formatData(post) {
         return {
           id: post.id.toString(),
-          title: post.Name,
-          intro: post.Intro,
-          description: post.Description,
-          issueDate: post.published_at,
-          videoUrl: post.Video_URL,
-          imageUrl: post.Image.url,
-          categories: post.article_categories.map((category) => {
-            return category.Name;
+          title: post.attributes.Name,
+          intro: post.attributes.Intro,
+          description: post.attributes.Description,
+          issueDate: post.attributes.publishedAt,
+          videoUrl: post.attributes.Video_URL,
+          imageUrl: post.attributes.Image.data.url,
+          categories: post.attributes.article_categories.map((category) => {
+            return category.attributes.Name;
           }),
         };
       }
@@ -170,7 +174,10 @@ export const getStaticProps: GetStaticProps = async (context) => {
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const paths = itemsList.map((item) => ({
+  const res = await axios.get("https://jbbeauty-cms.herokuapp.com/api/items");
+  const data = res.data.data;
+
+  const paths = data.map((item) => ({
     params: { productId: item.id.toString() },
   }));
 
