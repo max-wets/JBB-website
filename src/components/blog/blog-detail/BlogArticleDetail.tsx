@@ -9,6 +9,7 @@ import { BsFolder } from "react-icons/bs";
 import { BiComment } from "react-icons/bi";
 import { useState, useEffect } from "react";
 import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import VideoEmbed from "./VideoEmbed";
 import {
   EmailShareButton,
@@ -116,7 +117,9 @@ function BlogArticleDetail(props: {
           </li>
         </ul>
         <div className={classes.entrycontent}>
-          <ReactMarkdown>{props.article.description}</ReactMarkdown>
+          <ReactMarkdown remarkPlugins={[remarkGfm]}>
+            {props.article.description}
+          </ReactMarkdown>
         </div>
         {props.article.videoUrl ? (
           <div style={{ marginTop: "30px" }}>

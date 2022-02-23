@@ -84,6 +84,15 @@
   margin: 16px 0px;
 }
 
+.entrycontent a {
+  color: blue;
+  text-decoration: underline;
+}
+
+.entrycontent a:active {
+  color: purple;
+}
+
 .entrycontent h4 {
   margin: 16px 0px;
 }
