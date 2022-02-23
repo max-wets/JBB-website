@@ -2,10 +2,12 @@ import classes from "./VideoEmbed.module.css";
 import React from "react";
 
 function VideoEmbed({ source }) {
-  const regex = /\/watch\?v=(.*)/i;
+  // console.log("source URL:", source);
+  const isUrlMinimized = /^http.:\/\/youtu\.be\/.+/gm.test(source.trim());
+  const regex = isUrlMinimized ? /\.be\/(\w+)/i : /\/watch\?v=(.*)/i;
   const embedId = source.match(regex)[1];
 
-  console.log("embed id:", embedId);
+  // console.log("embed id:", embedId);
 
   return (
     <div className={classes.videoresponsive}>

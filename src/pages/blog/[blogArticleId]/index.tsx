@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { GetStaticProps, GetStaticPaths, InferGetStaticPropsType } from "next";
 import BlogArticleDetail from "../../../components/blog/blog-detail/BlogArticleDetail";
 import BlogArticleDetailHeading from "../../../components/blog/blog-detail/BlogArticleDetailHeading";
@@ -9,6 +9,7 @@ import axios from "axios";
 
 function BlogDetailPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
   const [isLargerThan960] = useMediaQuery("(min-width: 960px)");
+  const [serverRendering, setServerRendering] = useState(true);
 
   useEffect(() => {
     console.log("Blog detail page article data:", props.article);
@@ -18,13 +19,18 @@ function BlogDetailPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
       "Blog detail page recommended articles data:",
       props.recommendedArticles
     );
+    setServerRendering(false);
   }, []);
 
   return (
     <>
       <BlogArticleDetailHeading title={props.article.title} />
       <Container pt="50px" pb="50px" w="1200px" maxW="90%" margin="0 auto">
-        <Flex flexDirection={isLargerThan960 ? "row" : "column"}>
+        <Flex
+          flexDirection={
+            serverRendering ? "row" : isLargerThan960 ? "row" : "column"
+          }
+        >
           <BlogArticleDetail
             article={props.article}
             prevNextArticles={props.prevNextArticles}
@@ -39,8 +45,8 @@ function BlogDetailPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
 
 export const getStaticProps: GetStaticProps = async (context) => {
   const sortingFn = (a, b) => {
-    const aDate = new Date(a.published_at);
-    const bDate = new Date(b.published_at);
+    const aDate = new Date(a.attributes.publishedAt);
+    const bDate = new Date(b.attributes.publishedAt);
 
     if (aDate > bDate) {
       return -1;
@@ -51,8 +57,10 @@ export const getStaticProps: GetStaticProps = async (context) => {
     return 0;
   };
   const aid = Number(context.params.blogArticleId);
-  const res = await axios.get(`https://strapi-d6ef.onrender.com/articles`);
-  const data = res.data.sort(sortingFn);
+  const res = await axios.get(
+    `https://jbbeauty-cms.herokuapp.com/api/articles?populate=%2A`
+  );
+  const data = res.data.data.sort(sortingFn);
   const article = data.find((article) => article.id === aid);
   const previousArticle =
     aid > 0 ? data.find((article) => article.id === aid - 1) : null;
@@ -62,13 +70,13 @@ export const getStaticProps: GetStaticProps = async (context) => {
     previousArticle
       ? {
           id: previousArticle.id,
-          title: previousArticle.Name,
+          title: previousArticle.attributes.Name,
         }
       : null,
     nextArticle
       ? {
           id: nextArticle.id,
-          title: nextArticle.Name,
+          title: nextArticle.attributes.Name,
         }
       : null,
   ];
@@ -76,14 +84,14 @@ export const getStaticProps: GetStaticProps = async (context) => {
   function formatData(post) {
     return {
       id: post.id.toString(),
-      title: post.Name,
-      intro: post.Intro,
-      description: post.Description,
-      issueDate: post.published_at,
-      videoUrl: post.Video_URL,
-      imageUrl: post.Image.url,
-      categories: post.article_categories.map((category) => {
-        return category.Name;
+      title: post.attributes.Name,
+      intro: post.attributes.Intro,
+      description: post.attributes.Description,
+      issueDate: post.attributes.publishedAt,
+      videoUrl: post.attributes.Video_URL,
+      imageUrl: post.attributes.Image.data.attributes.url,
+      categories: post.attributes.article_categories.data.map((category) => {
+        return category.attributes.Name;
       }),
     };
   }
@@ -96,9 +104,9 @@ export const getStaticProps: GetStaticProps = async (context) => {
       if (data[idx].id != aid) {
         articles.push({
           id: data[idx].id,
-          title: data[idx].Name,
-          issueDate: data[idx].published_at,
-          imageUrl: data[idx].Image.url,
+          title: data[idx].attributes.Name,
+          issueDate: data[idx].attributes.publishedAt,
+          imageUrl: data[idx].attributes.Image.data.attributes.url,
         });
       }
       idx += 1;
@@ -108,15 +116,17 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
   function getRecommendedArticles(data, article) {
     let recommendedArticles = [];
-    const articleCategories = article.article_categories.map((category) => {
-      return category.Name;
-    });
+    const articleCategories = article.attributes.article_categories.data.map(
+      (category) => {
+        return category.attributes.Name;
+      }
+    );
     function containsCategory(post) {
       if (post.id === aid) return false;
 
       let hasCategory = false;
-      post.article_categories.forEach((category) => {
-        if (articleCategories.indexOf(category.Name) > -1) {
+      post.attributes.article_categories.data.forEach((category) => {
+        if (articleCategories.indexOf(category.attributes.Name) > -1) {
           !hasCategory ? (hasCategory = true) : null;
         }
       });
@@ -158,8 +168,10 @@ export const getStaticProps: GetStaticProps = async (context) => {
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const res = await axios.get("https://strapi-d6ef.onrender.com/articles");
-  const data = res.data;
+  const res = await axios.get(
+    "https://jbbeauty-cms.herokuapp.com/api/articles"
+  );
+  const data = res.data.data;
 
   const paths = data.map((article) => ({
     params: { blogArticleId: article.id.toString() },

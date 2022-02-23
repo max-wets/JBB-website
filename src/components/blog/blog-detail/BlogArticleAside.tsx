@@ -43,7 +43,7 @@ function BlogAside(props: { articles: Article[] }) {
   function SideBlogDetail({ article }) {
     return (
       <li>
-        <Link href="">
+        <Link href={`/blog/${article.id}`}>
           <a className={classes.imgctr}>
             <Image
               src={article.imageUrl}
@@ -55,7 +55,7 @@ function BlogAside(props: { articles: Article[] }) {
           </a>
         </Link>
         <div className={classes.recentpostdetails}>
-          <Link href="">
+          <Link href={`/blog/${article.id}`}>
             <a>{article.title}</a>
           </Link>
           <div>
