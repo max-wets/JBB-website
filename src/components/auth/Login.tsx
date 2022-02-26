@@ -39,18 +39,17 @@ function Login({ crsfToken, setError }) {
                 password: values.password,
                 callbackUrl: `${window.location.origin}`,
               });
-              console.log("res:", res);
+
               if (res?.error) {
-                console.log("is error:", res.error);
                 if (!res.ok)
                   setError(
                     "Email et/ou mot de passe non valide(s). Veuillez réessayer."
                   );
               } else {
+                if (res.url) router.push(res.url);
                 setError(null);
+                setSubmitting(false);
               }
-              if (res.url) router.push(res.url);
-              setSubmitting(false);
             }}
           >
             {(formik) => (
