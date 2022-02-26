@@ -30,13 +30,17 @@ const options = {
         const user = await res.json();
 
         if (!res.ok) {
-          throw new Error(user.exception);
+          console.log("res not ok");
+          // throw new Error(user.exception);
+          return user.exception;
         }
         // If no error and we have user data, return it
         if (res.ok && user) {
+          console.log("res ok");
           return user;
         }
 
+        console.log("res null");
         return null;
       },
     }),
@@ -44,7 +48,7 @@ const options = {
   secret: process.env.JWT_SECRET,
   pages: {
     signIn: "/auth/signin",
-    error: "/auth/signin",
+    // error: "/auth/signin",
   },
   callbacks: {
     async jwt({ token, user, account }) {
