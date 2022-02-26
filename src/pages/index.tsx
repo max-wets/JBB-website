@@ -13,13 +13,15 @@ const Home = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
 };
 
 export const getStaticProps: GetStaticProps = async () => {
-  const resProducts = await axios.get("https://strapi-d6ef.onrender.com/items");
-  const dataProducts = resProducts.data;
+  const resProducts = await axios.get(
+    "https://jbbeauty-cms.herokuapp.com/api/items?populate=%2A"
+  );
+  const dataProducts = resProducts.data.data;
 
   const resArticles = await axios.get(
-    "https://strapi-d6ef.onrender.com/articles"
+    "https://jbbeauty-cms.herokuapp.com/api/articles?populate=%2A"
   );
-  const dataArticles = resArticles.data;
+  const dataArticles = resArticles.data.data;
 
   const sortingFn = (a, b) => {
     const aDate = new Date(a.issueDate);
@@ -37,14 +39,14 @@ export const getStaticProps: GetStaticProps = async () => {
   const recentProducts = dataProducts
     .map((product) => ({
       id: product.id.toString(),
-      name: product.Name,
-      intro: product.Intro,
-      description: product.Description,
-      price: product.Price,
-      issueDate: product.published_at,
-      imageUrl: product.Image.url,
-      categories: product.item_categories.map((category) => {
-        return category.Name;
+      name: product.attributes.Name,
+      intro: product.attributes.Intro,
+      description: product.attributes.Description,
+      price: product.attributes.Price,
+      issueDate: product.attributes.publishedAt,
+      imageUrl: product.attributes.Image.data.attributes.url,
+      categories: product.attributes.item_categories.data.map((category) => {
+        return category.attributes.Name;
       }),
     }))
     .sort(sortingFn);
@@ -52,14 +54,14 @@ export const getStaticProps: GetStaticProps = async () => {
   const recentArticles = dataArticles
     .map((article) => ({
       id: article.id.toString(),
-      title: article.Name,
-      intro: article.Intro,
-      description: article.Description,
-      issueDate: article.published_at,
-      videoUrl: article.Video_URL,
-      imageUrl: article.Image.url,
-      categories: article.article_categories.map((category) => {
-        return category.Name;
+      title: article.attributes.Name,
+      intro: article.attributes.Intro,
+      description: article.attributes.Description,
+      issueDate: article.attributes.publishedAt,
+      videoUrl: article.attributes.Video_URL,
+      imageUrl: article.attributes.Image.data.attributes.url,
+      categories: article.attributes.article_categories.data.map((category) => {
+        return category.attributes.Name;
       }),
     }))
     .sort(sortingFn);

@@ -19,11 +19,14 @@ const options = {
 
         console.log("req body:", reqBody);
 
-        const res = await fetch("https://strapi-d6ef.onrender.com/auth/local", {
-          method: "POST",
-          body: JSON.stringify(reqBody),
-          headers: { "Content-Type": "application/json" },
-        });
+        const res = await fetch(
+          "https://jbbeauty-cms.herokuapp.com/api/auth/local",
+          {
+            method: "POST",
+            body: JSON.stringify(reqBody),
+            headers: { "Content-Type": "application/json" },
+          }
+        );
         const user = await res.json();
 
         if (!res.ok) {
