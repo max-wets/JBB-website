@@ -86,13 +86,24 @@ function MainNavigation() {
                     </Link>
                   </li>
                   <li>
-                    <Link href="#">
-                      <a>
-                        <Button size="sm" colorScheme="white" color="black">
-                          <p>SE CONNECTER</p>
-                        </Button>
-                      </a>
-                    </Link>
+                    {status === "authenticated" ? (
+                      <Button
+                        size="sm"
+                        colorScheme="white"
+                        color="black"
+                        onClick={() => signOut({ redirect: false })}
+                      >
+                        <p>SE DECONNECTER</p>
+                      </Button>
+                    ) : (
+                      <Button size="sm" colorScheme="white" color="black">
+                        <Link href={"/auth/signin"}>
+                          <a>
+                            <p>SE CONNECTER</p>
+                          </a>
+                        </Link>
+                      </Button>
+                    )}
                   </li>
                 </ul>
               </DrawerBody>
@@ -128,7 +139,7 @@ function MainNavigation() {
                 </a>
               </Link>
             </div>
-            {isLargerThan750 ? (
+            {/* {isLargerThan750 ? (
               <div className={classes.rightcontainers}>
                 <Menu>
                   <MenuButton
@@ -147,7 +158,7 @@ function MainNavigation() {
                   </MenuList>
                 </Menu>
               </div>
-            ) : null}
+            ) : null} */}
           </div>
         </div>
       </div>
