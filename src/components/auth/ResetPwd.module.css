@@ -1,0 +1,63 @@
+.container {
+  padding-top: 30px;
+  padding-bottom: 50px;
+  width: 1200px;
+  margin: 0 auto;
+}
+
+@media only screen and (max-width: 959px) {
+  .container {
+    width: 90%;
+  }
+}
+
+.contentarea {
+  margin-bottom: 40px;
+  position: relative;
+  width: 100%;
+  float: left;
+}
+
+.formwrap {
+  width: 560px;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.formwrap p {
+  padding: 3px 0;
+  margin: 0 0 20px;
+  width: 100%;
+}
+
+.formwrap label {
+  display: block;
+  margin: 0 0 5px;
+}
+
+.formwrap input {
+  min-height: 40px;
+  width: 100%;
+  font-size: 14px;
+  line-height: 1.8;
+  padding: 6px 12px;
+  background-color: transparent;
+  color: #333;
+  border: 1px solid #ddd;
+}
+
+.formwrap button {
+  width: 70%;
+  display: block;
+  margin: auto;
+  padding: 8px 0;
+  background-color: #d93644;
+  color: white;
+  text-transform: uppercase;
+  transition: 0.3s;
+}
+
+.formwrap button:hover {
+  background-color: #da5762;
+}
