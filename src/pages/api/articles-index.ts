@@ -13,7 +13,7 @@ const fetchArticlesFromDatabase = async () => {
     const articles = await axios.get(
       "https://jbbeauty-cms.herokuapp.com/api/articles?populate=%2A"
     ); // Fetch data from your database
-    const cleanArticles = articles.data.map((article) => ({
+    const cleanArticles = articles.data.data.map((article) => ({
       id: article.id.toString(),
       title: article.attributes.Name,
       intro: article.attributes.Intro,
@@ -34,6 +34,7 @@ const fetchArticlesFromDatabase = async () => {
 export default async function handler(req, res) {
   try {
     const articleRecords = await fetchArticlesFromDatabase();
+
     const response = indexArticles.saveObjects(articleRecords, {
       autoGenerateObjectIDIfNotExist: true,
     });
