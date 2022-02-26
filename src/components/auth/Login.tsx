@@ -4,6 +4,8 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 import { Field, Form, Formik, ErrorMessage } from "formik";
 import { signIn, getCsrfToken } from "next-auth/react";
+import { useSession } from "next-auth/react";
+import { signOut } from "next-auth/react";
 
 interface Errors {
   [key: string]: any;
@@ -11,6 +13,7 @@ interface Errors {
 
 function Login({ crsfToken, setError }) {
   const router = useRouter();
+  const { data: session, status } = useSession();
 
   return (
     <div className={classes.container}>
@@ -33,6 +36,8 @@ function Login({ crsfToken, setError }) {
               return errors;
             }}
             onSubmit={async (values, { setSubmitting }) => {
+              if (session?.user) signOut();
+
               const res = await signIn("credentials", {
                 redirect: false,
                 email: values.email,

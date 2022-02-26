@@ -1,12 +1,13 @@
 import classes from "./LostPwd.module.css";
 import Link from "next/link";
 import { Field, Form, Formik, ErrorMessage } from "formik";
+import axios from "axios";
 
 interface Errors {
   [key: string]: any;
 }
 
-function Signup() {
+function Signup({ setError }) {
   return (
     <div className={classes.container}>
       <div className={classes.contentarea}>
@@ -28,22 +29,52 @@ function Signup() {
               }
               return errors;
             }}
-            onSubmit={(values, { setSubmitting }) => {
-              setTimeout(() => {
-                alert(JSON.stringify(values, null, 2));
+            onSubmit={async (values, { setSubmitting }) => {
+              // setTimeout(() => {
+              //   alert(JSON.stringify(values, null, 2));
+              //   setSubmitting(false);
+              // }, 400);
+              try {
+                const res = await axios.post(
+                  "https://jbbeauty-cms.herokuapp.com/api/auth/forgot-password",
+                  {
+                    email: values.email,
+                  }
+                );
+                const data = res.data;
+                if (res.data) console.log(data);
                 setSubmitting(false);
-              }, 400);
+              } catch (err) {
+                const errMessage = err.response.data.error.message;
+                console.error("is error:", errMessage);
+                setError(errMessage);
+              }
             }}
           >
-            {({ isSubmitting }) => (
+            {(formik) => (
               <Form>
                 <p>
                   <label htmlFor="email">Email</label>
                   <Field type="email" name="email" />
-                  <ErrorMessage name="email" component="div" />
+                  <ErrorMessage
+                    name="email"
+                    render={(msg) => (
+                      <div
+                        style={{
+                          color: "red",
+                          fontWeight: "700",
+                          fontSize: "14px",
+                        }}
+                      >
+                        {msg + " !"}
+                      </div>
+                    )}
+                  />
                 </p>
-                <button type="submit" disabled={isSubmitting}>
-                  Réinitialiser mon mot de passe
+                <button type="submit" disabled={formik.isSubmitting}>
+                  {formik.isSubmitting
+                    ? "Veuillez patienter..."
+                    : "Réinitialiser mon mot de passe"}
                 </button>
               </Form>
             )}

@@ -52,7 +52,15 @@ Content-Type: application/json
 }
 
 ### Get users
-GET https://strapi-d6ef.onrender.com/users/me
-Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjQ1MjkwNDAxLCJleHAiOjE2NDc4ODI0MDF9.NZr9FT9ceVD2l6E5cQZi4VJQIlgB8dsqfSDzBfYlV_k'
+GET https://jbbeauty-cms.herokuapp.com/api/users/me
+
+### Forgot password
+POST https://jbbeauty-cms.herokuapp.com/api/auth/forgot-password
+Content-Type: application/json
+
+{
+    "email": "wetsmaxime@gmail.com"
+}
+
 
 

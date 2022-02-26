@@ -90,7 +90,7 @@ function Header() {
               <DrawerBody>
                 <ul className={classes.drawermenu}>
                   <li>
-                    <Link href="/blog">
+                    <Link href={"/blog"}>
                       <a>
                         <Button size="sm" colorScheme="white" color="black">
                           <p>BLOG</p>
@@ -137,7 +137,7 @@ function Header() {
             <nav>
               <ul className={classes.fullmenu}>
                 <li>
-                  <Link href="">
+                  <Link href={"/blog"}>
                     <a>
                       <Button size="sm" colorScheme="white" color="black">
                         <p>BLOG</p>
@@ -146,7 +146,7 @@ function Header() {
                   </Link>
                 </li>
                 <li>
-                  <Link href="#">
+                  <Link href={"/products"}>
                     <a>
                       <Button size="sm" colorScheme="white" color="black">
                         <p>PRODUITS</p>
