@@ -257,7 +257,8 @@
   justify-content: center;
 }
 
-.relatedpostsentry article a:nth-child(2):hover {
+.relatedpostsentry article a:nth-child(2):hover,
+.mustlogin a:hover {
   color: #d93644;
 }
 
@@ -279,4 +280,34 @@
 
 .overlay:hover {
   opacity: 0.1;
+}
+
+.commentsarea {
+  margin-top: 30px;
+  padding-top: 30px;
+  border-top: 1px solid #f1f1f1;
+}
+
+.commentrespond {
+  margin-bottom: 20px;
+}
+
+.commentreplytitle {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0 0 20px;
+  color: #333;
+  line-height: 1.4;
+}
+
+.mustlogin {
+  margin: 0 0 20px;
+}
+
+.mustlogin a {
+  text-decoration: underline;
+}
+
+.mustlogin a:active {
+  color: #d93644;
 }

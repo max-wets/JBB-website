@@ -1,6 +1,6 @@
 import classes from "./Login.module.css";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/router";
 import { Field, Form, Formik, ErrorMessage } from "formik";
 import { signIn, getCsrfToken } from "next-auth/react";
@@ -14,6 +14,16 @@ interface Errors {
 function Login({ crsfToken, setError }) {
   const router = useRouter();
   const { data: session, status } = useSession();
+  const previousPath = useRef(null);
+
+  useEffect(() => {
+    router.prefetch("/");
+  }, []);
+
+  useEffect(() => {
+    previousPath.current = globalThis.sessionStorage.getItem("prevPath");
+    console.log(previousPath.current);
+  }, [router.asPath]);
 
   return (
     <div className={classes.container}>
@@ -42,7 +52,10 @@ function Login({ crsfToken, setError }) {
                 redirect: false,
                 email: values.email,
                 password: values.password,
-                callbackUrl: `${window.location.origin}`,
+                callbackUrl:
+                  previousPath.current && previousPath.current !== "auth/signin"
+                    ? previousPath.current
+                    : `${window.location.origin}`,
               });
 
               if (res?.error) {

@@ -240,6 +240,18 @@ function BlogArticleDetail(props: {
           ))}
         </div>
       </section>
+      <section className={classes.commentsarea}>
+        <div className={classes.commentrespond}>
+          <h3 className={classes.commentreplytitle}>Laisser un commentaire</h3>
+          <p className={classes.mustlogin}>
+            Vous devez être{" "}
+            <Link href={"/auth/signin"}>
+              <a>connecté</a>
+            </Link>{" "}
+            pour publier un commentaire
+          </p>
+        </div>
+      </section>
     </article>
   );
 }

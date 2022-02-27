@@ -63,4 +63,32 @@ Content-Type: application/json
 }
 
 
+### Create comment
+POST https://jbbeauty-cms.herokuapp.com/api/comments
+Content-Type: application/json
+
+{
+    "data": {
+        "ArticleID": 1,
+        "AuthorID": 3,
+        "Content": "C'est le deuxième commentaire de Maxime sur l'article Botox Botulax"
+    }
+}
+
+### Update comment
+PUT https://jbbeauty-cms.herokuapp.com/api/comments/1
+
+{
+    "data": {
+        "Content": "Ceci est une version à nouveau modifiée du premier commentaire de Maxime sur l'article Botox Botulax"
+    }
+}
+
+### Get comments
+GET https://jbbeauty-cms.herokuapp.com/api/comments
+
+
+
+
+
 
