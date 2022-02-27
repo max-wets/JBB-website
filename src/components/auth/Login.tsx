@@ -18,11 +18,11 @@ function Login({ crsfToken, setError }) {
 
   useEffect(() => {
     router.prefetch("/");
+    if (previousPath.current) router.prefetch(previousPath.current);
   }, []);
 
   useEffect(() => {
     previousPath.current = globalThis.sessionStorage.getItem("prevPath");
-    console.log(previousPath.current);
   }, [router.asPath]);
 
   return (
@@ -46,7 +46,7 @@ function Login({ crsfToken, setError }) {
               return errors;
             }}
             onSubmit={async (values, { setSubmitting }) => {
-              if (session?.user) signOut();
+              if (session) signOut({ redirect: false });
 
               const res = await signIn("credentials", {
                 redirect: false,
