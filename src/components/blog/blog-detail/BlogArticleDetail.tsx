@@ -40,6 +40,17 @@ function BlogArticleDetail(props: {
   const router = useRouter();
   const [isLargerThan750] = useMediaQuery("(min-width: 750px)");
   const { data: session } = useSession();
+  const [commentText, setCommentText] = useState("");
+
+  function autoResize(el) {
+    // console.log(el);
+    el.style.height = "auto";
+    el.style.height = el.scrollHeight + "px";
+  }
+
+  useEffect(() => {
+    // console.log(commentText);
+  }, [commentText]);
 
   useEffect(() => {
     console.log(APP_URL);
@@ -242,14 +253,54 @@ function BlogArticleDetail(props: {
       </section>
       <section className={classes.commentsarea}>
         <div className={classes.commentrespond}>
-          <h3 className={classes.commentreplytitle}>Laisser un commentaire</h3>
-          <p className={classes.mustlogin}>
-            Vous devez être{" "}
-            <Link href={"/auth/signin"}>
-              <a>connecté</a>
-            </Link>{" "}
-            pour publier un commentaire
-          </p>
+          <>
+            <h3 className={classes.commentreplytitle}>
+              Laisser un commentaire
+            </h3>
+            {session.user ? (
+              <div className={classes.inputrow}>
+                <div className={classes.commentbox}>
+                  <textarea
+                    required
+                    minLength={1}
+                    maxLength={2000}
+                    rows={1}
+                    placeholder="Ajoutez un commentaire..."
+                    value={commentText}
+                    onChange={(e) => {
+                      setCommentText(e.target.value);
+                      autoResize(e.target);
+                    }}
+                  />
+
+                  <div className={classes.footer}>
+                    <div className={classes.buttons}>
+                      <button
+                        className={classes.cancelbutton}
+                        onClick={() => setCommentText("")}
+                      >
+                        ANNULER
+                      </button>
+                      <button
+                        className={classes.submitbutton}
+                        disabled={commentText ? false : true}
+                      >
+                        AJOUTER UN COMMENTAIRE
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <p className={classes.mustlogin}>
+                Vous devez être{" "}
+                <Link href={"/auth/signin"}>
+                  <a>connecté</a>
+                </Link>{" "}
+                pour publier un commentaire
+              </p>
+            )}
+          </>
         </div>
       </section>
     </article>

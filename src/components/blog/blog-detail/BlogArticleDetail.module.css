@@ -311,3 +311,69 @@
 .mustlogin a:active {
   color: #d93644;
 }
+
+.inputrow {
+  word-break: break-all;
+  display: flex;
+  flex-direction: row;
+}
+
+.commentbox {
+  flex: 1;
+  flex-basis: 1e-9px;
+  min-width: 0;
+}
+
+.footer {
+  display: none;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+}
+
+.buttons button {
+  vertical-align: middle;
+  white-space: nowrap;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 1.1;
+  text-transform: uppercase;
+  margin-left: 8px;
+  border-radius: 0.2em;
+  line-height: 20px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 6px 10px;
+}
+
+.cancelbutton {
+  color: rgb(66, 65, 65);
+}
+
+.submitbutton {
+  color: white;
+  background-color: #d93644;
+}
+
+.submitbutton:disabled {
+  background-color: rgb(235, 232, 232);
+  color: rgb(126, 123, 123);
+  cursor: initial;
+}
+
+.commentbox textarea {
+  resize: none;
+  height: auto;
+  width: 100%;
+  outline: none;
+  border-bottom: 1px solid #333;
+}
+
+.commentbox textarea:focus ~ .footer {
+  display: flex;
+}
