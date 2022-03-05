@@ -320,12 +320,12 @@
 
 .commentbox {
   flex: 1;
-  flex-basis: 1e-9px;
+  /* flex-basis: 1e-9px; */
   min-width: 0;
 }
 
 .footer {
-  display: none;
+  display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: flex-end;
@@ -358,6 +358,7 @@
 .submitbutton {
   color: white;
   background-color: #d93644;
+  min-width: 220px;
 }
 
 .submitbutton:disabled {
@@ -368,12 +369,12 @@
 
 .commentbox textarea {
   resize: none;
-  height: auto;
+  line-height: normal;
   width: 100%;
   outline: none;
   border-bottom: 1px solid #333;
 }
 
-.commentbox textarea:focus ~ .footer {
+/* .commentbox textarea:focus ~ .footer {
   display: flex;
-}
+} */

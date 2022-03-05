@@ -22,6 +22,7 @@ function Login({ crsfToken, setError }) {
   }, []);
 
   useEffect(() => {
+    console.log("prvious path:", previousPath.current);
     previousPath.current = globalThis.sessionStorage.getItem("prevPath");
   }, [router.asPath]);
 

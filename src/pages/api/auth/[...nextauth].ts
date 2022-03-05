@@ -71,6 +71,7 @@ const options = {
 
     async session({ session, token }) {
       session.user.accessToken = token.accessToken;
+      session.user.id = token.id;
       console.log("session:", session);
 
       return session;

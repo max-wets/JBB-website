@@ -2,12 +2,12 @@ import classes from "./BlogArticleDetail.module.css";
 import { Article } from "../BlogArticleItem";
 import Image from "next/image";
 import Link from "next/link";
-import { Icon, useMediaQuery } from "@chakra-ui/react";
+import { Icon, useMediaQuery, Spinner } from "@chakra-ui/react";
 import { BiUser } from "react-icons/bi";
 import { FiClock } from "react-icons/fi";
 import { BsFolder } from "react-icons/bs";
 import { BiComment } from "react-icons/bi";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import VideoEmbed from "./VideoEmbed";
@@ -28,6 +28,8 @@ import {
   ChevronRightIcon,
 } from "@chakra-ui/icons";
 import { useSession } from "next-auth/react";
+import Comment from "./Comment";
+import axios from "axios";
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL;
 
@@ -41,16 +43,49 @@ function BlogArticleDetail(props: {
   const [isLargerThan750] = useMediaQuery("(min-width: 750px)");
   const { data: session } = useSession();
   const [commentText, setCommentText] = useState("");
+  const [postingComment, setPostingComment] = useState(false);
+  const inputRef = useRef<HTMLTextAreaElement>();
+  const commentBoxBtnsRef = useRef<HTMLDivElement>();
+
+  interface SessionUser {
+    id?: number;
+    name?: string;
+    email?: string;
+    image?: string;
+  }
+
+  const sessionUser: SessionUser = session?.user;
 
   function autoResize(el) {
     // console.log(el);
     el.style.height = "auto";
-    el.style.height = el.scrollHeight + "px";
+    el.style.height = el.scrollHeight + 2 + "px";
   }
 
-  useEffect(() => {
-    // console.log(commentText);
-  }, [commentText]);
+  async function createComment() {
+    setPostingComment(true);
+
+    try {
+      const { data } = await axios.post(
+        "https://jbbeauty-cms.herokuapp.com/api/comments",
+        {
+          data: {
+            ArticleID: props.article.id,
+            AuthorID: sessionUser.id,
+            Content: commentText,
+          },
+        }
+      );
+
+      console.log(data);
+    } catch (err) {
+      console.error(err);
+    }
+
+    setPostingComment(false);
+  }
+
+  useEffect(() => {}, []);
 
   useEffect(() => {
     console.log(APP_URL);
@@ -257,10 +292,11 @@ function BlogArticleDetail(props: {
             <h3 className={classes.commentreplytitle}>
               Laisser un commentaire
             </h3>
-            {session.user ? (
+            {session?.user ? (
               <div className={classes.inputrow}>
                 <div className={classes.commentbox}>
                   <textarea
+                    ref={inputRef}
                     required
                     minLength={1}
                     maxLength={2000}
@@ -271,21 +307,34 @@ function BlogArticleDetail(props: {
                       setCommentText(e.target.value);
                       autoResize(e.target);
                     }}
+                    onFocus={() =>
+                      (commentBoxBtnsRef.current.style.display = "flex")
+                    }
                   />
 
-                  <div className={classes.footer}>
+                  <div className={classes.footer} ref={commentBoxBtnsRef}>
                     <div className={classes.buttons}>
                       <button
                         className={classes.cancelbutton}
-                        onClick={() => setCommentText("")}
+                        onClick={() => {
+                          setPostingComment(false);
+                          setCommentText("");
+                          inputRef.current.style.height = "24px";
+                          commentBoxBtnsRef.current.style.display = "none";
+                        }}
                       >
                         ANNULER
                       </button>
                       <button
                         className={classes.submitbutton}
                         disabled={commentText ? false : true}
+                        onClick={() => setPostingComment(true)}
                       >
-                        AJOUTER UN COMMENTAIRE
+                        {postingComment ? (
+                          <Spinner size="sm" />
+                        ) : (
+                          "AJOUTER UN COMMENTAIRE"
+                        )}
                       </button>
                     </div>
                   </div>
@@ -301,6 +350,9 @@ function BlogArticleDetail(props: {
               </p>
             )}
           </>
+        </div>
+        <div className={classes.commentslist}>
+          <Comment />
         </div>
       </section>
     </article>
