@@ -68,6 +68,8 @@ function BlogArticleDetail(props: {
   async function createComment() {
     setPostingComment(true);
 
+    let newComment;
+
     try {
       const { data } = await axios.post(
         "https://jbbeauty-cms.herokuapp.com/api/comments",
@@ -85,7 +87,16 @@ function BlogArticleDetail(props: {
         }
       );
 
-      console.log(data);
+      // console.log(data);
+      newComment = {
+        id: data.data.id,
+        ArticleID: data.data.attributes.ArticleID,
+        AuthorID: data.data.attributes.AuthorID,
+        Content: data.data.attributes.Content,
+        issueDate: data.data.attributes.publishedAt,
+        AuthorName: sessionUser.name,
+      };
+      console.log(newComment);
 
       commentBoxBtnsRef.current.style.display = "none";
       setCommentText("");
@@ -93,7 +104,24 @@ function BlogArticleDetail(props: {
       console.error(err);
     }
 
+    // newComment = {
+    //   id: 20,
+    //   ArticleID: Number(props.article.id),
+    //   AuthorID: sessionUser.id,
+    //   Content: commentText,
+    //   issueDate: "2016-04-26T17:14:08+00:00",
+    //   AuthorName: sessionUser.name,
+    // };
+
+    // console.log(newComment);
+
+    setComments((prev) => {
+      return [...prev, newComment];
+    });
+
     setPostingComment(false);
+    commentBoxBtnsRef.current.style.display = "none";
+    setCommentText("");
   }
 
   useEffect(() => {

@@ -68,28 +68,28 @@ function Comment(props: {
   async function updateComment() {
     setPostingComment(true);
 
-    // try {
-    //   const { data } = await axios.put(
-    //     `https://jbbeauty-cms.herokuapp.com/api/comments/${props.ArticleID}`,
-    //     {
-    //       data: {
-    //         Content: commentText,
-    //       },
-    //     },
-    //     {
-    //       headers: {
-    //         Authorization: `Bearer ${props.sessionUser.accessToken}`,
-    //       },
-    //     }
-    //   );
+    try {
+      const { data } = await axios.put(
+        `https://jbbeauty-cms.herokuapp.com/api/comments/${props.id}`,
+        {
+          data: {
+            Content: commentText,
+          },
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${props.sessionUser.accessToken}`,
+          },
+        }
+      );
 
-    //   console.log(data);
+      console.log(data);
 
-    //   setEditOn(false);
-    //   //    setCommentText("");
-    // } catch (err) {
-    //   console.error(err);
-    // }
+      //   setEditOn(false);
+      //    setCommentText("");
+    } catch (err) {
+      console.error(err);
+    }
 
     props.setComments((prev) => {
       const newCom = { ...prev[props.idx], Content: commentText };
@@ -124,6 +124,8 @@ function Comment(props: {
     props.setComments((prev) => prev.filter((com) => com.id !== props.id));
 
     setPostingComment(false);
+    setEditOn(false);
+    setIsOpen(false);
   }
 
   function DeleteAlertDialog() {
@@ -158,6 +160,7 @@ function Comment(props: {
                     onClose;
                   }}
                   ml={3}
+                  style={{ minWidth: 108 }}
                 >
                   {postingComment ? <Spinner size="sm" /> : "Supprimer"}
                 </Button>
@@ -171,7 +174,7 @@ function Comment(props: {
 
   return (
     <div key={props.idx} className={classes.commenttext}>
-      {!editOn ? (
+      {!editOn && props.sessionUser?.id === props.AuthorID ? (
         <div className={classes.commentbtns}>
           <EditIcon onClick={() => setEditOn(true)} />
           <DeleteIcon onClick={() => setIsOpen(true)} />
