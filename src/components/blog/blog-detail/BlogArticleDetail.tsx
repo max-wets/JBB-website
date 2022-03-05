@@ -52,6 +52,7 @@ function BlogArticleDetail(props: {
     name?: string;
     email?: string;
     image?: string;
+    accessToken?: string;
   }
 
   const sessionUser: SessionUser = session?.user;
@@ -74,10 +75,18 @@ function BlogArticleDetail(props: {
             AuthorID: sessionUser.id,
             Content: commentText,
           },
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${sessionUser.accessToken}`,
+          },
         }
       );
 
       console.log(data);
+
+      commentBoxBtnsRef.current.style.display = "none";
+      setCommentText("");
     } catch (err) {
       console.error(err);
     }
@@ -328,7 +337,7 @@ function BlogArticleDetail(props: {
                       <button
                         className={classes.submitbutton}
                         disabled={commentText ? false : true}
-                        onClick={() => setPostingComment(true)}
+                        onClick={() => createComment()}
                       >
                         {postingComment ? (
                           <Spinner size="sm" />
