@@ -37,6 +37,7 @@ function BlogArticleDetail(props: {
   article: Article;
   prevNextArticles;
   recommendedArticles;
+  articleComments;
 }) {
   // const api_url = "https://jbb-admin.herokuapp.com";
   const router = useRouter();
@@ -44,6 +45,7 @@ function BlogArticleDetail(props: {
   const { data: session } = useSession();
   const [commentText, setCommentText] = useState("");
   const [postingComment, setPostingComment] = useState(false);
+  const [comments, setComments] = useState([]);
   const inputRef = useRef<HTMLTextAreaElement>();
   const commentBoxBtnsRef = useRef<HTMLDivElement>();
 
@@ -94,7 +96,10 @@ function BlogArticleDetail(props: {
     setPostingComment(false);
   }
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    console.log("blog detail comments:", props.articleComments);
+    setComments(props.articleComments);
+  }, []);
 
   useEffect(() => {
     console.log(APP_URL);
@@ -361,7 +366,19 @@ function BlogArticleDetail(props: {
           </>
         </div>
         <div className={classes.commentslist}>
-          <Comment />
+          {comments?.map((com, idx) => (
+            <Comment
+              idx={idx}
+              id={com.id}
+              AuthorID={com.AuthorID}
+              ArticleID={com.ArticleID}
+              AuthorName={com.AuthorName}
+              Content={com.Content}
+              issueDate={com.issueDate}
+              sessionUser={sessionUser}
+              setComments={setComments}
+            />
+          ))}
         </div>
       </section>
     </article>

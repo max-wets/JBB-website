@@ -30,3 +30,74 @@
 .meta span {
   margin: 0 2px;
 }
+
+.commentbtns {
+  display: none;
+  flex-direction: row;
+  justify-content: space-between;
+  cursor: pointer;
+  vertical-align: top;
+  float: right;
+  position: relative;
+  width: 2.6em;
+  height: 1.2em;
+  margin-right: 8px;
+}
+
+.commentbtns svg:hover {
+  color: #d93644;
+}
+
+.commenttext:hover > .commentbtns {
+  display: flex;
+}
+
+.description textarea {
+  width: 100%;
+  resize: none;
+  outline: none;
+  border-bottom: solid 1px #eaeaea;
+}
+
+.footer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+}
+
+.buttons button {
+  vertical-align: middle;
+  white-space: nowrap;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 1.1;
+  text-transform: uppercase;
+  margin-left: 8px;
+  border-radius: 0.2em;
+  line-height: 20px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 6px 10px;
+}
+
+.cancelbutton {
+  color: rgb(66, 65, 65);
+}
+
+.submitbutton {
+  color: white;
+  background-color: #d93644;
+  min-width: 220px;
+}
+
+.submitbutton:disabled {
+  background-color: rgb(235, 232, 232);
+  color: rgb(126, 123, 123);
+  cursor: initial;
+}

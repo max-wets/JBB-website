@@ -6,19 +6,21 @@ import BlogArticleDetailHeading from "../../../components/blog/blog-detail/BlogA
 import BlogArticleAside from "../../../components/blog/blog-detail/BlogArticleAside";
 import { Container, Flex, useMediaQuery } from "@chakra-ui/react";
 import axios from "axios";
+import qs from "qs";
 
 function BlogDetailPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
   const [isLargerThan960] = useMediaQuery("(min-width: 960px)");
   const [serverRendering, setServerRendering] = useState(true);
 
   useEffect(() => {
-    console.log("Blog detail page article data:", props.article);
-    console.log("Blog detail page prevNext data:", props.prevNextArticles);
-    console.log("Blog detail page recent articles data:", props.recentArticles);
-    console.log(
-      "Blog detail page recommended articles data:",
-      props.recommendedArticles
-    );
+    // console.log("Blog detail page article data:", props.article);
+    // console.log("Blog detail page prevNext data:", props.prevNextArticles);
+    // console.log("Blog detail page recent articles data:", props.recentArticles);
+    // console.log(
+    //   "Blog detail page recommended articles data:",
+    //   props.recommendedArticles
+    // );
+    console.log("Blog article comments:", props.articleComments);
     setServerRendering(false);
   }, []);
 
@@ -35,6 +37,7 @@ function BlogDetailPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
             article={props.article}
             prevNextArticles={props.prevNextArticles}
             recommendedArticles={props.recommendedArticles}
+            articleComments={props.articleComments}
           />
           <BlogArticleAside articles={props.recentArticles} />
         </Flex>
@@ -157,12 +160,74 @@ export const getStaticProps: GetStaticProps = async (context) => {
   const recentArticles = getRecentArticles(data);
   const recommendedArticles = getRecommendedArticles(data, article);
 
+  // get article's comments
+  const resComments = await axios.get(
+    `https://jbbeauty-cms.herokuapp.com/api/comments?filters[ArticleID][$eq]=${aid}&sort=publishedAt%3Adesc`
+  );
+  const commentsData = resComments.data.data;
+  const AuthorIdsArr = [];
+  const completeComments = [];
+  const cleanComments = commentsData.map((comment) => {
+    if (AuthorIdsArr.indexOf(comment.attributes.AuthorID) < 0)
+      AuthorIdsArr.push(comment.attributes.AuthorID);
+    return {
+      id: comment.id,
+      ArticleID: comment.attributes.ArticleID,
+      AuthorID: comment.attributes.AuthorID,
+      Content: comment.attributes.Content,
+      issueDate: comment.attributes.publishedAt,
+    };
+  });
+  // console.log("comments:", cleanComments);
+  console.log("authors id arr:", AuthorIdsArr);
+
+  // get users' names
+  if (AuthorIdsArr.length > 0) {
+    const query = qs.stringify(
+      {
+        filters: {
+          id: {
+            $in: AuthorIdsArr,
+          },
+        },
+        // fields: ["id", "username"],
+      },
+      {
+        encodeValuesOnly: true,
+      }
+    );
+    const usersRes = await axios.get(
+      `https://jbbeauty-cms.herokuapp.com/api/users?${query}`,
+      {
+        headers: {
+          Authorization: `bearer ${process.env.NEXT_PUBLIC_API_TOKEN}`,
+        },
+      }
+    );
+    const usersData = usersRes.data;
+    console.log("users data:", usersData);
+
+    cleanComments.map((comment) => {
+      const authorName = usersData.filter(
+        (user) => user.id === comment.AuthorID
+      )[0].username;
+
+      completeComments.push({
+        ...comment,
+        AuthorName: authorName,
+      });
+    });
+
+    console.log("complete comments:", completeComments);
+  }
+
   return {
     props: {
       article: formatData(article),
       recentArticles: recentArticles,
       prevNextArticles: prevNextArticles,
       recommendedArticles: recommendedArticles,
+      articleComments: completeComments,
     },
   };
 };
