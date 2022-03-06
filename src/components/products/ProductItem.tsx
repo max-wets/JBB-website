@@ -8,7 +8,7 @@ const myLoader = ({ src }) => {
   return `../public/items/${src}`;
 };
 
-function ProductItem(props: { product }) {
+function ProductItem(props: { idx; product }) {
   function priceFormat(num) {
     let formattedNum;
 
@@ -27,7 +27,7 @@ function ProductItem(props: { product }) {
   // }, []);
 
   return (
-    <div key={props.product.id} className={classes.productctr}>
+    <div key={props.idx} className={classes.productctr}>
       <div className={classes.imgctr}>
         <Link href={`/products/${props.product.id.toString()}`}>
           <a>

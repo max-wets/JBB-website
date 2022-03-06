@@ -1,17 +1,30 @@
 import classes from "./Login.module.css";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/router";
 import { Field, Form, Formik, ErrorMessage } from "formik";
 import { signIn, getCsrfToken } from "next-auth/react";
+import { useSession } from "next-auth/react";
+import { signOut } from "next-auth/react";
 
 interface Errors {
   [key: string]: any;
 }
 
-function Login({ crsfToken }) {
+function Login({ crsfToken, setError }) {
   const router = useRouter();
-  const [error, setError] = useState(null);
+  const { data: session, status } = useSession();
+  const previousPath = useRef(null);
+
+  useEffect(() => {
+    router.prefetch("/");
+    if (previousPath.current) router.prefetch(previousPath.current);
+  }, []);
+
+  useEffect(() => {
+    // console.log("prvious path:", previousPath.current);
+    previousPath.current = globalThis.sessionStorage.getItem("prevPath");
+  }, [router.asPath]);
 
   return (
     <div className={classes.container}>
@@ -25,28 +38,37 @@ function Login({ crsfToken }) {
             validate={(values) => {
               const errors = {} as Errors;
               if (!values.email) {
-                errors.email = "Required";
+                errors.email = "Email obligatoire";
               } else if (
                 !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
               ) {
-                errors.email = "Invalid email address";
+                errors.email = "Adresse email non valide";
               }
               return errors;
             }}
             onSubmit={async (values, { setSubmitting }) => {
+              if (session) signOut({ redirect: false });
+
               const res = await signIn("credentials", {
                 redirect: false,
                 email: values.email,
                 password: values.password,
-                callbackUrl: `${window.location.origin}`,
+                callbackUrl:
+                  previousPath.current && previousPath.current !== "auth/signin"
+                    ? previousPath.current
+                    : `${window.location.origin}`,
               });
+
               if (res?.error) {
-                setError(res.error);
+                if (!res.ok)
+                  setError(
+                    "Email et/ou mot de passe non valide(s). Veuillez réessayer."
+                  );
               } else {
+                if (res.url) router.push(res.url);
                 setError(null);
+                setSubmitting(false);
               }
-              if (res.url) router.push(res.url);
-              setSubmitting(false);
             }}
           >
             {(formik) => (
@@ -57,15 +79,41 @@ function Login({ crsfToken }) {
                     type="hidden"
                     defaultValue={crsfToken}
                   />
-                  <p>{error}</p>
+                  {/* <p>{error}</p> */}
                   <label htmlFor="email">Email</label>
                   <Field type="email" name="email" />
-                  <ErrorMessage name="email" component="div" />
+                  <ErrorMessage
+                    name="email"
+                    render={(msg) => (
+                      <div
+                        style={{
+                          color: "red",
+                          fontWeight: "700",
+                          fontSize: "14px",
+                        }}
+                      >
+                        {msg + " !"}
+                      </div>
+                    )}
+                  />
                 </p>
                 <p>
                   <label htmlFor="password">Mot de passe</label>
                   <Field type="password" name="password" />
-                  <ErrorMessage name="password" component="div" />
+                  <ErrorMessage
+                    name="password"
+                    render={(msg) => (
+                      <div
+                        style={{
+                          color: "red",
+                          fontWeight: "700",
+                          fontSize: "14px",
+                        }}
+                      >
+                        {msg + " !"}
+                      </div>
+                    )}
+                  />
                 </p>
                 <button type="submit">
                   {formik.isSubmitting

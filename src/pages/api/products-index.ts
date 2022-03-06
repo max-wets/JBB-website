@@ -10,17 +10,19 @@ const indexProducts = client.initIndex(process.env.ALGOLIA_PRODUCTS_INDEX_NAME);
 
 const fetchProductsFromDatabase = async () => {
   try {
-    const products = await axios.get("https://strapi-d6ef.onrender.com/items"); // Fetch data from your database
+    const products = await axios.get(
+      "https://jbbeauty-cms.herokuapp.com/api/items?populate=%2A"
+    ); // Fetch data from your database
     const cleanProducts = products.data.map((article) => ({
       id: article.id.toString(),
-      name: article.Name,
-      intro: article.Intro,
-      description: article.Description,
-      price: article.Price,
-      issueDate: article.published_at,
-      imageUrl: article.Image.url,
-      categories: article.item_categories.map((category) => {
-        return category.Name;
+      name: article.attributes.Name,
+      intro: article.attributes.Intro,
+      description: article.attributes.Description,
+      price: article.attributes.Price,
+      issueDate: article.attributes.publishedAt,
+      imageUrl: article.attributes.Image.data.attributes.url,
+      categories: article.attributes.item_categories.data.map((category) => {
+        return category.attributes.Name;
       }),
     }));
     return cleanProducts;

@@ -86,10 +86,12 @@ export const getStaticProps: GetStaticProps = async () => {
   // );
   // const data = res.data.data;
 
-  const res = await axios.get("https://strapi-d6ef.onrender.com/articles");
-  const data = res.data;
+  const res = await axios.get(
+    "https://jbbeauty-cms.herokuapp.com/api/articles?populate=%2A"
+  );
+  const data = res.data.data;
 
-  // console.log("blog articles data:", res.data);
+  // console.log("blog articles data:", data);
 
   interface Category {
     [category: string]: number;
@@ -97,8 +99,8 @@ export const getStaticProps: GetStaticProps = async () => {
 
   const activeCategories = {} as Category;
   data.map((article) =>
-    article.article_categories.map((category) => {
-      const categoryName = category.Name;
+    article.attributes.article_categories.data.map((category) => {
+      const categoryName = category.attributes.Name;
       activeCategories[categoryName]
         ? (activeCategories[categoryName] += 1)
         : (activeCategories[categoryName] = 1);
@@ -108,14 +110,14 @@ export const getStaticProps: GetStaticProps = async () => {
 
   const articles = data.map((article) => ({
     id: article.id.toString(),
-    title: article.Name,
-    intro: article.Intro,
-    description: article.Description,
-    issueDate: article.published_at,
-    videoUrl: article.Video_URL,
-    imageUrl: article.Image.url,
-    categories: article.article_categories.map((category) => {
-      return category.Name;
+    title: article.attributes.Name,
+    intro: article.attributes.Intro,
+    description: article.attributes.Description,
+    issueDate: article.attributes.publishedAt,
+    videoUrl: article.attributes.Video_URL,
+    imageUrl: article.attributes.Image.data.attributes.url,
+    categories: article.attributes.article_categories.data.map((category) => {
+      return category.attributes.Name;
     }),
   }));
 

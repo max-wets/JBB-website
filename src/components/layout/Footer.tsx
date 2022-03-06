@@ -58,14 +58,14 @@ function Footer() {
             ) : null}
             <div className={classes.footerbox}>
               <div>
-                <Link href="">
+                <Link href={"/"}>
                   <a>
                     <p className={classes.footertitle}>JBBeauty</p>
                   </a>
                 </Link>
               </div>
               <div>
-                <Link href="">
+                <Link href="https://www.youtube.com/channel/UCvVIi4gAhSC4x7sM3g9q53w">
                   <a>
                     <IconButton
                       aria-label="lien youtube"
@@ -77,7 +77,7 @@ function Footer() {
                     />
                   </a>
                 </Link>
-                <Link href="">
+                <Link href="https://www.facebook.com/groups/3136931483299677">
                   <a>
                     <IconButton
                       aria-label="lien youtube"

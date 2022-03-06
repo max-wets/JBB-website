@@ -4,16 +4,22 @@ import Image from "next/image";
 import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 import { Tooltip } from "@chakra-ui/react";
 import ReactMarkdown from "react-markdown";
+import { useEffect } from "react";
+import remarkGfm from "remark-gfm";
 
 function ProductDetail(props: {
   product;
   prevNextProducts;
   recommendedProducts;
 }) {
+  // useEffect(() => {
+  //   console.log("product:", props.product);
+  // });
+
   function priceFormat(num) {
     let formattedNum;
 
-    if (!num.toString().includes(".")) {
+    if (!num?.toString().includes(".")) {
       formattedNum = num + ",00";
     } else {
       const splitArr = num.toString().split(".");
@@ -31,8 +37,8 @@ function ProductDetail(props: {
             <Link href={`/products/${product.id}`}>
               <a>
                 <Image
-                  src={product.Image.url}
-                  alt={product.Name}
+                  src={product.attributes.Image.data.attributes.url}
+                  alt={product.attributes.Name}
                   height={294}
                   width={235}
                   objectFit="contain"
@@ -44,15 +50,17 @@ function ProductDetail(props: {
           <div className={classes.productname}>
             <h2>
               <Link href={`/products/${product.id}`}>
-                <a>{product.Name}</a>
+                <a>{product.attributes.Name}</a>
               </Link>
             </h2>
           </div>
-          <div className={classes.pricewrap}>
-            <span style={{ fontSize: "18px" }} className={classes.price}>
-              {priceFormat(product.Price)}
-            </span>
-          </div>
+          {product.attributes.Price && (
+            <div className={classes.pricewrap}>
+              <span style={{ fontSize: "18px" }} className={classes.price}>
+                {priceFormat(product.attributes.Price)}
+              </span>
+            </div>
+          )}
         </div>
       </li>
     );
@@ -89,7 +97,7 @@ function ProductDetail(props: {
       <div className={classes.prodctr}>
         <div className={classes.productimg}>
           <Image
-            src={props.product.Image.url}
+            src={props.product.ImageUrl}
             alt={props.product.Name}
             width={370}
             height={370}
@@ -98,7 +106,9 @@ function ProductDetail(props: {
         </div>
         <div className={classes.summary}>
           <h2>{props.product.Name.toLowerCase()}</h2>
-          <p className={classes.price}>{priceFormat(props.product.Price)}</p>
+          {props.product.Price && (
+            <p className={classes.price}>{priceFormat(props.product.Price)}</p>
+          )}
           <div className={classes.intro}>
             <p>
               <ReactMarkdown>{props.product.Intro}</ReactMarkdown>
@@ -126,7 +136,12 @@ function ProductDetail(props: {
       <div className={classes.description}>
         <p>
           <h2>Description</h2>
-          <ReactMarkdown>{props.product.Description}</ReactMarkdown>
+          <ReactMarkdown
+            className={classes.descriptioncontent}
+            remarkPlugins={[remarkGfm]}
+          >
+            {props.product.Description}
+          </ReactMarkdown>
         </p>
       </div>
       <section className={classes.relatedproducts}>

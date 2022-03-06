@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import bgPicture from "../../public/home/bg-picture.jpg";
 import ProductItem from "../products/ProductItem";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Grid, GridItem, useMediaQuery, Tooltip, Icon } from "@chakra-ui/react";
 import { FiClock } from "react-icons/fi";
 import { BiComment } from "react-icons/bi";
@@ -11,12 +11,25 @@ import { BiComment } from "react-icons/bi";
 function HomeComponent(props: { recentProducts; recentArticles }) {
   const [isLargerThan1000] = useMediaQuery("(min-width: 1000px)");
   const [isLargerThan750] = useMediaQuery("(min-width: 750px)");
-  const [isLargerThan480] = useMediaQuery("(min-width: 480px)");
+  const [serverRendering, setServerRendering] = useState(true);
 
   useEffect(() => {
-    console.log("recent products:", props.recentProducts);
-    console.log("recent articles:", props.recentArticles);
+    // console.log("recent products:", props.recentProducts);
+    // console.log("recent articles:", props.recentArticles);
+    setServerRendering(false);
   }, []);
+
+  function determineItemGridDisplay() {
+    if (isLargerThan1000) return "repeat(4, 1fr)";
+    if (isLargerThan750) return "repeat(3, 1fr)";
+    return "repeat(1, 1fr)";
+  }
+
+  function determineArticleGridDisplay() {
+    if (isLargerThan1000) return "repeat(3, 1fr)";
+    if (isLargerThan750) return "repeat(2, 1fr)";
+    return "repeat(1, 1fr)";
+  }
 
   const newDate = (date) => {
     const mois = [
@@ -39,9 +52,36 @@ function HomeComponent(props: { recentProducts; recentArticles }) {
     } ${nDate.getFullYear()}`;
   };
 
-  function ArticleItem(props: { article }) {
+  function ArticleItem(props: { idx; article }) {
+    // console.log(props.article.description);
+    const [descriptionExcerpt, setDescriptionExcerpt] = useState("");
+
+    useEffect(() => {
+      let cleanExcerpt;
+
+      if (props.article.description.length > 100) {
+        const excerpt = props.article.description.substring(0, 100);
+        const regex = new RegExp("\\n", "g");
+        cleanExcerpt = excerpt
+          .split(" ")
+          .map((segment) => {
+            if (regex.test(segment)) {
+              const newSegment = segment.replace(regex, ` `);
+              return newSegment;
+            }
+            return segment;
+          })
+          .join(" ");
+        // console.log(cleanExcerpt);
+      } else {
+        cleanExcerpt = props.article.description;
+      }
+
+      setDescriptionExcerpt(cleanExcerpt);
+    }, []);
+
     return (
-      <div className={classes.articlectr}>
+      <div key={props.idx} className={classes.articlectr}>
         <div className={classes.thumbnail}>
           <Link href={`/blog/${props.article.id}`}>
             <a>
@@ -75,9 +115,7 @@ function HomeComponent(props: { recentProducts; recentArticles }) {
               </Tooltip>
             </a>
           </Link>
-          <div className={classes.excerpt}>
-            {props.article.description.substring(0, 100) + "..."}
-          </div>
+          <div className={classes.excerpt}>{descriptionExcerpt}</div>
         </div>
         <ul className={classes.meta}>
           <li>
@@ -135,17 +173,15 @@ function HomeComponent(props: { recentProducts; recentArticles }) {
                 <div className={classes.productsctr}>
                   <Grid
                     templateColumns={
-                      isLargerThan750
+                      serverRendering
                         ? "repeat(4, 1fr)"
-                        : isLargerThan480
-                        ? "repeat(3, 1fr)"
-                        : "repeat(1, 1fr)"
+                        : determineItemGridDisplay()
                     }
                     gap={4}
                   >
-                    {props.recentProducts.map((product) => (
-                      <GridItem w="100%" border="1px solid #e9e9e9">
-                        <ProductItem product={product} />
+                    {props.recentProducts.map((product, idx) => (
+                      <GridItem key={idx} w="100%" border="1px solid #e9e9e9">
+                        <ProductItem product={product} idx={idx} />
                       </GridItem>
                     ))}
                   </Grid>
@@ -167,22 +203,21 @@ function HomeComponent(props: { recentProducts; recentArticles }) {
                 <div className={classes.articlesctr}>
                   <Grid
                     templateColumns={
-                      isLargerThan1000
-                        ? "repeat(3, 1fr)"
-                        : isLargerThan750
-                        ? "repeat(2, 2fr)"
-                        : "repeat(1, 1fr)"
+                      serverRendering
+                        ? "repeat(3, 3fr)"
+                        : determineArticleGridDisplay()
                     }
                     gap={4}
                   >
-                    {props.recentArticles.map((article) => (
+                    {props.recentArticles.map((article, idx) => (
                       <GridItem
+                        key={idx}
                         w="100%"
                         border="1px solid #e9e9e9"
                         padding="0 10px"
                         marginBottom="20px"
                       >
-                        <ArticleItem article={article} />
+                        <ArticleItem idx={idx} article={article} />
                       </GridItem>
                     ))}
                   </Grid>

@@ -1,4 +1,4 @@
-import classes from "./LostPwd.module.css";
+import classes from "./ResetPwd.module.css";
 import Link from "next/link";
 import { Field, Form, Formik, ErrorMessage } from "formik";
 import axios from "axios";
@@ -7,25 +7,20 @@ interface Errors {
   [key: string]: any;
 }
 
-function Signup({ setError }) {
+function ResetPwd({ setError }) {
   return (
     <div className={classes.container}>
       <div className={classes.contentarea}>
         <div className={classes.formwrap}>
-          <p>
-            Vous avez oublié votre mot de passe ? Veuillez entrer votre adresse
-            email. Vous recevrez par mail un lien pour en créer un nouveau.
-          </p>
+          <p>Veuillez saisir votre nouveau mot de passe.</p>
           <Formik
-            initialValues={{ email: "" }}
+            initialValues={{ password: "", confPassword: "" }}
             validate={(values) => {
               const errors = {} as Errors;
-              if (!values.email) {
-                errors.email = "Email obligatoire";
-              } else if (
-                !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
-              ) {
-                errors.email = "Adresse mail non valide";
+              if (!values.password) {
+                errors.password = "Mot de passe obligatoire";
+              } else if (!values.confPassword) {
+                errors.password = "Confirmation de mot de passe obligatoire";
               }
               return errors;
             }}
@@ -34,11 +29,17 @@ function Signup({ setError }) {
               //   alert(JSON.stringify(values, null, 2));
               //   setSubmitting(false);
               // }, 400);
+              if (values.password !== values.confPassword) {
+                setError(
+                  "Veuillez confirmer votre nouveau mot de passe avec une valeur de mot de passe similaire."
+                );
+                setSubmitting(false);
+              }
               try {
                 const res = await axios.post(
                   "https://jbbeauty-cms.herokuapp.com/api/auth/forgot-password",
                   {
-                    email: values.email,
+                    password: values.password,
                   }
                 );
                 const data = res.data;
@@ -54,10 +55,28 @@ function Signup({ setError }) {
             {(formik) => (
               <Form>
                 <p>
-                  <label htmlFor="email">Email</label>
-                  <Field type="email" name="email" />
+                  <label htmlFor="password">Mot de passe</label>
+                  <Field type="password" name="password" />
                   <ErrorMessage
-                    name="email"
+                    name="password"
+                    render={(msg) => (
+                      <div
+                        style={{
+                          color: "red",
+                          fontWeight: "700",
+                          fontSize: "14px",
+                        }}
+                      >
+                        {msg + " !"}
+                      </div>
+                    )}
+                  />
+                </p>
+                <p>
+                  <label htmlFor="password">Confirmer mot de passe</label>
+                  <Field type="password" name="confirm-password" />
+                  <ErrorMessage
+                    name="confirm-password"
                     render={(msg) => (
                       <div
                         style={{
@@ -74,7 +93,7 @@ function Signup({ setError }) {
                 <button type="submit" disabled={formik.isSubmitting}>
                   {formik.isSubmitting
                     ? "Veuillez patienter..."
-                    : "Réinitialiser mon mot de passe"}
+                    : "Changer mon mot de passe"}
                 </button>
               </Form>
             )}
@@ -85,4 +104,4 @@ function Signup({ setError }) {
   );
 }
 
-export default Signup;
+export default ResetPwd;

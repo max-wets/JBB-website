@@ -6,7 +6,7 @@ function LoginPage(props: { crsfToken }) {
   return (
     <>
       <LoginHeading />
-      <Login crsfToken={props.crsfToken} />
+      <Login crsfToken={props.crsfToken} setError={undefined} />
     </>
   );
 }

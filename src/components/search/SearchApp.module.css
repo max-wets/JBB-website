@@ -1,21 +1,33 @@
 .header {
   align-items: center;
-  background: linear-gradient(#ce303d, #fca6ad);
-  color: #fff;
+  /* background: linear-gradient(#ce303d, #fca6ad); */
+  /* color: #fff; */
   display: flex;
   flex-direction: column;
   justify-content: center;
   min-height: 200px;
   padding: 0.5rem 1rem;
   padding-bottom: 25px;
+  margin-bottom: 20px;
+  margin: 0 40px;
   text-align: center;
+  border-top: solid 1px lightgray;
+  border-bottom: solid 1px lightgray;
 }
 
 .headertitle {
+  color: #d93644;
+  text-shadow: 1px 1px gray;
   font-size: 38px;
-  font-weight: 300;
+  font-weight: 500;
   margin-block-start: 1em;
   margin-block-end: 1em;
   margin-inline-start: 0px;
   margin-inline-end: 0px;
+}
+
+@media only screen and (max-width: 600px) {
+  .headertitle {
+    font-size: 28px;
+  }
 }

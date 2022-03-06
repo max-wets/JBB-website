@@ -12,7 +12,7 @@ import {
 } from "@chakra-ui/react";
 import Image from "next/image";
 import { Article } from "./BlogArticleItem";
-import { BsTwitter, BsFacebook, BsInstagram } from "react-icons/bs";
+import { BsTwitter, BsFacebook, BsInstagram, BsYoutube } from "react-icons/bs";
 import { FaRss } from "react-icons/fa";
 import { useState } from "react";
 
@@ -49,10 +49,10 @@ function BlogAside(props: {
     props.setSelectedCategory(e.target.dataset.category);
   };
 
-  function SideBlogDetail({ article }) {
+  function SideBlogDetail({ idx, article }) {
     return (
-      <li>
-        <Link href="">
+      <li key={idx}>
+        <Link href={`/blog/${article.id}`}>
           <a className={classes.imgctr}>
             <Image
               src={article.imageUrl}
@@ -64,7 +64,7 @@ function BlogAside(props: {
           </a>
         </Link>
         <div className={classes.recentpostdetails}>
-          <Link href="">
+          <Link href={`/blog/${article.id}`}>
             <a>{article.title}</a>
           </Link>
           <div>
@@ -83,21 +83,21 @@ function BlogAside(props: {
         <div className={classes.sidebox}>
           <h4 className={classes.socialtitle}>Me suivre</h4>
           <ul className={classes.socialicons}>
-            <Link href="">
+            <Link href="https://www.youtube.com/channel/UCvVIi4gAhSC4x7sM3g9q53w">
               <a>
                 <li>
-                  <Icon as={BsTwitter} h={5} w={5} size="sm" />
+                  <Icon as={BsYoutube} h={5} w={5} size="sm" />
                 </li>
               </a>
             </Link>
-            <Link href="">
+            <Link href="https://www.facebook.com/groups/3136931483299677">
               <a>
                 <li>
                   <Icon as={BsFacebook} h={5} w={5} size="sm" />
                 </li>
               </a>
             </Link>
-            <Link href="">
+            <Link href="https://www.instagram.com/julie_baronnie/">
               <a>
                 <li>
                   <Icon as={BsInstagram} h={5} w={5} size="sm" />
@@ -153,14 +153,16 @@ function BlogAside(props: {
         <div className={classes.sidebox}>
           <h4 className={classes.socialtitle}>Catégories</h4>
           <div className={classes.blogcategories}>
-            {Object.entries(props.activeCategories).map(([category, qty]) => (
-              <li>
-                <div data-category={category} onClick={(e) => handleClick(e)}>
-                  {category}
-                </div>
-                <span>{`(${qty})`}</span>
-              </li>
-            ))}
+            {Object.entries(props.activeCategories).map(
+              ([category, qty], idx) => (
+                <li key={idx}>
+                  <div data-category={category} onClick={(e) => handleClick(e)}>
+                    {category}
+                  </div>
+                  <span>{`(${qty})`}</span>
+                </li>
+              )
+            )}
             <li>
               <div data-category="Toutes" onClick={(e) => handleClick(e)}>
                 Toutes catégories
@@ -172,9 +174,9 @@ function BlogAside(props: {
         <div className={classes.sidebox}>
           <h4 className={classes.socialtitle}>Articles récents</h4>
           <ul className={classes.sidebarlist}>
-            <SideBlogDetail article={props.articles[0]} />
-            <SideBlogDetail article={props.articles[1]} />
-            <SideBlogDetail article={props.articles[2]} />
+            <SideBlogDetail idx={1} article={props.articles[0]} />
+            <SideBlogDetail idx={2} article={props.articles[1]} />
+            <SideBlogDetail idx={3} article={props.articles[2]} />
           </ul>
         </div>
       </div>

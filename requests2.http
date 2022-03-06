@@ -1,0 +1,101 @@
+### Get item categories list
+GET https://jbbeauty-cms.herokuapp.com/api/item-categories
+
+### Get items list
+GET https://jbbeauty-cms.herokuapp.com/api/items
+
+### Get items list (with attributes)
+GET https://jbbeauty-cms.herokuapp.com/api/items?populate=%2A
+
+### Get a given item
+GET https://jbbeauty-cms.herokuapp.com/api/items/12?populate=%2A
+
+### Get article categories list
+GET https://jbbeauty-cms.herokuapp.com/api/article-categories
+
+### Get articles list
+GET https://jbbeauty-cms.herokuapp.com/api/articles?populate=%2A
+
+### Get a given article
+GET https://jbbeauty-cms.herokuapp.com/api/articles/14?populate=%2A
+
+
+
+
+### Feed algolia products search index
+GET http://localhost:3000/api/products-index
+
+### Feed algolia articles search index
+GET http://localhost:3000/api/articles-index
+
+
+
+
+######## AUTHENTICATION ########
+### Create user
+POST https://jbbeauty-cms.herokuapp.com/api/auth/local/register
+Content-Type: application/json
+
+{
+    "username": "Max",
+    "email": "wetsmaxime@gmail.com",
+    "password": "max123"
+}
+
+### Sign in as a registered user
+POST https://jbbeauty-cms.herokuapp.com/api/auth/local
+Content-Type: application/json
+
+{
+    "identifier": "wetsmaxime@gmail.com",
+    "password": "max123"
+}
+
+### Get users
+GET https://jbbeauty-cms.herokuapp.com/api/users/me
+
+### Forgot password
+POST https://jbbeauty-cms.herokuapp.com/api/auth/forgot-password
+Content-Type: application/json
+
+{
+    "email": "wetsmaxime@gmail.com"
+}
+
+
+### Create comment
+POST https://jbbeauty-cms.herokuapp.com/api/comments
+Content-Type: application/json
+
+{
+    "data": {
+        "ArticleID": 1,
+        "AuthorID": 3,
+        "Content": "C'est le deuxième commentaire de Maxime sur l'article Botox Botulax"
+    }
+}
+
+### Update comment
+PUT https://jbbeauty-cms.herokuapp.com/api/comments/1
+
+{
+    "data": {
+        "Content": "Ceci est une version à nouveau modifiée du premier commentaire de Maxime sur l'article Botox Botulax"
+    }
+}
+
+### Get comments
+GET https://jbbeauty-cms.herokuapp.com/api/comments
+
+### get filtered comments
+GET https://jbbeauty-cms.herokuapp.com/api/comments?filters[ArticleID][$eq]=14
+
+### get users 
+GET https://jbbeauty-cms.herokuapp.com/api/users
+Authorization: bearer b94d30f2ba968948cedd9a0ee79f1abe60d9e403103d202152ae7c46c5d3fb976482228d0df84efdbee8053a17fedc165b4edb5e8503669646cfcaa0b4ed1b506f11465b1581378e7a7f7476a1a6509e64c50740944e21e3d622d7dbc25b4e40590aed2aecd602a74cf7cec2d07ff3cf4124f0b210398608acb5ab734992a9ed
+
+
+
+
+
+

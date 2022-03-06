@@ -32,8 +32,8 @@ function ProductsPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
 
   useEffect(() => {
     setLoadedProducts(props.products);
-    console.log("Products page products:", props.products);
-    console.log("Product page active categories:", props.activeCategories);
+    // console.log("Products page products:", props.products);
+    // console.log("Product page active categories:", props.activeCategories);
     setLoading(false);
   }, []);
 
@@ -100,19 +100,21 @@ function ProductsPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
 export default ProductsPage;
 
 export const getStaticProps: GetStaticProps = async () => {
-  const res = await axios.get("https://strapi-d6ef.onrender.com/items");
-  const data = res.data;
+  const res = await axios.get(
+    "https://jbbeauty-cms.herokuapp.com/api/items?populate=%2A"
+  );
+  const data = res.data.data;
 
   const products = data.map((article) => ({
     id: article.id.toString(),
-    name: article.Name,
-    intro: article.Intro,
-    description: article.Description,
-    price: article.Price,
-    issueDate: article.published_at,
-    imageUrl: article.Image.url,
-    categories: article.item_categories.map((category) => {
-      return category.Name;
+    name: article.attributes.Name,
+    intro: article.attributes.Intro,
+    description: article.attributes.Description,
+    price: article.attributes.Price,
+    issueDate: article.attributes.publishedAt,
+    imageUrl: article.attributes.Image.data.attributes.url,
+    categories: article.attributes.item_categories.data.map((category) => {
+      return category.attributes.Name;
     }),
   }));
 

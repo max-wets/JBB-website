@@ -1,9 +1,9 @@
-import Signup from "../../components/auth/Signup";
-import SignupHeading from "../../components/auth/SignupHeading";
+import ResetPwd from "../../../components/auth/ResetPwd";
+import ResetPwdHeading from "../../../components/auth/LostPwdHeading";
 import { useState, useEffect } from "react";
 import { Alert, AlertIcon, CloseButton } from "@chakra-ui/react";
 
-function SignupPage() {
+function ResetPwdPage() {
   const [error, setError] = useState(null);
   const [displayAlert, setDisplayAlert] = useState(false);
 
@@ -40,10 +40,10 @@ function SignupPage() {
   return (
     <>
       {displayAlert ? <AlertMessage /> : null}
-      <SignupHeading />
-      <Signup setError={setError} />
+      <ResetPwdHeading />
+      <ResetPwd setError={setError} />
     </>
   );
 }
 
-export default SignupPage;
+export default ResetPwdPage;

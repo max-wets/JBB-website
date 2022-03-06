@@ -11,18 +11,18 @@ const indexArticles = client.initIndex(process.env.ALGOLIA_ARTICLES_INDEX_NAME);
 const fetchArticlesFromDatabase = async () => {
   try {
     const articles = await axios.get(
-      "https://strapi-d6ef.onrender.com/articles"
+      "https://jbbeauty-cms.herokuapp.com/api/articles?populate=%2A"
     ); // Fetch data from your database
-    const cleanArticles = articles.data.map((article) => ({
+    const cleanArticles = articles.data.data.map((article) => ({
       id: article.id.toString(),
-      title: article.Name,
-      intro: article.Intro,
-      description: article.Description,
-      issueDate: article.published_at,
-      videoUrl: article.Video_URL,
-      imageUrl: article.Image.url,
-      categories: article.article_categories.map((category) => {
-        return category.Name;
+      title: article.attributes.Name,
+      intro: article.attributes.Intro,
+      description: article.attributes.Description,
+      issueDate: article.attributes.publishedAt,
+      videoUrl: article.attributes.Video_URL,
+      imageUrl: article.attributes.Image.data.attributes.url,
+      categories: article.attributes.article_categories.data.map((category) => {
+        return category.attributes.Name;
       }),
     }));
     return cleanArticles;
@@ -34,6 +34,7 @@ const fetchArticlesFromDatabase = async () => {
 export default async function handler(req, res) {
   try {
     const articleRecords = await fetchArticlesFromDatabase();
+
     const response = indexArticles.saveObjects(articleRecords, {
       autoGenerateObjectIDIfNotExist: true,
     });

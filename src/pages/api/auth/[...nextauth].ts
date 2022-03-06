@@ -10,30 +10,37 @@ const options = {
         password: { label: "password", type: "password" },
       },
       async authorize(credentials, req) {
-        console.log("req:", req.body);
+        // console.log("req:", req.body);
 
         const reqBody = {
           identifier: credentials.email,
           password: credentials.password,
         };
 
-        console.log("req body:", reqBody);
+        // console.log("req body:", reqBody);
 
-        const res = await fetch("https://strapi-d6ef.onrender.com/auth/local", {
-          method: "POST",
-          body: JSON.stringify(reqBody),
-          headers: { "Content-Type": "application/json" },
-        });
+        const res = await fetch(
+          "https://jbbeauty-cms.herokuapp.com/api/auth/local",
+          {
+            method: "POST",
+            body: JSON.stringify(reqBody),
+            headers: { "Content-Type": "application/json" },
+          }
+        );
         const user = await res.json();
 
         if (!res.ok) {
-          throw new Error(user.exception);
+          // console.log("res not ok");
+          // throw new Error(user.exception);
+          return user.exception;
         }
         // If no error and we have user data, return it
         if (res.ok && user) {
+          // console.log("res ok");
           return user;
         }
 
+        // console.log("res null");
         return null;
       },
     }),
@@ -41,13 +48,14 @@ const options = {
   secret: process.env.JWT_SECRET,
   pages: {
     signIn: "/auth/signin",
+    // error: "/auth/signin",
   },
   callbacks: {
     async jwt({ token, user, account }) {
       if (account && user) {
-        console.log("token:", token);
-        console.log("user:", user);
-        console.log("account:", account);
+        // console.log("token:", token);
+        // console.log("user:", user);
+        // console.log("account:", account);
 
         return {
           ...token,
@@ -63,7 +71,8 @@ const options = {
 
     async session({ session, token }) {
       session.user.accessToken = token.accessToken;
-      console.log("session:", session);
+      session.user.id = token.id;
+      // console.log("session:", session);
 
       return session;
     },

@@ -1,4 +1,4 @@
-import classes from "./ProductDetailHeading.module.css";
+import classes from "./LostPwdHeading.module.css";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -9,11 +9,11 @@ import {
 import { ChevronRightIcon } from "@chakra-ui/icons";
 import { BiHomeHeart } from "react-icons/bi";
 
-function BlogHeading(props: { Name }) {
+function ResetPwdHeading() {
   return (
     <header className={classes.pageheader}>
       <div className={classes.container}>
-        <h1>{props.Name.toLowerCase()}</h1>
+        <h1>Mon compte</h1>
         <Breadcrumb
           spacing="1px"
           separator={<ChevronRightIcon color="gray.500" />}
@@ -27,10 +27,10 @@ function BlogHeading(props: { Name }) {
           <BreadcrumbItem h="24px">
             <BreadcrumbLink
               fontSize="13px"
-              href="/products"
+              href="/login"
               _hover={{ textDecoration: "none", color: "#D93644" }}
             >
-              Products
+              Connexion
             </BreadcrumbLink>
           </BreadcrumbItem>
 
@@ -40,7 +40,7 @@ function BlogHeading(props: { Name }) {
               href="#"
               _hover={{ textDecoration: "none", color: "#D93644" }}
             >
-              {props.Name}
+              Modifier mot de passe
             </BreadcrumbLink>
           </BreadcrumbItem>
         </Breadcrumb>
@@ -49,4 +49,4 @@ function BlogHeading(props: { Name }) {
   );
 }
 
-export default BlogHeading;
+export default ResetPwdHeading;

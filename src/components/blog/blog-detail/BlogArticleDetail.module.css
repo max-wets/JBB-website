@@ -84,6 +84,15 @@
   margin: 16px 0px;
 }
 
+.entrycontent a {
+  color: blue;
+  text-decoration: underline;
+}
+
+.entrycontent a:active {
+  color: purple;
+}
+
 .entrycontent h4 {
   margin: 16px 0px;
 }
@@ -248,7 +257,8 @@
   justify-content: center;
 }
 
-.relatedpostsentry article a:nth-child(2):hover {
+.relatedpostsentry article a:nth-child(2):hover,
+.mustlogin a:hover {
   color: #d93644;
 }
 
@@ -271,3 +281,100 @@
 .overlay:hover {
   opacity: 0.1;
 }
+
+.commentsarea {
+  margin-top: 30px;
+  padding-top: 30px;
+  border-top: 1px solid #f1f1f1;
+}
+
+.commentrespond {
+  margin-bottom: 20px;
+}
+
+.commentreplytitle {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0 0 20px;
+  color: #333;
+  line-height: 1.4;
+}
+
+.mustlogin {
+  margin: 0 0 20px;
+}
+
+.mustlogin a {
+  text-decoration: underline;
+}
+
+.mustlogin a:active {
+  color: #d93644;
+}
+
+.inputrow {
+  word-break: break-all;
+  display: flex;
+  flex-direction: row;
+}
+
+.commentbox {
+  flex: 1;
+  /* flex-basis: 1e-9px; */
+  min-width: 0;
+}
+
+.footer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+}
+
+.buttons button {
+  vertical-align: middle;
+  white-space: nowrap;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 1.1;
+  text-transform: uppercase;
+  margin-left: 8px;
+  border-radius: 0.2em;
+  line-height: 20px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 6px 10px;
+}
+
+.cancelbutton {
+  color: rgb(66, 65, 65);
+}
+
+.submitbutton {
+  color: white;
+  background-color: #d93644;
+  min-width: 220px;
+}
+
+.submitbutton:disabled {
+  background-color: rgb(235, 232, 232);
+  color: rgb(126, 123, 123);
+  cursor: initial;
+}
+
+.commentbox textarea {
+  resize: none;
+  line-height: normal;
+  width: 100%;
+  outline: none;
+  border-bottom: 1px solid #333;
+}
+
+/* .commentbox textarea:focus ~ .footer {
+  display: flex;
+} */
