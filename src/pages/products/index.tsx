@@ -32,8 +32,8 @@ function ProductsPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
 
   useEffect(() => {
     setLoadedProducts(props.products);
-    console.log("Products page products:", props.products);
-    console.log("Product page active categories:", props.activeCategories);
+    // console.log("Products page products:", props.products);
+    // console.log("Product page active categories:", props.activeCategories);
     setLoading(false);
   }, []);
 

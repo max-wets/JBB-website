@@ -10,18 +10,23 @@ type Props = {
   children: React.ReactNode;
 };
 
+let mounted = false;
 function Layout({ children }: Props) {
   const { data: session, status } = useSession();
   const [connected, setConnected] = useState(null);
   const [AlertMessage, setAlertMessage] = useState(null);
 
   useEffect(() => {
+    mounted = true;
+  }, []);
+
+  useEffect(() => {
     if (status === "authenticated") {
       setConnected(true);
-      console.log("you're authenticated");
+      // console.log("you're authenticated");
     } else {
       setConnected(false);
-      console.log("you're not authenticated");
+      // console.log("you're not authenticated");
     }
   }, [status]);
 
@@ -47,15 +52,18 @@ function Layout({ children }: Props) {
     setTimeout(() => setAlertMessage(null), 5000);
   }, [connected]);
 
-  return (
-    <div>
-      {AlertMessage ? AlertMessage : null}
-      <StickyHeader />
-      <MainNavigation />
-      {children && <main className={classes.main}>{children}</main>}
-      <Footer />
-    </div>
-  );
+  if (mounted) {
+    return (
+      <div>
+        {AlertMessage ? AlertMessage : null}
+        <StickyHeader />
+        <MainNavigation />
+        {children && <main className={classes.main}>{children}</main>}
+        <Footer />
+      </div>
+    );
+  }
+  return null;
 }
 
 export default Layout;

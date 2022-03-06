@@ -9,11 +9,11 @@ import {
 import { ChevronRightIcon } from "@chakra-ui/icons";
 import { BiHomeHeart } from "react-icons/bi";
 
-function BlogHeading(props: { name }) {
+function BlogHeading(props: { Name }) {
   return (
     <header className={classes.pageheader}>
       <div className={classes.container}>
-        <h1>{props.name.toLowerCase()}</h1>
+        <h1>{props.Name.toLowerCase()}</h1>
         <Breadcrumb
           spacing="1px"
           separator={<ChevronRightIcon color="gray.500" />}
@@ -40,7 +40,7 @@ function BlogHeading(props: { name }) {
               href="#"
               _hover={{ textDecoration: "none", color: "#D93644" }}
             >
-              {props.name}
+              {props.Name}
             </BreadcrumbLink>
           </BreadcrumbItem>
         </Breadcrumb>

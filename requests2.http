@@ -8,7 +8,7 @@ GET https://jbbeauty-cms.herokuapp.com/api/items
 GET https://jbbeauty-cms.herokuapp.com/api/items?populate=%2A
 
 ### Get a given item
-GET https://jbbeauty-cms.herokuapp.com/api/items/1?populate=%2A
+GET https://jbbeauty-cms.herokuapp.com/api/items/12?populate=%2A
 
 ### Get article categories list
 GET https://jbbeauty-cms.herokuapp.com/api/article-categories

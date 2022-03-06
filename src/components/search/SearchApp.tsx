@@ -5,8 +5,8 @@ import CustomSearchBox from "./CustomSearchBox";
 import CustomHits from "./CustomHits";
 
 const searchClient = algoliasearch(
-  "RX7LAXFJUA",
-  "4464a67bccd9d2ba13f636b6a10f4336"
+  process.env.NEXT_PUBLIC_ALGOLIA_APP_ID,
+  process.env.NEXT_PUBLIC_ALGOLIA_SEARCH_API_KEY
 );
 
 export default function Search() {

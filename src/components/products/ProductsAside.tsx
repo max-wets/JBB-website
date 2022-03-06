@@ -41,7 +41,7 @@ function BlogAside(props: {
     }, []);
     priceRangeArr[0] = Math.min(...pricesArr);
     priceRangeArr[1] = Math.max(...pricesArr);
-    console.log("prices range array:", priceRangeArr);
+    // console.log("prices range array:", priceRangeArr);
     return priceRangeArr;
   }
 
@@ -54,9 +54,9 @@ function BlogAside(props: {
     // ]);
   }, []);
 
-  useEffect(() => {
-    console.log("price range current values:", priceRangeCurrentValues);
-  }, [priceRangeCurrentValues]);
+  // useEffect(() => {
+  //   console.log("price range current values:", priceRangeCurrentValues);
+  // }, [priceRangeCurrentValues]);
 
   // console.log("Blog Aside categories:", props.activeCategories);
 

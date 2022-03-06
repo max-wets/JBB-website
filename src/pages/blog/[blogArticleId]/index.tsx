@@ -20,7 +20,7 @@ function BlogDetailPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
     //   "Blog detail page recommended articles data:",
     //   props.recommendedArticles
     // );
-    console.log("Blog article comments:", props.articleComments);
+    // console.log("Blog article comments:", props.articleComments);
     setServerRendering(false);
   }, []);
 

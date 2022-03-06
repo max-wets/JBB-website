@@ -25,10 +25,10 @@ function ProductsList(props: {
   const [pageSize, setPageSize] = useState(PageSize);
 
   useEffect(() => {
-    console.log("Products list items:");
-    props.products.map((product) => {
-      console.log(product);
-    });
+    // console.log("Products list items:");
+    // props.products.map((product) => {
+    //   console.log(product);
+    // });
   }, []);
 
   useEffect(() => {
@@ -50,8 +50,10 @@ function ProductsList(props: {
     return (
       <ul className={classes.resultcount}>
         <li className={classes.viewtitle}>Produits par page:</li>
-        {views.map((view) => (
-          <li onClick={() => setPageSize(parseInt(view))}>{view}</li>
+        {views.map((view, idx) => (
+          <li key={idx} onClick={() => setPageSize(parseInt(view))}>
+            {view}
+          </li>
         ))}
         <li onClick={() => setPageSize(parseInt(props.productsLength))}>
           Tous
@@ -74,9 +76,9 @@ function ProductsList(props: {
         }
         gap={6}
       >
-        {currentData.map((product) => (
-          <GridItem w="100%" border="1px solid #e9e9e9">
-            <ProductItem product={product} />
+        {currentData.map((product, idx) => (
+          <GridItem key={idx} w="100%" border="1px solid #e9e9e9">
+            <ProductItem idx={idx} product={product} />
           </GridItem>
         ))}
       </Grid>

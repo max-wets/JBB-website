@@ -9,7 +9,7 @@ let PageSize = 3;
 
 function Hits({ searchState, searchResults }) {
   const validQuery = searchState.query?.length >= 1;
-  console.log(searchResults?.hits);
+  // console.log(searchResults?.hits);
 
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -19,9 +19,9 @@ function Hits({ searchState, searchResults }) {
     return searchResults?.hits.slice(firstPageIndex, lastPageIndex);
   }, [currentPage, searchResults]);
 
-  function ResultHit({ id, title, description, imageUrl }) {
+  function ResultHit({ idx, id, title, description, imageUrl }) {
     return (
-      <article key={id} className={classes.resulthit}>
+      <article key={idx} className={classes.resulthit}>
         <div className={classes.ctr}>
           <div className={classes.thumbnail}>
             <Link href={`/blog/${id}`}>
@@ -59,16 +59,20 @@ function Hits({ searchState, searchResults }) {
   }
 
   return (
-    <>
+    <div className={classes.resultsbox}>
       {searchResults?.hits.length === 0 && validQuery && (
-        <p>Aw snap! No search results were found.</p>
+        <p>
+          0 résultat. Désolé, nous n'avons rien trouvé qui corresponde à votre
+          recherche.
+        </p>
       )}
       {searchResults?.hits.length > 0 && validQuery && (
         <>
           <div>
             <ul>
-              {currentData.map((hit) => (
+              {currentData.map((hit, idx) => (
                 <ResultHit
+                  idx={idx}
                   id={hit.id}
                   title={hit.title}
                   description={hit.description}
@@ -86,7 +90,7 @@ function Hits({ searchState, searchResults }) {
           />
         </>
       )}
-    </>
+    </div>
   );
 }
 

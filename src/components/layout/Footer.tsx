@@ -58,7 +58,7 @@ function Footer() {
             ) : null}
             <div className={classes.footerbox}>
               <div>
-                <Link href="">
+                <Link href={"/"}>
                   <a>
                     <p className={classes.footertitle}>JBBeauty</p>
                   </a>

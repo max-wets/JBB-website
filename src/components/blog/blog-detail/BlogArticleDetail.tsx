@@ -96,7 +96,7 @@ function BlogArticleDetail(props: {
         issueDate: data.data.attributes.publishedAt,
         AuthorName: sessionUser.name,
       };
-      console.log(newComment);
+      // console.log(newComment);
 
       commentBoxBtnsRef.current.style.display = "none";
       setCommentText("");
@@ -125,17 +125,17 @@ function BlogArticleDetail(props: {
   }
 
   useEffect(() => {
-    console.log("blog detail comments:", props.articleComments);
+    // console.log("blog detail comments:", props.articleComments);
     setComments(props.articleComments);
   }, []);
 
-  useEffect(() => {
-    console.log(APP_URL);
-    console.log(router);
-    if (session) {
-      console.log("user session:", session);
-    } else console.log("no user session");
-  }, []);
+  // useEffect(() => {
+  //   console.log(APP_URL);
+  //   console.log(router);
+  //   if (session) {
+  //     console.log("user session:", session);
+  //   } else console.log("no user session");
+  // }, []);
 
   const newDate = (date) => {
     const mois = [
@@ -188,9 +188,8 @@ function BlogArticleDetail(props: {
             <Icon as={BsFolder} h={6} w={6} size="sm" />
             {props.article.categories.map((category, idx) => (
               <>
-                <Link href="">
-                  <a>{category}</a>
-                </Link>
+                <span>{category}</span>
+
                 <span style={{ fontSize: "16px" }}>
                   {idx < props.article.categories.length - 1 ? ", " : null}
                 </span>
@@ -199,9 +198,9 @@ function BlogArticleDetail(props: {
           </li>
           <li>
             <Icon as={BiComment} h={6} w={6} size="sm" />
-            <Link href="">
-              <a>0 Commentaires</a>
-            </Link>
+            <span>
+              {comments ? `${comments.length} Commentaires` : "0 Commentaires"}
+            </span>
           </li>
         </ul>
         <div className={classes.entrycontent}>

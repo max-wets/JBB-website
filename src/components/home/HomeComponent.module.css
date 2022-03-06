@@ -223,3 +223,8 @@
 .details h2:hover {
   color: #d93644;
 }
+
+.details {
+  max-height: 320px;
+  text-align: start;
+}

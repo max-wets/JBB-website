@@ -13,7 +13,7 @@ const theme = extendTheme({
 function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   const router = useRouter();
 
-  useEffect(() => console.log(router), []);
+  // useEffect(() => console.log(router), []);
 
   useEffect(() => storePathValues, [router.asPath]);
 
