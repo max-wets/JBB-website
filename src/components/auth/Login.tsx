@@ -48,15 +48,16 @@ function Login({ crsfToken, setError }) {
             }}
             onSubmit={async (values, { setSubmitting }) => {
               if (session) signOut({ redirect: false });
+              const callbackUrl =
+                previousPath.current && previousPath.current !== "auth/signin"
+                  ? previousPath.current
+                  : `${window.location.origin}`;
 
               const res = await signIn("credentials", {
                 redirect: false,
                 email: values.email,
                 password: values.password,
-                callbackUrl:
-                  previousPath.current && previousPath.current !== "auth/signin"
-                    ? previousPath.current
-                    : `${window.location.origin}`,
+                callbackUrl: callbackUrl,
               });
 
               if (res?.error) {
@@ -65,7 +66,8 @@ function Login({ crsfToken, setError }) {
                     "Email et/ou mot de passe non valide(s). Veuillez réessayer."
                   );
               } else {
-                if (res.url) router.push(res.url);
+                // console.log(callbackUrl);
+                if (res.url) router.push(callbackUrl);
                 setError(null);
                 setSubmitting(false);
               }
