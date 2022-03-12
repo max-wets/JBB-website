@@ -1,5 +1,6 @@
 import classes from "./ResetPwd.module.css";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { Field, Form, Formik, ErrorMessage } from "formik";
 import axios from "axios";
 
@@ -7,7 +8,12 @@ interface Errors {
   [key: string]: any;
 }
 
-function ResetPwd({ setError }) {
+function ResetPwd({ setError, setSuccess }) {
+  const router = useRouter();
+  const { code } = router.query;
+
+  // console.log(code);
+
   return (
     <div className={classes.container}>
       <div className={classes.contentarea}>
@@ -19,7 +25,8 @@ function ResetPwd({ setError }) {
               const errors = {} as Errors;
               if (!values.password) {
                 errors.password = "Mot de passe obligatoire";
-              } else if (!values.confPassword) {
+              }
+              if (!values.confPassword) {
                 errors.password = "Confirmation de mot de passe obligatoire";
               }
               return errors;
@@ -37,18 +44,37 @@ function ResetPwd({ setError }) {
               }
               try {
                 const res = await axios.post(
-                  "https://jbbeauty-cms.herokuapp.com/api/auth/forgot-password",
+                  "https://jbbeauty-cms.herokuapp.com/api/auth/reset-password",
                   {
+                    code: code,
                     password: values.password,
+                    passwordConfirmation: values.confPassword,
                   }
                 );
                 const data = res.data;
                 if (res.data) console.log(data);
+                // alert(
+                //   JSON.stringify({
+                //     code: code,
+                //     password: values.password,
+                //     passwordConfirmation: values.confPassword,
+                //   })
+                // );
                 setSubmitting(false);
+                setSuccess(
+                  "Votre nouveau mot de passe a bien été pris en compte !"
+                );
+                router.push("/login");
               } catch (err) {
                 const errMessage = err.response.data.error.message;
                 console.error("is error:", errMessage);
-                setError(errMessage);
+                if (errMessage === "Passwords do not match") {
+                  setError(
+                    "Veuillez confirmer votre nouveau mot de passe avec une valeur de mot de passe similaire."
+                  );
+                } else {
+                  setError(errMessage);
+                }
               }
             }}
           >
@@ -73,10 +99,10 @@ function ResetPwd({ setError }) {
                   />
                 </p>
                 <p>
-                  <label htmlFor="password">Confirmer mot de passe</label>
-                  <Field type="password" name="confirm-password" />
+                  <label htmlFor="confPassword">Confirmer mot de passe</label>
+                  <Field type="password" name="confPassword" />
                   <ErrorMessage
-                    name="confirm-password"
+                    name="confPassword"
                     render={(msg) => (
                       <div
                         style={{

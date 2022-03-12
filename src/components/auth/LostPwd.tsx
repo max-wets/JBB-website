@@ -7,7 +7,7 @@ interface Errors {
   [key: string]: any;
 }
 
-function Signup({ setError }) {
+function Signup({ setError, setSuccess }) {
   return (
     <div className={classes.container}>
       <div className={classes.contentarea}>
@@ -39,11 +39,18 @@ function Signup({ setError }) {
                   "https://jbbeauty-cms.herokuapp.com/api/auth/forgot-password",
                   {
                     email: values.email,
+                  },
+                  {
+                    headers: {
+                      "Content-Type": "application/json; charset=utf-8",
+                      "Access-Control-Allow-Origin": "*",
+                    },
                   }
                 );
                 const data = res.data;
                 if (res.data) console.log(data);
                 setSubmitting(false);
+                setSuccess("Un email vous a été envoyé !");
               } catch (err) {
                 const errMessage = err.response.data.error.message;
                 console.error("is error:", errMessage);
