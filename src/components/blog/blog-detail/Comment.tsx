@@ -83,7 +83,7 @@ function Comment(props: {
         }
       );
 
-      console.log(data);
+      // console.log(data);
 
       //   setEditOn(false);
       //    setCommentText("");

@@ -179,7 +179,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
     };
   });
   // console.log("comments:", cleanComments);
-  console.log("authors id arr:", AuthorIdsArr);
+  // console.log("authors id arr:", AuthorIdsArr);
 
   // get users' names
   if (AuthorIdsArr.length > 0) {
@@ -205,7 +205,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
       }
     );
     const usersData = usersRes.data;
-    console.log("users data:", usersData);
+    // console.log("users data:", usersData);
 
     cleanComments.map((comment) => {
       const authorName = usersData.filter(
@@ -218,7 +218,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
       });
     });
 
-    console.log("complete comments:", completeComments);
+    // console.log("complete comments:", completeComments);
   }
 
   return {
