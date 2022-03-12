@@ -16,6 +16,9 @@ GET https://jbbeauty-cms.herokuapp.com/api/article-categories
 ### Get articles list
 GET https://jbbeauty-cms.herokuapp.com/api/articles?populate=%2A
 
+### Get articles list (with attributes) sorted by date
+GET https://jbbeauty-cms.herokuapp.com/api/articles?populate=%2A&sort[0]=createdAt%3Adesc
+
 ### Get a given article
 GET https://jbbeauty-cms.herokuapp.com/api/articles/14?populate=%2A
 

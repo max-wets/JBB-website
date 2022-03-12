@@ -8,23 +8,13 @@ import {
   IconButton,
   Drawer,
   DrawerBody,
-  DrawerFooter,
   DrawerHeader,
   DrawerOverlay,
   DrawerContent,
   DrawerCloseButton,
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
   useMediaQuery,
-  Accordion,
-  AccordionItem,
-  AccordionButton,
-  AccordionPanel,
-  AccordionIcon,
 } from "@chakra-ui/react";
-import { SearchIcon, ChevronDownIcon } from "@chakra-ui/icons";
+import { SearchIcon } from "@chakra-ui/icons";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { useSession } from "next-auth/react";
 import { signOut } from "next-auth/react";
@@ -140,7 +130,7 @@ function MainNavigation() {
                       colorScheme="white"
                       color="black"
                       size="sm"
-                      icon={<SearchIcon w={4} h={4} />}
+                      icon={<SearchIcon w={5} h={5} />}
                     />
                   </a>
                 </Link>

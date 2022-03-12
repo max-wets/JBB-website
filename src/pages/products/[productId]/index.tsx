@@ -49,6 +49,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
   const data = res.data.data;
 
   const rawProduct = data.filter((item) => item.id === pid)[0];
+  const productIdx = data.findIndex((item) => item.id === pid);
   const product = {
     id: rawProduct.id,
     Name: rawProduct.attributes.Name,
@@ -65,9 +66,13 @@ export const getStaticProps: GetStaticProps = async (context) => {
   };
 
   const previousProduct =
-    pid > 0 ? data.find((item) => item.id === pid - 1) : null;
+    productIdx > 0
+      ? data.find((item) => data.indexOf(item) === productIdx - 1)
+      : null;
   const nextProduct =
-    pid < data.length ? data.find((item) => item.id === pid + 1) : null;
+    productIdx < data.length
+      ? data.find((item) => data.indexOf(item) === productIdx + 1)
+      : null;
 
   const prevNextProducts = [
     previousProduct
@@ -91,14 +96,14 @@ export const getStaticProps: GetStaticProps = async (context) => {
     // console.log("product:", product);
 
     if (product.item_categories?.length > 0) {
-      const productCategories = product.item_categories.map((category) => {
-        return category.Name;
-      });
+      const productCategories = product.item_categories;
+
       function containsCategory(item) {
         if (item.id === pid) return false;
 
         let hasCategory = false;
         item.attributes.item_categories.data.forEach((category) => {
+          console.log(category.attributes.Name);
           if (productCategories.indexOf(category.attributes.Name) > -1) {
             !hasCategory ? (hasCategory = true) : null;
           }
@@ -106,12 +111,12 @@ export const getStaticProps: GetStaticProps = async (context) => {
         return hasCategory;
       }
       recommendedProducts = data.filter(containsCategory);
+      // console.log(recommendedProducts);
       // return recommendedProducts;
     }
 
     if (recommendedProducts.length > 3) {
-      // const slicedArticlesArray = sameCategoryArticles.slice(2);
-      recommendedProducts = recommendedProducts.slice(2);
+      recommendedProducts = recommendedProducts.slice(0, 3);
     } else if (recommendedProducts.length < 3) {
       const takenIds = recommendedProducts.reduce((prev, curr) => {
         return [...prev, curr.id];
@@ -119,12 +124,14 @@ export const getStaticProps: GetStaticProps = async (context) => {
       const availableProducts = data.filter(
         (product) => product.id !== pid && takenIds.indexOf(product.id) < 0
       );
+
       let i = 0;
-      while (i < 3 - recommendedProducts.length) {
+      while (recommendedProducts.length < 3) {
         recommendedProducts.push(availableProducts[i]);
         i++;
       }
     }
+
     return recommendedProducts;
   }
 
@@ -133,15 +140,13 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
     try {
       const res = await axios.get(
-        "https://jbbeauty-cms.herokuapp.com/api/items?populate=%2A"
+        "https://jbbeauty-cms.herokuapp.com/api/articles?populate=%2A&sort[0]=createdAt%3Adesc"
       );
-      const data = res.data.data;
+      const data: Array<any> = res.data.data;
 
       // console.log("data:", data);
 
-      const productCategories = product.item_categories.map((category) => {
-        return category.Name;
-      });
+      const productCategories = product.item_categories;
 
       function containsCategory(post) {
         let hasCategory = false;
@@ -162,17 +167,34 @@ export const getStaticProps: GetStaticProps = async (context) => {
           issueDate: post.attributes.publishedAt,
           videoUrl: post.attributes.Video_URL,
           imageUrl: post.attributes.Image.data.attributes.url,
-          categories: post.attributes.article_categories.map((category) => {
-            return category.attributes.Name;
-          }),
+          categories: post.attributes.article_categories.data.map(
+            (category) => {
+              return category.attributes.Name;
+            }
+          ),
         };
       }
 
-      if (data) {
-        relatedPosts = data.filter(containsCategory).map(formatData);
-        return relatedPosts;
+      relatedPosts = data.filter(containsCategory).map(formatData);
+
+      if (relatedPosts.length > 3) {
+        relatedPosts = relatedPosts.slice(0, 3);
+      } else {
+        const takenIds = relatedPosts.reduce((prev, curr) => {
+          return [...prev, curr.id];
+        }, []);
+        const availablePosts = data.filter(
+          (product) => takenIds.indexOf(product.id) < 0
+        );
+
+        let i = 0;
+        while (relatedPosts.length < 3) {
+          relatedPosts.push(formatData(availablePosts[i]));
+          i++;
+        }
       }
-      return null;
+      // console.log(relatedPosts);
+      return relatedPosts;
     } catch (err) {
       console.error(err);
     }

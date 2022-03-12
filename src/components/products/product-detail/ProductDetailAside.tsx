@@ -73,28 +73,28 @@ function BlogAside(props: { relatedArticles }) {
             <Link href="https://www.youtube.com/channel/UCvVIi4gAhSC4x7sM3g9q53w">
               <a>
                 <li>
-                  <Icon as={BsYoutube} h={5} w={5} size="sm" />
+                  <Icon as={BsYoutube} h={5} w={5} />
                 </li>
               </a>
             </Link>
             <Link href="https://www.facebook.com/groups/3136931483299677">
               <a>
                 <li>
-                  <Icon as={BsFacebook} h={5} w={5} size="sm" />
+                  <Icon as={BsFacebook} h={5} w={5} />
                 </li>
               </a>
             </Link>
             <Link href="https://www.instagram.com/julie_baronnie/">
               <a>
                 <li>
-                  <Icon as={BsInstagram} h={5} w={5} size="sm" />
+                  <Icon as={BsInstagram} h={5} w={5} />
                 </li>
               </a>
             </Link>
             <Link href="">
               <a>
                 <li>
-                  <Icon as={FaRss} h={5} w={5} size="sm" />
+                  <Icon as={FaRss} h={5} w={5} />
                 </li>
               </a>
             </Link>

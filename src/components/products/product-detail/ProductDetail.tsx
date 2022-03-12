@@ -29,9 +29,9 @@ function ProductDetail(props: {
     return formattedNum + "€";
   }
 
-  function RelatedProduct({ product }) {
+  function RelatedProduct({ idx, product }) {
     return (
-      <li className={classes.listentry}>
+      <li key={idx} className={classes.listentry}>
         <div className={classes.productinner}>
           <div className={classes.thumbnail}>
             <Link href={`/products/${product.id}`}>
@@ -110,18 +110,16 @@ function ProductDetail(props: {
             <p className={classes.price}>{priceFormat(props.product.Price)}</p>
           )}
           <div className={classes.intro}>
-            <p>
+            <div>
               <ReactMarkdown>{props.product.Intro}</ReactMarkdown>
-            </p>
+            </div>
           </div>
           <div className={classes.categories}>
             <div>
               <span>Categories: </span>
               {props.product.item_categories.map((category, idx) => (
                 <>
-                  <Link href="">
-                    <a>{category.Name}</a>
-                  </Link>
+                  {category}
                   <span style={{ fontSize: "16px" }}>
                     {idx < props.product.item_categories.length - 1
                       ? ", "
@@ -147,8 +145,8 @@ function ProductDetail(props: {
       <section className={classes.relatedproducts}>
         <h2>Produits associés</h2>
         <ul className={classes.productslist}>
-          {props.recommendedProducts.map((product) => (
-            <RelatedProduct product={product} />
+          {props.recommendedProducts.map((product, idx) => (
+            <RelatedProduct idx={idx} product={product} />
           ))}
         </ul>
       </section>
