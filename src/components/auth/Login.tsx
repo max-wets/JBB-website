@@ -22,7 +22,7 @@ function Login({ crsfToken, setError }) {
   }, []);
 
   useEffect(() => {
-    // console.log("prvious path:", previousPath.current);
+    console.log("previous path:", previousPath.current);
     previousPath.current = globalThis.sessionStorage.getItem("prevPath");
   }, [router.asPath]);
 
@@ -64,7 +64,7 @@ function Login({ crsfToken, setError }) {
                     "Email et/ou mot de passe non valide(s). Veuillez réessayer."
                   );
               } else {
-                // console.log(callbackUrl);
+                console.log(callbackUrl);
                 if (res.url) router.push(callbackUrl);
                 setError(null);
                 setSubmitting(false);
