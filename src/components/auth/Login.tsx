@@ -49,9 +49,7 @@ function Login({ crsfToken, setError }) {
             onSubmit={async (values, { setSubmitting }) => {
               if (session) signOut({ redirect: false });
               const callbackUrl =
-                `${window.location.origin}` + previousPath.current
-                  ? previousPath.current
-                  : null;
+                `${window.location.origin}` + previousPath.current;
 
               const res = await signIn("credentials", {
                 redirect: false,
