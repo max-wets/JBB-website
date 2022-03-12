@@ -31,25 +31,25 @@ function Layout({ children }: Props) {
   }, [status]);
 
   useEffect(() => {
-    setAlertMessage(
-      <Alert
-        status="success"
-        position="absolute"
-        justifyContent="space-between"
-        transition="all 1s"
-      >
-        <AlertIcon />
-        {connected
-          ? "Vous êtes maintenant connecté !"
-          : "Vous avez été déconnecté !"}
-        <CloseButton
-          position="relative"
-          top="-6px"
-          onClick={() => setAlertMessage(null)}
-        />
-      </Alert>
-    );
-    setTimeout(() => setAlertMessage(null), 5000);
+    if (connected) {
+      setAlertMessage(
+        <Alert
+          status="success"
+          position="absolute"
+          justifyContent="space-between"
+          transition="all 1s"
+        >
+          <AlertIcon />
+          Vous êtes maintenant connecté !
+          <CloseButton
+            position="relative"
+            top="-6px"
+            onClick={() => setAlertMessage(null)}
+          />
+        </Alert>
+      );
+      setTimeout(() => setAlertMessage(null), 5000);
+    }
   }, [connected]);
 
   if (mounted) {
