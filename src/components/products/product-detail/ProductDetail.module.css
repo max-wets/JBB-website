@@ -60,6 +60,7 @@
   float: right;
   width: 44%;
   margin-bottom: 36px;
+  margin-left: 10px;
 }
 
 @media only screen and (max-width: 600px) {
@@ -192,7 +193,16 @@
   width: 33.33%;
   float: left;
   margin: 0 0 1.25rem;
-  padding: 0 0 0.625rem;
+  padding: 0 0.3rem 0.625rem;
+}
+
+@media only screen and (max-width: 650px) {
+  .listentry {
+    width: 80%;
+    max-width: 300px;
+    float: none;
+    margin: auto;
+  }
 }
 
 .productinner {

@@ -31,7 +31,7 @@ function ProductDetail(props: {
 
   function RelatedProduct({ product }) {
     return (
-      <li className={classes.listentry}>
+      <li key={product.id} className={classes.listentry}>
         <div className={classes.productinner}>
           <div className={classes.thumbnail}>
             <Link href={`/products/${product.id}`}>
@@ -71,7 +71,7 @@ function ProductDetail(props: {
       <div className={classes.prevnextctr}>
         <ul>
           {props.prevNextProducts[0] ? (
-            <li>
+            <li key={props.prevNextProducts[0].id}>
               <Link href={`/products/${props.prevNextProducts[0].id}`}>
                 <a>
                   <Tooltip label={props.prevNextProducts[0].title}>
@@ -82,7 +82,7 @@ function ProductDetail(props: {
             </li>
           ) : null}
           {props.prevNextProducts[1] ? (
-            <li>
+            <li key={props.prevNextProducts[1].id}>
               <Link href={`/products/${props.prevNextProducts[1].id}`}>
                 <a>
                   <Tooltip label={props.prevNextProducts[1].title}>
@@ -110,31 +110,27 @@ function ProductDetail(props: {
             <p className={classes.price}>{priceFormat(props.product.Price)}</p>
           )}
           <div className={classes.intro}>
-            <p>
-              <ReactMarkdown>{props.product.Intro}</ReactMarkdown>
-            </p>
+            <ReactMarkdown>{props.product.Intro}</ReactMarkdown>
           </div>
           <div className={classes.categories}>
             <div>
               <span>Categories: </span>
               {props.product.item_categories.map((category, idx) => (
-                <>
-                  <Link href="">
-                    <a>{category.Name}</a>
-                  </Link>
+                <span key={category.id}>
+                  {category}
                   <span style={{ fontSize: "16px" }}>
                     {idx < props.product.item_categories.length - 1
                       ? ", "
                       : null}
                   </span>
-                </>
+                </span>
               ))}
             </div>
           </div>
         </div>
       </div>
       <div className={classes.description}>
-        <p>
+        <div>
           <h2>Description</h2>
           <ReactMarkdown
             className={classes.descriptioncontent}
@@ -142,7 +138,7 @@ function ProductDetail(props: {
           >
             {props.product.Description}
           </ReactMarkdown>
-        </p>
+        </div>
       </div>
       <section className={classes.relatedproducts}>
         <h2>Produits associés</h2>

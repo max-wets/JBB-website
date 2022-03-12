@@ -25,35 +25,33 @@ function Footer() {
           <div className={classes.container}>
             {isLargerThan750 ? (
               <div className={classes.footerbox}>
-                <Formik
-                  initialValues={{ email: "" }}
-                  onSubmit={() => console.log("email submitted")}
-                >
-                  {(props) => (
-                    <Form>
-                      <Field name="email">
-                        {({ field, form }) => (
-                          <FormControl>
-                            <FormLabel htmlFor="email" />
-                            <InputGroup size="md">
-                              <Input
-                                {...field}
-                                variant="filled"
-                                id="email"
-                                placeholder="Saisissez votre adresse mail ici"
-                              />
-                              <InputRightElement width="4.5rem">
-                                <Button colorScheme="blackAlpha" type="submit">
-                                  Envoyer
-                                </Button>
-                              </InputRightElement>
-                            </InputGroup>
-                          </FormControl>
-                        )}
-                      </Field>
-                    </Form>
-                  )}
-                </Formik>
+                <div className={classes.footerbottommenu}>
+                  <div>
+                    <ul>
+                      <li>
+                        <Link href={"/confidentialite"}>
+                          <a>
+                            <span>Confidentialité</span>
+                          </a>
+                        </Link>
+                      </li>
+                      <li>
+                        <Link href={"/mentions-legales"}>
+                          <a>
+                            <span>Mentions Légales</span>
+                          </a>
+                        </Link>
+                      </li>
+                      <li>
+                        <Link href={"/cgu"}>
+                          <a>
+                            <span>CGU</span>
+                          </a>
+                        </Link>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
               </div>
             ) : null}
             <div className={classes.footerbox}>
@@ -95,33 +93,35 @@ function Footer() {
         </div>
         <div className={classes.footerbottom}>
           <div className={classes.footerbottominner}>
-            <div className={classes.footerbottommenu}>
-              <div>
-                <ul>
-                  <li>
-                    <Link href="">
-                      <a>
-                        <span>Confidentialité</span>
-                      </a>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="">
-                      <a>
-                        <span>Mentions Légales</span>
-                      </a>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="">
-                      <a>
-                        <span>CGV</span>
-                      </a>
-                    </Link>
-                  </li>
-                </ul>
+            {!isLargerThan750 ? (
+              <div className={classes.footerbottommenu}>
+                <div>
+                  <ul>
+                    <li>
+                      <Link href={"/confidentialite"}>
+                        <a>
+                          <span>Confidentialité</span>
+                        </a>
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href={"/mentions-legales"}>
+                        <a>
+                          <span>Mentions Légales</span>
+                        </a>
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href={"/cgu"}>
+                        <a>
+                          <span>CGU</span>
+                        </a>
+                      </Link>
+                    </li>
+                  </ul>
+                </div>
               </div>
-            </div>
+            ) : null}
             <div className={classes.copyright}>
               @ 2022 | JBBeauty. Tous droits réservés.
             </div>
