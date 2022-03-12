@@ -83,28 +83,34 @@ function BlogAside(props: {
         <div className={classes.sidebox}>
           <h4 className={classes.socialtitle}>Me suivre</h4>
           <ul className={classes.socialicons}>
-            <Link href="https://www.youtube.com/channel/UCvVIi4gAhSC4x7sM3g9q53w">
+            <Link
+              key={1}
+              href="https://www.youtube.com/channel/UCvVIi4gAhSC4x7sM3g9q53w"
+            >
               <a>
                 <li>
                   <Icon as={BsYoutube} h={5} w={5} size="sm" />
                 </li>
               </a>
             </Link>
-            <Link href="https://www.facebook.com/groups/3136931483299677">
+            <Link
+              key={2}
+              href="https://www.facebook.com/groups/3136931483299677"
+            >
               <a>
                 <li>
                   <Icon as={BsFacebook} h={5} w={5} size="sm" />
                 </li>
               </a>
             </Link>
-            <Link href="https://www.instagram.com/julie_baronnie/">
+            <Link key={3} href="https://www.instagram.com/julie_baronnie/">
               <a>
                 <li>
                   <Icon as={BsInstagram} h={5} w={5} size="sm" />
                 </li>
               </a>
             </Link>
-            <Link href="">
+            <Link key={4} href="">
               <a>
                 <li>
                   <Icon as={FaRss} h={5} w={5} size="sm" />

@@ -38,7 +38,7 @@ function BlogAside(props: { relatedArticles }) {
 
   function SideBlogDetail({ article }) {
     return (
-      <li>
+      <li key={article.id}>
         <Link href={`/blog/${article.id}`}>
           <a className={classes.imgctr}>
             <Image
@@ -71,28 +71,28 @@ function BlogAside(props: { relatedArticles }) {
           <h4 className={classes.socialtitle}>Me suivre</h4>
           <ul className={classes.socialicons}>
             <Link href="https://www.youtube.com/channel/UCvVIi4gAhSC4x7sM3g9q53w">
-              <a>
+              <a key={"youtube-link"}>
                 <li>
                   <Icon as={BsYoutube} h={5} w={5} />
                 </li>
               </a>
             </Link>
             <Link href="https://www.facebook.com/groups/3136931483299677">
-              <a>
+              <a key={"facebook-link"}>
                 <li>
                   <Icon as={BsFacebook} h={5} w={5} />
                 </li>
               </a>
             </Link>
             <Link href="https://www.instagram.com/julie_baronnie/">
-              <a>
+              <a key={"instagram-link"}>
                 <li>
                   <Icon as={BsInstagram} h={5} w={5} />
                 </li>
               </a>
             </Link>
             <Link href="">
-              <a>
+              <a key={"last-link"}>
                 <li>
                   <Icon as={FaRss} h={5} w={5} />
                 </li>
@@ -100,7 +100,7 @@ function BlogAside(props: { relatedArticles }) {
             </Link>
           </ul>
         </div>
-        <div className={classes.sidebox}>
+        {/* <div className={classes.sidebox}>
           <h4 className={classes.socialtitle}>Newsletter</h4>
           <div className={classes.newsletter}>
             <div className={classes.newslettertxt}>
@@ -136,12 +136,12 @@ function BlogAside(props: { relatedArticles }) {
               )}
             </Formik>
           </div>
-        </div>
+        </div> */}
         {props.relatedArticles.length > 0 ? (
           <div className={classes.sidebox}>
             <h4 className={classes.socialtitle}>Articles recommandés</h4>
             <ul className={classes.sidebarlist}>
-              {props.relatedArticles.map((article) => (
+              {props.relatedArticles.map((article, idx) => (
                 <SideBlogDetail article={article} />
               ))}
             </ul>

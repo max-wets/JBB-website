@@ -103,7 +103,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
         let hasCategory = false;
         item.attributes.item_categories.data.forEach((category) => {
-          console.log(category.attributes.Name);
+          // console.log(category.attributes.Name);
           if (productCategories.indexOf(category.attributes.Name) > -1) {
             !hasCategory ? (hasCategory = true) : null;
           }

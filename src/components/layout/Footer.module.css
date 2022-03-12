@@ -19,6 +19,11 @@
   }
 }
 
+.footerbox:first-child {
+  display: flex;
+  align-items: flex-end;
+}
+
 .footerbox:nth-child(2) {
   border-left: 1px solid #e9e9e9;
   display: flex;
@@ -64,11 +69,17 @@
 }
 
 .footerbottommenu {
-  margin-bottom: 12px;
-  float: none;
+  /* margin-bottom: 12px; */
+  display: flex;
+  align-items: flex-end;
   width: 100%;
   text-align: center;
   padding: 0;
+}
+
+.footerbottommenu > div {
+  display: flex;
+  align-items: flex-end;
 }
 
 .footerbottommenu ul {
@@ -93,6 +104,10 @@
   content: "";
   margin-left: 0px;
   margin-right: 0px;
+}
+
+.footerbottommenu ul li a:hover {
+  color: #d93644;
 }
 
 .copyright {
