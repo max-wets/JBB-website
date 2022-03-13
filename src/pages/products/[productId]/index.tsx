@@ -139,12 +139,13 @@ export const getStaticProps: GetStaticProps = async (context) => {
     let relatedPosts = [];
 
     try {
+      const sortParam = "sort[0]=publishedAt%3Adesc";
       const res = await axios.get(
-        "https://jbbeauty-cms.herokuapp.com/api/articles?populate=%2A&sort[0]=createdAt%3Adesc"
+        `https://jbbeauty-cms.herokuapp.com/api/articles?populate=%2A&${sortParam}`
       );
-      const data: Array<any> = res.data.data;
+      const dataPosts: Array<any> = res.data.data;
 
-      // console.log("data:", data);
+      // console.log("data:", dataPosts);
 
       const productCategories = product.item_categories;
 
@@ -175,7 +176,8 @@ export const getStaticProps: GetStaticProps = async (context) => {
         };
       }
 
-      relatedPosts = data.filter(containsCategory).map(formatData);
+      relatedPosts = dataPosts.filter(containsCategory).map(formatData);
+      console.log(relatedPosts);
 
       if (relatedPosts.length > 3) {
         relatedPosts = relatedPosts.slice(0, 3);
@@ -183,8 +185,8 @@ export const getStaticProps: GetStaticProps = async (context) => {
         const takenIds = relatedPosts.reduce((prev, curr) => {
           return [...prev, curr.id];
         }, []);
-        const availablePosts = data.filter(
-          (product) => takenIds.indexOf(product.id) < 0
+        const availablePosts = dataPosts.filter(
+          (post) => takenIds.indexOf(post.id) < 0
         );
 
         let i = 0;
@@ -193,7 +195,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
           i++;
         }
       }
-      // console.log(relatedPosts);
+      console.log(relatedPosts);
       return relatedPosts;
     } catch (err) {
       console.error(err);

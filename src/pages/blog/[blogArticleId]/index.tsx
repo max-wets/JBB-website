@@ -7,6 +7,7 @@ import BlogArticleAside from "../../../components/blog/blog-detail/BlogArticleAs
 import { Container, Flex, useMediaQuery } from "@chakra-ui/react";
 import axios from "axios";
 import qs from "qs";
+import { urlStringFormatter } from "../../../lib/utils";
 
 function BlogDetailPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
   const [isLargerThan960] = useMediaQuery("(min-width: 960px)");
@@ -59,9 +60,11 @@ export const getStaticProps: GetStaticProps = async (context) => {
     }
     return 0;
   };
-  const aid = Number(context.params.blogArticleId);
+  const aid = Number(
+    (context.params.blogArticleId as string).split("-").slice(-1)
+  );
   const res = await axios.get(
-    `https://jbbeauty-cms.herokuapp.com/api/articles?populate=%2A`
+    `https://jbbeauty-cms.herokuapp.com/api/articles?populate=%2A&pagination[pageSize]=100&sort[0]=createdAt%3Adesc`
   );
   const data = res.data.data.sort(sortingFn);
   const article = data.find((article) => article.id === aid);
@@ -234,12 +237,16 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const res = await axios.get(
-    "https://jbbeauty-cms.herokuapp.com/api/articles"
+    "https://jbbeauty-cms.herokuapp.com/api/articles?pagination[pageSize]=100"
   );
   const data = res.data.data;
 
+  // console.log(data.length);
+
   const paths = data.map((article) => ({
-    params: { blogArticleId: article.id.toString() },
+    params: {
+      blogArticleId: urlStringFormatter(article.attributes.Name, article.id),
+    },
   }));
 
   return { paths, fallback: false };

@@ -30,6 +30,7 @@ import {
 import { useSession } from "next-auth/react";
 import Comment from "./Comment";
 import axios from "axios";
+import { urlStringFormatter } from "../../../lib/utils";
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL;
 
@@ -255,7 +256,12 @@ function BlogArticleDetail(props: {
       <nav className={classes.postnavigation}>
         {props.prevNextArticles[0] ? (
           <div className={classes.navprevious}>
-            <Link href={`/blog/${props.prevNextArticles[0].id}`}>
+            <Link
+              href={`/blog/${urlStringFormatter(
+                props.prevNextArticles[0].title,
+                props.prevNextArticles[0].id
+              )}`}
+            >
               <a>
                 <div className={classes.prevtitle}>
                   <ArrowLeftIcon w={3} h={3} />
@@ -272,7 +278,12 @@ function BlogArticleDetail(props: {
         ) : null}
         {props.prevNextArticles[1] ? (
           <div className={classes.navnext}>
-            <Link href={`/blog/${props.prevNextArticles[1].id}`}>
+            <Link
+              href={`/blog/${urlStringFormatter(
+                props.prevNextArticles[1].title,
+                props.prevNextArticles[1].id
+              )}`}
+            >
               <a>
                 <div className={classes.nexttitle}>
                   <ArrowRightIcon w={3} h={3} />
@@ -297,7 +308,12 @@ function BlogArticleDetail(props: {
           {props.recommendedArticles.map((article) => (
             <article>
               <div className={classes.thumbnail}>
-                <Link href={`/blog/${article.id}`}>
+                <Link
+                  href={`/blog/${urlStringFormatter(
+                    article.title,
+                    article.id
+                  )}`}
+                >
                   <a>
                     <Image
                       src={article.imageUrl}
@@ -310,7 +326,9 @@ function BlogArticleDetail(props: {
                   </a>
                 </Link>
               </div>
-              <Link href={`/blog/${article.id}`}>
+              <Link
+                href={`/blog/${urlStringFormatter(article.title, article.id)}`}
+              >
                 <a>
                   <h3>
                     {article.title.length > 40

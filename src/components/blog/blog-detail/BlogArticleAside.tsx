@@ -15,6 +15,7 @@ import { Article } from "../BlogArticleItem";
 import { BsTwitter, BsFacebook, BsInstagram, BsYoutube } from "react-icons/bs";
 import { FaRss } from "react-icons/fa";
 import { useState } from "react";
+import { urlStringFormatter } from "../../../lib/utils";
 
 function BlogAside(props: { articles: Article[] }) {
   // const api_url = "https://jbb-admin.herokuapp.com";
@@ -41,9 +42,11 @@ function BlogAside(props: { articles: Article[] }) {
   };
 
   function SideBlogDetail({ article }) {
+    const articleUrl = urlStringFormatter(article.title, article.id);
+
     return (
       <li>
-        <Link href={`/blog/${article.id}`}>
+        <Link href={`/blog/${articleUrl}`}>
           <a className={classes.imgctr}>
             <Image
               src={article.imageUrl}
@@ -55,7 +58,7 @@ function BlogAside(props: { articles: Article[] }) {
           </a>
         </Link>
         <div className={classes.recentpostdetails}>
-          <Link href={`/blog/${article.id}`}>
+          <Link href={`/blog/${articleUrl}`}>
             <a>{article.title}</a>
           </Link>
           <div>
@@ -104,7 +107,7 @@ function BlogAside(props: { articles: Article[] }) {
             </Link>
           </ul>
         </div>
-        <div className={classes.sidebox}>
+        {/* <div className={classes.sidebox}>
           <h4 className={classes.socialtitle}>Newsletter</h4>
           <div className={classes.newsletter}>
             <div className={classes.newslettertxt}>
@@ -140,7 +143,7 @@ function BlogAside(props: { articles: Article[] }) {
               )}
             </Formik>
           </div>
-        </div>
+        </div> */}
         <div className={classes.sidebox}>
           <h4 className={classes.socialtitle}>Articles récents</h4>
           <ul className={classes.sidebarlist}>

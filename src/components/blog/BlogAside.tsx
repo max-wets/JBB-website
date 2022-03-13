@@ -15,6 +15,7 @@ import { Article } from "./BlogArticleItem";
 import { BsTwitter, BsFacebook, BsInstagram, BsYoutube } from "react-icons/bs";
 import { FaRss } from "react-icons/fa";
 import { useState } from "react";
+import { urlStringFormatter } from "../../lib/utils";
 
 function BlogAside(props: {
   articles: Article[];
@@ -50,9 +51,11 @@ function BlogAside(props: {
   };
 
   function SideBlogDetail({ idx, article }) {
+    const articleUrl = urlStringFormatter(article.title, article.id);
+
     return (
       <li key={idx}>
-        <Link href={`/blog/${article.id}`}>
+        <Link href={`/blog/${articleUrl}`}>
           <a className={classes.imgctr}>
             <Image
               src={article.imageUrl}
@@ -64,7 +67,7 @@ function BlogAside(props: {
           </a>
         </Link>
         <div className={classes.recentpostdetails}>
-          <Link href={`/blog/${article.id}`}>
+          <Link href={`/blog/${articleUrl}`}>
             <a>{article.title}</a>
           </Link>
           <div>
@@ -118,43 +121,6 @@ function BlogAside(props: {
               </a>
             </Link>
           </ul>
-        </div>
-        <div className={classes.sidebox}>
-          <h4 className={classes.socialtitle}>Newsletter</h4>
-          <div className={classes.newsletter}>
-            <div className={classes.newslettertxt}>
-              Recevez mes dernières nouvelles directement sur votre boîte mail
-            </div>
-            <Formik
-              initialValues={{ email: "" }}
-              onSubmit={() => console.log("email submitted")}
-            >
-              {(props) => (
-                <Form>
-                  <Field name="email">
-                    {({ field, form }) => (
-                      <FormControl>
-                        <FormLabel htmlFor="email" />
-                        <InputGroup size="md">
-                          <Input
-                            {...field}
-                            variant="filled"
-                            id="email"
-                            placeholder="Adresse mail"
-                          />
-                          <InputRightElement width="4.5rem">
-                            <Button colorScheme="blackAlpha" type="submit">
-                              OK
-                            </Button>
-                          </InputRightElement>
-                        </InputGroup>
-                      </FormControl>
-                    )}
-                  </Field>
-                </Form>
-              )}
-            </Formik>
-          </div>
         </div>
         <div className={classes.sidebox}>
           <h4 className={classes.socialtitle}>Catégories</h4>
