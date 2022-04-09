@@ -7,16 +7,30 @@ import { useState } from "react";
 function SearchBox({ refine }) {
   return (
     <div className={classes.searchbox}>
-      <form action="" role="search">
+      <form
+        noValidate
+        className={classes.searchboxform}
+        action=""
+        role="search"
+      >
         <InputGroup display="flex" alignItems="center" justifyContent="center">
           <InputLeftElement
             pointerEvents="none"
-            children={<SearchIcon size="sm" color="gray.300" />}
+            children={<SearchIcon size="md" color="red.200" />}
+            ml={4}
+            mt={2}
+            mb={2}
           />
           <input
             className={classes.searchboxinput}
             type="search"
             placeholder="Chercher un article..."
+            autoComplete="off"
+            autoCorrect="off"
+            autoCapitalize="off"
+            spellCheck="false"
+            required
+            maxLength={400}
             onChange={(e) => refine(e.currentTarget.value)}
           />
         </InputGroup>

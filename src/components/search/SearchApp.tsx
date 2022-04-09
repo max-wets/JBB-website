@@ -13,11 +13,19 @@ export default function Search() {
   return (
     <>
       <InstantSearch searchClient={searchClient} indexName="jbb_articles">
-        <header className={classes.header}>
-          <p className={classes.headertitle}>Que cherchez-vous ?</p>
-          <CustomSearchBox />
-        </header>
-        <CustomHits />
+        <section className={classes.spacer}></section>
+        <section className={classes.appsection}>
+          <div className={classes.appcontainer}>
+            <div className={classes.columnwrap}>
+              <p className={classes.heading}>
+                <h1>Que cherchez-vous ?</h1>
+              </p>
+              <CustomSearchBox />
+
+              <CustomHits />
+            </div>
+          </div>
+        </section>
       </InstantSearch>
     </>
   );

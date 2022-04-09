@@ -21,7 +21,7 @@ function Hits({ searchState, searchResults }) {
 
   function ResultHit({ idx, id, title, description, imageUrl }) {
     return (
-      <article key={idx} className={classes.resulthit}>
+      <article key={id} className={classes.resulthit}>
         <div className={classes.ctr}>
           <div className={classes.thumbnail}>
             <Link href={`/blog/${id}`}>
