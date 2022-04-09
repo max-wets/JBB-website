@@ -5,6 +5,10 @@ export default function Document() {
     <Html>
       <Head>
         {/* Global Site Tag (gtag.js) - Google Analytics */}
+        <link
+          href="https://fonts.googleapis.com/css2?family=Nunito&family=Tangerine&display=swap"
+          rel="stylesheet"
+        />
         <script
           async
           src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}`}

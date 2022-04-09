@@ -143,7 +143,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
     if (recommendedArticles.length > 3) {
       // const slicedArticlesArray = sameCategoryArticles.slice(2);
-      recommendedArticles = recommendedArticles.slice(2);
+      recommendedArticles = recommendedArticles.slice(0, 3);
     } else if (recommendedArticles.length < 3) {
       const takenIds = recommendedArticles.reduce((prev, curr) => {
         return [...prev, curr.id];
@@ -153,6 +153,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
       );
       let i = 0;
       while (i < 3 - recommendedArticles.length) {
+        console.log(i);
         recommendedArticles.push(availableArticles[i]);
         i++;
       }
