@@ -13,6 +13,7 @@ import {
 import Image from "next/image";
 import { BsTwitter, BsFacebook, BsInstagram, BsYoutube } from "react-icons/bs";
 import { FaRss } from "react-icons/fa";
+import { urlStringFormatter } from "../../../lib/utils";
 
 function BlogAside(props: { relatedArticles }) {
   const newDate = (date) => {
@@ -37,9 +38,16 @@ function BlogAside(props: { relatedArticles }) {
   };
 
   function SideBlogDetail({ article }) {
+    const articleUrl = urlStringFormatter(article.title, article.id);
+
     return (
       <li key={article.id}>
-        <Link href={`/blog/${article.id}`}>
+        <Link
+          href={{
+            pathname: `/blog/[articleId]`,
+            query: { articleId: articleUrl },
+          }}
+        >
           <a className={classes.imgctr}>
             <Image
               src={article.imageUrl}
@@ -51,7 +59,7 @@ function BlogAside(props: { relatedArticles }) {
           </a>
         </Link>
         <div className={classes.recentpostdetails}>
-          <Link href={`/blog/${article.id}`}>
+          <Link href={`/blog/${articleUrl}`}>
             <a>{article.title}</a>
           </Link>
           <div>

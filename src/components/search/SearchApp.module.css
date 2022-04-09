@@ -1,33 +1,67 @@
-.header {
+.spacer {
+  background-color: #d93644;
+  position: relative;
+  min-height: 87px;
+  /* max-width: 1140px; */
   align-items: center;
-  /* background: linear-gradient(#ce303d, #fca6ad); */
-  /* color: #fff; */
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  min-height: 200px;
-  padding: 0.5rem 1rem;
-  padding-bottom: 25px;
-  margin-bottom: 20px;
-  margin: 0 40px;
-  text-align: center;
-  border-top: solid 1px lightgray;
-  border-bottom: solid 1px lightgray;
+  margin-right: auto;
+  margin-left: auto;
 }
 
-.headertitle {
+.appsection {
+  padding: 0px 80px 0px 80px;
+  position: relative;
+}
+
+@media only screen and (max-width: 750px) {
+  .appsection {
+    padding: 0px 20px 0px 20px;
+    position: relative;
+  }
+}
+
+.appcontainer {
+  max-width: 860px;
+  display: flex;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.columnwrap {
+  width: 100%;
+  margin: -40px 0px 0px 0px;
+  padding: 50px 80px 50px 80px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+@media only screen and (max-width: 899px) {
+  .columnwrap {
+    padding: 50px 20px 50px 20px;
+  }
+}
+
+.heading {
   color: #d93644;
-  text-shadow: 1px 1px gray;
-  font-size: 38px;
-  font-weight: 500;
-  margin-block-start: 1em;
-  margin-block-end: 1em;
-  margin-inline-start: 0px;
-  margin-inline-end: 0px;
+  font-size: 2.5rem;
+  font-weight: 800;
+  width: 100%;
+  margin-bottom: 20px;
+  text-align: center;
+  display: block;
 }
 
 @media only screen and (max-width: 600px) {
   .headertitle {
     font-size: 28px;
+  }
+
+  .heading {
+    display: none;
   }
 }

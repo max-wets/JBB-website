@@ -4,13 +4,11 @@ import { connectStateResults } from "react-instantsearch-dom";
 import classes from "./CustomHits.module.css";
 import Pagination from "../pagination/Pagination";
 import { useMemo, useState } from "react";
+import { urlStringFormatter } from "../../lib/utils";
 
 let PageSize = 3;
 
 function Hits({ searchState, searchResults }) {
-  const validQuery = searchState.query?.length >= 1;
-  // console.log(searchResults?.hits);
-
   const [currentPage, setCurrentPage] = useState(1);
 
   const currentData = useMemo(() => {
@@ -19,19 +17,23 @@ function Hits({ searchState, searchResults }) {
     return searchResults?.hits.slice(firstPageIndex, lastPageIndex);
   }, [currentPage, searchResults]);
 
-  function ResultHit({ idx, id, title, description, imageUrl }) {
+  function ResultHit({ id, title, description, imageUrl }) {
+    const articleUrl = urlStringFormatter(title, id);
+
     return (
-      <article key={idx} className={classes.resulthit}>
+      <article key={id} className={classes.resulthit}>
         <div className={classes.ctr}>
           <div className={classes.thumbnail}>
-            <Link href={`/blog/${id}`}>
+            <Link href={`/blog/${articleUrl}`}>
               <a>
                 <Image
                   width={120}
-                  height={120}
+                  height={80}
                   alt={title}
                   src={imageUrl}
-                  objectFit="fill"
+                  layout="responsive"
+                  placeholder="blur"
+                  blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mO88uRJPQAITQMdakdKKAAAAABJRU5ErkJggg=="
                 />
               </a>
             </Link>
@@ -39,7 +41,7 @@ function Hits({ searchState, searchResults }) {
           <div className={classes.content}>
             <header className={classes.contentheader}>
               <h2>
-                <Link href={`/blog/${id}`}>
+                <Link href={`/blog/${articleUrl}`}>
                   <a>{title}</a>
                 </Link>
               </h2>
@@ -48,7 +50,7 @@ function Hits({ searchState, searchResults }) {
               <p>{description.slice(0, 200) + "..."}</p>
             </div>
             <div className={classes.readmore}>
-              <Link href={`/blog/${id}`}>
+              <Link href={`/blog/${articleUrl}`}>
                 <a>Lire</a>
               </Link>
             </div>
@@ -60,19 +62,12 @@ function Hits({ searchState, searchResults }) {
 
   return (
     <div className={classes.resultsbox}>
-      {searchResults?.hits.length === 0 && validQuery && (
-        <p>
-          0 résultat. Désolé, nous n'avons rien trouvé qui corresponde à votre
-          recherche.
-        </p>
-      )}
-      {searchResults?.hits.length > 0 && validQuery && (
+      {searchResults && searchResults.nbHits ? (
         <>
           <div>
             <ul>
-              {currentData.map((hit, idx) => (
+              {currentData.map((hit) => (
                 <ResultHit
-                  idx={idx}
                   id={hit.id}
                   title={hit.title}
                   description={hit.description}
@@ -81,14 +76,21 @@ function Hits({ searchState, searchResults }) {
               ))}
             </ul>
           </div>
-          <Pagination
-            className={classes.paginationbar}
-            currentPage={currentPage}
-            totalCount={searchResults.hits.length}
-            pageSize={PageSize}
-            onPageChange={(page) => setCurrentPage(page)}
-          />
+          <div className={classes.paginationctr}>
+            <Pagination
+              className={classes.paginationbar}
+              currentPage={currentPage}
+              totalCount={searchResults.hits.length}
+              pageSize={PageSize}
+              onPageChange={(page) => setCurrentPage(page)}
+            />
+          </div>
         </>
+      ) : (
+        <p>
+          0 résultat. Désolé, nous n'avons rien trouvé qui corresponde à votre
+          recherche: &quot;<span>{searchState.query}</span>&quot;
+        </p>
       )}
     </div>
   );

@@ -7,6 +7,7 @@ import { FiClock } from "react-icons/fi";
 import { useEffect } from "react";
 import { BsFolder } from "react-icons/bs";
 import { BiComment } from "react-icons/bi";
+import { urlStringFormatter } from "../../lib/utils";
 
 export interface Article {
   id: string;
@@ -21,6 +22,7 @@ export interface Article {
 
 function BlogArticle(props: Article) {
   // const api_url = "https://jbb-admin.herokuapp.com";
+  const articleUrl = urlStringFormatter(props.title, props.id);
 
   const newDate = (date) => {
     const mois = [
@@ -46,7 +48,7 @@ function BlogArticle(props: Article) {
   return (
     <article className={classes.blogentryouter}>
       <div className={classes.thumbnail}>
-        <Link href={`/blog/${props.id}`}>
+        <Link href={`/blog/${articleUrl}`}>
           <a>
             <Image
               width={833}
@@ -62,7 +64,7 @@ function BlogArticle(props: Article) {
       </div>
       <header className={classes.blogentryheader}>
         <h2>
-          <Link href={`/blog/${props.id}`}>
+          <Link href={`/blog/${articleUrl}`}>
             <a>{props.title}</a>
           </Link>
         </h2>
@@ -100,7 +102,7 @@ function BlogArticle(props: Article) {
       </ul>
       <div className={classes.blogentrysummary}>{props.intro}</div>
       <div className={classes.blogentryreadmore}>
-        <Link href={`/blog/${props.id.toString()}`}>
+        <Link href={`/blog/${articleUrl}`}>
           <a>
             <Button
               colorScheme="white"
