@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Nunito&family=Tangerine&display=swap");
+/* @import url("https://fonts.googleapis.com/css2?family=Nunito&family=Tangerine&display=swap"); */
 
 .header {
   width: 100%;
@@ -55,7 +55,6 @@
 }
 
 .logo {
-  font-family: "Nunito", sans-serif;
   font-family: "Tangerine", cursive;
   color: #d93644;
   font-weight: 600;

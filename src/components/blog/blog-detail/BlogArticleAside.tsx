@@ -12,7 +12,13 @@ import {
 } from "@chakra-ui/react";
 import Image from "next/image";
 import { Article } from "../BlogArticleItem";
-import { BsTwitter, BsFacebook, BsInstagram, BsYoutube } from "react-icons/bs";
+import {
+  BsTwitter,
+  BsFacebook,
+  BsInstagram,
+  BsYoutube,
+  BsFillEnvelopeFill,
+} from "react-icons/bs";
 import { FaRss } from "react-icons/fa";
 import { useState } from "react";
 import { urlStringFormatter } from "../../../lib/utils";
@@ -98,10 +104,10 @@ function BlogAside(props: { articles: Article[] }) {
                 </li>
               </a>
             </Link>
-            <Link href="">
+            <Link href="mailto:contact@juliebaronniebeauty.com">
               <a>
                 <li>
-                  <Icon as={FaRss} h={5} w={5} size="sm" />
+                  <Icon as={BsFillEnvelopeFill} h={5} w={5} size="sm" />
                 </li>
               </a>
             </Link>

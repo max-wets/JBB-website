@@ -215,12 +215,14 @@
 }
 
 .relatedpostsentry {
-  display: flex;
-  flex-direction: row;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 12px;
 }
 
 .relatedpostsentry article {
-  width: 33.3333%;
+  grid-row: 1;
+  width: 100%;
   float: left;
   position: relative;
   min-height: 100px;
