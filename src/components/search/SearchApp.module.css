@@ -2,7 +2,7 @@
   background-color: #d93644;
   position: relative;
   min-height: 87px;
-  max-width: 1140px;
+  /* max-width: 1140px; */
   align-items: center;
   display: flex;
   margin-right: auto;
@@ -10,33 +10,19 @@
 }
 
 .appsection {
-  padding: 0px 80px 80px 80px;
+  padding: 0px 80px 0px 80px;
   position: relative;
 }
 
 @media only screen and (max-width: 750px) {
   .appsection {
-    padding: 0px 20px 20px 20px;
+    padding: 0px 20px 0px 20px;
     position: relative;
   }
 }
 
 .appcontainer {
-  /* align-items: center; */
-  /* background: linear-gradient(#ce303d, #fca6ad); */
-  /* color: #fff; */
-  /* display: flex;
-  flex-direction: column;
-  justify-content: center;
-  min-height: 200px;
-  padding: 0.5rem 1rem;
-  padding-bottom: 25px;
-  margin-bottom: 20px;
-  margin: 0 40px;
-  text-align: center;
-  border-top: solid 1px lightgray;
-  border-bottom: solid 1px lightgray; */
-  max-width: 760px;
+  max-width: 860px;
   display: flex;
   margin-right: auto;
   margin-left: auto;

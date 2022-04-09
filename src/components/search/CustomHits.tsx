@@ -60,13 +60,7 @@ function Hits({ searchState, searchResults }) {
 
   return (
     <div className={classes.resultsbox}>
-      {searchResults?.hits.length === 0 && validQuery && (
-        <p>
-          0 résultat. Désolé, nous n'avons rien trouvé qui corresponde à votre
-          recherche.
-        </p>
-      )}
-      {searchResults?.hits.length > 0 && validQuery && (
+      {searchResults && searchResults.nbHits ? (
         <>
           <div>
             <ul>
@@ -81,14 +75,21 @@ function Hits({ searchState, searchResults }) {
               ))}
             </ul>
           </div>
-          <Pagination
-            className={classes.paginationbar}
-            currentPage={currentPage}
-            totalCount={searchResults.hits.length}
-            pageSize={PageSize}
-            onPageChange={(page) => setCurrentPage(page)}
-          />
+          <div className={classes.paginationctr}>
+            <Pagination
+              className={classes.paginationbar}
+              currentPage={currentPage}
+              totalCount={searchResults.hits.length}
+              pageSize={PageSize}
+              onPageChange={(page) => setCurrentPage(page)}
+            />
+          </div>
         </>
+      ) : (
+        <p>
+          0 résultat. Désolé, nous n'avons rien trouvé qui corresponde à votre
+          recherche: &quot;<span>{searchState.query}</span>&quot;
+        </p>
       )}
     </div>
   );
