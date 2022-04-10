@@ -12,5 +12,5 @@ export const urlStringFormatter = (title: string, id: number | string) => {
     }
     return newStr;
   });
-  return encodeURIComponent(cleanedUrlArr.join("-").concat(`-${id}`));
+  return cleanedUrlArr.join("-").concat(`-${id}`);
 };
