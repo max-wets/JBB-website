@@ -4,69 +4,74 @@
 }
 
 .paginationitem {
-    padding: 0 12px;
-    height: 32px;
-    text-align: center;
-    margin: auto 4px;
-    color: rgba(0, 0, 0, 0.87);
-    display: flex;
-    box-sizing: border-box;
-    align-items: center;
-    letter-spacing: 0.01071em;
-    border-radius: 50%;
-    border: 1px solid rgba(0, 0, 0, 0.15);
-    line-height: 1.43;
-    font-size: 16px;
-    min-width: 32px;
+  padding: 0 12px;
+  height: 32px;
+  text-align: center;
+  margin: auto 4px;
+  color: rgba(0, 0, 0, 0.87);
+  display: flex;
+  box-sizing: border-box;
+  align-items: center;
+  letter-spacing: 0.01071em;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  line-height: 1.43;
+  font-size: 16px;
+  min-width: 32px;
+}
+
+@media only screen and (max-width: 500px) {
+  .paginationitem:not(:first-child):not(:last-child) {
+    display: none;
+  }
 }
 
 .dots:hover {
-      background-color: transparent;
-      cursor: default;
+  background-color: transparent;
+  cursor: default;
 }
 
 .paginationitem:hover {
-      background-color: rgba(0, 0, 0, 0.04);
-      cursor: pointer;
+  background-color: rgba(0, 0, 0, 0.04);
+  cursor: pointer;
 }
 
 .selected {
-      background-color: rgba(0, 0, 0, 0.04);
+  background-color: rgba(0, 0, 0, 0.04);
 }
 
 .arrow::before {
-        position: relative;
-        /* top: 3pt; Uncomment this to lower the icons as requested in comments*/
-        content: '';
-        /* By using an em scale, the arrows will size with the font */
-        display: inline-block;
-        width: 0.4em;
-        height: 0.4em;
-        border-right: 0.12em solid rgba(0, 0, 0, 0.87);
-        border-top: 0.12em solid rgba(0, 0, 0, 0.87);
+  position: relative;
+  /* top: 3pt; Uncomment this to lower the icons as requested in comments*/
+  content: "";
+  /* By using an em scale, the arrows will size with the font */
+  display: inline-block;
+  width: 0.4em;
+  height: 0.4em;
+  border-right: 0.12em solid rgba(0, 0, 0, 0.87);
+  border-top: 0.12em solid rgba(0, 0, 0, 0.87);
 }
 
 .left {
-        transform: rotate(-135deg) translate(-12%, -12%);
+  transform: rotate(-135deg) translate(-12%, -12%);
 }
 
 .right {
-        transform: rotate(45deg) translate(-10%, -10%);
+  transform: rotate(45deg) translate(-10%, -10%);
 }
 
 .disabled {
-    pointer-events: none;
-    color: gray;
-    background-color: rgba(0, 0, 0, 0.06);
+  pointer-events: none;
+  color: gray;
+  background-color: rgba(0, 0, 0, 0.06);
 }
 
 .disabled .arrow::before {
-    border-right: 0.12em solid rgba(0, 0, 0, 0.43);
-    border-top: 0.12em solid rgba(0, 0, 0, 0.43);
+  border-right: 0.12em solid rgba(0, 0, 0, 0.43);
+  border-top: 0.12em solid rgba(0, 0, 0, 0.43);
 }
 
 .disabled:hover {
-    background-color: transparent;
-    cursor: default;
+  background-color: transparent;
+  cursor: default;
 }
-

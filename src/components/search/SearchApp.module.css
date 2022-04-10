@@ -21,6 +21,12 @@
   }
 }
 
+@media only screen and (max-width: 500px) {
+  .appsection {
+    padding: 0px 8px 0px 8px;
+  }
+}
+
 .appcontainer {
   max-width: 860px;
   display: flex;
@@ -43,6 +49,12 @@
 @media only screen and (max-width: 899px) {
   .columnwrap {
     padding: 50px 20px 50px 20px;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .columnwrap {
+    padding: 30px 0px 0px 0px;
   }
 }
 

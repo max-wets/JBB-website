@@ -50,7 +50,8 @@
   }
 
   .resultsbox {
-    margin: 0 20px;
+    margin: 0 0px;
+    padding: 2rem 0;
   }
 }
 
@@ -59,6 +60,17 @@
   margin: 0 0 6px;
   color: #333;
   line-height: 1.4;
+}
+
+@media only screen and (max-width: 600px) {
+  .contentheader h2 {
+    font-size: 18px;
+  }
+
+  .content p {
+    line-height: 1em;
+    font-size: 14px;
+  }
 }
 
 .readmore a {
@@ -83,4 +95,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+@media only screen and (max-width: 600px) {
+  .paginationctr {
+    justify-content: flex-end;
+  }
 }

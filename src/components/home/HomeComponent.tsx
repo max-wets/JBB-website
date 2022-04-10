@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { Grid, GridItem, useMediaQuery, Tooltip, Icon } from "@chakra-ui/react";
 import { FiClock } from "react-icons/fi";
 import { BiComment } from "react-icons/bi";
+import { urlStringFormatter } from "../../lib/utils";
 
 function HomeComponent(props: { recentProducts; recentArticles }) {
   const [isLargerThan1000] = useMediaQuery("(min-width: 1000px)");
@@ -55,6 +56,10 @@ function HomeComponent(props: { recentProducts; recentArticles }) {
   function ArticleItem(props: { idx; article }) {
     // console.log(props.article.description);
     const [descriptionExcerpt, setDescriptionExcerpt] = useState("");
+    const articleUrl = urlStringFormatter(
+      props.article.title,
+      props.article.id
+    );
 
     useEffect(() => {
       let cleanExcerpt;
@@ -83,7 +88,7 @@ function HomeComponent(props: { recentProducts; recentArticles }) {
     return (
       <div key={props.idx} className={classes.articlectr}>
         <div className={classes.thumbnail}>
-          <Link href={`/blog/${props.article.id}`}>
+          <Link href={`/blog/${articleUrl}`}>
             <a>
               <Image
                 src={props.article.imageUrl}
@@ -100,7 +105,7 @@ function HomeComponent(props: { recentProducts; recentArticles }) {
           </Link>
         </div>
         <div className={classes.details}>
-          <Link href={`/blog/${props.article.id}`}>
+          <Link href={`/blog/${articleUrl}`}>
             <a>
               <Tooltip
                 label={props.article.title}
