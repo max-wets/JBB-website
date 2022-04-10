@@ -17,7 +17,12 @@ import {
 } from "@chakra-ui/react";
 import Image from "next/image";
 import ProductItem from "./ProductItem";
-import { BsTwitter, BsFacebook, BsInstagram, BsYoutube } from "react-icons/bs";
+import {
+  BsFillEnvelopeFill,
+  BsFacebook,
+  BsInstagram,
+  BsYoutube,
+} from "react-icons/bs";
 import { FaRss } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import { Product } from "./ProductsList";
@@ -160,16 +165,16 @@ function BlogAside(props: {
                 </li>
               </a>
             </Link>
-            <Link href="">
+            <Link href="mailto:contact@juliebaronniebeauty.com">
               <a>
                 <li>
-                  <Icon as={FaRss} h={5} w={5} size="sm" />
+                  <Icon as={BsFillEnvelopeFill} h={5} w={5} size="sm" />
                 </li>
               </a>
             </Link>
           </ul>
         </div>
-        <div className={classes.sidebox}>
+        {/* <div className={classes.sidebox}>
           <h4 className={classes.socialtitle}>Newsletter</h4>
           <div className={classes.newsletter}>
             <div className={classes.newslettertxt}>
@@ -205,7 +210,7 @@ function BlogAside(props: {
               )}
             </Formik>
           </div>
-        </div>
+        </div> */}
         <div className={classes.sidebox}>
           <h4 className={classes.socialtitle}>Catégories</h4>
           <div className={classes.blogcategories}>
