@@ -63,9 +63,22 @@ function LegalNoticeComponent() {
               suit :
             </p>
             <ul>
-                <li>Sous Internet Explorer : Menu « Outils > Options Internet ». Cliquez sur « Confidentialité » et choisissez « Bloquer tous les cookies ». Validez sur « OK »</li>
-                <li>Sous Firefox : Menu « Outils > Options ». Cliquez sur l’option « Vie privée » puis désactivez les cookies dans la rubrique « Cookies »</li>
-                <li>Sous Chrome : Menu « Outils ». Cliquez sur « Effacer les données de navigation » et choisissez « Supprimer les cookies et autres données de site et de plug-in ». Validez sur « Effacer les données de navigation ».</li>
+              <li>
+                Sous Internet Explorer : Menu « Outils {">"} Options Internet ».
+                Cliquez sur « Confidentialité » et choisissez « Bloquer tous les
+                cookies ». Validez sur « OK »
+              </li>
+              <li>
+                Sous Firefox : Menu « Outils {">"} Options ». Cliquez sur
+                l’option « Vie privée » puis désactivez les cookies dans la
+                rubrique « Cookies »
+              </li>
+              <li>
+                Sous Chrome : Menu « Outils ». Cliquez sur « Effacer les données
+                de navigation » et choisissez « Supprimer les cookies et autres
+                données de site et de plug-in ». Validez sur « Effacer les
+                données de navigation ».
+              </li>
             </ul>
           </div>
         </div>
