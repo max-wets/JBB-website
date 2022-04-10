@@ -38,6 +38,7 @@ function MainNavigation() {
           <div className={`${classes.small} ${classes.column}`}>
             <IconButton
               size="sm"
+              ml={2}
               aria-label="hamburger menu button"
               colorScheme="white"
               color="black"
@@ -110,9 +111,7 @@ function MainNavigation() {
             <div className={classes.logowrapper}>
               <Link href="/">
                 <a>
-                  <p className={classes.logo} style={{ fontSize: "50px" }}>
-                    JBBeauty
-                  </p>
+                  <p className={classes.logo}>JBBeauty</p>
                 </a>
               </Link>
             </div>
@@ -131,6 +130,7 @@ function MainNavigation() {
                       color="black"
                       size="sm"
                       icon={<SearchIcon w={5} h={5} />}
+                      mr={2}
                     />
                   </a>
                 </Link>

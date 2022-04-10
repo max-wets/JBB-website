@@ -13,6 +13,7 @@ function BlogPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
   const [selectedCategory, setSelectedCategory] = useState("Toutes");
   const [currentPage, setCurrentPage] = useState(null);
   const [isLargerThan960] = useMediaQuery("(min-width: 960px)");
+  const [isLargerThan600] = useMediaQuery("(min-width: 600px)");
 
   const sortingFn = (a, b) => {
     const aDate = new Date(a.issueDate);
@@ -48,7 +49,13 @@ function BlogPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <>
       <BlogHeading />
-      <Container pt="50px" pb="50px" w="1200px" maxW="90%" margin="0 auto">
+      <Container
+        pt={isLargerThan600 ? "50px" : "20px"}
+        pb={isLargerThan600 ? "50px" : "20px"}
+        w="1200px"
+        maxW={isLargerThan600 ? "90%" : "100%"}
+        margin={isLargerThan600 ? "0 auto" : "none"}
+      >
         <>
           <Flex
             display={currentPage === null ? "none" : "flex"}

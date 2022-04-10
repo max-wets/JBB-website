@@ -11,6 +11,7 @@ import { urlStringFormatter } from "../../../lib/utils";
 
 function BlogDetailPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
   const [isLargerThan960] = useMediaQuery("(min-width: 960px)");
+  const [isLargerThan600] = useMediaQuery("(min-width: 600px)");
   const [serverRendering, setServerRendering] = useState(true);
 
   useEffect(() => {
@@ -28,7 +29,13 @@ function BlogDetailPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <>
       <BlogArticleDetailHeading title={props.article.title} />
-      <Container pt="50px" pb="50px" w="1200px" maxW="90%" margin="0 auto">
+      <Container
+        pt={isLargerThan600 ? "50px" : "20px"}
+        pb={isLargerThan600 ? "50px" : "20px"}
+        w="1200px"
+        maxW={isLargerThan600 ? "90%" : "100%"}
+        margin="0 auto"
+      >
         <Flex
           flexDirection={
             serverRendering ? "row" : isLargerThan960 ? "row" : "column"

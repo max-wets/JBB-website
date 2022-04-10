@@ -1,7 +1,7 @@
 import classes from "./BlogArticleItem.module.css";
 import Image from "next/image";
 import Link from "next/link";
-import { Icon, Button } from "@chakra-ui/react";
+import { Icon, Button, useMediaQuery } from "@chakra-ui/react";
 import { BiUser } from "react-icons/bi";
 import { FiClock } from "react-icons/fi";
 import { useEffect } from "react";
@@ -22,6 +22,7 @@ export interface Article {
 
 function BlogArticle(props: Article) {
   // const api_url = "https://jbb-admin.herokuapp.com";
+  const [isLargerThan600] = useMediaQuery("(min-width: 600px)");
   const articleUrl = urlStringFormatter(props.title, props.id);
 
   const newDate = (date) => {
@@ -71,22 +72,36 @@ function BlogArticle(props: Article) {
       </header>
       <ul>
         <li>
-          <Icon as={BiUser} h={6} w={6} size="sm" />
-          <Link href="">
-            <a>Julie</a>
-          </Link>
+          <Icon
+            as={BiUser}
+            h={isLargerThan600 ? 6 : 4}
+            w={isLargerThan600 ? 6 : 4}
+            size={isLargerThan600 ? "sm" : "xs"}
+            mr="4px"
+          />
+          Julie
         </li>
         <li>
-          <Icon as={FiClock} h={5} w={5} size="sm" mt="2px" />
+          <Icon
+            as={FiClock}
+            h={isLargerThan600 ? 5 : 4}
+            w={isLargerThan600 ? 5 : 4}
+            size={isLargerThan600 ? "sm" : "xs"}
+            mt="2px"
+          />
           <div>{newDate(props.issueDate)}</div>
         </li>
         <li>
-          <Icon as={BsFolder} h={6} w={6} size="sm" />
+          <Icon
+            as={BsFolder}
+            h={isLargerThan600 ? 6 : 4}
+            w={isLargerThan600 ? 6 : 4}
+            size={isLargerThan600 ? "sm" : "xs"}
+            mr="4px"
+          />
           {props.categories.map((category, idx) => (
             <>
-              <Link href="">
-                <a>{category}</a>
-              </Link>
+              {category}
               <span style={{ fontSize: "16px" }}>
                 {idx < props.categories.length - 1 ? ", " : null}
               </span>
@@ -94,10 +109,14 @@ function BlogArticle(props: Article) {
           ))}
         </li>
         <li>
-          <Icon as={BiComment} h={6} w={6} size="sm" />
-          <Link href="">
-            <a>0 Commentaires</a>
-          </Link>
+          <Icon
+            as={BiComment}
+            h={isLargerThan600 ? 6 : 4}
+            w={isLargerThan600 ? 6 : 4}
+            size={isLargerThan600 ? "sm" : "xs"}
+          />
+
+          <a>0 Commentaires</a>
         </li>
       </ul>
       <div className={classes.blogentrysummary}>{props.intro}</div>
@@ -108,7 +127,7 @@ function BlogArticle(props: Article) {
               colorScheme="white"
               color="black"
               variant="outline"
-              size="md"
+              size={isLargerThan600 ? "md" : "sm"}
               _hover={{ color: "#D93644" }}
             >
               Lire la suite...

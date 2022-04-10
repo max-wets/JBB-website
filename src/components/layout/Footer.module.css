@@ -76,6 +76,12 @@
   padding: 0;
 }
 
+@media screen and (max-width: 750px) {
+  .footerbottommenu {
+    justify-content: center;
+  }
+}
+
 .footerbottommenu > div {
   display: flex;
   align-items: flex-end;

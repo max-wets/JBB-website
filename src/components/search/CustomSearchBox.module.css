@@ -30,7 +30,7 @@
   appearance: none;
   border: none;
   color: rgba(33, 36, 61, 0.8);
-  min-height: 44px;
+  min-height: 34px;
   height: 54px;
   outline: none;
   width: 100%;
@@ -43,5 +43,6 @@
 @media only screen and (max-width: 899px) {
   .searchboxinput {
     font-size: 1rem;
+    height: 44px;
   }
 }
