@@ -213,6 +213,8 @@ function HomeComponent(props: { recentProducts; recentArticles }) {
                         : determineArticleGridDisplay()
                     }
                     gap={4}
+                    maxW="94vw"
+                    margin="auto"
                   >
                     {props.recentArticles.map((article, idx) => (
                       <GridItem

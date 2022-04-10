@@ -43,6 +43,7 @@ function BlogArticleDetail(props: {
   // const api_url = "https://jbb-admin.herokuapp.com";
   const router = useRouter();
   const [isLargerThan750] = useMediaQuery("(min-width: 750px)");
+  const [isLargerThan600] = useMediaQuery("(min-width: 600px)");
   const { data: session } = useSession();
   const [commentText, setCommentText] = useState("");
   const [postingComment, setPostingComment] = useState(false);
@@ -176,17 +177,34 @@ function BlogArticleDetail(props: {
       <div className={classes.meta}>
         <ul>
           <li>
-            <Icon as={BiUser} h={6} w={6} size="sm" />
+            <Icon
+              as={BiUser}
+              h={isLargerThan600 ? 6 : 4}
+              w={isLargerThan600 ? 6 : 4}
+              size={isLargerThan600 ? "sm" : "sx"}
+            />
             <Link href="">
               <a>Julie</a>
             </Link>
           </li>
           <li>
-            <Icon as={FiClock} h={5} w={5} size="sm" mt="2px" />
+            <Icon
+              as={FiClock}
+              h={isLargerThan600 ? 5 : 3}
+              w={isLargerThan600 ? 5 : 3}
+              size={isLargerThan600 ? "sm" : "sx"}
+              mt="2px"
+            />
             <div>{newDate(props.article.issueDate)}</div>
           </li>
           <li>
-            <Icon as={BsFolder} h={6} w={6} size="sm" />
+            <Icon
+              as={BsFolder}
+              h={isLargerThan600 ? 6 : 4}
+              w={isLargerThan600 ? 6 : 4}
+              size={isLargerThan600 ? "sm" : "sx"}
+              mr="4px"
+            />
             {props.article.categories.map((category, idx) => (
               <>
                 <span>{category}</span>
@@ -198,7 +216,13 @@ function BlogArticleDetail(props: {
             ))}
           </li>
           <li>
-            <Icon as={BiComment} h={6} w={6} size="sm" />
+            <Icon
+              as={BiComment}
+              h={isLargerThan600 ? 6 : 4}
+              w={isLargerThan600 ? 6 : 4}
+              size={isLargerThan600 ? "sm" : "sx"}
+              mr="4px"
+            />
             <span>
               {comments ? `${comments.length} Commentaires` : "0 Commentaires"}
             </span>

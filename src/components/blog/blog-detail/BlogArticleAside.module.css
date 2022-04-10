@@ -11,6 +11,12 @@
   }
 }
 
+@media only screen and (max-width: 960px) {
+  .sidebarctn {
+    padding: 0px 8px;
+  }
+}
+
 .sidebarinner {
   display: flex;
   flex-direction: column;
@@ -47,6 +53,12 @@
   display: flex;
   flex-direction: row;
   width: 100%;
+}
+
+@media only screen and (max-width: 960px) {
+  .socialicons {
+    justify-content: center;
+  }
 }
 
 .socialicons li {

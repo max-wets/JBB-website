@@ -16,7 +16,7 @@ function BlogArticlesList(props: {
 
   useEffect(() => {
     setLoadedArticles(props.articles);
-    console.log("Blog List articles:", loadedArticles);
+    // console.log("Blog List articles:", loadedArticles);
   }, [props.articles]);
 
   useEffect(() => {

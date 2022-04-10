@@ -27,6 +27,12 @@
   letter-spacing: 0.6px;
 }
 
+@media only screen and (max-width: 750px) {
+  .entrytitle {
+    font-size: 22px;
+  }
+}
+
 .meta ul {
   margin: 0 0 12px;
   display: flex;
@@ -48,9 +54,23 @@
   padding-bottom: 5px;
 }
 
+.meta ul li a,
+.meta ul li div {
+  font-size: 16px;
+  position: relative;
+  margin-left: 4px;
+}
+
 @media only screen and (max-width: 600px) {
   .meta ul li {
     flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .meta ul li a,
+  .meta ul li div,
+  .meta ul li span {
+    font-size: 14px;
   }
 }
 
@@ -63,13 +83,6 @@
 
 .meta ul li:last-child:after {
   content: "";
-}
-
-.meta ul li a,
-.meta ul li div {
-  font-size: 16px;
-  position: relative;
-  margin-left: 4px;
 }
 
 .meta ul li a:hover {
@@ -236,10 +249,15 @@
     min-width: 100%;
   }
   .relatedpostsentry {
+    display: flex;
     flex-direction: column;
   }
   .relatedpostsentry article {
     width: 100%;
+  }
+
+  .primary {
+    padding: 0px 8px;
   }
 }
 
