@@ -1,6 +1,12 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { GetStaticProps, GetStaticPaths, InferGetStaticPropsType } from "next";
+import {
+  GetStaticProps,
+  GetServerSideProps,
+  GetStaticPaths,
+  InferGetStaticPropsType,
+  InferGetServerSidePropsType,
+} from "next";
 import BlogArticleDetail from "../../../components/blog/blog-detail/BlogArticleDetail";
 import BlogArticleDetailHeading from "../../../components/blog/blog-detail/BlogArticleDetailHeading";
 import BlogArticleAside from "../../../components/blog/blog-detail/BlogArticleAside";
@@ -9,7 +15,9 @@ import axios from "axios";
 import qs from "qs";
 import { urlStringFormatter } from "../../../lib/utils";
 
-function BlogDetailPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
+function BlogDetailPage(
+  props: InferGetServerSidePropsType<typeof getServerSideProps>
+) {
   const [isLargerThan960] = useMediaQuery("(min-width: 960px)");
   const [isLargerThan600] = useMediaQuery("(min-width: 600px)");
   const [serverRendering, setServerRendering] = useState(true);
@@ -54,7 +62,7 @@ function BlogDetailPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
   );
 }
 
-export const getStaticProps: GetStaticProps = async (context) => {
+export const getServerSideProps: GetServerSideProps = async (context) => {
   const sortingFn = (a, b) => {
     const aDate = new Date(a.attributes.publishedAt);
     const bDate = new Date(b.attributes.publishedAt);
@@ -160,7 +168,6 @@ export const getStaticProps: GetStaticProps = async (context) => {
       );
       let i = 0;
       while (i < 3 - recommendedArticles.length) {
-        console.log(i);
         recommendedArticles.push(availableArticles[i]);
         i++;
       }
@@ -243,21 +250,21 @@ export const getStaticProps: GetStaticProps = async (context) => {
   };
 };
 
-export const getStaticPaths: GetStaticPaths = async () => {
-  const res = await axios.get(
-    "https://jbbeauty-cms.herokuapp.com/api/articles?pagination[pageSize]=100"
-  );
-  const data = res.data.data;
+// export const getStaticPaths: GetStaticPaths = async () => {
+//   const res = await axios.get(
+//     "https://jbbeauty-cms.herokuapp.com/api/articles?pagination[pageSize]=100"
+//   );
+//   const data = res.data.data;
 
-  // console.log(data.length);
+//   // console.log(data.length);
 
-  const paths = data.map((article) => ({
-    params: {
-      blogArticleId: urlStringFormatter(article.attributes.Name, article.id),
-    },
-  }));
+//   const paths = data.map((article) => ({
+//     params: {
+//       blogArticleId: urlStringFormatter(article.attributes.Name, article.id),
+//     },
+//   }));
 
-  return { paths, fallback: false };
-};
+//   return { paths, fallback: false };
+// };
 
 export default BlogDetailPage;
