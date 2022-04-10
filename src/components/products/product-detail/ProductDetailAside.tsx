@@ -11,7 +11,12 @@ import {
   InputRightElement,
 } from "@chakra-ui/react";
 import Image from "next/image";
-import { BsTwitter, BsFacebook, BsInstagram, BsYoutube } from "react-icons/bs";
+import {
+  BsFillEnvelopeFill,
+  BsFacebook,
+  BsInstagram,
+  BsYoutube,
+} from "react-icons/bs";
 import { FaRss } from "react-icons/fa";
 import { urlStringFormatter } from "../../../lib/utils";
 
@@ -99,10 +104,10 @@ function BlogAside(props: { relatedArticles }) {
                 </li>
               </a>
             </Link>
-            <Link href="">
+            <Link href="mailto:contact@juliebaronniebeauty.com">
               <a key={"last-link"}>
                 <li>
-                  <Icon as={FaRss} h={5} w={5} />
+                  <Icon as={BsFillEnvelopeFill} h={5} w={5} />
                 </li>
               </a>
             </Link>
