@@ -217,6 +217,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
       recommendedProducts: recommendedProducts,
       relatedArticles: relatedArticles ? relatedArticles : [],
     },
+    revalidate: 3600,
   };
 };
 
