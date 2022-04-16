@@ -245,7 +245,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
       recommendedArticles: recommendedArticles,
       articleComments: completeComments,
     },
-    revalidate: 60_000,
+    revalidate: 3600,
   };
 };
 
