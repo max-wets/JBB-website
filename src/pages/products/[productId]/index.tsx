@@ -177,7 +177,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
       }
 
       relatedPosts = dataPosts.filter(containsCategory).map(formatData);
-      console.log(relatedPosts);
+      // console.log(relatedPosts);
 
       if (relatedPosts.length > 3) {
         relatedPosts = relatedPosts.slice(0, 3);
@@ -195,7 +195,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
           i++;
         }
       }
-      console.log(relatedPosts);
+      // console.log(relatedPosts);
       return relatedPosts;
     } catch (err) {
       console.error(err);
