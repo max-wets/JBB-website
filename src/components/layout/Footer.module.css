@@ -22,6 +22,7 @@
 .footerbox:first-child {
   display: flex;
   align-items: flex-end;
+  justify-content: center;
 }
 
 .footerbox:nth-child(2) {
@@ -41,8 +42,8 @@
   justify-content: space-between;
 }
 
-.footerbox:nth-child(2) div:nth-child(2) a {
-  margin-left: 16px;
+.footerbox:nth-child(2) div a {
+  margin-left: 12px;
 }
 
 .footertitle {
@@ -121,6 +122,10 @@
   text-align: center;
   padding: 0;
   font-size: 14px;
+}
+
+.copyright a:hover {
+  color: #d93644;
 }
 
 .container {

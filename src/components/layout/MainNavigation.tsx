@@ -67,7 +67,12 @@ function MainNavigation() {
                     <li>
                       <Link href="/blog">
                         <a>
-                          <Button size="sm" colorScheme="white" color="black">
+                          <Button
+                            size="sm"
+                            colorScheme="white"
+                            color="black"
+                            onClick={onClose}
+                          >
                             <p>BLOG</p>
                           </Button>
                         </a>
@@ -76,7 +81,12 @@ function MainNavigation() {
                     <li>
                       <Link href="/products">
                         <a>
-                          <Button size="sm" colorScheme="white" color="black">
+                          <Button
+                            size="sm"
+                            colorScheme="white"
+                            color="black"
+                            onClick={onClose}
+                          >
                             <p>PRODUITS</p>
                           </Button>
                         </a>
@@ -135,26 +145,6 @@ function MainNavigation() {
                   </a>
                 </Link>
               </div>
-              {/* {isLargerThan750 ? (
-                <div className={classes.rightcontainers}>
-                  <Menu>
-                    <MenuButton
-                      colorScheme="white"
-                      color="black"
-                      size="sm"
-                      as={Button}
-                      rightIcon={<ChevronDownIcon w={5} h={5} paddingTop={1} />}
-                      className={classes.menuhover}
-                      // _focus={{ boxShadow: "none" }}
-                    >
-                      <p style={{ fontSize: "16px" }}>SUIVRE</p>
-                    </MenuButton>
-                    <MenuList>
-                      <MenuItem>YOUTUBE</MenuItem>
-                    </MenuList>
-                  </Menu>
-                </div>
-              ) : null} */}
             </div>
           </div>
         </div>

@@ -96,11 +96,10 @@ function Comment(props: {
       console.error(err);
     }
 
-    props.setComments((prev) => prev.filter((com) => com.id !== props.id));
-
     setPostingComment(false);
-    // setEditOn(false);
     setIsOpen(false);
+
+    props.setComments((prev) => prev.filter((com) => com.id !== props.id));
   }
 
   function DeleteAlertDialog() {

@@ -84,28 +84,28 @@ function BlogAside(props: { relatedArticles }) {
           <h4 className={classes.socialtitle}>Me suivre</h4>
           <ul className={classes.socialicons}>
             <Link href="https://www.youtube.com/channel/UCvVIi4gAhSC4x7sM3g9q53w">
-              <a key={"youtube-link"}>
+              <a target="_blank" key={"youtube-link"}>
                 <li>
                   <Icon as={BsYoutube} h={5} w={5} />
                 </li>
               </a>
             </Link>
             <Link href="https://www.facebook.com/groups/3136931483299677">
-              <a key={"facebook-link"}>
+              <a target="_blank" key={"facebook-link"}>
                 <li>
                   <Icon as={BsFacebook} h={5} w={5} />
                 </li>
               </a>
             </Link>
             <Link href="https://www.instagram.com/julie_baronnie/">
-              <a key={"instagram-link"}>
+              <a target="_blank" key={"instagram-link"}>
                 <li>
                   <Icon as={BsInstagram} h={5} w={5} />
                 </li>
               </a>
             </Link>
             <Link href="mailto:contact@juliebaronniebeauty.com">
-              <a key={"last-link"}>
+              <a target="_blank" key={"last-link"}>
                 <li>
                   <Icon as={BsFillEnvelopeFill} h={5} w={5} />
                 </li>
@@ -113,43 +113,6 @@ function BlogAside(props: { relatedArticles }) {
             </Link>
           </ul>
         </div>
-        {/* <div className={classes.sidebox}>
-          <h4 className={classes.socialtitle}>Newsletter</h4>
-          <div className={classes.newsletter}>
-            <div className={classes.newslettertxt}>
-              Recevez mes dernières nouvelles directement sur votre boîte mail
-            </div>
-            <Formik
-              initialValues={{ email: "" }}
-              onSubmit={() => console.log("email submitted")}
-            >
-              {(props) => (
-                <Form>
-                  <Field name="email">
-                    {({ field, form }) => (
-                      <FormControl>
-                        <FormLabel htmlFor="email" />
-                        <InputGroup size="md">
-                          <Input
-                            {...field}
-                            variant="filled"
-                            id="email"
-                            placeholder="Adresse mail"
-                          />
-                          <InputRightElement width="4.5rem">
-                            <Button colorScheme="blackAlpha" type="submit">
-                              OK
-                            </Button>
-                          </InputRightElement>
-                        </InputGroup>
-                      </FormControl>
-                    )}
-                  </Field>
-                </Form>
-              )}
-            </Formik>
-          </div>
-        </div> */}
         {props.relatedArticles.length > 0 ? (
           <div className={classes.sidebox}>
             <h4 className={classes.socialtitle}>Articles recommandés</h4>

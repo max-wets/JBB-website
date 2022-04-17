@@ -16,12 +16,10 @@ function LegalNoticeComponent() {
             </p>
             <h4>Hébergement</h4>
             <p>
-              Ce site est hébergé par [HOST_NAME]
+              Ce site est hébergé par Vercel.com
               <br></br>
-              Sur les serveurs de la société : [COMPANY_NAME] <br></br> Adresse
-              web : [COMPANY_URL] <br></br> Adresse Postale : [POSTAL_ADDRESS]{" "}
-              <br></br> Téléphone : [PHONE_NBR] <br></br> Adresse électronique
-              (E-mail) : [EMAIL_ADDRESS]
+              Sur les serveurs de la société : Vercel Inc. <br></br> Adresse web
+              : https://vercel.com <br></br>
             </p>
             <h4>Licence</h4>
             <p>

@@ -13,7 +13,7 @@ function BlogHeading() {
   return (
     <header className={classes.pageheader}>
       <div className={classes.container}>
-        <h1>Products</h1>
+        <h1>Produits</h1>
         <Breadcrumb
           spacing="1px"
           separator={<ChevronRightIcon color="gray.500" />}

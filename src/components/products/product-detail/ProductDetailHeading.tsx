@@ -30,7 +30,7 @@ function BlogHeading(props: { Name }) {
               href="/products"
               _hover={{ textDecoration: "none", color: "#D93644" }}
             >
-              Products
+              Produits
             </BreadcrumbLink>
           </BreadcrumbItem>
 
