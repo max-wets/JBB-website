@@ -2,12 +2,11 @@ import classes from "./BlogArticleDetail.module.css";
 import { Article } from "../BlogArticleItem";
 import Image from "next/image";
 import Link from "next/link";
-import { Icon, useMediaQuery, Spinner } from "@chakra-ui/react";
-import { BiUser } from "react-icons/bi";
+import { Icon, useMediaQuery } from "@chakra-ui/react";
+import { BiUser, BiComment } from "react-icons/bi";
 import { FiClock } from "react-icons/fi";
 import { BsFolder } from "react-icons/bs";
-import { BiComment } from "react-icons/bi";
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import VideoEmbed from "./VideoEmbed";
@@ -27,12 +26,8 @@ import {
   ArrowRightIcon,
   ChevronRightIcon,
 } from "@chakra-ui/icons";
-import { useSession } from "next-auth/react";
-import Comment from "./Comment";
-import axios from "axios";
 import { urlStringFormatter, newDate } from "../../../lib/utils";
-import { SessionUser } from "../../../types";
-import CommentsList from "./CommentsList";
+import CommentsSection from "./CommentsSection";
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL;
 
@@ -46,92 +41,7 @@ function BlogArticleDetail(props: {
   const router = useRouter();
   const [isLargerThan750] = useMediaQuery("(min-width: 750px)");
   const [isLargerThan600] = useMediaQuery("(min-width: 600px)");
-  const { data: session } = useSession();
-  const [commentText, setCommentText] = useState("");
-  const [postingComment, setPostingComment] = useState(false);
   const [comments, setComments] = useState([]);
-  const inputRef = useRef<HTMLTextAreaElement>();
-  const commentBoxBtnsRef = useRef<HTMLDivElement>();
-
-  const sessionUser: SessionUser = session?.user;
-
-  function autoResize(el) {
-    // console.log(el);
-    el.style.height = "auto";
-    el.style.height = el.scrollHeight + 2 + "px";
-  }
-
-  async function createComment() {
-    setPostingComment(true);
-
-    let newComment;
-
-    try {
-      const { data } = await axios.post(
-        "https://jbbeauty-cms.herokuapp.com/api/comments",
-        {
-          data: {
-            ArticleID: props.article.id,
-            AuthorID: sessionUser.id,
-            Content: commentText,
-          },
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${sessionUser.accessToken}`,
-          },
-        }
-      );
-
-      // console.log(data);
-      newComment = {
-        id: data.data.id,
-        ArticleID: data.data.attributes.ArticleID,
-        AuthorID: data.data.attributes.AuthorID,
-        Content: data.data.attributes.Content,
-        issueDate: data.data.attributes.publishedAt,
-        AuthorName: sessionUser.name,
-      };
-      // console.log(newComment);
-
-      commentBoxBtnsRef.current.style.display = "none";
-      setCommentText("");
-    } catch (err) {
-      console.error(err);
-    }
-
-    // newComment = {
-    //   id: 20,
-    //   ArticleID: Number(props.article.id),
-    //   AuthorID: sessionUser.id,
-    //   Content: commentText,
-    //   issueDate: "2016-04-26T17:14:08+00:00",
-    //   AuthorName: sessionUser.name,
-    // };
-
-    // console.log(newComment);
-
-    setComments((prev) => {
-      return [...prev, newComment];
-    });
-
-    setPostingComment(false);
-    commentBoxBtnsRef.current.style.display = "none";
-    setCommentText("");
-  }
-
-  useEffect(() => {
-    // console.log("blog detail comments:", props.articleComments);
-    setComments(props.articleComments);
-  }, []);
-
-  // useEffect(() => {
-  //   console.log(APP_URL);
-  //   console.log(router);
-  //   if (session) {
-  //     console.log("user session:", session);
-  //   } else console.log("no user session");
-  // }, []);
 
   return (
     <article className={classes.primary}>
@@ -180,10 +90,11 @@ function BlogArticleDetail(props: {
             />
             {props.article.categories.map((category, idx) => (
               <>
-                <span>{category}</span>
-
-                <span style={{ fontSize: "16px" }}>
-                  {idx < props.article.categories.length - 1 ? ", " : null}
+                <span style={idx > 0 ? { marginLeft: "4px" } : null}>
+                  {category}
+                </span>
+                <span>
+                  {idx < props.article.categories.length - 1 ? "," : null}
                 </span>
               </>
             ))}
@@ -197,7 +108,11 @@ function BlogArticleDetail(props: {
               mr="4px"
             />
             <span>
-              {comments ? `${comments.length} Commentaires` : "0 Commentaires"}
+              {comments
+                ? `${comments.length} Commentaire${
+                    comments.length > 1 ? "s" : ""
+                  }`
+                : "0 Commentaires"}
             </span>
           </li>
         </ul>
@@ -342,91 +257,11 @@ function BlogArticleDetail(props: {
           ))}
         </div>
       </section>
-      <section className={classes.commentsarea}>
-        <div className={classes.commentrespond}>
-          <>
-            <h3 className={classes.commentreplytitle}>
-              Laisser un commentaire
-            </h3>
-            {session?.user ? (
-              <div className={classes.inputrow}>
-                <div className={classes.commentbox}>
-                  <textarea
-                    ref={inputRef}
-                    required
-                    minLength={1}
-                    maxLength={2000}
-                    rows={1}
-                    placeholder="Ajoutez un commentaire..."
-                    value={commentText}
-                    onChange={(e) => {
-                      setCommentText(e.target.value);
-                      autoResize(e.target);
-                    }}
-                    onFocus={() =>
-                      (commentBoxBtnsRef.current.style.display = "flex")
-                    }
-                  />
-
-                  <div className={classes.footer} ref={commentBoxBtnsRef}>
-                    <div className={classes.buttons}>
-                      <button
-                        className={classes.cancelbutton}
-                        onClick={() => {
-                          setPostingComment(false);
-                          setCommentText("");
-                          inputRef.current.style.height = "24px";
-                          commentBoxBtnsRef.current.style.display = "none";
-                        }}
-                      >
-                        ANNULER
-                      </button>
-                      <button
-                        className={classes.submitbutton}
-                        disabled={commentText ? false : true}
-                        onClick={() => createComment()}
-                      >
-                        {postingComment ? (
-                          <Spinner size="sm" />
-                        ) : (
-                          "AJOUTER UN COMMENTAIRE"
-                        )}
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ) : (
-              <p className={classes.mustlogin}>
-                Vous devez être{" "}
-                <Link href={"/auth/signin"}>
-                  <a>connecté</a>
-                </Link>{" "}
-                pour publier un commentaire
-              </p>
-            )}
-          </>
-        </div>
-        {/* <div className={classes.commentslist}>
-          {comments?.map((com) => (
-            <Comment
-              id={com.id}
-              AuthorID={com.AuthorID}
-              ArticleID={com.ArticleID}
-              AuthorName={com.AuthorName}
-              Content={com.Content}
-              issueDate={com.issueDate}
-              sessionUser={sessionUser}
-              setComments={setComments}
-            />
-          ))}
-        </div> */}
-        <CommentsList
-          articleID={props.article.id}
-          setComments={setComments}
-          sessionUser={sessionUser}
-        />
-      </section>
+      <CommentsSection
+        article={props.article}
+        comments={comments}
+        setComments={setComments}
+      />
     </article>
   );
 }

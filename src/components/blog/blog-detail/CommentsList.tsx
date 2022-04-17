@@ -5,16 +5,23 @@ import Comment from "./Comment";
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { SessionUser } from "../../../types";
+import CommentsSection from "./CommentsSection";
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
 const COMMENTS_URL = "https://jbbeauty-cms.herokuapp.com/api/comments";
-const CommentsList = (props: { articleID; setComments; sessionUser }) => {
-  const [commentsList, setCommentsList] = useState([]);
+
+const CommentsList = (props: {
+  articleID;
+  comments;
+  setComments;
+  sessionUser;
+}) => {
+  //   const [commentsList, setCommentsList] = useState([]);
   const filters = `?filters[ArticleID][$eq]=${props.articleID}&sort=publishedAt%3Adesc`;
   const { data, error } = useSWR(COMMENTS_URL + filters, fetcher);
 
   useEffect(() => {
-    console.log("comments:", data);
+    console.log("comments raw data:", data);
     const AuthorIdsArr = [];
     let completeComments = [];
     let cleanComments =
@@ -74,23 +81,15 @@ const CommentsList = (props: { articleID; setComments; sessionUser }) => {
         });
       });
       console.log("complete comments:", completeComments);
-      setCommentsList(completeComments);
+      props.setComments(completeComments);
     }
 
     renderUsers();
   }, [data]);
 
-  //   useEffect(() => {
-  //     if (commentsList.length < 1) renderUsers();
-  //     // setCommentsList(completeComments);
-  //   }, [cleanComments]);
-
-  //   if (error) return <div>Une erreur s'est produite...</div>;
-  //   if (!data) return <div>Chargement en cours...</div>;
-
   return (
     <div>
-      {commentsList.map((com, idx) => (
+      {props.comments.map((com, idx) => (
         <Comment
           idx={idx}
           id={com.id}
