@@ -46,6 +46,9 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
 
   return (
     <>
+      <Head>
+        <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+      </Head>
       <ChakraProvider theme={theme}>
         <SessionProvider session={session}>
           <Layout>

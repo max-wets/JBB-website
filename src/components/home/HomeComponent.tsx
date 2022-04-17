@@ -1,7 +1,7 @@
 import classes from "./HomeComponent.module.css";
 import Image from "next/image";
 import Link from "next/link";
-import bgPicture from "../../public/home/bg-picture.jpg";
+import bgPicture from "../../../public/bg-picture.jpg";
 import ProductItem from "../products/ProductItem";
 import { useEffect, useState } from "react";
 import { Grid, GridItem, useMediaQuery, Tooltip, Icon } from "@chakra-ui/react";

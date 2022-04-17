@@ -12,7 +12,7 @@
 
 .bgpicture {
   position: relative;
-  background-image: url("../../public/home/bg-picture.jpg");
+  background-image: url("../../../public/bg-picture.jpg");
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;

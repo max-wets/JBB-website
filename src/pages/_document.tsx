@@ -4,7 +4,6 @@ export default function Document() {
   return (
     <Html>
       <Head>
-        <link rel="icon" type="image/png" href="/logo/jbb-logo.png" />
         {/* Global Site Tag (gtag.js) - Google Analytics */}
         <link
           href="https://fonts.googleapis.com/css2?family=Nunito&family=Tangerine&display=swap"
