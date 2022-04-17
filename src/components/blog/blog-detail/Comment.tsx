@@ -14,6 +14,7 @@ import {
 import axios from "axios";
 
 function Comment(props: {
+  idx;
   id;
   ArticleID;
   AuthorID;

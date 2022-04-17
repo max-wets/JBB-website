@@ -421,7 +421,11 @@ function BlogArticleDetail(props: {
             />
           ))}
         </div> */}
-        <CommentsList articleID={props.article.id} setComments={setComments} />
+        <CommentsList
+          articleID={props.article.id}
+          setComments={setComments}
+          sessionUser={sessionUser}
+        />
       </section>
     </article>
   );
