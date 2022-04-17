@@ -30,7 +30,9 @@ import {
 import { useSession } from "next-auth/react";
 import Comment from "./Comment";
 import axios from "axios";
-import { urlStringFormatter } from "../../../lib/utils";
+import { urlStringFormatter, newDate } from "../../../lib/utils";
+import { SessionUser } from "../../../types";
+import CommentsList from "./CommentsList";
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL;
 
@@ -50,14 +52,6 @@ function BlogArticleDetail(props: {
   const [comments, setComments] = useState([]);
   const inputRef = useRef<HTMLTextAreaElement>();
   const commentBoxBtnsRef = useRef<HTMLDivElement>();
-
-  interface SessionUser {
-    id?: number;
-    name?: string;
-    email?: string;
-    image?: string;
-    accessToken?: string;
-  }
 
   const sessionUser: SessionUser = session?.user;
 
@@ -138,27 +132,6 @@ function BlogArticleDetail(props: {
   //     console.log("user session:", session);
   //   } else console.log("no user session");
   // }, []);
-
-  const newDate = (date) => {
-    const mois = [
-      "Janvier",
-      "Février",
-      "Mars",
-      "Avril",
-      "Mai",
-      "Juin",
-      "Juillet",
-      "Août",
-      "Septembre",
-      "Octobre",
-      "Novembre",
-      "Décembre",
-    ];
-    const nDate = new Date(date);
-    return `${nDate.getDate()} ${
-      mois[nDate.getMonth()]
-    } ${nDate.getFullYear()}`;
-  };
 
   return (
     <article className={classes.primary}>
@@ -434,10 +407,9 @@ function BlogArticleDetail(props: {
             )}
           </>
         </div>
-        <div className={classes.commentslist}>
-          {comments?.map((com, idx) => (
+        {/* <div className={classes.commentslist}>
+          {comments?.map((com) => (
             <Comment
-              idx={idx}
               id={com.id}
               AuthorID={com.AuthorID}
               ArticleID={com.ArticleID}
@@ -448,7 +420,8 @@ function BlogArticleDetail(props: {
               setComments={setComments}
             />
           ))}
-        </div>
+        </div> */}
+        <CommentsList articleID={props.article.id} setComments={setComments} />
       </section>
     </article>
   );

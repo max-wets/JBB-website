@@ -47,7 +47,7 @@ function Signup({ setError }) {
                   }
                 );
                 const data = res.data;
-                console.log("res data:", data);
+                // console.log("res data:", data);
                 setSubmitting(false);
                 setError(null);
                 if (res.data.user) {

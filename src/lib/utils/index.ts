@@ -14,3 +14,22 @@ export const urlStringFormatter = (title: string, id: number | string) => {
   });
   return cleanedUrlArr.join("-").concat(`-${id}`);
 };
+
+export const newDate = (date: string): string => {
+  const mois = [
+    "Janvier",
+    "Février",
+    "Mars",
+    "Avril",
+    "Mai",
+    "Juin",
+    "Juillet",
+    "Août",
+    "Septembre",
+    "Octobre",
+    "Novembre",
+    "Décembre",
+  ];
+  const nDate = new Date(date);
+  return `${nDate.getDate()} ${mois[nDate.getMonth()]} ${nDate.getFullYear()}`;
+};

@@ -14,7 +14,6 @@ import {
 import axios from "axios";
 
 function Comment(props: {
-  idx;
   id;
   ArticleID;
   AuthorID;
@@ -173,7 +172,7 @@ function Comment(props: {
   }
 
   return (
-    <div key={props.idx} className={classes.commenttext}>
+    <div key={props.id} className={classes.commenttext}>
       {!editOn && props.sessionUser?.id === props.AuthorID ? (
         <div className={classes.commentbtns}>
           <EditIcon onClick={() => setEditOn(true)} />

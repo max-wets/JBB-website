@@ -30,7 +30,7 @@ function BlogPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
 
   useEffect(() => {
     setLoadedArticles(props.articles.sort(sortingFn));
-    console.log("loaded articles:", loadedArticles);
+    // console.log("loaded articles:", loadedArticles);
     // console.log("categories: ", props.activeCategories);
   }, [props.articles]);
 
