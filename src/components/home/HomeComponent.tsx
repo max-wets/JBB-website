@@ -147,7 +147,7 @@ function HomeComponent(props: { recentProducts; recentArticles }) {
               /> */}
               <div className={classes.bgtextctr}>
                 <div className={classes.bgtextheading}>
-                  <h2>Lorem ipsum dolor sit.</h2>
+                  <h2>Julie Baronnie Beauty</h2>
                 </div>
                 <div className={classes.bgtextdivider}>
                   <div className={classes.divider}>
@@ -156,9 +156,11 @@ function HomeComponent(props: { recentProducts; recentArticles }) {
                 </div>
                 <div className={classes.bgtextcontent}>
                   <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Fils tenseurs, injections AH, mésothérapie, microneedling,
+                    Botox.
                     <br />
-                    Perferendis maxime autem nam cumque quo expedita!
+                    Toutes mes techniques anti âge que vous pouvez retrouver sur
+                    ma chaine Youtube Julie Baronnie
                   </p>
                 </div>
               </div>

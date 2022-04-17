@@ -21,7 +21,7 @@ const CommentsList = (props: {
   const { data, error } = useSWR(COMMENTS_URL + filters, fetcher);
 
   useEffect(() => {
-    console.log("comments raw data:", data);
+    // console.log("comments raw data:", data);
     const AuthorIdsArr = [];
     let completeComments = [];
     let cleanComments =
@@ -68,7 +68,7 @@ const CommentsList = (props: {
 
     async function renderUsers() {
       let users = await getUsers();
-      console.log("users:", users);
+      // console.log("users:", users);
 
       cleanComments?.map((comment) => {
         const authorName = users?.filter(
@@ -80,7 +80,7 @@ const CommentsList = (props: {
           AuthorName: authorName,
         });
       });
-      console.log("complete comments:", completeComments);
+      // console.log("complete comments:", completeComments);
       props.setComments(completeComments);
     }
 

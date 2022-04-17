@@ -52,7 +52,7 @@ function ResetPwd({ setError, setSuccess }) {
                   }
                 );
                 const data = res.data;
-                if (res.data) console.log(data);
+                // if (res.data) console.log(data);
                 // alert(
                 //   JSON.stringify({
                 //     code: code,
