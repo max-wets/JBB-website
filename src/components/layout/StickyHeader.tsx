@@ -3,26 +3,16 @@ import Link from "next/link";
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import {
   Button,
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
   IconButton,
   useDisclosure,
   Icon,
-  Accordion,
-  AccordionItem,
   Drawer,
   DrawerOverlay,
   DrawerContent,
   DrawerCloseButton,
   DrawerHeader,
   DrawerBody,
-  AccordionPanel,
-  AccordionIcon,
-  AccordionButton,
 } from "@chakra-ui/react";
-import { ChevronDownIcon } from "@chakra-ui/icons";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { useSession } from "next-auth/react";
 import { signOut } from "next-auth/react";
@@ -92,7 +82,12 @@ function Header() {
                   <li>
                     <Link href={"/blog"}>
                       <a>
-                        <Button size="sm" colorScheme="white" color="black">
+                        <Button
+                          size="sm"
+                          colorScheme="white"
+                          color="black"
+                          onClick={onClose}
+                        >
                           <p>BLOG</p>
                         </Button>
                       </a>
@@ -101,7 +96,12 @@ function Header() {
                   <li>
                     <Link href={"/products"}>
                       <a>
-                        <Button size="sm" colorScheme="white" color="black">
+                        <Button
+                          size="sm"
+                          colorScheme="white"
+                          color="black"
+                          onClick={onClose}
+                        >
                           <p>PRODUITS</p>
                         </Button>
                       </a>

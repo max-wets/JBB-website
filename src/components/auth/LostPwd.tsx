@@ -48,7 +48,7 @@ function Signup({ setError, setSuccess }) {
                   }
                 );
                 const data = res.data;
-                if (res.data) console.log(data);
+                // if (res.data) console.log(data);
                 setSubmitting(false);
                 setSuccess("Un email vous a été envoyé !");
               } catch (err) {

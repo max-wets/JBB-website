@@ -21,31 +21,10 @@ import {
 } from "react-icons/bs";
 import { FaRss } from "react-icons/fa";
 import { useState } from "react";
-import { urlStringFormatter } from "../../../lib/utils";
+import { urlStringFormatter, newDate } from "../../../lib/utils";
 
 function BlogAside(props: { articles: Article[] }) {
   // const api_url = "https://jbb-admin.herokuapp.com";
-
-  const newDate = (date) => {
-    const mois = [
-      "Janvier",
-      "Février",
-      "Mars",
-      "Avril",
-      "Mai",
-      "Juin",
-      "Juillet",
-      "Août",
-      "Septembre",
-      "Octobre",
-      "Novembre",
-      "Décembre",
-    ];
-    const nDate = new Date(date);
-    return `${nDate.getDate()} ${
-      mois[nDate.getMonth()]
-    } ${nDate.getFullYear()}`;
-  };
 
   function SideBlogDetail({ article }) {
     const articleUrl = urlStringFormatter(article.title, article.id);
@@ -84,28 +63,28 @@ function BlogAside(props: { articles: Article[] }) {
           <h4 className={classes.socialtitle}>Me suivre</h4>
           <ul className={classes.socialicons}>
             <Link href="https://www.youtube.com/channel/UCvVIi4gAhSC4x7sM3g9q53w">
-              <a>
+              <a target="_blank">
                 <li>
                   <Icon as={BsYoutube} h={5} w={5} size="sm" />
                 </li>
               </a>
             </Link>
             <Link href="https://www.facebook.com/groups/3136931483299677">
-              <a>
+              <a target="_blank">
                 <li>
                   <Icon as={BsFacebook} h={5} w={5} size="sm" />
                 </li>
               </a>
             </Link>
             <Link href="https://www.instagram.com/julie_baronnie/">
-              <a>
+              <a target="_blank">
                 <li>
                   <Icon as={BsInstagram} h={5} w={5} size="sm" />
                 </li>
               </a>
             </Link>
             <Link href="mailto:contact@juliebaronniebeauty.com">
-              <a>
+              <a target="_blank">
                 <li>
                   <Icon as={BsFillEnvelopeFill} h={5} w={5} size="sm" />
                 </li>
@@ -113,43 +92,6 @@ function BlogAside(props: { articles: Article[] }) {
             </Link>
           </ul>
         </div>
-        {/* <div className={classes.sidebox}>
-          <h4 className={classes.socialtitle}>Newsletter</h4>
-          <div className={classes.newsletter}>
-            <div className={classes.newslettertxt}>
-              Recevez mes dernières nouvelles directement sur votre boîte mail
-            </div>
-            <Formik
-              initialValues={{ email: "" }}
-              onSubmit={() => console.log("email submitted")}
-            >
-              {(props) => (
-                <Form>
-                  <Field name="email">
-                    {({ field, form }) => (
-                      <FormControl>
-                        <FormLabel htmlFor="email" />
-                        <InputGroup size="md">
-                          <Input
-                            {...field}
-                            variant="filled"
-                            id="email"
-                            placeholder="Adresse mail"
-                          />
-                          <InputRightElement width="4.5rem">
-                            <Button colorScheme="blackAlpha" type="submit">
-                              OK
-                            </Button>
-                          </InputRightElement>
-                        </InputGroup>
-                      </FormControl>
-                    )}
-                  </Field>
-                </Form>
-              )}
-            </Formik>
-          </div>
-        </div> */}
         <div className={classes.sidebox}>
           <h4 className={classes.socialtitle}>Articles récents</h4>
           <ul className={classes.sidebarlist}>

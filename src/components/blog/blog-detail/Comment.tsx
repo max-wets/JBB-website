@@ -12,6 +12,7 @@ import {
   AlertDialogOverlay,
 } from "@chakra-ui/react";
 import axios from "axios";
+import { newDate } from "../../../lib/utils/index";
 
 function Comment(props: {
   idx;
@@ -44,27 +45,6 @@ function Comment(props: {
     el.style.height = el.scrollHeight + 2 + "px";
   }
 
-  const newDate = (date) => {
-    const mois = [
-      "Janvier",
-      "Février",
-      "Mars",
-      "Avril",
-      "Mai",
-      "Juin",
-      "Juillet",
-      "Août",
-      "Septembre",
-      "Octobre",
-      "Novembre",
-      "Décembre",
-    ];
-    const nDate = new Date(date);
-    return `${nDate.getDate()} ${
-      mois[nDate.getMonth()]
-    } ${nDate.getFullYear()}`;
-  };
-
   async function updateComment() {
     setPostingComment(true);
 
@@ -82,11 +62,6 @@ function Comment(props: {
           },
         }
       );
-
-      // console.log(data);
-
-      //   setEditOn(false);
-      //    setCommentText("");
     } catch (err) {
       console.error(err);
     }
@@ -121,11 +96,10 @@ function Comment(props: {
       console.error(err);
     }
 
-    props.setComments((prev) => prev.filter((com) => com.id !== props.id));
-
     setPostingComment(false);
-    setEditOn(false);
     setIsOpen(false);
+
+    props.setComments((prev) => prev.filter((com) => com.id !== props.id));
   }
 
   function DeleteAlertDialog() {
@@ -157,7 +131,7 @@ function Comment(props: {
                   colorScheme="red"
                   onClick={() => {
                     deleteComment();
-                    onClose;
+                    // onClose;
                   }}
                   ml={3}
                   style={{ minWidth: 108 }}
@@ -173,7 +147,7 @@ function Comment(props: {
   }
 
   return (
-    <div key={props.idx} className={classes.commenttext}>
+    <div key={props.id} className={classes.commenttext}>
       {!editOn && props.sessionUser?.id === props.AuthorID ? (
         <div className={classes.commentbtns}>
           <EditIcon onClick={() => setEditOn(true)} />

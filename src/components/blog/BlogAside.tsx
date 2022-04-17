@@ -95,7 +95,7 @@ function BlogAside(props: {
               key={1}
               href="https://www.youtube.com/channel/UCvVIi4gAhSC4x7sM3g9q53w"
             >
-              <a>
+              <a target="_blank">
                 <li>
                   <Icon as={BsYoutube} h={5} w={5} size="sm" />
                 </li>
@@ -105,21 +105,21 @@ function BlogAside(props: {
               key={2}
               href="https://www.facebook.com/groups/3136931483299677"
             >
-              <a>
+              <a target="_blank">
                 <li>
                   <Icon as={BsFacebook} h={5} w={5} size="sm" />
                 </li>
               </a>
             </Link>
             <Link key={3} href="https://www.instagram.com/julie_baronnie/">
-              <a>
+              <a target="_blank">
                 <li>
                   <Icon as={BsInstagram} h={5} w={5} size="sm" />
                 </li>
               </a>
             </Link>
             <Link key={4} href="mailto:contact@juliebaronniebeauty.com">
-              <a>
+              <a target="_blank">
                 <li>
                   <Icon as={BsFillEnvelopeFill} h={5} w={5} size="sm" />
                 </li>
