@@ -5,6 +5,7 @@ import Layout from "../components/layout/Layout";
 import { SessionProvider } from "next-auth/react";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
+import Head from "next/head";
 import * as ga from "../lib/ga/index";
 
 const theme = extendTheme({
@@ -44,13 +45,18 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   }
 
   return (
-    <ChakraProvider theme={theme}>
-      <SessionProvider session={session}>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
-      </SessionProvider>
-    </ChakraProvider>
+    <>
+      <Head>
+        <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+      </Head>
+      <ChakraProvider theme={theme}>
+        <SessionProvider session={session}>
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        </SessionProvider>
+      </ChakraProvider>
+    </>
   );
 }
 

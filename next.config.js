@@ -5,7 +5,6 @@
  **/
 
 const nextConfig = {
-  swcMinify: true,
   reactStrictMode: true,
   images: {
     domains: ["jbb-admin.herokuapp.com", "res.cloudinary.com"],
