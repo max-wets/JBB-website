@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { Grid, GridItem, useMediaQuery, Tooltip, Icon } from "@chakra-ui/react";
 import { FiClock } from "react-icons/fi";
 import { BiComment } from "react-icons/bi";
+import Head from "next/head";
 import { urlStringFormatter } from "../../lib/utils";
 
 function HomeComponent(props: { recentProducts; recentArticles }) {
@@ -86,49 +87,59 @@ function HomeComponent(props: { recentProducts; recentArticles }) {
     }, []);
 
     return (
-      <div key={props.idx} className={classes.articlectr}>
-        <div className={classes.thumbnail}>
-          <Link href={`/blog/${articleUrl}`}>
-            <a>
-              <Image
-                src={props.article.imageUrl}
-                alt={props.article.title}
-                width={351}
-                height={181}
-                layout="responsive"
-                objectFit="cover"
-              />
-              <span className={classes.overlay}>
-                <span className={classes.overlaybtn}>Lire</span>
-              </span>
-            </a>
-          </Link>
+      <>
+        <Head>
+          <title>Accueil - JBBeauty</title>
+          <meta
+            name="description"
+            content="Meta description for the Home page"
+          />
+        </Head>
+
+        <div key={props.idx} className={classes.articlectr}>
+          <div className={classes.thumbnail}>
+            <Link href={`/blog/${articleUrl}`}>
+              <a>
+                <Image
+                  src={props.article.imageUrl}
+                  alt={props.article.title}
+                  width={351}
+                  height={181}
+                  layout="responsive"
+                  objectFit="cover"
+                />
+                <span className={classes.overlay}>
+                  <span className={classes.overlaybtn}>Lire</span>
+                </span>
+              </a>
+            </Link>
+          </div>
+          <div className={classes.details}>
+            <Link href={`/blog/${articleUrl}`}>
+              <a>
+                <Tooltip
+                  label={props.article.title}
+                  aria-label="article title"
+                  openDelay={300}
+                >
+                  <h2>
+                    {props.article.title.length > 30
+                      ? props.article.title.substring(0, 30) + "..."
+                      : props.article.title}
+                  </h2>
+                </Tooltip>
+              </a>
+            </Link>
+            <div className={classes.excerpt}>{descriptionExcerpt}</div>
+          </div>
+          <ul className={classes.meta}>
+            <li>
+              <Icon as={FiClock} h={5} w={5} size="sm" mt="2px" mr="2px" />
+              <div>{newDate(props.article.issueDate)}</div>
+            </li>
+          </ul>
         </div>
-        <div className={classes.details}>
-          <Link href={`/blog/${articleUrl}`}>
-            <a>
-              <Tooltip
-                label={props.article.title}
-                aria-label="article title"
-                openDelay={300}
-              >
-                <h2>
-                  {props.article.title.length > 30
-                    ? props.article.title.substring(0, 30) + "..."
-                    : props.article.title}
-                </h2>
-              </Tooltip>
-            </a>
-          </Link>
-          <div className={classes.excerpt}>{descriptionExcerpt}</div>
-        </div>
-        <ul className={classes.meta}>
-          <li>
-            <Icon as={FiClock} h={5} w={5} size="sm" mt="2px" mr="2px" />
-            <div>{newDate(props.article.issueDate)}</div>
-          </li>
-        </ul>
-      </div>
+      </>
     );
   }
 

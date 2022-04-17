@@ -2,6 +2,7 @@ import ResetPwd from "../../../components/auth/ResetPwd";
 import ResetPwdHeading from "../../../components/auth/LostPwdHeading";
 import { useState, useEffect } from "react";
 import { Alert, AlertIcon, CloseButton } from "@chakra-ui/react";
+import Head from "next/head";
 
 function ResetPwdPage() {
   const [error, setError] = useState(null);
@@ -50,6 +51,13 @@ function ResetPwdPage() {
 
   return (
     <>
+      <Head>
+        <title>Changement de mot de passe - JBBeauty</title>
+        <meta
+          name="description"
+          content="Meta description for the Reset password page"
+        />
+      </Head>
       {displayAlert ? <AlertMessage /> : null}
       <ResetPwdHeading />
       <ResetPwd setError={setError} setSuccess={setSuccess} />

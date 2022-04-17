@@ -14,6 +14,7 @@ import { Container, Flex, useMediaQuery } from "@chakra-ui/react";
 import axios from "axios";
 import qs from "qs";
 import { urlStringFormatter } from "../../../lib/utils";
+import Head from "next/head";
 
 function BlogDetailPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
   const [isLargerThan960] = useMediaQuery("(min-width: 960px)");
@@ -34,6 +35,13 @@ function BlogDetailPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
 
   return (
     <>
+      <Head>
+        <title>{props.article.title} - JBBeauty</title>
+        <meta
+          name="description"
+          content="Meta description for the Blog article page"
+        />
+      </Head>
       <BlogArticleDetailHeading title={props.article.title} />
       <Container
         pt={isLargerThan600 ? "50px" : "20px"}

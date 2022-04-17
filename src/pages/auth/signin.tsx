@@ -3,6 +3,7 @@ import LoginHeading from "../../components/auth/LoginHeading";
 import { getCsrfToken } from "next-auth/react";
 import { useState, useEffect } from "react";
 import { Alert, AlertIcon, CloseButton } from "@chakra-ui/react";
+import Head from "next/head";
 
 function SignInPage(props: { crsfToken }) {
   const [error, setError] = useState(null);
@@ -40,6 +41,14 @@ function SignInPage(props: { crsfToken }) {
 
   return (
     <>
+      {" "}
+      <Head>
+        <title>Connexion - JBBeauty</title>
+        <meta
+          name="description"
+          content="Meta description for the Signin page"
+        />
+      </Head>
       {displayAlert ? <AlertMessage /> : null}
       <LoginHeading />
       <Login crsfToken={props.crsfToken} setError={setError} />

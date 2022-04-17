@@ -8,6 +8,7 @@ import axios from "axios";
 import { itemsList } from "../../../data/items";
 import { Container, Flex, Spinner } from "@chakra-ui/react";
 import { useMediaQuery } from "@chakra-ui/react";
+import Head from "next/head";
 
 function ProductDetailPage(
   props: InferGetStaticPropsType<typeof getStaticProps>
@@ -23,6 +24,13 @@ function ProductDetailPage(
 
   return (
     <>
+      <Head>
+        <title>{props.product.Name} - JBBeauty</title>
+        <meta
+          name="description"
+          content="Meta description for the Product detail page"
+        />
+      </Head>
       <ProductDetailHeading Name={props.product.Name} />
       <Container pt="50px" pb="50px" w="1200px" maxW="90%" margin="0 auto">
         <Flex>
