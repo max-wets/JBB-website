@@ -13,7 +13,7 @@ function Footer() {
           <div className={classes.container}>
             <div className={classes.footerbox}>
               <div>
-                <Link href={"/"}>
+                <Link href={process.env.NEXT_PUBLIC_APP_URL}>
                   <a>
                     <p className={classes.footertitle}>JBBeauty</p>
                   </a>
