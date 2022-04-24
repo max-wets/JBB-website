@@ -1,22 +1,23 @@
 import { urlStringFormatter } from "../lib/utils";
 
-const EXTERNAL_DATA_URL = "https://www.juliebaronniebeauty.com";
+const EXTERNAL_DATA_URL = "https://jbbeauty-cms.herokuapp.com/api";
+const APP_URL = "https://www.juliebaronniebeauty.com";
 
 function generateSiteMap(posts, items) {
   return `<?xml version="1.0" encoding="UTF-8"?>
    <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
      <!--We manually set the two URLs we know already-->
      <url>
-       <loc>${EXTERNAL_DATA_URL}</loc>
+       <loc>${APP_URL}</loc>
      </url>
       <url>
-       <loc>${EXTERNAL_DATA_URL}/blog</loc>
+       <loc>${APP_URL}/blog</loc>
      </url>
      ${posts
        .map(({ id, attributes }) => {
          return `
        <url>
-           <loc>${`${EXTERNAL_DATA_URL}/blog/${urlStringFormatter(
+           <loc>${`${APP_URL}/blog/${urlStringFormatter(
              attributes.Name,
              id
            )}`}</loc>
@@ -25,46 +26,46 @@ function generateSiteMap(posts, items) {
        })
        .join("")}
        <url>
-        <loc>${EXTERNAL_DATA_URL}/products</loc>
+        <loc>${APP_URL}/products</loc>
        </url>
        ${items
          .map(({ id }) => {
            return `
        <url>
-           <loc>${`${EXTERNAL_DATA_URL}/products/${id}`}</loc>
+           <loc>${`${APP_URL}/products/${id}`}</loc>
        </url>
      `;
          })
          .join("")}
         <url>
-            <loc>${EXTERNAL_DATA_URL}/login</loc>
+            <loc>${APP_URL}/login</loc>
        </url>
         <url>
-            <loc>${EXTERNAL_DATA_URL}/login/lost-password</loc>
+            <loc>${APP_URL}/login/lost-password</loc>
        </url>
        <url>
-            <loc>${EXTERNAL_DATA_URL}/login/reset-password</loc>
+            <loc>${APP_URL}/login/reset-password</loc>
        </url>
        <url>
-            <loc>${EXTERNAL_DATA_URL}/auth/signin</loc>
+            <loc>${APP_URL}/auth/signin</loc>
        </url>
        <url>
-            <loc>${EXTERNAL_DATA_URL}/search</loc>
+            <loc>${APP_URL}/search</loc>
        </url>
        <url>
-            <loc>${EXTERNAL_DATA_URL}/signup</loc>
+            <loc>${APP_URL}/signup</loc>
        </url>
        <url>
-            <loc>${EXTERNAL_DATA_URL}/mentions-legales</loc>
+            <loc>${APP_URL}/mentions-legales</loc>
        </url>
        <url>
-            <loc>${EXTERNAL_DATA_URL}/api/auth</loc>
+            <loc>${APP_URL}/api/auth</loc>
        </url>
        <url>
-            <loc>${EXTERNAL_DATA_URL}/api/articles-index</loc>
+            <loc>${APP_URL}/api/articles-index</loc>
        </url>
        <url>
-            <loc>${EXTERNAL_DATA_URL}/api/products-index</loc>
+            <loc>${APP_URL}/api/products-index</loc>
        </url>
    </urlset>
  `;
@@ -77,16 +78,12 @@ function SiteMap() {
 export async function getServerSideProps({ res }) {
   // We make an API call to gather the URLs for our site
   // posts
-  const requestPosts = await fetch(
-    "https://jbbeauty-cms.herokuapp.com/api/articles"
-  );
+  const requestPosts = await fetch(`${EXTERNAL_DATA_URL}/articles`);
   const responsePosts = await requestPosts.json();
   const posts = responsePosts.data;
 
   // items
-  const requestItems = await fetch(
-    "https://jbbeauty-cms.herokuapp.com/api/items"
-  );
+  const requestItems = await fetch(`${EXTERNAL_DATA_URL}/items`);
   const responseItems = await requestItems.json();
   const items = responseItems.data;
 
