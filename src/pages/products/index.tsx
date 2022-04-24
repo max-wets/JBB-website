@@ -7,6 +7,7 @@ import { Container, Flex, Spinner, useMediaQuery } from "@chakra-ui/react";
 import ProductsHeading from "../../components/products/ProductsHeading";
 import { Product } from "../../components/products/ProductsList";
 import axios from "axios";
+import Head from "next/head";
 
 function ProductsPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
   const [loadedProducts, setLoadedProducts] = useState<Product[]>([]);
@@ -63,6 +64,13 @@ function ProductsPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
 
   return (
     <>
+      <Head>
+        <title>Produits - JBBeauty</title>
+        <meta
+          name="description"
+          content="Meta description for the Products page"
+        />
+      </Head>
       <ProductsHeading />
       <Container pt="50px" pb="50px" w="1200px" maxW="90%" margin="0 auto">
         <Flex

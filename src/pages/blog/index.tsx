@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { Article } from "../../components/blog/BlogArticleItem";
 import { Container, Flex, Spinner, useMediaQuery } from "@chakra-ui/react";
 import { BsTwitter } from "react-icons/bs";
+import Head from "next/head";
 
 function BlogPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
   const [loadedArticles, setLoadedArticles] = useState<Article[]>([]);
@@ -48,6 +49,10 @@ function BlogPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
 
   return (
     <>
+      <Head>
+        <title>Blog - JBBeauty</title>
+        <meta name="description" content="Meta description for the Blog page" />
+      </Head>
       <BlogHeading />
       <Container
         pt={isLargerThan600 ? "50px" : "20px"}

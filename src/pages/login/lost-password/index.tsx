@@ -2,6 +2,7 @@ import LostPwd from "../../../components/auth/LostPwd";
 import LostPwdHeading from "../../../components/auth/LostPwdHeading";
 import { useState, useEffect } from "react";
 import { Alert, AlertIcon, CloseButton } from "@chakra-ui/react";
+import Head from "next/head";
 
 function LostPwdPage() {
   const [error, setError] = useState(null);
@@ -50,6 +51,13 @@ function LostPwdPage() {
 
   return (
     <>
+      <Head>
+        <title>Mot de passe perdu - JBBeauty</title>
+        <meta
+          name="description"
+          content="Meta description for the Lost password page"
+        />
+      </Head>
       {displayAlert ? <AlertMessage /> : null}
       <LostPwdHeading />
       <LostPwd setError={setError} setSuccess={setSuccess} />

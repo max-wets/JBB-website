@@ -2,6 +2,7 @@ import Signup from "../../components/auth/Signup";
 import SignupHeading from "../../components/auth/SignupHeading";
 import { useState, useEffect } from "react";
 import { Alert, AlertIcon, CloseButton } from "@chakra-ui/react";
+import Head from "next/head";
 
 function SignupPage() {
   const [error, setError] = useState(null);
@@ -9,21 +10,23 @@ function SignupPage() {
 
   function AlertMessage() {
     return (
-      <Alert
-        status="error"
-        position="fixed"
-        top="0"
-        zIndex="99"
-        justifyContent="space-between"
-      >
-        <AlertIcon />
-        {error}
-        <CloseButton
-          position="relative"
-          top="-6px"
-          onClick={() => setDisplayAlert(false)}
-        />
-      </Alert>
+      <>
+        <Alert
+          status="error"
+          position="fixed"
+          top="0"
+          zIndex="99"
+          justifyContent="space-between"
+        >
+          <AlertIcon />
+          {error}
+          <CloseButton
+            position="relative"
+            top="-6px"
+            onClick={() => setDisplayAlert(false)}
+          />
+        </Alert>
+      </>
     );
   }
 
@@ -39,6 +42,13 @@ function SignupPage() {
 
   return (
     <>
+      <Head>
+        <title>Inscription - JBBeauty</title>
+        <meta
+          name="description"
+          content="Meta description for the Signup page"
+        />
+      </Head>
       {displayAlert ? <AlertMessage /> : null}
       <SignupHeading />
       <Signup setError={setError} />
