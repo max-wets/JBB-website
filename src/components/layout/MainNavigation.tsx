@@ -119,7 +119,7 @@ function MainNavigation() {
           </div>
           <div className={`${classes.small} ${classes.column}`}>
             <div className={classes.logowrapper}>
-              <Link href="/">
+              <Link href={process.env.NEXT_PUBLIC_APP_URL}>
                 <a>
                   <p className={classes.logo}>JBBeauty</p>
                 </a>

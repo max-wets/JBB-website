@@ -8,7 +8,7 @@ import { Grid, GridItem, useMediaQuery, Tooltip, Icon } from "@chakra-ui/react";
 import { FiClock } from "react-icons/fi";
 import { BiComment } from "react-icons/bi";
 import Head from "next/head";
-import { urlStringFormatter } from "../../lib/utils";
+import { urlStringFormatter, newDate } from "../../lib/utils";
 
 function HomeComponent(props: { recentProducts; recentArticles }) {
   const [isLargerThan1000] = useMediaQuery("(min-width: 1000px)");
@@ -32,27 +32,6 @@ function HomeComponent(props: { recentProducts; recentArticles }) {
     if (isLargerThan750) return "repeat(2, 1fr)";
     return "repeat(1, 1fr)";
   }
-
-  const newDate = (date) => {
-    const mois = [
-      "Janvier",
-      "Février",
-      "Mars",
-      "Avril",
-      "Mai",
-      "Juin",
-      "Juillet",
-      "Août",
-      "Septembre",
-      "Octobre",
-      "Novembre",
-      "Décembre",
-    ];
-    const nDate = new Date(date);
-    return `${nDate.getDate()} ${
-      mois[nDate.getMonth()]
-    } ${nDate.getFullYear()}`;
-  };
 
   function ArticleItem(props: { idx; article }) {
     // console.log(props.article.description);
@@ -89,10 +68,10 @@ function HomeComponent(props: { recentProducts; recentArticles }) {
     return (
       <>
         <Head>
-          <title>Accueil - JBBeauty</title>
+          <title>Accueil - Julie Baronnie Beauty</title>
           <meta
             name="description"
-            content="Meta description for the Home page"
+            content="Bienvenue sur Julie Baronnie Beauty, ici vous trouverez toutes mes techniques anti âge que vous pouvez retrouver sur ma chaine Youtube Julie Baronnie"
           />
         </Head>
 
