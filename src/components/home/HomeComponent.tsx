@@ -73,6 +73,12 @@ function HomeComponent(props: { recentProducts; recentArticles }) {
             name="description"
             content="Bienvenue sur Julie Baronnie Beauty, ici vous trouverez toutes mes techniques anti âge que vous pouvez retrouver sur ma chaine Youtube Julie Baronnie"
           />
+          <meta property="og:title" content="Accueil - Julie Baronnie Beauty" />
+          <meta
+            property="og:description"
+            content="Bienvenue sur Julie Baronnie Beauty, ici vous trouverez toutes mes techniques anti âge"
+          />
+          <meta property="og:image" content={"/bg-picture.jpg"} />
         </Head>
 
         <div key={props.idx} className={classes.articlectr}>
@@ -128,16 +134,9 @@ function HomeComponent(props: { recentProducts; recentArticles }) {
         <article className={classes.singlepagearticle}>
           <section className={classes.bgpicture}>
             <div className={classes.bgcolumn}>
-              {/* <Image
-                src={bgPicture}
-                alt="home page background picture"
-                width={1300}
-                height={800}
-                objectFit="cover"
-              /> */}
               <div className={classes.bgtextctr}>
                 <div className={classes.bgtextheading}>
-                  <h2>Julie Baronnie Beauty</h2>
+                  <h1>Julie Baronnie Beauty</h1>
                 </div>
                 <div className={classes.bgtextdivider}>
                   <div className={classes.divider}>
