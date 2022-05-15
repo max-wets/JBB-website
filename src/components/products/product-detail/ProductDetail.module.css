@@ -160,6 +160,13 @@
   color: #d93644;
 }
 
+.itemlink {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  padding: 12px 0;
+}
+
 .description {
   margin: 1.5em 0 0;
 }

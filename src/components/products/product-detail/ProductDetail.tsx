@@ -1,8 +1,12 @@
 import classes from "./ProductDetail.module.css";
 import Link from "next/link";
 import Image from "next/image";
-import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
-import { Tooltip } from "@chakra-ui/react";
+import {
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  ExternalLinkIcon,
+} from "@chakra-ui/icons";
+import { Tooltip, Button } from "@chakra-ui/react";
 import ReactMarkdown from "react-markdown";
 import { useEffect } from "react";
 import remarkGfm from "remark-gfm";
@@ -13,8 +17,14 @@ function ProductDetail(props: {
   recommendedProducts;
 }) {
   // useEffect(() => {
-  //   console.log("product:", props.product);
-  // });
+  //   console.log("product: ", props.product);
+  // }, []);
+
+  function getManufacturerLink(itemDescription: string): string {
+    const regex = /https?\:\/\/\w+\.\w+\.\w+(\/[\w+-]*)*/gm;
+    const urlLink = itemDescription.match(regex)[0];
+    return urlLink;
+  }
 
   function priceFormat(num) {
     let formattedNum;
@@ -126,6 +136,16 @@ function ProductDetail(props: {
                 </span>
               ))}
             </div>
+          </div>
+          <div className={classes.itemlink}>
+            <Link href={getManufacturerLink(props.product.Description)}>
+              <a target="_blank">
+                <Button size="sm">
+                  <ExternalLinkIcon mr="4px" />
+                  Fiche produit
+                </Button>
+              </a>
+            </Link>
           </div>
         </div>
       </div>

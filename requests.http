@@ -5,16 +5,16 @@ GET https://jbbeauty-cms.herokuapp.com/api/item-categories
 GET https://jbbeauty-cms.herokuapp.com/api/items
 
 ### Get items list (with attributes)
-GET https://jbbeauty-cms.herokuapp.com/api/items?populate=%2A
+GET https://jbbeauty-cms.herokuapp.com/api/items?populate=%2A&pagination[pageSize]=100
 
 ### Get a given item
-GET https://jbbeauty-cms.herokuapp.com/api/items/12?populate=%2A
+GET https://jbbeauty-cms.herokuapp.com/api/items/22?populate=%2A
 
 ### Get article categories list
 GET https://jbbeauty-cms.herokuapp.com/api/article-categories
 
 ### Get articles list
-GET https://jbbeauty-cms.herokuapp.com/api/articles?pagination[pageSize]=100
+GET https://jbbeauty-cms.herokuapp.com/api/articles?populate=%2A&pagination[pageSize]=100
 
 ### Get articles list (with attributes) sorted by date
 GET https://jbbeauty-cms.herokuapp.com/api/articles?populate=%2A&sort[0]=createdAt%3Adesc
