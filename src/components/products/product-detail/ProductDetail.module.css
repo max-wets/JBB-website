@@ -163,8 +163,8 @@
 .itemlink {
   display: flex;
   flex-direction: row;
-  justify-content: flex-end;
-  padding: 12px 0;
+  justify-content: flex-start;
+  padding: 18px 0;
 }
 
 .description {

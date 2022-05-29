@@ -140,9 +140,9 @@ function ProductDetail(props: {
           <div className={classes.itemlink}>
             <Link href={getManufacturerLink(props.product.Description)}>
               <a target="_blank">
-                <Button size="sm">
+                <Button size="sm" colorScheme="red">
                   <ExternalLinkIcon mr="4px" />
-                  Fiche produit
+                  ACHETER
                 </Button>
               </a>
             </Link>
