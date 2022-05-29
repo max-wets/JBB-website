@@ -1,0 +1,123 @@
+.wrap {
+  margin-top: 80px;
+  margin-bottom: 0px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.sectionctr {
+  display: flex;
+  margin: auto;
+  position: relative;
+}
+
+.sectionwrap {
+  padding: 10px;
+}
+
+.row {
+  width: 100%;
+  display: flex;
+}
+
+.col50 {
+  width: 50%;
+  position: relative;
+  display: flex;
+}
+
+.colwrap {
+  display: flex;
+  align-content: center;
+  align-items: center;
+  padding: 10px;
+  position: relative;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+.heading {
+  margin: 0px 0px 0px -71px;
+}
+
+.heading h2 {
+  color: #d93644;
+  font-size: 45px;
+}
+
+.dividerwrap {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.dividerctr {
+  margin: 0px 0px 0px -71px;
+}
+
+.divider {
+  padding-bottom: 2px;
+  padding-top: 2px;
+  display: flex;
+}
+
+.separator {
+  width: 60%;
+  border-top: solid #d93644 3px;
+}
+
+.textctr {
+  width: 100%;
+  position: relative;
+}
+
+.textctr h2 {
+  margin-bottom: 20px;
+}
+
+.textblock {
+  padding-top: 30px;
+  margin-bottom: 50px;
+}
+
+.textcol {
+  max-width: 850px;
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  position: relative;
+}
+
+.textrow {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.textrow p {
+  margin-bottom: 20px;
+}
+
+.textrow a {
+  color: #d93644;
+  text-decoration: underline;
+}
+
+.textrow a:active {
+  color: blueviolet;
+}
+
+.textsignaturectr {
+  width: 100%;
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-start;
+}
+
+.signature {
+  margin-right: 3rem;
+  color: #d93644;
+  font-size: 38px;
+  font-weight: 600;
+  font-family: "Tangerine", cursive;
+}

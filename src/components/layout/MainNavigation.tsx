@@ -93,6 +93,20 @@ function MainNavigation() {
                       </Link>
                     </li>
                     <li>
+                      <Link href="/about">
+                        <a>
+                          <Button
+                            size="sm"
+                            colorScheme="white"
+                            color="black"
+                            onClick={onClose}
+                          >
+                            <p>A PROPOS</p>
+                          </Button>
+                        </a>
+                      </Link>
+                    </li>
+                    <li>
                       {status === "authenticated" ? (
                         <Button
                           size="sm"
@@ -168,6 +182,15 @@ function MainNavigation() {
                         <a>
                           <Button size="sm" colorScheme="white" color="black">
                             <p>PRODUITS</p>
+                          </Button>
+                        </a>
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href={"/about"}>
+                        <a>
+                          <Button size="sm" colorScheme="white" color="black">
+                            <p>A PROPOS</p>
                           </Button>
                         </a>
                       </Link>

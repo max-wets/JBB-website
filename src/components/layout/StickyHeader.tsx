@@ -12,6 +12,7 @@ import {
   DrawerCloseButton,
   DrawerHeader,
   DrawerBody,
+  useMediaQuery,
 } from "@chakra-ui/react";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { useSession } from "next-auth/react";
@@ -23,6 +24,7 @@ function Header() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = useRef();
   const { data: session, status } = useSession();
+  const [isLargerThan415] = useMediaQuery("(min-width: 415px)");
 
   const controlDirection = useCallback(() => {
     if (window.scrollY > oldScrollY.current) {
@@ -108,6 +110,20 @@ function Header() {
                     </Link>
                   </li>
                   <li>
+                    <Link href={"/about"}>
+                      <a>
+                        <Button
+                          size="sm"
+                          colorScheme="white"
+                          color="black"
+                          onClick={onClose}
+                        >
+                          <p>A PROPOS</p>
+                        </Button>
+                      </a>
+                    </Link>
+                  </li>
+                  <li>
                     {status === "authenticated" ? (
                       <Button
                         size="sm"
@@ -132,52 +148,63 @@ function Header() {
             </DrawerContent>
           </Drawer>
         </div>
-        <div className={`${classes.large} ${classes.column}`}>
-          <div className={classes.navbar}>
-            <nav>
-              <ul className={classes.fullmenu}>
-                <li>
-                  <Link href={"/blog"}>
-                    <a>
-                      <Button size="sm" colorScheme="white" color="black">
-                        <p>BLOG</p>
+        {isLargerThan415 ? (
+          <div className={`${classes.large} ${classes.column}`}>
+            <div className={classes.navbar}>
+              <nav>
+                <ul className={classes.fullmenu}>
+                  <li>
+                    <Link href={"/blog"}>
+                      <a>
+                        <Button size="sm" colorScheme="white" color="black">
+                          <p>BLOG</p>
+                        </Button>
+                      </a>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href={"/products"}>
+                      <a>
+                        <Button size="sm" colorScheme="white" color="black">
+                          <p>PRODUITS</p>
+                        </Button>
+                      </a>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href={"/about"}>
+                      <a>
+                        <Button size="sm" colorScheme="white" color="black">
+                          <p>A PROPOS</p>
+                        </Button>
+                      </a>
+                    </Link>
+                  </li>
+                  <li>
+                    {status === "authenticated" ? (
+                      <Button
+                        size="sm"
+                        colorScheme="white"
+                        color="black"
+                        onClick={() => signOut({ redirect: false })}
+                      >
+                        <p>SE DECONNECTER</p>
                       </Button>
-                    </a>
-                  </Link>
-                </li>
-                <li>
-                  <Link href={"/products"}>
-                    <a>
+                    ) : (
                       <Button size="sm" colorScheme="white" color="black">
-                        <p>PRODUITS</p>
+                        <Link href={"/auth/signin"}>
+                          <a>
+                            <p>SE CONNECTER</p>
+                          </a>
+                        </Link>
                       </Button>
-                    </a>
-                  </Link>
-                </li>
-                <li>
-                  {status === "authenticated" ? (
-                    <Button
-                      size="sm"
-                      colorScheme="white"
-                      color="black"
-                      onClick={() => signOut({ redirect: false })}
-                    >
-                      <p>SE DECONNECTER</p>
-                    </Button>
-                  ) : (
-                    <Button size="sm" colorScheme="white" color="black">
-                      <Link href={"/auth/signin"}>
-                        <a>
-                          <p>SE CONNECTER</p>
-                        </a>
-                      </Link>
-                    </Button>
-                  )}
-                </li>
-              </ul>
-            </nav>
+                    )}
+                  </li>
+                </ul>
+              </nav>
+            </div>
           </div>
-        </div>
+        ) : null}
       </div>
     </header>
   );
