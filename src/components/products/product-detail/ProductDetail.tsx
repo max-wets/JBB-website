@@ -21,8 +21,13 @@ function ProductDetail(props: {
   // }, []);
 
   function getManufacturerLink(itemDescription: string): string {
-    const regex = /https?\:\/\/\w+\.\w+\.\w+(\/[\w+-]*)*/gm;
-    const urlLink = itemDescription.match(regex)[0];
+    // /https?\:\/\/\w+\.[\w+-]+\.\w+(\/[\w+-]*)*/gm;
+    const regex = new RegExp(
+      "https?\\:\\/\\/\\w+\\.[\\w+-]+\\.\\w+(\\/[\\w+-]*)*",
+      "gm"
+    );
+    const regexMatch = itemDescription.match(regex);
+    const urlLink = regexMatch ? regexMatch[0] : "#";
     return urlLink;
   }
 
