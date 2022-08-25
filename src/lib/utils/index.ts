@@ -4,7 +4,7 @@ export const urlStringFormatter = (title: string, id: number | string) => {
   const filteredUrlArr = urlArr.filter((str) => regex.test(str));
   const cleanedUrlArr = filteredUrlArr.map((str) => {
     let newStr = "";
-    const bannedCharsRegex = new RegExp("[,.']");
+    const bannedCharsRegex = new RegExp("[,\\.']");
     for (let char of str) {
       if (!bannedCharsRegex.test(char)) {
         newStr += char;
