@@ -52,7 +52,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
   const pid = Number(context.params.productId);
 
   const res = await axios.get(
-    `https://jbbeauty-cms.herokuapp.com/api/items?populate=%2A`
+    `https://jbbeauty-cms.herokuapp.com/api/items?populate=%2A&pagination[pageSize]=100`
   );
   const data = res.data.data;
 
@@ -149,7 +149,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
     try {
       const sortParam = "sort[0]=publishedAt%3Adesc";
       const res = await axios.get(
-        `https://jbbeauty-cms.herokuapp.com/api/articles?populate=%2A&${sortParam}`
+        `https://jbbeauty-cms.herokuapp.com/api/articles?populate=%2A&${sortParam}&pagination[pageSize]=100`
       );
       const dataPosts: Array<any> = res.data.data;
 
@@ -230,7 +230,9 @@ export const getStaticProps: GetStaticProps = async (context) => {
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const res = await axios.get("https://jbbeauty-cms.herokuapp.com/api/items");
+  const res = await axios.get(
+    "https://jbbeauty-cms.herokuapp.com/api/items?pagination[pageSize]=100"
+  );
   const data = res.data.data;
 
   const paths = data.map((item) => ({
