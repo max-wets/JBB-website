@@ -44,7 +44,7 @@ function HomeComponent(props: { recentProducts; recentArticles }) {
     useEffect(() => {
       let cleanExcerpt;
 
-      if (props.article.description.length > 100) {
+      if (props.article.description?.length > 100) {
         const excerpt = props.article.description.substring(0, 100);
         const regex = new RegExp("\\n", "g");
         cleanExcerpt = excerpt
