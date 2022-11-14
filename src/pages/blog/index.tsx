@@ -103,8 +103,6 @@ export const getStaticProps: GetStaticProps = async () => {
   );
   const data = res.data.data;
 
-  // console.log("blog articles data:", data);
-
   interface Category {
     [category: string]: number;
   }
