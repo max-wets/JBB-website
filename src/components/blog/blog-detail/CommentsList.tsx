@@ -21,7 +21,6 @@ const CommentsList = (props: {
   const { data, error } = useSWR(COMMENTS_URL + filters, fetcher);
 
   useEffect(() => {
-    // console.log("comments raw data:", data);
     const AuthorIdsArr = [];
     let completeComments = [];
     let cleanComments =
