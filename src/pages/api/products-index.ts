@@ -11,7 +11,7 @@ const indexProducts = client.initIndex(process.env.ALGOLIA_PRODUCTS_INDEX_NAME);
 const fetchProductsFromDatabase = async () => {
   try {
     const products = await axios.get(
-      "https://jbbeauty-cms.herokuapp.com/api/items?populate=%2A"
+      `${process.env.NEXT_PUBLIC_API_URL}/items?populate=%2A`
     ); // Fetch data from your database
     const cleanProducts = products.data.map((article) => ({
       id: article.id.toString(),

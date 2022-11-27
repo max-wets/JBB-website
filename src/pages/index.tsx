@@ -14,12 +14,12 @@ const Home = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
 
 export const getStaticProps: GetStaticProps = async () => {
   const resProducts = await axios.get(
-    "https://jbbeauty-cms.herokuapp.com/api/items?populate=%2A"
+    `${process.env.NEXT_PUBLIC_API_URL}/items?populate=%2A`
   );
   const dataProducts = resProducts.data.data;
 
   const resArticles = await axios.get(
-    "https://jbbeauty-cms.herokuapp.com/api/articles?populate=%2A"
+    `${process.env.NEXT_PUBLIC_API_URL}/articles?populate=%2A`
   );
   const dataArticles = resArticles.data.data;
 

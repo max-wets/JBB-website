@@ -50,7 +50,7 @@ function Comment(props: {
 
     try {
       const { data } = await axios.put(
-        `https://jbbeauty-cms.herokuapp.com/api/comments/${props.id}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/comments/${props.id}`,
         {
           data: {
             Content: commentText,
@@ -85,7 +85,7 @@ function Comment(props: {
 
     try {
       const { data } = await axios.delete(
-        `https://jbbeauty-cms.herokuapp.com/api/comments/${props.id}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/comments/${props.id}`,
         {
           headers: {
             Authorization: `Bearer ${props.sessionUser.accessToken}`,

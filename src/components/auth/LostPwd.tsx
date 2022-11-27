@@ -36,7 +36,7 @@ function Signup({ setError, setSuccess }) {
               // }, 400);
               try {
                 const res = await axios.post(
-                  "https://jbbeauty-cms.herokuapp.com/api/auth/forgot-password",
+                  `${process.env.NEXT_PUBLIC_API_URL}/auth/forgot-password`,
                   {
                     email: values.email,
                   },

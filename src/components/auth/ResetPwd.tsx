@@ -44,7 +44,7 @@ function ResetPwd({ setError, setSuccess }) {
               }
               try {
                 const res = await axios.post(
-                  "https://jbbeauty-cms.herokuapp.com/api/auth/reset-password",
+                  `${process.env.NEXT_PUBLIC_API_URL}/auth/reset-password`,
                   {
                     code: code,
                     password: values.password,

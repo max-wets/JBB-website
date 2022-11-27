@@ -20,7 +20,7 @@ const options = {
         // console.log("req body:", reqBody);
 
         const res = await fetch(
-          "https://jbbeauty-cms.herokuapp.com/api/auth/local",
+          `${process.env.NEXT_PUBLIC_API_URL}/auth/local`,
           {
             method: "POST",
             body: JSON.stringify(reqBody),

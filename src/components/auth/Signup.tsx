@@ -39,7 +39,7 @@ function Signup({ setError }) {
               // }, 400);
               try {
                 const res = await axios.post(
-                  "https://jbbeauty-cms.herokuapp.com/api/auth/local/register",
+                  `${process.env.NEXT_PUBLIC_API_URL}/auth/local/register`,
                   {
                     username: values.username,
                     email: values.email,

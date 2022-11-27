@@ -1,6 +1,6 @@
 import { urlStringFormatter } from "../lib/utils";
 
-const EXTERNAL_DATA_URL = "https://jbbeauty-cms.herokuapp.com/api";
+const EXTERNAL_DATA_URL = process.env.NEXT_PUBLIC_API_URL;
 const APP_URL = "https://www.juliebaronniebeauty.com";
 
 function generateSiteMap(posts, items) {

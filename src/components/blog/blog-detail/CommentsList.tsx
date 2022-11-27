@@ -8,7 +8,7 @@ import { SessionUser } from "../../../types";
 import CommentsSection from "./CommentsSection";
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
-const COMMENTS_URL = "https://jbbeauty-cms.herokuapp.com/api/comments";
+const COMMENTS_URL = `${process.env.NEXT_PUBLIC_API_URL}/comments`;
 
 const CommentsList = (props: {
   articleID;
@@ -52,7 +52,7 @@ const CommentsList = (props: {
           encodeValuesOnly: true,
         }
       );
-      const url = `https://jbbeauty-cms.herokuapp.com/api/users?${query}`;
+      const url = `${process.env.NEXT_PUBLIC_API_URL}/users?${query}`;
       const options = {
         headers: {
           Authorization: `bearer ${process.env.NEXT_PUBLIC_API_TOKEN}`,

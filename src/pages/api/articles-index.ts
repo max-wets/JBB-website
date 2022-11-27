@@ -11,7 +11,7 @@ const indexArticles = client.initIndex(process.env.ALGOLIA_ARTICLES_INDEX_NAME);
 const fetchArticlesFromDatabase = async () => {
   try {
     const articles = await axios.get(
-      "https://jbbeauty-cms.herokuapp.com/api/articles?populate=%2A&pagination[pageSize]=100"
+      `${process.env.NEXT_PUBLIC_API_URL}/articles?populate=%2A&pagination[pageSize]=100`
     ); // Fetch data from your database
     const cleanArticles = articles.data.data.map((article) => ({
       id: article.id.toString(),

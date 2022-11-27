@@ -85,7 +85,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
     (context.params.blogArticleId as string).split("-").slice(-1)
   );
   const res = await axios.get(
-    `https://jbbeauty-cms.herokuapp.com/api/articles?populate=%2A&pagination[pageSize]=100&sort[0]=createdAt%3Adesc`
+    `${process.env.NEXT_PUBLIC_API_URL}/articles?populate=%2A&pagination[pageSize]=100&sort[0]=createdAt%3Adesc`
   );
   const data = res.data.data.sort(sortingFn);
   const article = data.find((article) => article.id === aid);
@@ -186,7 +186,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
   // get article's comments
   const resComments = await axios.get(
-    `https://jbbeauty-cms.herokuapp.com/api/comments?filters[ArticleID][$eq]=${aid}&sort=publishedAt%3Adesc`
+    `${process.env.NEXT_PUBLIC_API_URL}/comments?filters[ArticleID][$eq]=${aid}&sort=publishedAt%3Adesc`
   );
   const commentsData = resComments.data.data;
   const AuthorIdsArr = [];
@@ -221,7 +221,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
       }
     );
     const usersRes = await axios.get(
-      `https://jbbeauty-cms.herokuapp.com/api/users?${query}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/users?${query}`,
       {
         headers: {
           Authorization: `bearer ${process.env.NEXT_PUBLIC_API_TOKEN}`,
@@ -259,7 +259,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const res = await axios.get(
-    "https://jbbeauty-cms.herokuapp.com/api/articles?pagination[pageSize]=100"
+    `${process.env.NEXT_PUBLIC_API_URL}/articles?pagination[pageSize]=100`
   );
   const data = res.data.data;
 

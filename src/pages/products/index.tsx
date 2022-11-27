@@ -108,7 +108,7 @@ export default ProductsPage;
 
 export const getStaticProps: GetStaticProps = async () => {
   const res = await axios.get(
-    "https://jbbeauty-cms.herokuapp.com/api/items?populate=%2A&pagination[pageSize]=100&sort[0]=createdAt%3Adesc"
+    `${process.env.NEXT_PUBLIC_API_URL}/items?populate=%2A&pagination[pageSize]=100&sort[0]=createdAt%3Adesc`
   );
   const data = res.data.data;
 

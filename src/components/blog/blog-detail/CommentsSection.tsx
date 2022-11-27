@@ -30,7 +30,7 @@ const CommentsSection = (props: { article; comments; setComments }) => {
 
     try {
       const { data } = await axios.post(
-        "https://jbbeauty-cms.herokuapp.com/api/comments",
+        `${process.env.NEXT_PUBLIC_API_URL}/comments`,
         {
           data: {
             ArticleID: props.article.id,
