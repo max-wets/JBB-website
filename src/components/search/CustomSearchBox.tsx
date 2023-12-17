@@ -16,7 +16,7 @@ function SearchBox({ refine }) {
         <InputGroup display="flex" alignItems="center" justifyContent="center">
           <InputLeftElement
             pointerEvents="none"
-            children={<SearchIcon size="md" color="red.200" />}
+            children={<SearchIcon color="red.200" />}
             ml={4}
             mt={2}
             mb={2}
