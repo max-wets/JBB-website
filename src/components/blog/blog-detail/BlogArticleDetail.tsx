@@ -142,7 +142,7 @@ function BlogArticleDetail(props: {
           <li>
             <FacebookShareButton
               url={APP_URL + router.asPath}
-              quote={`Voici un article à lire sur le thème suivant: ${props.article.title} \n\n`}
+              hashtag={`Voici un article à lire sur le thème suivant: ${props.article.title} \n\n`}
             >
               <FacebookIcon size={40} borderRadius={6} />
             </FacebookShareButton>
