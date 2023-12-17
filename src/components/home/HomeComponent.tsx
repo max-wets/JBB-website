@@ -83,7 +83,7 @@ function HomeComponent(props: { recentProducts; recentArticles }) {
 
         <div key={props.idx} className={classes.articlectr}>
           <div className={classes.thumbnail}>
-            <Link href={`/blog/${articleUrl}`}>
+            <Link legacyBehavior href={`/blog/${articleUrl}`}>
               <a>
                 <Image
                   src={props.article.imageUrl}
@@ -100,7 +100,7 @@ function HomeComponent(props: { recentProducts; recentArticles }) {
             </Link>
           </div>
           <div className={classes.details}>
-            <Link href={`/blog/${articleUrl}`}>
+            <Link legacyBehavior href={`/blog/${articleUrl}`}>
               <a>
                 <Tooltip
                   label={props.article.title}

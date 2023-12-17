@@ -24,7 +24,7 @@ function Hits({ searchState, searchResults }) {
       <article key={id} className={classes.resulthit}>
         <div className={classes.ctr}>
           <div className={classes.thumbnail}>
-            <Link href={`/blog/${articleUrl}`}>
+            <Link legacyBehavior href={`/blog/${articleUrl}`}>
               <a>
                 <Image
                   width={120}
@@ -41,7 +41,7 @@ function Hits({ searchState, searchResults }) {
           <div className={classes.content}>
             <header className={classes.contentheader}>
               <h2>
-                <Link href={`/blog/${articleUrl}`}>
+                <Link legacyBehavior href={`/blog/${articleUrl}`}>
                   <a>{title}</a>
                 </Link>
               </h2>
@@ -50,7 +50,7 @@ function Hits({ searchState, searchResults }) {
               <p>{description.slice(0, 200) + "..."}</p>
             </div>
             <div className={classes.readmore}>
-              <Link href={`/blog/${articleUrl}`}>
+              <Link legacyBehavior href={`/blog/${articleUrl}`}>
                 <a>Lire</a>
               </Link>
             </div>

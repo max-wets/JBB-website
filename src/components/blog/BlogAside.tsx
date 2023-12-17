@@ -60,19 +60,14 @@ function BlogAside(props: {
 
     return (
       <li key={idx}>
-        <Link href={`/blog/${articleUrl}`}>
+        <Link legacyBehavior href={`/blog/${articleUrl}`}>
           <a className={classes.imgctr}>
-            <Image
-              src={article.imageUrl}
-              alt={article.title}
-              width="100%"
-              height="100%"
-            />
+            <Image src={article.imageUrl} alt={article.title} fill={true} />
             <span className={classes.overlay}></span>
           </a>
         </Link>
         <div className={classes.recentpostdetails}>
-          <Link href={`/blog/${articleUrl}`}>
+          <Link legacyBehavior href={`/blog/${articleUrl}`}>
             <a>{article.title}</a>
           </Link>
           <div>
@@ -92,6 +87,7 @@ function BlogAside(props: {
           <h4 className={classes.socialtitle}>Me suivre</h4>
           <ul className={classes.socialicons}>
             <Link
+              legacyBehavior
               key={1}
               href="https://www.youtube.com/channel/UCvVIi4gAhSC4x7sM3g9q53w"
             >
@@ -102,6 +98,7 @@ function BlogAside(props: {
               </a>
             </Link>
             <Link
+              legacyBehavior
               key={2}
               href="https://www.facebook.com/groups/3136931483299677"
             >
@@ -111,14 +108,22 @@ function BlogAside(props: {
                 </li>
               </a>
             </Link>
-            <Link key={3} href="https://www.instagram.com/julie_baronnie/">
+            <Link
+              legacyBehavior
+              key={3}
+              href="https://www.instagram.com/julie_baronnie/"
+            >
               <a target="_blank">
                 <li>
                   <Icon as={BsInstagram} h={5} w={5} size="sm" />
                 </li>
               </a>
             </Link>
-            <Link key={4} href="mailto:contact@juliebaronniebeauty.com">
+            <Link
+              legacyBehavior
+              key={4}
+              href="mailto:contact@juliebaronniebeauty.com"
+            >
               <a target="_blank">
                 <li>
                   <Icon as={BsFillEnvelopeFill} h={5} w={5} size="sm" />

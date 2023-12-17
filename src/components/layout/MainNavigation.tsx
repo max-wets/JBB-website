@@ -65,7 +65,7 @@ function MainNavigation() {
                 <DrawerBody>
                   <ul className={classes.drawermenu}>
                     <li>
-                      <Link href="/blog">
+                      <Link legacyBehavior href="/blog">
                         <a>
                           <Button
                             size="sm"
@@ -79,7 +79,7 @@ function MainNavigation() {
                       </Link>
                     </li>
                     <li>
-                      <Link href="/products">
+                      <Link legacyBehavior href="/products">
                         <a>
                           <Button
                             size="sm"
@@ -93,7 +93,7 @@ function MainNavigation() {
                       </Link>
                     </li>
                     <li>
-                      <Link href="/about">
+                      <Link legacyBehavior href="/about">
                         <a>
                           <Button
                             size="sm"
@@ -118,7 +118,7 @@ function MainNavigation() {
                         </Button>
                       ) : (
                         <Button size="sm" colorScheme="white" color="black">
-                          <Link href={"/auth/signin"}>
+                          <Link legacyBehavior href={"/auth/signin"}>
                             <a>
                               <p>SE CONNECTER</p>
                             </a>
@@ -133,7 +133,7 @@ function MainNavigation() {
           </div>
           <div className={`${classes.small} ${classes.column}`}>
             <div className={classes.logowrapper}>
-              <Link href={process.env.NEXT_PUBLIC_APP_URL}>
+              <Link legacyBehavior href={process.env.NEXT_PUBLIC_APP_URL}>
                 <a>
                   <p className={classes.logo}>JBBeauty</p>
                 </a>
@@ -146,7 +146,7 @@ function MainNavigation() {
           >
             <div className={classes.secondaryarea}>
               <div className={classes.rightcontainers}>
-                <Link href={"/search"}>
+                <Link legacyBehavior href={"/search"}>
                   <a>
                     <IconButton
                       aria-label="Search database"
@@ -169,7 +169,7 @@ function MainNavigation() {
                 <nav>
                   <ul className={classes.fullmenu}>
                     <li>
-                      <Link href={"/blog"}>
+                      <Link legacyBehavior href={"/blog"}>
                         <a>
                           <Button size="sm" colorScheme="white" color="black">
                             <p>BLOG</p>
@@ -178,7 +178,7 @@ function MainNavigation() {
                       </Link>
                     </li>
                     <li>
-                      <Link href={"/products"}>
+                      <Link legacyBehavior href={"/products"}>
                         <a>
                           <Button size="sm" colorScheme="white" color="black">
                             <p>PRODUITS</p>
@@ -187,7 +187,7 @@ function MainNavigation() {
                       </Link>
                     </li>
                     <li>
-                      <Link href={"/about"}>
+                      <Link legacyBehavior href={"/about"}>
                         <a>
                           <Button size="sm" colorScheme="white" color="black">
                             <p>A PROPOS</p>
@@ -207,7 +207,7 @@ function MainNavigation() {
                         </Button>
                       ) : (
                         <Button size="sm" colorScheme="white" color="black">
-                          <Link href={"/auth/signin"}>
+                          <Link legacyBehavior href={"/auth/signin"}>
                             <a>
                               <p>SE CONNECTER</p>
                             </a>

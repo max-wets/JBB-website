@@ -29,7 +29,7 @@ function ProductItem(props: { idx; product }) {
   return (
     <div key={props.idx} className={classes.productctr}>
       <div className={classes.imgctr}>
-        <Link href={`/products/${props.product.id.toString()}`}>
+        <Link legacyBehavior href={`/products/${props.product.id.toString()}`}>
           <a>
             <Image
               src={props.product.imageUrl}
@@ -41,7 +41,7 @@ function ProductItem(props: { idx; product }) {
           </a>
         </Link>
       </div>
-      <Link href={`/products/${props.product.id.toString()}`}>
+      <Link legacyBehavior href={`/products/${props.product.id.toString()}`}>
         <a>
           <h3>{props.product.name}</h3>
         </a>
