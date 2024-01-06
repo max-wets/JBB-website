@@ -82,7 +82,7 @@ function Header() {
               <DrawerBody>
                 <ul className={classes.drawermenu}>
                   <li>
-                    <Link href={"/blog"}>
+                    <Link legacyBehavior href={"/blog"}>
                       <a>
                         <Button
                           size="sm"
@@ -96,7 +96,7 @@ function Header() {
                     </Link>
                   </li>
                   <li>
-                    <Link href={"/products"}>
+                    <Link legacyBehavior href={"/products"}>
                       <a>
                         <Button
                           size="sm"
@@ -110,7 +110,7 @@ function Header() {
                     </Link>
                   </li>
                   <li>
-                    <Link href={"/about"}>
+                    <Link legacyBehavior href={"/about"}>
                       <a>
                         <Button
                           size="sm"
@@ -135,7 +135,7 @@ function Header() {
                       </Button>
                     ) : (
                       <Button size="sm" colorScheme="white" color="black">
-                        <Link href={"/auth/signin"}>
+                        <Link legacyBehavior href={"/auth/signin"}>
                           <a>
                             <p>SE CONNECTER</p>
                           </a>
@@ -154,7 +154,7 @@ function Header() {
               <nav>
                 <ul className={classes.fullmenu}>
                   <li>
-                    <Link href={"/blog"}>
+                    <Link legacyBehavior href={"/blog"}>
                       <a>
                         <Button size="sm" colorScheme="white" color="black">
                           <p>BLOG</p>
@@ -163,7 +163,7 @@ function Header() {
                     </Link>
                   </li>
                   <li>
-                    <Link href={"/products"}>
+                    <Link legacyBehavior href={"/products"}>
                       <a>
                         <Button size="sm" colorScheme="white" color="black">
                           <p>PRODUITS</p>
@@ -172,7 +172,7 @@ function Header() {
                     </Link>
                   </li>
                   <li>
-                    <Link href={"/about"}>
+                    <Link legacyBehavior href={"/about"}>
                       <a>
                         <Button size="sm" colorScheme="white" color="black">
                           <p>A PROPOS</p>
@@ -192,7 +192,7 @@ function Header() {
                       </Button>
                     ) : (
                       <Button size="sm" colorScheme="white" color="black">
-                        <Link href={"/auth/signin"}>
+                        <Link legacyBehavior href={"/auth/signin"}>
                           <a>
                             <p>SE CONNECTER</p>
                           </a>

@@ -143,7 +143,7 @@ const CommentsSection = (props: { article; comments; setComments }) => {
           ) : (
             <p className={classes.mustlogin}>
               Vous devez être{" "}
-              <Link href={"/auth/signin"}>
+              <Link legacyBehavior href={"/auth/signin"}>
                 <a>connecté</a>
               </Link>{" "}
               pour publier un commentaire

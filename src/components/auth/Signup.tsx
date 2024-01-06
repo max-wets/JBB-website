@@ -132,7 +132,7 @@ function Signup({ setError }) {
                 </button>
                 <p>
                   Déjà inscrit ?{" "}
-                  <Link href={`/login`}>
+                  <Link legacyBehavior href={`/login`}>
                     <a>Se connecter</a>
                   </Link>
                 </p>

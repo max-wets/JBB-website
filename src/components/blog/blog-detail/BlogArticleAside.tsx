@@ -31,19 +31,14 @@ function BlogAside(props: { articles: Article[] }) {
 
     return (
       <li>
-        <Link href={`/blog/${articleUrl}`}>
+        <Link legacyBehavior href={`/blog/${articleUrl}`}>
           <a className={classes.imgctr}>
-            <Image
-              src={article.imageUrl}
-              alt={article.title}
-              width="100%"
-              height="100%"
-            />
+            <Image src={article.imageUrl} alt={article.title} fill={true} />
             <span className={classes.overlay}></span>
           </a>
         </Link>
         <div className={classes.recentpostdetails}>
-          <Link href={`/blog/${articleUrl}`}>
+          <Link legacyBehavior href={`/blog/${articleUrl}`}>
             <a>{article.title}</a>
           </Link>
           <div>
@@ -62,28 +57,37 @@ function BlogAside(props: { articles: Article[] }) {
         <div className={classes.sidebox}>
           <h4 className={classes.socialtitle}>Me suivre</h4>
           <ul className={classes.socialicons}>
-            <Link href="https://www.youtube.com/channel/UCvVIi4gAhSC4x7sM3g9q53w">
+            <Link
+              legacyBehavior
+              href="https://www.youtube.com/channel/UCvVIi4gAhSC4x7sM3g9q53w"
+            >
               <a target="_blank">
                 <li>
                   <Icon as={BsYoutube} h={5} w={5} size="sm" />
                 </li>
               </a>
             </Link>
-            <Link href="https://www.facebook.com/groups/3136931483299677">
+            <Link
+              legacyBehavior
+              href="https://www.facebook.com/groups/3136931483299677"
+            >
               <a target="_blank">
                 <li>
                   <Icon as={BsFacebook} h={5} w={5} size="sm" />
                 </li>
               </a>
             </Link>
-            <Link href="https://www.instagram.com/julie_baronnie/">
+            <Link
+              legacyBehavior
+              href="https://www.instagram.com/julie_baronnie/"
+            >
               <a target="_blank">
                 <li>
                   <Icon as={BsInstagram} h={5} w={5} size="sm" />
                 </li>
               </a>
             </Link>
-            <Link href="mailto:contact@juliebaronniebeauty.com">
+            <Link legacyBehavior href="mailto:contact@juliebaronniebeauty.com">
               <a target="_blank">
                 <li>
                   <Icon as={BsFillEnvelopeFill} h={5} w={5} size="sm" />

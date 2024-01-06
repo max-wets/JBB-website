@@ -121,13 +121,13 @@ function Login({ crsfToken, setError }) {
                     : "Se connecter"}
                 </button>
                 <p className={classes.lostpassword} style={{ width: "85%" }}>
-                  <Link href={`/login/lost-password`}>
+                  <Link legacyBehavior href={`/login/lost-password`}>
                     <a>Mot de passe oublié ?</a>
                   </Link>
                 </p>
                 <p>
                   Pas encore inscrit ?{" "}
-                  <Link href={`/signup`}>
+                  <Link legacyBehavior href={`/signup`}>
                     <a>S'enregistrer</a>
                   </Link>
                 </p>

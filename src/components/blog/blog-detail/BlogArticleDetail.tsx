@@ -66,7 +66,7 @@ function BlogArticleDetail(props: {
               w={isLargerThan600 ? 6 : 4}
               size={isLargerThan600 ? "sm" : "sx"}
             />
-            <Link href="">
+            <Link legacyBehavior href="">
               <a>Julie</a>
             </Link>
           </li>
@@ -142,7 +142,7 @@ function BlogArticleDetail(props: {
           <li>
             <FacebookShareButton
               url={APP_URL + router.asPath}
-              quote={`Voici un article à lire sur le thème suivant: ${props.article.title} \n\n`}
+              hashtag={`Voici un article à lire sur le thème suivant: ${props.article.title} \n\n`}
             >
               <FacebookIcon size={40} borderRadius={6} />
             </FacebookShareButton>
@@ -169,6 +169,7 @@ function BlogArticleDetail(props: {
         {props.prevNextArticles[0] ? (
           <div className={classes.navprevious}>
             <Link
+              legacyBehavior
               href={`/blog/${urlStringFormatter(
                 props.prevNextArticles[0].title,
                 props.prevNextArticles[0].id
@@ -191,6 +192,7 @@ function BlogArticleDetail(props: {
         {props.prevNextArticles[1] ? (
           <div className={classes.navnext}>
             <Link
+              legacyBehavior
               href={`/blog/${urlStringFormatter(
                 props.prevNextArticles[1].title,
                 props.prevNextArticles[1].id
@@ -221,6 +223,7 @@ function BlogArticleDetail(props: {
             <article>
               <div className={classes.thumbnail}>
                 <Link
+                  legacyBehavior
                   href={`/blog/${urlStringFormatter(
                     article.title,
                     article.id
@@ -239,6 +242,7 @@ function BlogArticleDetail(props: {
                 </Link>
               </div>
               <Link
+                legacyBehavior
                 href={`/blog/${urlStringFormatter(article.title, article.id)}`}
               >
                 <a>

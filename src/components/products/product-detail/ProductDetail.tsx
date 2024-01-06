@@ -49,7 +49,7 @@ function ProductDetail(props: {
       <li key={product.id} className={classes.listentry}>
         <div className={classes.productinner}>
           <div className={classes.thumbnail}>
-            <Link href={`/products/${product.id}`}>
+            <Link legacyBehavior href={`/products/${product.id}`}>
               <a>
                 <Image
                   src={product.attributes.Image.data.attributes.url}
@@ -64,7 +64,7 @@ function ProductDetail(props: {
           </div>
           <div className={classes.productname}>
             <h2>
-              <Link href={`/products/${product.id}`}>
+              <Link legacyBehavior href={`/products/${product.id}`}>
                 <a>{product.attributes.Name}</a>
               </Link>
             </h2>
@@ -87,7 +87,10 @@ function ProductDetail(props: {
         <ul>
           {props.prevNextProducts[0] ? (
             <li key={props.prevNextProducts[0].id}>
-              <Link href={`/products/${props.prevNextProducts[0].id}`}>
+              <Link
+                legacyBehavior
+                href={`/products/${props.prevNextProducts[0].id}`}
+              >
                 <a>
                   <Tooltip label={props.prevNextProducts[0].title}>
                     <ChevronLeftIcon w={5} h={5} />
@@ -98,7 +101,10 @@ function ProductDetail(props: {
           ) : null}
           {props.prevNextProducts[1] ? (
             <li key={props.prevNextProducts[1].id}>
-              <Link href={`/products/${props.prevNextProducts[1].id}`}>
+              <Link
+                legacyBehavior
+                href={`/products/${props.prevNextProducts[1].id}`}
+              >
                 <a>
                   <Tooltip label={props.prevNextProducts[1].title}>
                     <ChevronRightIcon w={5} h={5} />
@@ -143,7 +149,10 @@ function ProductDetail(props: {
             </div>
           </div>
           <div className={classes.itemlink}>
-            <Link href={getManufacturerLink(props.product.Description)}>
+            <Link
+              legacyBehavior
+              href={getManufacturerLink(props.product.Description)}
+            >
               <a target="_blank">
                 <Button size="sm" colorScheme="red">
                   <ExternalLinkIcon mr="4px" />
