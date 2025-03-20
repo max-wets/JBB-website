@@ -133,7 +133,9 @@ export const getStaticProps: GetStaticProps = async (context) => {
           id: data[idx].id,
           title: data[idx].attributes.Name,
           issueDate: data[idx].attributes.publishedAt,
-          imageUrl: data[idx].attributes.Image.data.attributes.url,
+          imageUrl: data[idx].attributes.Image.data
+            ? data[idx].attributes.Image.data.attributes.url
+            : null,
         });
       }
       idx += 1;
@@ -224,7 +226,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
       `${process.env.NEXT_PUBLIC_API_URL}/users?${query}`,
       {
         headers: {
-          Authorization: `bearer ${process.env.NEXT_PUBLIC_API_TOKEN}`,
+          Authorization: `Bearer ${process.env.NEXT_PUBLIC_API_TOKEN}`,
         },
       }
     );

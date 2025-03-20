@@ -125,7 +125,9 @@ export const getStaticProps: GetStaticProps = async () => {
     description: article.attributes.Description,
     issueDate: article.attributes.publishedAt,
     videoUrl: article.attributes.Video_URL,
-    imageUrl: article.attributes.Image.data.attributes.url,
+    imageUrl: article.attributes.Image.data
+      ? article.attributes.Image.data.attributes.url
+      : null,
     categories: article.attributes.article_categories.data.map((category) => {
       return category.attributes.Name;
     }),
