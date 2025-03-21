@@ -15,7 +15,7 @@
     "algoliasearch": "^4.24.0",
     "axios": "^1.8.4",
     "classnames": "^2.3.2",
-    "dompurify": "^3.0.6",
+    "dompurify": "^3.2.4",
     "dotenv": "^16.4.7",
     "formik": "^2.4.5",
     "framer-motion": "^10.16.16",
