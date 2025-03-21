@@ -1,13 +1,12 @@
-import classes from "./LostPwdHeading.module.css";
+import classes from './LostPwdHeading.module.css';
 import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
-  BreadcrumbSeparator,
   Icon,
-} from "@chakra-ui/react";
-import { ChevronRightIcon } from "@chakra-ui/icons";
-import { BiHomeHeart } from "react-icons/bi";
+} from '@chakra-ui/react';
+import { ChevronRightIcon } from '@chakra-ui/icons';
+import { BiHomeHeart } from 'react-icons/bi';
 
 function ResetPwdHeading() {
   return (
@@ -19,7 +18,7 @@ function ResetPwdHeading() {
           separator={<ChevronRightIcon color="gray.500" />}
         >
           <BreadcrumbItem h="24px" position="relative" top="3px">
-            <BreadcrumbLink href="/" _hover={{ color: "#D93644" }}>
+            <BreadcrumbLink href="/" _hover={{ color: '#D93644' }}>
               <Icon as={BiHomeHeart} h={6} w={6} size="sm" pt="4px" />
             </BreadcrumbLink>
           </BreadcrumbItem>
@@ -28,7 +27,7 @@ function ResetPwdHeading() {
             <BreadcrumbLink
               fontSize="13px"
               href="/login"
-              _hover={{ textDecoration: "none", color: "#D93644" }}
+              _hover={{ textDecoration: 'none', color: '#D93644' }}
             >
               Connexion
             </BreadcrumbLink>
@@ -38,7 +37,7 @@ function ResetPwdHeading() {
             <BreadcrumbLink
               fontSize="13px"
               href="#"
-              _hover={{ textDecoration: "none", color: "#D93644" }}
+              _hover={{ textDecoration: 'none', color: '#D93644' }}
             >
               Modifier mot de passe
             </BreadcrumbLink>

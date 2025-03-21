@@ -1,22 +1,21 @@
-import { GetStaticProps, InferGetStaticPropsType } from "next";
-import { itemsList } from "../../data/items";
-import ProductsList from "../../components/products/ProductsList";
-import ProductsAside from "../../components/products/ProductsAside";
-import { useEffect, useState } from "react";
-import { Container, Flex, Spinner, useMediaQuery } from "@chakra-ui/react";
-import ProductsHeading from "../../components/products/ProductsHeading";
-import { Product } from "../../components/products/ProductsList";
-import axios from "axios";
-import Head from "next/head";
+import { GetStaticProps, InferGetStaticPropsType } from 'next';
+import ProductsList from '../../components/products/ProductsList';
+import ProductsAside from '../../components/products/ProductsAside';
+import { useEffect, useState } from 'react';
+import { Container, Flex, Spinner, useMediaQuery } from '@chakra-ui/react';
+import ProductsHeading from '../../components/products/ProductsHeading';
+import { Product } from '../../components/products/ProductsList';
+import axios from 'axios';
+import Head from 'next/head';
 
 function ProductsPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
   const [loadedProducts, setLoadedProducts] = useState<Product[]>([]);
-  const [selectedCategory, setSelectedCategory] = useState("Toutes");
+  const [selectedCategory, setSelectedCategory] = useState('Toutes');
   const [filterRange, setFilterRange] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(null);
-  const [isLargerThan960] = useMediaQuery("(min-width: 960px)");
-  const [isLargerThan500] = useMediaQuery("(min-width: 500px)");
+  const [isLargerThan960] = useMediaQuery('(min-width: 960px)');
+  const [isLargerThan500] = useMediaQuery('(min-width: 500px)');
 
   const sortingFn = (a, b) => {
     const aDate = new Date(a.issueDate);
@@ -36,10 +35,10 @@ function ProductsPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
     // console.log("Products page products:", props.products);
     // console.log("Product page active categories:", props.activeCategories);
     setLoading(false);
-  }, []);
+  }, [props.products]);
 
   useEffect(() => {
-    if (selectedCategory !== "Toutes") {
+    if (selectedCategory !== 'Toutes') {
       const productsByCategory = props.products
         .filter((product) => product.categories.includes(selectedCategory))
         .sort(sortingFn);
@@ -47,7 +46,7 @@ function ProductsPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
     } else {
       setLoadedProducts(props.products);
     }
-  }, [selectedCategory]);
+  }, [props.products, selectedCategory]);
 
   useEffect(() => {
     if (filterRange.length > 0) {
@@ -60,7 +59,7 @@ function ProductsPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
       // console.log("products by price:", productsByPrice);
       setLoadedProducts(productsByPrice);
     }
-  }, [filterRange]);
+  }, [filterRange, props.products]);
 
   return (
     <>
@@ -74,8 +73,8 @@ function ProductsPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
       <ProductsHeading />
       <Container pt="50px" pb="50px" w="1200px" maxW="90%" margin="0 auto">
         <Flex
-          display={loading ? "none" : "flex"}
-          flexDirection={isLargerThan960 ? "row" : "column"}
+          display={loading ? 'none' : 'flex'}
+          flexDirection={isLargerThan960 ? 'row' : 'column'}
         >
           <ProductsList
             products={loadedProducts}
@@ -91,7 +90,7 @@ function ProductsPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
           />
         </Flex>
         <Flex
-          display={loading ? "flex" : "none"}
+          display={loading ? 'flex' : 'none'}
           h="50vh"
           w="100%"
           justifyContent="center"
@@ -130,11 +129,11 @@ export const getStaticProps: GetStaticProps = async () => {
   }
 
   const activeCategories = {} as Category;
-  products.map((article) =>
-    article.categories.map((category) => {
-      activeCategories[category]
+  products.forEach((article) =>
+    article.categories.forEach((category) => {
+      activeCategories[category] = activeCategories[category]
         ? (activeCategories[category] += 1)
-        : (activeCategories[category] = 1);
+        : 1;
     })
   );
   return {

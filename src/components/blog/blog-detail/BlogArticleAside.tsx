@@ -1,26 +1,14 @@
 import classes from "./BlogArticleAside.module.css";
 import Link from "next/link";
-import { Field, Form, Formik } from "formik";
-import {
-  Icon,
-  Button,
-  FormControl,
-  FormLabel,
-  Input,
-  InputGroup,
-  InputRightElement,
-} from "@chakra-ui/react";
+import { Icon } from "@chakra-ui/react";
 import Image from "next/image";
 import { Article } from "../BlogArticleItem";
 import {
-  BsTwitter,
   BsFacebook,
   BsInstagram,
   BsYoutube,
   BsFillEnvelopeFill,
 } from "react-icons/bs";
-import { FaRss } from "react-icons/fa";
-import { useState } from "react";
 import { urlStringFormatter, newDate } from "../../../lib/utils";
 
 function BlogAside(props: { articles: Article[] }) {

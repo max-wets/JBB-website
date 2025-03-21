@@ -1,19 +1,16 @@
-import { useRouter } from "next/router";
-import { useEffect } from "react";
-import { GetStaticProps, GetStaticPaths, InferGetStaticPropsType } from "next";
-import ProductDetail from "../../../components/products/product-detail/ProductDetail";
-import ProductDetailHeading from "../../../components/products/product-detail/ProductDetailHeading";
-import ProductDetailAside from "../../../components/products/product-detail/ProductDetailAside";
-import axios from "axios";
-import { itemsList } from "../../../data/items";
-import { Container, Flex, Spinner } from "@chakra-ui/react";
-import { useMediaQuery } from "@chakra-ui/react";
-import Head from "next/head";
+import { GetStaticProps, GetStaticPaths, InferGetStaticPropsType } from 'next';
+import ProductDetail from '../../../components/products/product-detail/ProductDetail';
+import ProductDetailHeading from '../../../components/products/product-detail/ProductDetailHeading';
+import ProductDetailAside from '../../../components/products/product-detail/ProductDetailAside';
+import axios from 'axios';
+import { Container, Flex } from '@chakra-ui/react';
+import { useMediaQuery } from '@chakra-ui/react';
+import Head from 'next/head';
 
 function ProductDetailPage(
   props: InferGetStaticPropsType<typeof getStaticProps>
 ) {
-  const [isLargerThan950] = useMediaQuery("(min-width: 950px)");
+  const [isLargerThan950] = useMediaQuery('(min-width: 950px)');
 
   // useEffect(() => {
   //   console.log("product detail:", props.product);
@@ -112,8 +109,11 @@ export const getStaticProps: GetStaticProps = async (context) => {
         let hasCategory = false;
         item.attributes.item_categories.data.forEach((category) => {
           // console.log(category.attributes.Name);
-          if (productCategories.indexOf(category.attributes.Name) > -1) {
-            !hasCategory ? (hasCategory = true) : null;
+          if (
+            productCategories.indexOf(category.attributes.Name) > -1 &&
+            !hasCategory
+          ) {
+            hasCategory = true;
           }
         });
         return hasCategory;
@@ -147,10 +147,11 @@ export const getStaticProps: GetStaticProps = async (context) => {
     let relatedPosts = [];
 
     try {
-      const sortParam = "sort[0]=publishedAt%3Adesc";
+      const sortParam = 'sort[0]=publishedAt%3Adesc';
       const res = await axios.get(
         `${process.env.NEXT_PUBLIC_API_URL}/articles?populate=%2A&${sortParam}&pagination[pageSize]=100`
       );
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const dataPosts: Array<any> = res.data.data;
 
       // console.log("data:", dataPosts);
@@ -160,8 +161,11 @@ export const getStaticProps: GetStaticProps = async (context) => {
       function containsCategory(post) {
         let hasCategory = false;
         post.attributes.article_categories.data.forEach((category) => {
-          if (productCategories.indexOf(category.attributes.Name) > -1) {
-            !hasCategory ? (hasCategory = true) : null;
+          if (
+            productCategories.indexOf(category.attributes.Name) > -1 &&
+            !hasCategory
+          ) {
+            hasCategory = true;
           }
         });
         return hasCategory;

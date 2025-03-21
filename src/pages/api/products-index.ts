@@ -4,14 +4,14 @@ import axios from "axios";
 
 const client = algoliasearch(
   process.env.ALGOLIA_APP_ID,
-  process.env.ALGOLIA_API_KEY
+  process.env.ALGOLIA_API_KEY,
 );
 const indexProducts = client.initIndex(process.env.ALGOLIA_PRODUCTS_INDEX_NAME);
 
 const fetchProductsFromDatabase = async () => {
   try {
     const products = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_URL}/items?populate=%2A`
+      `${process.env.NEXT_PUBLIC_API_URL}/items?populate=%2A`,
     ); // Fetch data from your database
     const cleanProducts = products.data.map((article) => ({
       id: article.id.toString(),

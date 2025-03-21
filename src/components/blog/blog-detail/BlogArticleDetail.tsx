@@ -172,7 +172,7 @@ function BlogArticleDetail(props: {
               legacyBehavior
               href={`/blog/${urlStringFormatter(
                 props.prevNextArticles[0].title,
-                props.prevNextArticles[0].id
+                props.prevNextArticles[0].id,
               )}`}
             >
               <a>
@@ -195,7 +195,7 @@ function BlogArticleDetail(props: {
               legacyBehavior
               href={`/blog/${urlStringFormatter(
                 props.prevNextArticles[1].title,
-                props.prevNextArticles[1].id
+                props.prevNextArticles[1].id,
               )}`}
             >
               <a>
@@ -220,13 +220,13 @@ function BlogArticleDetail(props: {
         </div>
         <div className={classes.relatedpostsentry}>
           {props.recommendedArticles.map((article) => (
-            <article>
+            <article key={article.id}>
               <div className={classes.thumbnail}>
                 <Link
                   legacyBehavior
                   href={`/blog/${urlStringFormatter(
                     article.title,
-                    article.id
+                    article.id,
                   )}`}
                 >
                   <a>

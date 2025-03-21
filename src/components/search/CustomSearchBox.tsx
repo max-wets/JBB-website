@@ -1,8 +1,7 @@
-import classes from "./CustomSearchBox.module.css";
-import { connectSearchBox } from "react-instantsearch-dom";
-import { Input, InputGroup, InputLeftElement } from "@chakra-ui/react";
-import { SearchIcon } from "@chakra-ui/icons";
-import { useState } from "react";
+import classes from './CustomSearchBox.module.css';
+import { connectSearchBox } from 'react-instantsearch-dom';
+import { InputGroup, InputLeftElement } from '@chakra-ui/react';
+import { SearchIcon } from '@chakra-ui/icons';
 
 function SearchBox({ refine }) {
   return (
@@ -16,6 +15,7 @@ function SearchBox({ refine }) {
         <InputGroup display="flex" alignItems="center" justifyContent="center">
           <InputLeftElement
             pointerEvents="none"
+            // eslint-disable-next-line react/no-children-prop
             children={<SearchIcon color="red.200" />}
             ml={4}
             mt={2}

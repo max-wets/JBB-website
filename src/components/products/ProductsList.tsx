@@ -1,10 +1,10 @@
-import classes from "./ProductsList.module.css";
-import ProductItem from "./ProductItem";
-import Pagination from "../pagination/Pagination";
-import { Grid, GridItem, Flex, useMediaQuery } from "@chakra-ui/react";
-import { useEffect, useMemo, useState } from "react";
+import classes from './ProductsList.module.css';
+import ProductItem from './ProductItem';
+import Pagination from '../pagination/Pagination';
+import { Grid, GridItem, Flex } from '@chakra-ui/react';
+import { useEffect, useMemo, useState } from 'react';
 
-let PageSize = 12;
+const PageSize = 12;
 
 export interface Product {
   id: number;
@@ -33,6 +33,7 @@ function ProductsList(props: {
 
   useEffect(() => {
     props.setCurrentPage(1);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const currentData = useMemo(() => {
@@ -72,7 +73,7 @@ function ProductsList(props: {
       </Flex>
       <Grid
         templateColumns={
-          props.isLargerThan500 ? "repeat(3, 1fr)" : "repeat(1, 1fr)"
+          props.isLargerThan500 ? 'repeat(3, 1fr)' : 'repeat(1, 1fr)'
         }
         gap={6}
       >

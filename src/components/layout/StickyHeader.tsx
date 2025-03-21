@@ -23,7 +23,7 @@ function Header() {
   const [direction, setDirection] = useState("top");
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = useRef();
-  const { data: session, status } = useSession();
+  const { status } = useSession();
   const [isLargerThan415] = useMediaQuery("(min-width: 415px)");
 
   const controlDirection = useCallback(() => {

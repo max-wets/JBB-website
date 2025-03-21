@@ -3,7 +3,6 @@ import Link from "next/link";
 import { IconButton, Icon } from "@chakra-ui/react";
 import { AiFillYoutube } from "react-icons/ai";
 import { BsFacebook } from "react-icons/bs";
-import { useMediaQuery } from "@chakra-ui/react";
 
 function Footer() {
   return (

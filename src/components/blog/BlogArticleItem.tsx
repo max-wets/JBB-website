@@ -4,7 +4,6 @@ import Link from "next/link";
 import { Icon, Button, useMediaQuery } from "@chakra-ui/react";
 import { BiUser } from "react-icons/bi";
 import { FiClock } from "react-icons/fi";
-import { useEffect } from "react";
 import { BsFolder } from "react-icons/bs";
 import { BiComment } from "react-icons/bi";
 import { urlStringFormatter } from "../../lib/utils";

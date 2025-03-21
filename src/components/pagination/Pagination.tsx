@@ -1,7 +1,7 @@
-import React from "react";
-import classnames from "classnames";
-import { usePagination, DOTS } from "../../hooks/usePagination";
-import classes from "./Pagination.module.css";
+import React from 'react';
+import classnames from 'classnames';
+import { usePagination, DOTS } from '../../hooks/usePagination';
+import classes from './Pagination.module.css';
 
 const Pagination = (props) => {
   const {
@@ -25,7 +25,7 @@ const Pagination = (props) => {
     return null;
   }
 
-  let lastPage = paginationRange[paginationRange.length - 1];
+  const lastPage = paginationRange[paginationRange.length - 1];
 
   const onNext = () => {
     if (currentPage < lastPage) {

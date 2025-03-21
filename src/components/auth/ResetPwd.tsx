@@ -1,11 +1,10 @@
-import classes from "./ResetPwd.module.css";
-import Link from "next/link";
-import { useRouter } from "next/router";
-import { Field, Form, Formik, ErrorMessage } from "formik";
-import axios from "axios";
+import classes from './ResetPwd.module.css';
+import { useRouter } from 'next/router';
+import { Field, Form, Formik, ErrorMessage } from 'formik';
+import axios from 'axios';
 
 interface Errors {
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 function ResetPwd({ setError, setSuccess }) {
@@ -20,14 +19,14 @@ function ResetPwd({ setError, setSuccess }) {
         <div className={classes.formwrap}>
           <p>Veuillez saisir votre nouveau mot de passe.</p>
           <Formik
-            initialValues={{ password: "", confPassword: "" }}
+            initialValues={{ password: '', confPassword: '' }}
             validate={(values) => {
               const errors = {} as Errors;
               if (!values.password) {
-                errors.password = "Mot de passe obligatoire";
+                errors.password = 'Mot de passe obligatoire';
               }
               if (!values.confPassword) {
-                errors.password = "Confirmation de mot de passe obligatoire";
+                errors.password = 'Confirmation de mot de passe obligatoire';
               }
               return errors;
             }}
@@ -38,12 +37,12 @@ function ResetPwd({ setError, setSuccess }) {
               // }, 400);
               if (values.password !== values.confPassword) {
                 setError(
-                  "Veuillez confirmer votre nouveau mot de passe avec une valeur de mot de passe similaire."
+                  'Veuillez confirmer votre nouveau mot de passe avec une valeur de mot de passe similaire.'
                 );
                 setSubmitting(false);
               }
               try {
-                const res = await axios.post(
+                await axios.post(
                   `${process.env.NEXT_PUBLIC_API_URL}/auth/reset-password`,
                   {
                     code: code,
@@ -51,26 +50,17 @@ function ResetPwd({ setError, setSuccess }) {
                     passwordConfirmation: values.confPassword,
                   }
                 );
-                const data = res.data;
-                // if (res.data) console.log(data);
-                // alert(
-                //   JSON.stringify({
-                //     code: code,
-                //     password: values.password,
-                //     passwordConfirmation: values.confPassword,
-                //   })
-                // );
                 setSubmitting(false);
                 setSuccess(
-                  "Votre nouveau mot de passe a bien été pris en compte !"
+                  'Votre nouveau mot de passe a bien été pris en compte !'
                 );
-                router.push("/login");
+                router.push('/login');
               } catch (err) {
                 const errMessage = err.response.data.error.message;
-                console.error("is error:", errMessage);
-                if (errMessage === "Passwords do not match") {
+                console.error('is error:', errMessage);
+                if (errMessage === 'Passwords do not match') {
                   setError(
-                    "Veuillez confirmer votre nouveau mot de passe avec une valeur de mot de passe similaire."
+                    'Veuillez confirmer votre nouveau mot de passe avec une valeur de mot de passe similaire.'
                   );
                 } else {
                   setError(errMessage);
@@ -88,12 +78,12 @@ function ResetPwd({ setError, setSuccess }) {
                     render={(msg) => (
                       <div
                         style={{
-                          color: "red",
-                          fontWeight: "700",
-                          fontSize: "14px",
+                          color: 'red',
+                          fontWeight: '700',
+                          fontSize: '14px',
                         }}
                       >
-                        {msg + " !"}
+                        {msg + ' !'}
                       </div>
                     )}
                   />
@@ -106,20 +96,20 @@ function ResetPwd({ setError, setSuccess }) {
                     render={(msg) => (
                       <div
                         style={{
-                          color: "red",
-                          fontWeight: "700",
-                          fontSize: "14px",
+                          color: 'red',
+                          fontWeight: '700',
+                          fontSize: '14px',
                         }}
                       >
-                        {msg + " !"}
+                        {msg + ' !'}
                       </div>
                     )}
                   />
                 </p>
                 <button type="submit" disabled={formik.isSubmitting}>
                   {formik.isSubmitting
-                    ? "Veuillez patienter..."
-                    : "Changer mon mot de passe"}
+                    ? 'Veuillez patienter...'
+                    : 'Changer mon mot de passe'}
                 </button>
               </Form>
             )}

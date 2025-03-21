@@ -1,11 +1,8 @@
-import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import {
   GetStaticProps,
-  GetServerSideProps,
   GetStaticPaths,
   InferGetStaticPropsType,
-  InferGetServerSidePropsType,
 } from "next";
 import BlogArticleDetail from "../../../components/blog/blog-detail/BlogArticleDetail";
 import BlogArticleDetailHeading from "../../../components/blog/blog-detail/BlogArticleDetailHeading";
@@ -18,8 +15,8 @@ import Head from "next/head";
 import { ApiResource, ApiResponse, BlogPost, BlogPostApi, BlogPostSmall, PostComment, PostCommentApi } from "../../../types";
 
 function BlogDetailPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
-  const [isLargerThan960] = useMediaQuery("(min-width: 960px)");
-  const [isLargerThan600] = useMediaQuery("(min-width: 600px)");
+  const [isLargerThan960] = useMediaQuery('(min-width: 960px)');
+  const [isLargerThan600] = useMediaQuery('(min-width: 600px)');
   const [serverRendering, setServerRendering] = useState(true);
 
   useEffect(() => {
@@ -45,15 +42,15 @@ function BlogDetailPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
       </Head>
       <BlogArticleDetailHeading title={props.article.title} />
       <Container
-        pt={isLargerThan600 ? "50px" : "20px"}
-        pb={isLargerThan600 ? "50px" : "20px"}
+        pt={isLargerThan600 ? '50px' : '20px'}
+        pb={isLargerThan600 ? '50px' : '20px'}
         w="1200px"
-        maxW={isLargerThan600 ? "90%" : "100%"}
+        maxW={isLargerThan600 ? '90%' : '100%'}
         margin="0 auto"
       >
         <Flex
           flexDirection={
-            serverRendering ? "row" : isLargerThan960 ? "row" : "column"
+            serverRendering ? 'row' : isLargerThan960 ? 'row' : 'column'
           }
         >
           <BlogArticleDetail
@@ -83,7 +80,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
     return 0;
   };
   const aid = Number(
-    (context.params.blogArticleId as string).split("-").slice(-1)
+    (context.params.blogArticleId as string).split('-').slice(-1)
   );
   const res = await axios.get<ApiResponse<BlogPostApi>>(
     `${process.env.NEXT_PUBLIC_API_URL}/articles?populate=%2A&pagination[pageSize]=100&sort[0]=createdAt%3Adesc`
@@ -156,8 +153,11 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
       let hasCategory = false;
       post.attributes.article_categories.data.forEach((category) => {
-        if (articleCategories.indexOf(category.attributes.Name) > -1) {
-          !hasCategory ? (hasCategory = true) : null;
+        if (
+          articleCategories.indexOf(category.attributes.Name) > -1 &&
+          !hasCategory
+        ) {
+          hasCategory = true;
         }
       });
       return hasCategory;

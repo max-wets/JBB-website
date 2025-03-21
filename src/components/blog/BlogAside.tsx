@@ -1,15 +1,6 @@
 import classes from "./BlogAside.module.css";
 import Link from "next/link";
-import { Field, Form, Formik } from "formik";
-import {
-  Icon,
-  Button,
-  FormControl,
-  FormLabel,
-  Input,
-  InputGroup,
-  InputRightElement,
-} from "@chakra-ui/react";
+import { Icon } from "@chakra-ui/react";
 import Image from "next/image";
 import { Article } from "./BlogArticleItem";
 import {
@@ -18,13 +9,11 @@ import {
   BsInstagram,
   BsYoutube,
 } from "react-icons/bs";
-import { FaRss } from "react-icons/fa";
-import { useState } from "react";
 import { urlStringFormatter } from "../../lib/utils";
 
 function BlogAside(props: {
   articles: Article[];
-  activeCategories: Object;
+  activeCategories: object;
   setSelectedCategory;
 }) {
   // const api_url = "https://jbb-admin.herokuapp.com";
@@ -143,7 +132,7 @@ function BlogAside(props: {
                   </div>
                   <span>{`(${qty})`}</span>
                 </li>
-              )
+              ),
             )}
             <li>
               <div data-category="Toutes" onClick={(e) => handleClick(e)}>

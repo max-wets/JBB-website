@@ -1,14 +1,15 @@
-import CredentialsProvider from "next-auth/providers/credentials";
-import NextAuth from "next-auth/next";
+import CredentialsProvider from 'next-auth/providers/credentials';
+import NextAuth from 'next-auth/next';
 
 const options = {
   providers: [
     CredentialsProvider({
-      name: "Credentials",
+      name: 'Credentials',
       credentials: {
-        email: { label: "email", type: "email" },
-        password: { label: "password", type: "password" },
+        email: { label: 'email', type: 'email' },
+        password: { label: 'password', type: 'password' },
       },
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       async authorize(credentials, req) {
         // console.log("req:", req.body);
 
@@ -22,9 +23,9 @@ const options = {
         const res = await fetch(
           `${process.env.NEXT_PUBLIC_API_URL}/auth/local`,
           {
-            method: "POST",
+            method: 'POST',
             body: JSON.stringify(reqBody),
-            headers: { "Content-Type": "application/json" },
+            headers: { 'Content-Type': 'application/json' },
           }
         );
         const user = await res.json();
@@ -47,7 +48,7 @@ const options = {
   ],
   secret: process.env.JWT_SECRET,
   pages: {
-    signIn: "/auth/signin",
+    signIn: '/auth/signin',
     // error: "/auth/signin",
   },
   callbacks: {

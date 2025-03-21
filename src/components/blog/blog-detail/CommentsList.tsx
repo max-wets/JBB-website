@@ -1,11 +1,7 @@
-import useSWR from "swr";
-import axios from "axios";
-import qs from "qs";
-import Comment from "./Comment";
-import { useEffect, useState } from "react";
-import { useSession } from "next-auth/react";
-import { SessionUser } from "../../../types";
-import CommentsSection from "./CommentsSection";
+import useSWR from 'swr';
+import qs from 'qs';
+import Comment from './Comment';
+import { useEffect } from 'react';
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
 const COMMENTS_URL = `${process.env.NEXT_PUBLIC_API_URL}/comments`;
@@ -18,12 +14,12 @@ const CommentsList = (props: {
 }) => {
   //   const [commentsList, setCommentsList] = useState([]);
   const filters = `?filters[ArticleID][$eq]=${props.articleID}&sort=publishedAt%3Adesc`;
-  const { data, error } = useSWR(COMMENTS_URL + filters, fetcher);
+  const { data } = useSWR(COMMENTS_URL + filters, fetcher);
 
   useEffect(() => {
     const AuthorIdsArr = [];
-    let completeComments = [];
-    let cleanComments =
+    const completeComments = [];
+    const cleanComments =
       data &&
       data.data.map((comment) => {
         if (AuthorIdsArr.indexOf(comment.attributes.AuthorID) < 0)
@@ -58,7 +54,7 @@ const CommentsList = (props: {
         },
       };
       try {
-        let res = await fetch(url, options);
+        const res = await fetch(url, options);
         return await res.json();
       } catch (error) {
         console.error(error);
@@ -66,7 +62,7 @@ const CommentsList = (props: {
     }
 
     async function renderUsers() {
-      let users = await getUsers();
+      const users = await getUsers();
       // console.log("users:", users);
 
       cleanComments?.map((comment) => {
@@ -84,12 +80,13 @@ const CommentsList = (props: {
     }
 
     renderUsers();
-  }, [data]);
+  }, [data, props]);
 
   return (
     <div>
       {props.comments.map((com, idx) => (
         <Comment
+          key={com.id}
           idx={idx}
           id={com.id}
           AuthorID={com.AuthorID}

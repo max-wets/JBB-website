@@ -49,7 +49,7 @@ function Comment(props: {
     setPostingComment(true);
 
     try {
-      const { data } = await axios.put(
+      await axios.put(
         `${process.env.NEXT_PUBLIC_API_URL}/comments/${props.id}`,
         {
           data: {
@@ -60,14 +60,13 @@ function Comment(props: {
           headers: {
             Authorization: `Bearer ${props.sessionUser.accessToken}`,
           },
-        }
+        },
       );
     } catch (err) {
       console.error(err);
     }
 
     props.setComments((prev) => {
-      const newCom = { ...prev[props.idx], Content: commentText };
       //   console.log(newCom);
       return [
         ...prev.slice(0, props.idx),
@@ -84,13 +83,13 @@ function Comment(props: {
     setPostingComment(true);
 
     try {
-      const { data } = await axios.delete(
+      await axios.delete(
         `${process.env.NEXT_PUBLIC_API_URL}/comments/${props.id}`,
         {
           headers: {
             Authorization: `Bearer ${props.sessionUser.accessToken}`,
           },
-        }
+        },
       );
     } catch (err) {
       console.error(err);

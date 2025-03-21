@@ -1,16 +1,15 @@
-import classes from "./BlogArticlesList.module.css";
-import { Article } from "./BlogArticleItem";
-import BlogArticle from "./BlogArticleItem";
-import Pagination from "../pagination/Pagination";
-import { useState, useMemo, useEffect } from "react";
-import { Spinner } from "@chakra-ui/react";
+import classes from './BlogArticlesList.module.css';
+import { Article } from './BlogArticleItem';
+import BlogArticle from './BlogArticleItem';
+import Pagination from '../pagination/Pagination';
+import { useState, useMemo, useEffect } from 'react';
 
-let PageSize = 3;
+const PageSize = 3;
 
 function BlogArticlesList(props: {
   articles: Article[];
   currentPage: number;
-  setCurrentPage: (arg0: any) => any;
+  setCurrentPage: (arg0: number) => void;
 }) {
   const [loadedArticles, setLoadedArticles] = useState(props.articles);
 
@@ -21,7 +20,7 @@ function BlogArticlesList(props: {
 
   useEffect(() => {
     props.setCurrentPage(1);
-  }, []);
+  }, [props]);
 
   const currentData = useMemo(() => {
     const firstPageIndex = (props.currentPage - 1) * PageSize;
