@@ -1,11 +1,11 @@
-import classes from './Login.module.css';
-import Link from 'next/link';
-import { useEffect, useRef } from 'react';
-import { useRouter } from 'next/router';
-import { Field, Formik, ErrorMessage } from 'formik';
-import { signIn } from 'next-auth/react';
-import { useSession } from 'next-auth/react';
-import { signOut } from 'next-auth/react';
+import classes from "./Login.module.css";
+import Link from "next/link";
+import { useEffect, useRef } from "react";
+import { useRouter } from "next/router";
+import { Field, Formik, ErrorMessage } from "formik";
+import { signIn } from "next-auth/react";
+import { useSession } from "next-auth/react";
+import { signOut } from "next-auth/react";
 
 interface Errors {
   [key: string]: unknown;
@@ -17,13 +17,13 @@ function Login({ crsfToken, setError }) {
   const previousPath = useRef(null);
 
   useEffect(() => {
-    router.prefetch('/');
+    router.prefetch("/");
     if (previousPath.current) router.prefetch(previousPath.current);
   }, [router]);
 
   useEffect(() => {
     // console.log("previous path:", previousPath.current);
-    previousPath.current = globalThis.sessionStorage.getItem('prevPath');
+    previousPath.current = globalThis.sessionStorage.getItem("prevPath");
   }, [router.asPath]);
 
   return (
@@ -34,15 +34,15 @@ function Login({ crsfToken, setError }) {
         </div>
         <div className={classes.formwrap}>
           <Formik
-            initialValues={{ email: '', password: '' }}
+            initialValues={{ email: "", password: "" }}
             validate={(values) => {
               const errors = {} as Errors;
               if (!values.email) {
-                errors.email = 'Email obligatoire';
+                errors.email = "Email obligatoire";
               } else if (
                 !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
               ) {
-                errors.email = 'Adresse email non valide';
+                errors.email = "Adresse email non valide";
               }
               return errors;
             }}
@@ -51,7 +51,7 @@ function Login({ crsfToken, setError }) {
               const callbackUrl =
                 `${window.location.origin}` + previousPath.current;
 
-              const res = await signIn('credentials', {
+              const res = await signIn("credentials", {
                 redirect: false,
                 email: values.email,
                 password: values.password,
@@ -61,7 +61,7 @@ function Login({ crsfToken, setError }) {
               if (res?.error) {
                 if (!res.ok)
                   setError(
-                    'Email et/ou mot de passe non valide(s). Veuillez réessayer.'
+                    "Email et/ou mot de passe non valide(s). Veuillez réessayer.",
                   );
               } else {
                 // console.log(callbackUrl);
@@ -87,12 +87,12 @@ function Login({ crsfToken, setError }) {
                     render={(msg) => (
                       <div
                         style={{
-                          color: 'red',
-                          fontWeight: '700',
-                          fontSize: '14px',
+                          color: "red",
+                          fontWeight: "700",
+                          fontSize: "14px",
                         }}
                       >
-                        {msg + ' !'}
+                        {msg + " !"}
                       </div>
                     )}
                   />
@@ -105,28 +105,28 @@ function Login({ crsfToken, setError }) {
                     render={(msg) => (
                       <div
                         style={{
-                          color: 'red',
-                          fontWeight: '700',
-                          fontSize: '14px',
+                          color: "red",
+                          fontWeight: "700",
+                          fontSize: "14px",
                         }}
                       >
-                        {msg + ' !'}
+                        {msg + " !"}
                       </div>
                     )}
                   />
                 </p>
                 <button type="submit">
                   {formik.isSubmitting
-                    ? 'Veuillez patienter...'
-                    : 'Se connecter'}
+                    ? "Veuillez patienter..."
+                    : "Se connecter"}
                 </button>
-                <p className={classes.lostpassword} style={{ width: '85%' }}>
+                <p className={classes.lostpassword} style={{ width: "85%" }}>
                   <Link legacyBehavior href={`/login/lost-password`}>
                     <a>Mot de passe oublié ?</a>
                   </Link>
                 </p>
                 <p>
-                  Pas encore inscrit ?{' '}
+                  Pas encore inscrit ?{" "}
                   <Link legacyBehavior href={`/signup`}>
                     <a>S&apos;enregistrer</a>
                   </Link>

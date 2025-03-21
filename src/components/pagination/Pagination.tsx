@@ -1,7 +1,7 @@
-import React from 'react';
-import classnames from 'classnames';
-import { usePagination, DOTS } from '../../hooks/usePagination';
-import classes from './Pagination.module.css';
+import React from "react";
+import classnames from "classnames";
+import { usePagination, DOTS } from "../../hooks/usePagination";
+import classes from "./Pagination.module.css";
 
 const Pagination = (props) => {
   const {

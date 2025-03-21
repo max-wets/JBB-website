@@ -1,9 +1,9 @@
-import classes from './Login.module.css';
-import Link from 'next/link';
-import { Field, Form, Formik, ErrorMessage } from 'formik';
-import { useRouter } from 'next/router';
-import { signIn } from 'next-auth/react';
-import axios from 'axios';
+import classes from "./Login.module.css";
+import Link from "next/link";
+import { Field, Form, Formik, ErrorMessage } from "formik";
+import { useRouter } from "next/router";
+import { signIn } from "next-auth/react";
+import axios from "axios";
 
 interface Errors {
   [key: string]: unknown;
@@ -20,15 +20,15 @@ function Signup({ setError }) {
         </div>
         <div className={classes.formwrap}>
           <Formik
-            initialValues={{ username: '', email: '', password: '' }}
+            initialValues={{ username: "", email: "", password: "" }}
             validate={(values) => {
               const errors = {} as Errors;
               if (!values.email) {
-                errors.email = 'Email obligatoire';
+                errors.email = "Email obligatoire";
               } else if (
                 !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
               ) {
-                errors.email = 'Adresse email non valide';
+                errors.email = "Adresse email non valide";
               }
               return errors;
             }}
@@ -44,14 +44,14 @@ function Signup({ setError }) {
                     username: values.username,
                     email: values.email,
                     password: values.password,
-                  }
+                  },
                 );
                 // console.log("res data:", data);
                 setSubmitting(false);
                 setError(null);
                 if (res.data.user) {
                   try {
-                    const res = await signIn('credentials', {
+                    const res = await signIn("credentials", {
                       redirect: false,
                       email: values.email,
                       password: values.password,
@@ -59,13 +59,13 @@ function Signup({ setError }) {
                     });
                     if (res.url) router.push(res.url);
                   } catch (err) {
-                    console.error('login error:', err);
+                    console.error("login error:", err);
                     setError(err.message);
                   }
                 }
               } catch (err) {
                 const errMessage = err.response.data.error.message;
-                console.error('is error:', errMessage);
+                console.error("is error:", errMessage);
                 setError(errMessage);
               }
             }}
@@ -80,12 +80,12 @@ function Signup({ setError }) {
                     render={(msg) => (
                       <div
                         style={{
-                          color: 'red',
-                          fontWeight: '700',
-                          fontSize: '14px',
+                          color: "red",
+                          fontWeight: "700",
+                          fontSize: "14px",
                         }}
                       >
-                        {msg + ' !'}
+                        {msg + " !"}
                       </div>
                     )}
                   />
@@ -98,12 +98,12 @@ function Signup({ setError }) {
                     render={(msg) => (
                       <div
                         style={{
-                          color: 'red',
-                          fontWeight: '700',
-                          fontSize: '14px',
+                          color: "red",
+                          fontWeight: "700",
+                          fontSize: "14px",
                         }}
                       >
-                        {msg + ' !'}
+                        {msg + " !"}
                       </div>
                     )}
                   />
@@ -116,21 +116,21 @@ function Signup({ setError }) {
                     render={(msg) => (
                       <div
                         style={{
-                          color: 'red',
-                          fontWeight: '700',
-                          fontSize: '14px',
+                          color: "red",
+                          fontWeight: "700",
+                          fontSize: "14px",
                         }}
                       >
-                        {msg + ' !'}
+                        {msg + " !"}
                       </div>
                     )}
                   />
                 </p>
                 <button type="submit">
-                  {formik.isSubmitting ? 'Veuillez patienter...' : "S'inscrire"}
+                  {formik.isSubmitting ? "Veuillez patienter..." : "S'inscrire"}
                 </button>
                 <p>
-                  Déjà inscrit ?{' '}
+                  Déjà inscrit ?{" "}
                   <Link legacyBehavior href={`/login`}>
                     <a>Se connecter</a>
                   </Link>

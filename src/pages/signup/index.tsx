@@ -1,8 +1,8 @@
-import Signup from '../../components/auth/Signup';
-import SignupHeading from '../../components/auth/SignupHeading';
-import { useState, useEffect } from 'react';
-import { Alert, AlertIcon, CloseButton } from '@chakra-ui/react';
-import Head from 'next/head';
+import Signup from "../../components/auth/Signup";
+import SignupHeading from "../../components/auth/SignupHeading";
+import { useState, useEffect } from "react";
+import { Alert, AlertIcon, CloseButton } from "@chakra-ui/react";
+import Head from "next/head";
 
 function SignupPage() {
   const [error, setError] = useState(null);

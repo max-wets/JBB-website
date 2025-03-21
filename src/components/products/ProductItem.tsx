@@ -1,19 +1,19 @@
-import classes from './ProductItem.module.css';
-import Image from 'next/image';
-import Link from 'next/link';
+import classes from "./ProductItem.module.css";
+import Image from "next/image";
+import Link from "next/link";
 
 function ProductItem(props: { idx; product }) {
   function priceFormat(num) {
     let formattedNum;
 
-    if (!num.toString().includes('.')) {
-      formattedNum = num + ',00';
+    if (!num.toString().includes(".")) {
+      formattedNum = num + ",00";
     } else {
-      const splitArr = num.toString().split('.');
-      splitArr[1] = splitArr[1] < 10 ? splitArr[1] + '0' : splitArr[1];
-      formattedNum = splitArr.join(',');
+      const splitArr = num.toString().split(".");
+      splitArr[1] = splitArr[1] < 10 ? splitArr[1] + "0" : splitArr[1];
+      formattedNum = splitArr.join(",");
     }
-    return formattedNum + '€';
+    return formattedNum + "€";
   }
 
   // useEffect(() => {

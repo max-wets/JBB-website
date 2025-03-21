@@ -1,7 +1,7 @@
-import classes from './CustomSearchBox.module.css';
-import { connectSearchBox } from 'react-instantsearch-dom';
-import { InputGroup, InputLeftElement } from '@chakra-ui/react';
-import { SearchIcon } from '@chakra-ui/icons';
+import classes from "./CustomSearchBox.module.css";
+import { connectSearchBox } from "react-instantsearch-dom";
+import { InputGroup, InputLeftElement } from "@chakra-ui/react";
+import { SearchIcon } from "@chakra-ui/icons";
 
 function SearchBox({ refine }) {
   return (

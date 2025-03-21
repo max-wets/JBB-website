@@ -1,7 +1,7 @@
-import useSWR from 'swr';
-import qs from 'qs';
-import Comment from './Comment';
-import { useEffect } from 'react';
+import useSWR from "swr";
+import qs from "qs";
+import Comment from "./Comment";
+import { useEffect } from "react";
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
 const COMMENTS_URL = `${process.env.NEXT_PUBLIC_API_URL}/comments`;
@@ -45,7 +45,7 @@ const CommentsList = (props: {
         },
         {
           encodeValuesOnly: true,
-        }
+        },
       );
       const url = `${process.env.NEXT_PUBLIC_API_URL}/users?${query}`;
       const options = {
@@ -67,7 +67,7 @@ const CommentsList = (props: {
 
       cleanComments?.map((comment) => {
         const authorName = users?.filter(
-          (user) => user.id === comment.AuthorID
+          (user) => user.id === comment.AuthorID,
         )[0].username;
 
         completeComments.push({

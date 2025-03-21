@@ -1,5 +1,5 @@
-import AboutComponent from '../../components/about/AboutComponent';
-import Head from 'next/head';
+import AboutComponent from "../../components/about/AboutComponent";
+import Head from "next/head";
 
 function AboutPage() {
   return (

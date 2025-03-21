@@ -1,5 +1,5 @@
-import classes from './ProductsAside.module.css';
-import Link from 'next/link';
+import classes from "./ProductsAside.module.css";
+import Link from "next/link";
 import {
   Icon,
   Button,
@@ -7,16 +7,16 @@ import {
   RangeSliderTrack,
   RangeSliderFilledTrack,
   RangeSliderThumb,
-} from '@chakra-ui/react';
-import Image from 'next/image';
+} from "@chakra-ui/react";
+import Image from "next/image";
 import {
   BsFillEnvelopeFill,
   BsFacebook,
   BsInstagram,
   BsYoutube,
-} from 'react-icons/bs';
-import { useEffect, useState } from 'react';
-import { Product } from './ProductsList';
+} from "react-icons/bs";
+import { useEffect, useState } from "react";
+import { Product } from "./ProductsList";
 
 function BlogAside(props: {
   products: Product[];
@@ -63,14 +63,14 @@ function BlogAside(props: {
   function priceFormat(num) {
     let formattedNum;
 
-    if (!num.toString().includes('.')) {
-      formattedNum = num + ',00';
+    if (!num.toString().includes(".")) {
+      formattedNum = num + ",00";
     } else {
-      const splitArr = num.toString().split('.');
-      splitArr[1] = splitArr[1] < 10 ? splitArr[1] + '0' : splitArr[1];
-      formattedNum = splitArr.join(',');
+      const splitArr = num.toString().split(".");
+      splitArr[1] = splitArr[1] < 10 ? splitArr[1] + "0" : splitArr[1];
+      formattedNum = splitArr.join(",");
     }
-    return formattedNum + '€';
+    return formattedNum + "€";
   }
 
   function SideProductDetail({ product }) {

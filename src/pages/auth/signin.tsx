@@ -1,9 +1,9 @@
-import Login from '../../components/auth/Login';
-import LoginHeading from '../../components/auth/LoginHeading';
-import { getCsrfToken } from 'next-auth/react';
-import { useState, useEffect } from 'react';
-import { Alert, AlertIcon, CloseButton } from '@chakra-ui/react';
-import Head from 'next/head';
+import Login from "../../components/auth/Login";
+import LoginHeading from "../../components/auth/LoginHeading";
+import { getCsrfToken } from "next-auth/react";
+import { useState, useEffect } from "react";
+import { Alert, AlertIcon, CloseButton } from "@chakra-ui/react";
+import Head from "next/head";
 
 function SignInPage(props: { crsfToken }) {
   const [error, setError] = useState(null);
@@ -41,7 +41,7 @@ function SignInPage(props: { crsfToken }) {
 
   return (
     <>
-      {' '}
+      {" "}
       <Head>
         <title>Connexion - JBBeauty</title>
         <meta

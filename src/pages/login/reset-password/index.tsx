@@ -1,8 +1,8 @@
-import ResetPwd from '../../../components/auth/ResetPwd';
-import ResetPwdHeading from '../../../components/auth/LostPwdHeading';
-import { useState, useEffect } from 'react';
-import { Alert, AlertIcon, CloseButton } from '@chakra-ui/react';
-import Head from 'next/head';
+import ResetPwd from "../../../components/auth/ResetPwd";
+import ResetPwdHeading from "../../../components/auth/LostPwdHeading";
+import { useState, useEffect } from "react";
+import { Alert, AlertIcon, CloseButton } from "@chakra-ui/react";
+import Head from "next/head";
 
 function ResetPwdPage() {
   const [error, setError] = useState(null);
@@ -12,7 +12,7 @@ function ResetPwdPage() {
   function AlertMessage() {
     return (
       <Alert
-        status={error ? 'error' : 'success'}
+        status={error ? "error" : "success"}
         position="fixed"
         top="0"
         zIndex="99"

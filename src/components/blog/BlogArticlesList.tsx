@@ -1,8 +1,8 @@
-import classes from './BlogArticlesList.module.css';
-import { Article } from './BlogArticleItem';
-import BlogArticle from './BlogArticleItem';
-import Pagination from '../pagination/Pagination';
-import { useState, useMemo, useEffect } from 'react';
+import classes from "./BlogArticlesList.module.css";
+import { Article } from "./BlogArticleItem";
+import BlogArticle from "./BlogArticleItem";
+import Pagination from "../pagination/Pagination";
+import { useState, useMemo, useEffect } from "react";
 
 const PageSize = 3;
 

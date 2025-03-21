@@ -1,11 +1,11 @@
-import { useState, useEffect } from 'react';
-import qs from 'qs';
+import { useState, useEffect } from "react";
+import qs from "qs";
 
 const updateAfter = 700;
 const searchStateToUrl = (searchState: string): string | URL => {
   return searchState
     ? `${window.location.pathname}?${qs.stringify(searchState)}`
-    : '';
+    : "";
 };
 // let debouncedSetState;
 
@@ -23,11 +23,11 @@ const withUrlSync = (App) =>
     const onPopState = (state) => setSearchState(state || null);
 
     useEffect(() => {
-      window.addEventListener('popstate', onPopState);
+      window.addEventListener("popstate", onPopState);
 
       return () => {
         clearTimeout(debouncedState);
-        window.removeEventListener('popstate', onPopState);
+        window.removeEventListener("popstate", onPopState);
       };
     }, [clearTimeout, debouncedState]);
 
@@ -39,9 +39,9 @@ const withUrlSync = (App) =>
           window.history.pushState(
             searchState,
             null,
-            searchStateToUrl(searchState)
+            searchStateToUrl(searchState),
           );
-        }, updateAfter)
+        }, updateAfter),
       );
 
       setSearchState(searchState);

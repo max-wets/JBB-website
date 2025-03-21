@@ -15,8 +15,8 @@ import Head from "next/head";
 import { ApiResource, ApiResponse, BlogPost, BlogPostApi, BlogPostSmall, PostComment, PostCommentApi } from "../../../types";
 
 function BlogDetailPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
-  const [isLargerThan960] = useMediaQuery('(min-width: 960px)');
-  const [isLargerThan600] = useMediaQuery('(min-width: 600px)');
+  const [isLargerThan960] = useMediaQuery("(min-width: 960px)");
+  const [isLargerThan600] = useMediaQuery("(min-width: 600px)");
   const [serverRendering, setServerRendering] = useState(true);
 
   useEffect(() => {
@@ -42,15 +42,15 @@ function BlogDetailPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
       </Head>
       <BlogArticleDetailHeading title={props.article.title} />
       <Container
-        pt={isLargerThan600 ? '50px' : '20px'}
-        pb={isLargerThan600 ? '50px' : '20px'}
+        pt={isLargerThan600 ? "50px" : "20px"}
+        pb={isLargerThan600 ? "50px" : "20px"}
         w="1200px"
-        maxW={isLargerThan600 ? '90%' : '100%'}
+        maxW={isLargerThan600 ? "90%" : "100%"}
         margin="0 auto"
       >
         <Flex
           flexDirection={
-            serverRendering ? 'row' : isLargerThan960 ? 'row' : 'column'
+            serverRendering ? "row" : isLargerThan960 ? "row" : "column"
           }
         >
           <BlogArticleDetail
@@ -80,7 +80,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
     return 0;
   };
   const aid = Number(
-    (context.params.blogArticleId as string).split('-').slice(-1)
+    (context.params.blogArticleId as string).split("-").slice(-1),
   );
   const res = await axios.get<ApiResponse<BlogPostApi>>(
     `${process.env.NEXT_PUBLIC_API_URL}/articles?populate=%2A&pagination[pageSize]=100&sort[0]=createdAt%3Adesc`
@@ -146,7 +146,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
     const articleCategories = article.attributes.article_categories.data.map(
       (category) => {
         return category.attributes.Name;
-      }
+      },
     );
     function containsCategory(post) {
       if (post.id === aid) return false;
@@ -173,7 +173,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
         return [...prev, curr.id];
       }, []);
       const availableArticles = data.filter(
-        (article) => article.id !== aid && takenIds.indexOf(article.id) < 0
+        (article) => article.id !== aid && takenIds.indexOf(article.id) < 0,
       );
       let i = 0;
       while (i < 3 - recommendedArticles.length) {
@@ -221,7 +221,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
       },
       {
         encodeValuesOnly: true,
-      }
+      },
     );
     const usersRes = await axios.get(
       `${process.env.NEXT_PUBLIC_API_URL}/users?${query}`,
@@ -229,14 +229,14 @@ export const getStaticProps: GetStaticProps = async (context) => {
         headers: {
           Authorization: `Bearer ${process.env.NEXT_PUBLIC_API_TOKEN}`,
         },
-      }
+      },
     );
     const usersData = usersRes.data;
     // console.log("users data:", usersData);
 
     cleanComments.map((comment) => {
       const authorName = usersData.filter(
-        (user) => user.id === comment.AuthorID
+        (user) => user.id === comment.AuthorID,
       )[0].username;
 
       completeComments.push({

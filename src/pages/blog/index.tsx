@@ -11,10 +11,10 @@ import { ApiResponse, BlogPostApi } from "../../types";
 
 function BlogPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
   const [loadedArticles, setLoadedArticles] = useState<Article[]>([]);
-  const [selectedCategory, setSelectedCategory] = useState('Toutes');
+  const [selectedCategory, setSelectedCategory] = useState("Toutes");
   const [currentPage, setCurrentPage] = useState(null);
-  const [isLargerThan960] = useMediaQuery('(min-width: 960px)');
-  const [isLargerThan600] = useMediaQuery('(min-width: 600px)');
+  const [isLargerThan960] = useMediaQuery("(min-width: 960px)");
+  const [isLargerThan600] = useMediaQuery("(min-width: 600px)");
 
   const sortingFn = (a, b) => {
     const aDate = new Date(a.issueDate);
@@ -36,7 +36,7 @@ function BlogPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
   }, [props.articles]);
 
   useEffect(() => {
-    if (selectedCategory !== 'Toutes') {
+    if (selectedCategory !== "Toutes") {
       const ArticlesByCategory = props.articles
         .filter((article) => article.categories.includes(selectedCategory))
         .sort(sortingFn);
@@ -55,16 +55,16 @@ function BlogPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
       </Head>
       <BlogHeading />
       <Container
-        pt={isLargerThan600 ? '50px' : '20px'}
-        pb={isLargerThan600 ? '50px' : '20px'}
+        pt={isLargerThan600 ? "50px" : "20px"}
+        pb={isLargerThan600 ? "50px" : "20px"}
         w="1200px"
-        maxW={isLargerThan600 ? '90%' : '100%'}
-        margin={isLargerThan600 ? '0 auto' : 'none'}
+        maxW={isLargerThan600 ? "90%" : "100%"}
+        margin={isLargerThan600 ? "0 auto" : "none"}
       >
         <>
           <Flex
-            display={currentPage === null ? 'none' : 'flex'}
-            flexDirection={isLargerThan960 ? 'row' : 'column'}
+            display={currentPage === null ? "none" : "flex"}
+            flexDirection={isLargerThan960 ? "row" : "column"}
           >
             <BlogArticlesList
               articles={loadedArticles}
@@ -78,7 +78,7 @@ function BlogPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
             />
           </Flex>
           <Flex
-            display={currentPage !== null ? 'none' : 'flex'}
+            display={currentPage !== null ? "none" : "flex"}
             h="50vh"
             w="100%"
             justifyContent="center"
@@ -114,7 +114,7 @@ export const getStaticProps: GetStaticProps = async () => {
       activeCategories[categoryName] = activeCategories[categoryName]
         ? activeCategories[categoryName] + 1
         : 1;
-    })
+    }),
   );
   // console.log("active categories to send:", JSON.stringify(activeCategories));
 
