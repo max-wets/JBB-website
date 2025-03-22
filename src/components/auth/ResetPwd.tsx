@@ -1,11 +1,10 @@
 import classes from "./ResetPwd.module.css";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import { Field, Form, Formik, ErrorMessage } from "formik";
 import axios from "axios";
 
 interface Errors {
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 function ResetPwd({ setError, setSuccess }) {
@@ -38,31 +37,22 @@ function ResetPwd({ setError, setSuccess }) {
               // }, 400);
               if (values.password !== values.confPassword) {
                 setError(
-                  "Veuillez confirmer votre nouveau mot de passe avec une valeur de mot de passe similaire."
+                  "Veuillez confirmer votre nouveau mot de passe avec une valeur de mot de passe similaire.",
                 );
                 setSubmitting(false);
               }
               try {
-                const res = await axios.post(
+                await axios.post(
                   `${process.env.NEXT_PUBLIC_API_URL}/auth/reset-password`,
                   {
                     code: code,
                     password: values.password,
                     passwordConfirmation: values.confPassword,
-                  }
+                  },
                 );
-                const data = res.data;
-                // if (res.data) console.log(data);
-                // alert(
-                //   JSON.stringify({
-                //     code: code,
-                //     password: values.password,
-                //     passwordConfirmation: values.confPassword,
-                //   })
-                // );
                 setSubmitting(false);
                 setSuccess(
-                  "Votre nouveau mot de passe a bien été pris en compte !"
+                  "Votre nouveau mot de passe a bien été pris en compte !",
                 );
                 router.push("/login");
               } catch (err) {
@@ -70,7 +60,7 @@ function ResetPwd({ setError, setSuccess }) {
                 console.error("is error:", errMessage);
                 if (errMessage === "Passwords do not match") {
                   setError(
-                    "Veuillez confirmer votre nouveau mot de passe avec une valeur de mot de passe similaire."
+                    "Veuillez confirmer votre nouveau mot de passe avec une valeur de mot de passe similaire.",
                   );
                 } else {
                   setError(errMessage);

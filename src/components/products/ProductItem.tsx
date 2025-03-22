@@ -1,12 +1,6 @@
 import classes from "./ProductItem.module.css";
 import Image from "next/image";
-import ProductsList from "./ProductsList";
 import Link from "next/link";
-import { useEffect } from "react";
-
-const myLoader = ({ src }) => {
-  return `../public/items/${src}`;
-};
 
 function ProductItem(props: { idx; product }) {
   function priceFormat(num) {
@@ -16,7 +10,7 @@ function ProductItem(props: { idx; product }) {
       formattedNum = num + ",00";
     } else {
       const splitArr = num.toString().split(".");
-      Number(splitArr[1]) < 10 ? (splitArr[1] = splitArr[1] + "0") : null;
+      splitArr[1] = splitArr[1] < 10 ? splitArr[1] + "0" : splitArr[1];
       formattedNum = splitArr.join(",");
     }
     return formattedNum + "€";

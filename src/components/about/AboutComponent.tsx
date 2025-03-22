@@ -33,10 +33,11 @@ function AboutComponent() {
                 <div className={classes.textctr}>
                   <p>
                     Comédienne, cinéma, tv ou théâtre, animatrice tv, on peut
-                    dire que j'ai eu plusieurs vies en une seule, artiste dans
-                    l'âme, tout ce qui touche au domaine de la beauté me
-                    passionne, que ce soit la médecine esthétique, le make up,
-                    la mode, la décoration, j'aime créer, embellir, améliorer.
+                    dire que j&apos;ai eu plusieurs vies en une seule, artiste
+                    dans l&apos;âme, tout ce qui touche au domaine de la beauté
+                    me passionne, que ce soit la médecine esthétique, le make
+                    up, la mode, la décoration, j&apos;aime créer, embellir,
+                    améliorer.
                   </p>
                 </div>
               </div>
@@ -105,15 +106,18 @@ function AboutComponent() {
               faire de même.
             </p>
             <p>
-              Attention : n'allez jamais vous faire injecter chez des personnes
-              qui se disent professionnelles des injections se vantant de
-              diplômes qui n'existent pas ! C'est interdit par la loi !
+              Attention : n&apos;allez jamais vous faire injecter chez des
+              personnes qui se disent professionnelles des injections se vantant
+              de diplômes qui n&apos;existent pas ! C&apos;est interdit par la
+              loi !
             </p>
             <p>
               Seuls les médecins sont habilités à injecter sur autrui. Il y a
-              bien trop de ratés et d'accidents.
+              bien trop de ratés et d&apos;accidents.
             </p>
-            <p>Ma peau est comme une toile que j'améliore jour après jour.</p>
+            <p>
+              Ma peau est comme une toile que j&apos;améliore jour après jour.
+            </p>
           </div>
           <div className={classes.textsignaturectr}>
             <div className={classes.signature}>Julie Baronnie</div>

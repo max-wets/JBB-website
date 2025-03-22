@@ -6,7 +6,7 @@ import { signIn } from "next-auth/react";
 import axios from "axios";
 
 interface Errors {
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 function Signup({ setError }) {
@@ -44,9 +44,8 @@ function Signup({ setError }) {
                     username: values.username,
                     email: values.email,
                     password: values.password,
-                  }
+                  },
                 );
-                const data = res.data;
                 // console.log("res data:", data);
                 setSubmitting(false);
                 setError(null);

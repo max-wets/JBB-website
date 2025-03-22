@@ -8,7 +8,6 @@ import {
 } from "@chakra-ui/icons";
 import { Tooltip, Button } from "@chakra-ui/react";
 import ReactMarkdown from "react-markdown";
-import { useEffect } from "react";
 import remarkGfm from "remark-gfm";
 
 function ProductDetail(props: {
@@ -24,7 +23,7 @@ function ProductDetail(props: {
     // /https?\:\/\/\w+\.[\w+-]+\.\w+(\/[\w+-]*)*/gm;
     const regex = new RegExp(
       "https?\\:\\/\\/\\w+\\.[\\w+-]+\\.\\w+(\\/[\\w+-]*)*",
-      "gm"
+      "gm",
     );
     const regexMatch = itemDescription.match(regex);
     const urlLink = regexMatch ? regexMatch[0] : "#";
@@ -38,7 +37,7 @@ function ProductDetail(props: {
       formattedNum = num + ",00";
     } else {
       const splitArr = num.toString().split(".");
-      Number(splitArr[1]) < 10 ? (splitArr[1] = splitArr[1] + "0") : null;
+      splitArr[1] = splitArr[1] < 10 ? splitArr[1] + "0" : splitArr[1];
       formattedNum = splitArr.join(",");
     }
     return formattedNum + "€";
@@ -178,7 +177,7 @@ function ProductDetail(props: {
         <h2>Produits associés</h2>
         <ul className={classes.productslist}>
           {props.recommendedProducts.map((product) => (
-            <RelatedProduct product={product} />
+            <RelatedProduct key={product.id} product={product} />
           ))}
         </ul>
       </section>

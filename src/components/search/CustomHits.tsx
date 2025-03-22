@@ -6,7 +6,7 @@ import Pagination from "../pagination/Pagination";
 import { useMemo, useState } from "react";
 import { urlStringFormatter } from "../../lib/utils";
 
-let PageSize = 3;
+const PageSize = 3;
 
 function Hits({ searchState, searchResults }) {
   const [currentPage, setCurrentPage] = useState(1);
@@ -68,6 +68,7 @@ function Hits({ searchState, searchResults }) {
             <ul>
               {currentData.map((hit) => (
                 <ResultHit
+                  key={hit.id}
                   id={hit.id}
                   title={hit.title}
                   description={hit.description}
@@ -88,8 +89,8 @@ function Hits({ searchState, searchResults }) {
         </>
       ) : (
         <p>
-          0 résultat. Désolé, nous n'avons rien trouvé qui corresponde à votre
-          recherche: &quot;<span>{searchState.query}</span>&quot;
+          0 résultat. Désolé, nous n&apos;avons rien trouvé qui corresponde à
+          votre recherche: &quot;<span>{searchState.query}</span>&quot;
         </p>
       )}
     </div>

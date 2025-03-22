@@ -9,6 +9,7 @@ const options = {
         email: { label: "email", type: "email" },
         password: { label: "password", type: "password" },
       },
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       async authorize(credentials, req) {
         // console.log("req:", req.body);
 
@@ -25,7 +26,7 @@ const options = {
             method: "POST",
             body: JSON.stringify(reqBody),
             headers: { "Content-Type": "application/json" },
-          }
+          },
         );
         const user = await res.json();
 

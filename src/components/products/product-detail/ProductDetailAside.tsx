@@ -1,15 +1,6 @@
 import classes from "./ProductDetailAside.module.css";
 import Link from "next/link";
-import { Field, Form, Formik } from "formik";
-import {
-  Icon,
-  Button,
-  FormControl,
-  FormLabel,
-  Input,
-  InputGroup,
-  InputRightElement,
-} from "@chakra-ui/react";
+import { Icon } from "@chakra-ui/react";
 import Image from "next/image";
 import {
   BsFillEnvelopeFill,
@@ -17,7 +8,6 @@ import {
   BsInstagram,
   BsYoutube,
 } from "react-icons/bs";
-import { FaRss } from "react-icons/fa";
 import { urlStringFormatter } from "../../../lib/utils";
 
 function BlogAside(props: { relatedArticles }) {
@@ -122,8 +112,8 @@ function BlogAside(props: { relatedArticles }) {
           <div className={classes.sidebox}>
             <h4 className={classes.socialtitle}>Articles recommandés</h4>
             <ul className={classes.sidebarlist}>
-              {props.relatedArticles.map((article, idx) => (
-                <SideBlogDetail article={article} />
+              {props.relatedArticles.map((article) => (
+                <SideBlogDetail key={article.id} article={article} />
               ))}
             </ul>
           </div>

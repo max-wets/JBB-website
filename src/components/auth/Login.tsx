@@ -1,25 +1,25 @@
 import classes from "./Login.module.css";
 import Link from "next/link";
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useRouter } from "next/router";
-import { Field, Form, Formik, ErrorMessage } from "formik";
-import { signIn, getCsrfToken } from "next-auth/react";
+import { Field, Formik, ErrorMessage } from "formik";
+import { signIn } from "next-auth/react";
 import { useSession } from "next-auth/react";
 import { signOut } from "next-auth/react";
 
 interface Errors {
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 function Login({ crsfToken, setError }) {
   const router = useRouter();
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
   const previousPath = useRef(null);
 
   useEffect(() => {
     router.prefetch("/");
     if (previousPath.current) router.prefetch(previousPath.current);
-  }, []);
+  }, [router]);
 
   useEffect(() => {
     // console.log("previous path:", previousPath.current);
@@ -61,7 +61,7 @@ function Login({ crsfToken, setError }) {
               if (res?.error) {
                 if (!res.ok)
                   setError(
-                    "Email et/ou mot de passe non valide(s). Veuillez réessayer."
+                    "Email et/ou mot de passe non valide(s). Veuillez réessayer.",
                   );
               } else {
                 // console.log(callbackUrl);
@@ -128,7 +128,7 @@ function Login({ crsfToken, setError }) {
                 <p>
                   Pas encore inscrit ?{" "}
                   <Link legacyBehavior href={`/signup`}>
-                    <a>S'enregistrer</a>
+                    <a>S&apos;enregistrer</a>
                   </Link>
                 </p>
               </form>

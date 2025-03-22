@@ -12,7 +12,7 @@ type Props = {
 
 let mounted = false;
 function Layout({ children }: Props) {
-  const { data: session, status } = useSession();
+  const { status } = useSession();
   const [connected, setConnected] = useState(null);
   const [AlertMessage, setAlertMessage] = useState(null);
 
@@ -46,7 +46,7 @@ function Layout({ children }: Props) {
             top="-6px"
             onClick={() => setAlertMessage(null)}
           />
-        </Alert>
+        </Alert>,
       );
       setTimeout(() => setAlertMessage(null), 5000);
     }

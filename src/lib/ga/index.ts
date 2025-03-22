@@ -1,5 +1,9 @@
 interface gaWindow extends Window {
-  gtag: Function;
+  gtag: (
+    type: string,
+    googleKey: string,
+    options: Record<string, string>,
+  ) => unknown;
 }
 
 // log the pageview with their URL
@@ -9,7 +13,7 @@ export const pageview = (url) => {
     process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS,
     {
       page_path: url,
-    }
+    },
   );
 };
 

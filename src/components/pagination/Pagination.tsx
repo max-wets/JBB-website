@@ -25,7 +25,7 @@ const Pagination = (props) => {
     return null;
   }
 
-  let lastPage = paginationRange[paginationRange.length - 1];
+  const lastPage = paginationRange[paginationRange.length - 1];
 
   const onNext = () => {
     if (currentPage < lastPage) {

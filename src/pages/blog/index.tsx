@@ -6,7 +6,6 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Article } from "../../components/blog/BlogArticleItem";
 import { Container, Flex, Spinner, useMediaQuery } from "@chakra-ui/react";
-import { BsTwitter } from "react-icons/bs";
 import Head from "next/head";
 import { ApiResponse, BlogPostApi } from "../../types";
 
@@ -112,10 +111,10 @@ export const getStaticProps: GetStaticProps = async () => {
   data.map((article) =>
     article.attributes.article_categories.data.map((category) => {
       const categoryName = category.attributes.Name;
-      activeCategories[categoryName]
-        ? (activeCategories[categoryName] += 1)
-        : (activeCategories[categoryName] = 1);
-    })
+      activeCategories[categoryName] = activeCategories[categoryName]
+        ? activeCategories[categoryName] + 1
+        : 1;
+    }),
   );
   // console.log("active categories to send:", JSON.stringify(activeCategories));
 

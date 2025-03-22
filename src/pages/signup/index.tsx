@@ -38,7 +38,7 @@ function SignupPage() {
         setDisplayAlert(false);
       }, 5000);
     }
-  }, [error]);
+  }, [displayAlert, error]);
 
   return (
     <>

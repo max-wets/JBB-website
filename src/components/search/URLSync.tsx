@@ -1,8 +1,8 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import qs from "qs";
 
 const updateAfter = 700;
-const searchStateToUrl = (searchState: any): string | URL => {
+const searchStateToUrl = (searchState: string): string | URL => {
   return searchState
     ? `${window.location.pathname}?${qs.stringify(searchState)}`
     : "";
@@ -29,7 +29,7 @@ const withUrlSync = (App) =>
         clearTimeout(debouncedState);
         window.removeEventListener("popstate", onPopState);
       };
-    }, []);
+    }, [clearTimeout, debouncedState]);
 
     const onSearchStateChange = (searchState) => {
       clearTimeout(debouncedState);
@@ -39,9 +39,9 @@ const withUrlSync = (App) =>
           window.history.pushState(
             searchState,
             null,
-            searchStateToUrl(searchState)
+            searchStateToUrl(searchState),
           );
-        }, updateAfter)
+        }, updateAfter),
       );
 
       setSearchState(searchState);

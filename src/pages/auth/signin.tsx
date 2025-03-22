@@ -37,7 +37,7 @@ function SignInPage(props: { crsfToken }) {
         setDisplayAlert(false);
       }, 5000);
     }
-  }, [error]);
+  }, [displayAlert, error]);
 
   return (
     <>

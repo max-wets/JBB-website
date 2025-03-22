@@ -1,12 +1,10 @@
 import classes from "./HomeComponent.module.css";
 import Image from "next/image";
 import Link from "next/link";
-import bgPicture from "../../../public/bg-picture.jpg";
 import ProductItem from "../products/ProductItem";
 import { useEffect, useState } from "react";
 import { Grid, GridItem, useMediaQuery, Tooltip, Icon } from "@chakra-ui/react";
 import { FiClock } from "react-icons/fi";
-import { BiComment } from "react-icons/bi";
 import Head from "next/head";
 import { urlStringFormatter, newDate } from "../../lib/utils";
 
@@ -38,7 +36,7 @@ function HomeComponent(props: { recentProducts; recentArticles }) {
     const [descriptionExcerpt, setDescriptionExcerpt] = useState("");
     const articleUrl = urlStringFormatter(
       props.article.title,
-      props.article.id
+      props.article.id,
     );
 
     useEffect(() => {
@@ -63,7 +61,7 @@ function HomeComponent(props: { recentProducts; recentArticles }) {
       }
 
       setDescriptionExcerpt(cleanExcerpt);
-    }, []);
+    }, [props.article.description]);
 
     return (
       <>

@@ -67,13 +67,15 @@ export const getStaticProps: GetStaticProps = async () => {
     }))
     .sort(sortingFn);
 
-  recentProducts.length > 8
-    ? recentProducts.splice(8)
-    : recentProducts.length > 4
-    ? recentProducts.splice(4)
-    : recentProducts;
+  if (recentProducts.length > 8) {
+    recentProducts.splice(8);
+  } else if (recentProducts.length > 4) {
+    recentProducts.splice(4);
+  }
 
-  recentArticles.length > 3 ? recentArticles.splice(3) : recentArticles;
+  if (recentArticles.length > 3) {
+    recentArticles.splice(3);
+  }
 
   return {
     props: {

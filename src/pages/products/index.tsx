@@ -1,5 +1,4 @@
 import { GetStaticProps, InferGetStaticPropsType } from "next";
-import { itemsList } from "../../data/items";
 import ProductsList from "../../components/products/ProductsList";
 import ProductsAside from "../../components/products/ProductsAside";
 import { useEffect, useState } from "react";
@@ -36,7 +35,7 @@ function ProductsPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
     // console.log("Products page products:", props.products);
     // console.log("Product page active categories:", props.activeCategories);
     setLoading(false);
-  }, []);
+  }, [props.products]);
 
   useEffect(() => {
     if (selectedCategory !== "Toutes") {
@@ -47,20 +46,20 @@ function ProductsPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
     } else {
       setLoadedProducts(props.products);
     }
-  }, [selectedCategory]);
+  }, [props.products, selectedCategory]);
 
   useEffect(() => {
     if (filterRange.length > 0) {
       const productsByPrice = props.products
         .filter(
           (product) =>
-            product.price >= filterRange[0] && product.price <= filterRange[1]
+            product.price >= filterRange[0] && product.price <= filterRange[1],
         )
         .sort(sortingFn);
       // console.log("products by price:", productsByPrice);
       setLoadedProducts(productsByPrice);
     }
-  }, [filterRange]);
+  }, [filterRange, props.products]);
 
   return (
     <>
@@ -108,7 +107,7 @@ export default ProductsPage;
 
 export const getStaticProps: GetStaticProps = async () => {
   const res = await axios.get(
-    `${process.env.NEXT_PUBLIC_API_URL}/items?populate=%2A&pagination[pageSize]=100&sort[0]=createdAt%3Adesc`
+    `${process.env.NEXT_PUBLIC_API_URL}/items?populate=%2A&pagination[pageSize]=100&sort[0]=createdAt%3Adesc`,
   );
   const data = res.data.data;
 
@@ -130,12 +129,12 @@ export const getStaticProps: GetStaticProps = async () => {
   }
 
   const activeCategories = {} as Category;
-  products.map((article) =>
-    article.categories.map((category) => {
-      activeCategories[category]
+  products.forEach((article) =>
+    article.categories.forEach((category) => {
+      activeCategories[category] = activeCategories[category]
         ? (activeCategories[category] += 1)
-        : (activeCategories[category] = 1);
-    })
+        : 1;
+    }),
   );
   return {
     props: {

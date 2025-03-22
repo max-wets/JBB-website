@@ -18,7 +18,7 @@ function generateSiteMap(posts, items) {
        <url>
            <loc>${`${APP_URL}/blog/${urlStringFormatter(
              attributes.Name,
-             id
+             id,
            )}`}</loc>
        </url>
      `;
@@ -78,14 +78,14 @@ export async function getServerSideProps({ res }) {
   // We make an API call to gather the URLs for our site
   // posts
   const requestPosts = await fetch(
-    `${EXTERNAL_DATA_URL}/articles?pagination[pageSize]=100`
+    `${EXTERNAL_DATA_URL}/articles?pagination[pageSize]=100`,
   );
   const responsePosts = await requestPosts.json();
   const posts = responsePosts.data;
 
   // items
   const requestItems = await fetch(
-    `${EXTERNAL_DATA_URL}/items?pagination[pageSize]=100`
+    `${EXTERNAL_DATA_URL}/items?pagination[pageSize]=100`,
   );
   const responseItems = await requestItems.json();
   const items = responseItems.data;

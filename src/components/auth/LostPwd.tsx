@@ -1,10 +1,9 @@
 import classes from "./LostPwd.module.css";
-import Link from "next/link";
 import { Field, Form, Formik, ErrorMessage } from "formik";
 import axios from "axios";
 
 interface Errors {
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 function Signup({ setError, setSuccess }) {
@@ -35,7 +34,7 @@ function Signup({ setError, setSuccess }) {
               //   setSubmitting(false);
               // }, 400);
               try {
-                const res = await axios.post(
+                await axios.post(
                   `${process.env.NEXT_PUBLIC_API_URL}/auth/forgot-password`,
                   {
                     email: values.email,
@@ -45,10 +44,8 @@ function Signup({ setError, setSuccess }) {
                       "Content-Type": "application/json; charset=utf-8",
                       "Access-Control-Allow-Origin": "*",
                     },
-                  }
+                  },
                 );
-                const data = res.data;
-                // if (res.data) console.log(data);
                 setSubmitting(false);
                 setSuccess("Un email vous a été envoyé !");
               } catch (err) {

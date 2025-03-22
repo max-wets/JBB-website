@@ -1,35 +1,26 @@
 import classes from "./ProductsAside.module.css";
 import Link from "next/link";
-import { Field, Form, Formik } from "formik";
 import {
   Icon,
-  Box,
   Button,
-  FormControl,
-  FormLabel,
-  Input,
-  InputGroup,
-  InputRightElement,
   RangeSlider,
   RangeSliderTrack,
   RangeSliderFilledTrack,
   RangeSliderThumb,
 } from "@chakra-ui/react";
 import Image from "next/image";
-import ProductItem from "./ProductItem";
 import {
   BsFillEnvelopeFill,
   BsFacebook,
   BsInstagram,
   BsYoutube,
 } from "react-icons/bs";
-import { FaRss } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import { Product } from "./ProductsList";
 
 function BlogAside(props: {
   products: Product[];
-  activeCategories: Object;
+  activeCategories: object;
   setSelectedCategory;
   setFilterRange;
 }) {
@@ -57,7 +48,7 @@ function BlogAside(props: {
     //   ((priceRange[1] - priceRange[0]) * 4) / 10,
     //   ((priceRange[1] - priceRange[0]) * 6) / 10,
     // ]);
-  }, []);
+  }, [props.products]);
 
   // useEffect(() => {
   //   console.log("price range current values:", priceRangeCurrentValues);
@@ -76,7 +67,7 @@ function BlogAside(props: {
       formattedNum = num + ",00";
     } else {
       const splitArr = num.toString().split(".");
-      Number(splitArr[1]) < 10 ? (splitArr[1] = splitArr[1] + "0") : null;
+      splitArr[1] = splitArr[1] < 10 ? splitArr[1] + "0" : splitArr[1];
       formattedNum = splitArr.join(",");
     }
     return formattedNum + "€";
@@ -219,7 +210,7 @@ function BlogAside(props: {
           <h4 className={classes.socialtitle}>Catégories</h4>
           <div className={classes.blogcategories}>
             {Object.entries(props.activeCategories).map(([category, qty]) => (
-              <li>
+              <li key={category}>
                 <div data-category={category} onClick={(e) => handleClick(e)}>
                   {category}
                 </div>

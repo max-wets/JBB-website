@@ -1,7 +1,7 @@
 import classes from "./CommentsSection.module.css";
 import Link from "next/link";
 import { Spinner } from "@chakra-ui/react";
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState } from "react";
 import { useSession } from "next-auth/react";
 import { SessionUser } from "../../../types";
 import CommentsList from "./CommentsList";
@@ -42,7 +42,7 @@ const CommentsSection = (props: { article; comments; setComments }) => {
           headers: {
             Authorization: `Bearer ${sessionUser.accessToken}`,
           },
-        }
+        },
       );
 
       // console.log(data);

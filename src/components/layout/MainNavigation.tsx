@@ -22,10 +22,9 @@ import { signOut } from "next-auth/react";
 let mounted = false;
 function MainNavigation() {
   const [isLargerThan1024] = useMediaQuery("(min-width: 1024px)");
-  const [isLargerThan750] = useMediaQuery("(min-width: 750px)");
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = useRef();
-  const { data: session, status } = useSession();
+  const { status } = useSession();
 
   useEffect(() => {
     mounted = true;
