@@ -1,13 +1,13 @@
-import classes from "./BlogArticlesList.module.css";
-import { Article } from "./BlogArticleItem";
-import BlogArticle from "./BlogArticleItem";
-import Pagination from "../pagination/Pagination";
-import { useState, useMemo, useEffect } from "react";
+import classes from './BlogArticlesList.module.css';
+import BlogArticle from './BlogArticleItem';
+import Pagination from '../pagination/Pagination';
+import { useState, useMemo, useEffect } from 'react';
+import { BlogPost } from '../../types';
 
 const PageSize = 3;
 
 function BlogArticlesList(props: {
-  articles: Article[];
+  articles: BlogPost[];
   currentPage: number;
   setCurrentPage: (arg0: number) => void;
 }) {
@@ -49,7 +49,7 @@ function BlogArticlesList(props: {
           currentPage={props.currentPage}
           totalCount={loadedArticles.length}
           pageSize={PageSize}
-          onPageChange={(page) => props.setCurrentPage(page)}
+          onPageChange={(page) => props.setCurrentPage(Number(page))}
         />
       </div>
     </div>

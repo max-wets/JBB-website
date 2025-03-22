@@ -1,22 +1,31 @@
-import BlogHeading from "../../components/blog/BlogHeading";
-import BlogArticlesList from "../../components/blog/BlogArticlesList";
-import BlogAside from "../../components/blog/BlogAside";
-import { GetStaticProps, InferGetStaticPropsType } from "next";
-import axios from "axios";
-import { useEffect, useState } from "react";
-import { Article } from "../../components/blog/BlogArticleItem";
-import { Container, Flex, Spinner, useMediaQuery } from "@chakra-ui/react";
-import Head from "next/head";
-import { ApiResponse, BlogPostApi } from "../../types";
+import BlogHeading from '../../components/blog/BlogHeading';
+import BlogArticlesList from '../../components/blog/BlogArticlesList';
+import BlogAside from '../../components/blog/BlogAside';
+import { GetStaticProps, GetStaticPropsResult } from 'next';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import { Container, Flex, Spinner, useMediaQuery } from '@chakra-ui/react';
+import Head from 'next/head';
+import {
+  ActiveCategories,
+  ApiResponse,
+  BlogPost,
+  BlogPostApi,
+} from '../../types';
 
-function BlogPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
-  const [loadedArticles, setLoadedArticles] = useState<Article[]>([]);
-  const [selectedCategory, setSelectedCategory] = useState("Toutes");
-  const [currentPage, setCurrentPage] = useState(null);
-  const [isLargerThan960] = useMediaQuery("(min-width: 960px)");
-  const [isLargerThan600] = useMediaQuery("(min-width: 600px)");
+type BlogPageProps = {
+  articles: BlogPost[];
+  activeCategories: ActiveCategories;
+};
 
-  const sortingFn = (a, b) => {
+function BlogPage(props: BlogPageProps) {
+  const [loadedArticles, setLoadedArticles] = useState<BlogPost[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState('Toutes');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [isLargerThan960] = useMediaQuery('(min-width: 960px)');
+  const [isLargerThan600] = useMediaQuery('(min-width: 600px)');
+
+  const sortingFn = (a: BlogPost, b: BlogPost) => {
     const aDate = new Date(a.issueDate);
     const bDate = new Date(b.issueDate);
 
@@ -36,7 +45,7 @@ function BlogPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
   }, [props.articles]);
 
   useEffect(() => {
-    if (selectedCategory !== "Toutes") {
+    if (selectedCategory !== 'Toutes') {
       const ArticlesByCategory = props.articles
         .filter((article) => article.categories.includes(selectedCategory))
         .sort(sortingFn);
@@ -45,7 +54,7 @@ function BlogPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
     } else {
       setLoadedArticles(props.articles);
     }
-  }, [selectedCategory]);
+  }, [props.articles, selectedCategory]);
 
   return (
     <>
@@ -55,16 +64,16 @@ function BlogPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
       </Head>
       <BlogHeading />
       <Container
-        pt={isLargerThan600 ? "50px" : "20px"}
-        pb={isLargerThan600 ? "50px" : "20px"}
+        pt={isLargerThan600 ? '50px' : '20px'}
+        pb={isLargerThan600 ? '50px' : '20px'}
         w="1200px"
-        maxW={isLargerThan600 ? "90%" : "100%"}
-        margin={isLargerThan600 ? "0 auto" : "none"}
+        maxW={isLargerThan600 ? '90%' : '100%'}
+        margin={isLargerThan600 ? '0 auto' : 'none'}
       >
         <>
           <Flex
-            display={currentPage === null ? "none" : "flex"}
-            flexDirection={isLargerThan960 ? "row" : "column"}
+            display={currentPage === null ? 'none' : 'flex'}
+            flexDirection={isLargerThan960 ? 'row' : 'column'}
           >
             <BlogArticlesList
               articles={loadedArticles}
@@ -78,7 +87,7 @@ function BlogPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
             />
           </Flex>
           <Flex
-            display={currentPage !== null ? "none" : "flex"}
+            display={currentPage !== null ? 'none' : 'flex'}
             h="50vh"
             w="100%"
             justifyContent="center"
@@ -92,7 +101,9 @@ function BlogPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
   );
 }
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getStaticProps: GetStaticProps = async (): Promise<
+  GetStaticPropsResult<BlogPageProps>
+> => {
   // const res = await axios.get(
   //   "https://jbb-admin.herokuapp.com/api/articles?populate=%2A"
   // );
@@ -103,22 +114,18 @@ export const getStaticProps: GetStaticProps = async () => {
   );
   const data = res.data.data;
 
-  interface Category {
-    [category: string]: number;
-  }
-
-  const activeCategories = {} as Category;
+  const activeCategories = {} as ActiveCategories;
   data.map((article) =>
     article.attributes.article_categories.data.map((category) => {
       const categoryName = category.attributes.Name;
       activeCategories[categoryName] = activeCategories[categoryName]
         ? activeCategories[categoryName] + 1
         : 1;
-    }),
+    })
   );
   // console.log("active categories to send:", JSON.stringify(activeCategories));
 
-  const articles = data.map((article) => ({
+  const articles: BlogPost[] = data.map((article) => ({
     id: article.id.toString(),
     title: article.attributes.Name,
     intro: article.attributes.Intro,

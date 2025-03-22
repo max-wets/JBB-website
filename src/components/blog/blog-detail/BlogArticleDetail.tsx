@@ -1,15 +1,14 @@
-import classes from "./BlogArticleDetail.module.css";
-import { Article } from "../BlogArticleItem";
-import Image from "next/image";
-import Link from "next/link";
-import { Icon, useMediaQuery } from "@chakra-ui/react";
-import { BiUser, BiComment } from "react-icons/bi";
-import { FiClock } from "react-icons/fi";
-import { BsFolder } from "react-icons/bs";
-import { useState } from "react";
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
-import VideoEmbed from "./VideoEmbed";
+import classes from './BlogArticleDetail.module.css';
+import Image from 'next/image';
+import Link from 'next/link';
+import { Icon, useMediaQuery } from '@chakra-ui/react';
+import { BiUser, BiComment } from 'react-icons/bi';
+import { FiClock } from 'react-icons/fi';
+import { BsFolder } from 'react-icons/bs';
+import { useState } from 'react';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+import VideoEmbed from './VideoEmbed';
 import {
   EmailShareButton,
   EmailIcon,
@@ -19,35 +18,38 @@ import {
   TwitterIcon,
   WhatsappShareButton,
   WhatsappIcon,
-} from "react-share";
-import { useRouter } from "next/router";
+} from 'react-share';
+import { useRouter } from 'next/router';
 import {
   ArrowLeftIcon,
   ArrowRightIcon,
   ChevronRightIcon,
-} from "@chakra-ui/icons";
-import { urlStringFormatter, newDate } from "../../../lib/utils";
-import CommentsSection from "./CommentsSection";
+} from '@chakra-ui/icons';
+import { urlStringFormatter, newDate } from '../../../lib/utils';
+import CommentsSection from './CommentsSection';
+import { BlogPost, PostComment, PrevNextPost } from '../../../types';
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL;
 
-function BlogArticleDetail(props: {
-  article: Article;
-  prevNextArticles;
-  recommendedArticles;
-  articleComments;
-}) {
+type BlogArticleDetailProps = {
+  article: BlogPost;
+  prevNextPosts: (PrevNextPost | null)[];
+  recommendedArticles: BlogPost[];
+  articleComments: PostComment[];
+};
+
+function BlogArticleDetail(props: BlogArticleDetailProps) {
   // const api_url = "https://jbb-admin.herokuapp.com";
   const router = useRouter();
-  const [isLargerThan750] = useMediaQuery("(min-width: 750px)");
-  const [isLargerThan600] = useMediaQuery("(min-width: 600px)");
-  const [comments, setComments] = useState([]);
+  const [isLargerThan750] = useMediaQuery('(min-width: 750px)');
+  const [isLargerThan600] = useMediaQuery('(min-width: 600px)');
+  const [comments, setComments] = useState<PostComment[]>([]);
 
   return (
     <article className={classes.primary}>
       <div className={classes.thumbnail}>
         <Image
-          src={props.article.imageUrl}
+          src={props.article.imageUrl ?? ''}
           alt={props.article.title}
           width={833}
           height={430}
@@ -64,7 +66,7 @@ function BlogArticleDetail(props: {
               as={BiUser}
               h={isLargerThan600 ? 6 : 4}
               w={isLargerThan600 ? 6 : 4}
-              size={isLargerThan600 ? "sm" : "sx"}
+              size={isLargerThan600 ? 'sm' : 'sx'}
             />
             <Link legacyBehavior href="">
               <a>Julie</a>
@@ -75,7 +77,7 @@ function BlogArticleDetail(props: {
               as={FiClock}
               h={isLargerThan600 ? 5 : 3}
               w={isLargerThan600 ? 5 : 3}
-              size={isLargerThan600 ? "sm" : "sx"}
+              size={isLargerThan600 ? 'sm' : 'sx'}
               mt="2px"
             />
             <div>{newDate(props.article.issueDate)}</div>
@@ -85,16 +87,16 @@ function BlogArticleDetail(props: {
               as={BsFolder}
               h={isLargerThan600 ? 6 : 4}
               w={isLargerThan600 ? 6 : 4}
-              size={isLargerThan600 ? "sm" : "sx"}
+              size={isLargerThan600 ? 'sm' : 'sx'}
               mr="4px"
             />
             {props.article.categories.map((category, idx) => (
               <>
-                <span style={idx > 0 ? { marginLeft: "4px" } : null}>
+                <span style={idx > 0 ? { marginLeft: '4px' } : undefined}>
                   {category}
                 </span>
                 <span>
-                  {idx < props.article.categories.length - 1 ? "," : null}
+                  {idx < props.article.categories.length - 1 ? ',' : null}
                 </span>
               </>
             ))}
@@ -104,15 +106,15 @@ function BlogArticleDetail(props: {
               as={BiComment}
               h={isLargerThan600 ? 6 : 4}
               w={isLargerThan600 ? 6 : 4}
-              size={isLargerThan600 ? "sm" : "sx"}
+              size={isLargerThan600 ? 'sm' : 'sx'}
               mr="4px"
             />
             <span>
               {comments
                 ? `${comments.length} Commentaire${
-                    comments.length > 1 ? "s" : ""
+                    comments.length > 1 ? 's' : ''
                   }`
-                : "0 Commentaires"}
+                : '0 Commentaires'}
             </span>
           </li>
         </ul>
@@ -122,7 +124,7 @@ function BlogArticleDetail(props: {
           </ReactMarkdown>
         </div>
         {props.article.videoUrl ? (
-          <div style={{ marginTop: "30px" }}>
+          <div style={{ marginTop: '30px' }}>
             <VideoEmbed source={props.article.videoUrl} />
           </div>
         ) : null}
@@ -166,13 +168,13 @@ function BlogArticleDetail(props: {
         </ul>
       </div>
       <nav className={classes.postnavigation}>
-        {props.prevNextArticles[0] ? (
+        {props.prevNextPosts[0] ? (
           <div className={classes.navprevious}>
             <Link
               legacyBehavior
               href={`/blog/${urlStringFormatter(
-                props.prevNextArticles[0].title,
-                props.prevNextArticles[0].id,
+                props.prevNextPosts[0].title,
+                props.prevNextPosts[0].id
               )}`}
             >
               <a>
@@ -181,21 +183,21 @@ function BlogArticleDetail(props: {
                   <span>Article Précédent</span>
                 </div>
                 <div className={classes.prevtext}>
-                  {props.prevNextArticles[0].title.length > 40
-                    ? props.prevNextArticles[0].title.slice(0, 40) + "..."
-                    : props.prevNextArticles[0].title}
+                  {props.prevNextPosts[0].title.length > 40
+                    ? props.prevNextPosts[0].title.slice(0, 40) + '...'
+                    : props.prevNextPosts[0].title}
                 </div>
               </a>
             </Link>
           </div>
         ) : null}
-        {props.prevNextArticles[1] ? (
+        {props.prevNextPosts[1] ? (
           <div className={classes.navnext}>
             <Link
               legacyBehavior
               href={`/blog/${urlStringFormatter(
-                props.prevNextArticles[1].title,
-                props.prevNextArticles[1].id,
+                props.prevNextPosts[1].title,
+                props.prevNextPosts[1].id
               )}`}
             >
               <a>
@@ -204,9 +206,9 @@ function BlogArticleDetail(props: {
                   <span>Article Suivant</span>
                 </div>
                 <div className={classes.nexttext}>
-                  {props.prevNextArticles[1].title.length > 40
-                    ? props.prevNextArticles[1].title.slice(0, 40) + "..."
-                    : props.prevNextArticles[1].title}
+                  {props.prevNextPosts[1].title.length > 40
+                    ? props.prevNextPosts[1].title.slice(0, 40) + '...'
+                    : props.prevNextPosts[1].title}
                 </div>
               </a>
             </Link>
@@ -226,12 +228,12 @@ function BlogArticleDetail(props: {
                   legacyBehavior
                   href={`/blog/${urlStringFormatter(
                     article.title,
-                    article.id,
+                    article.id
                   )}`}
                 >
                   <a>
                     <Image
-                      src={article.imageUrl}
+                      src={article.imageUrl ?? ''}
                       alt={article.title}
                       width={isLargerThan750 ? 239 : 667}
                       height={isLargerThan750 ? 124 : 347}
@@ -248,7 +250,7 @@ function BlogArticleDetail(props: {
                 <a>
                   <h3>
                     {article.title.length > 40
-                      ? article.title.slice(0, 39) + "..."
+                      ? article.title.slice(0, 39) + '...'
                       : article.title}
                   </h3>
                 </a>

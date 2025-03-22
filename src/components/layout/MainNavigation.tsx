@@ -1,6 +1,6 @@
-import classes from "./MainNavigation.module.css";
-import Link from "next/link";
-import { useEffect, useRef } from "react";
+import classes from './MainNavigation.module.css';
+import Link from 'next/link';
+import { useEffect, useRef } from 'react';
 import {
   Icon,
   Button,
@@ -13,17 +13,17 @@ import {
   DrawerContent,
   DrawerCloseButton,
   useMediaQuery,
-} from "@chakra-ui/react";
-import { SearchIcon } from "@chakra-ui/icons";
-import { GiHamburgerMenu } from "react-icons/gi";
-import { useSession } from "next-auth/react";
-import { signOut } from "next-auth/react";
+} from '@chakra-ui/react';
+import { SearchIcon } from '@chakra-ui/icons';
+import { GiHamburgerMenu } from 'react-icons/gi';
+import { useSession } from 'next-auth/react';
+import { signOut } from 'next-auth/react';
 
 let mounted = false;
-function MainNavigation() {
-  const [isLargerThan1024] = useMediaQuery("(min-width: 1024px)");
+export default function MainNavigation() {
+  const [isLargerThan1024] = useMediaQuery('(min-width: 1024px)');
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const btnRef = useRef();
+  const btnRef = useRef(null);
   const { status } = useSession();
 
   useEffect(() => {
@@ -56,7 +56,7 @@ function MainNavigation() {
                 <DrawerCloseButton />
                 <DrawerHeader
                   className={classes.logo}
-                  style={{ fontSize: "34px" }}
+                  style={{ fontSize: '34px' }}
                   borderBottomWidth="1px"
                 >
                   JBBeauty
@@ -106,7 +106,7 @@ function MainNavigation() {
                       </Link>
                     </li>
                     <li>
-                      {status === "authenticated" ? (
+                      {status === 'authenticated' ? (
                         <Button
                           size="sm"
                           colorScheme="white"
@@ -117,7 +117,7 @@ function MainNavigation() {
                         </Button>
                       ) : (
                         <Button size="sm" colorScheme="white" color="black">
-                          <Link legacyBehavior href={"/auth/signin"}>
+                          <Link legacyBehavior href={'/auth/signin'}>
                             <a>
                               <p>SE CONNECTER</p>
                             </a>
@@ -132,7 +132,7 @@ function MainNavigation() {
           </div>
           <div className={`${classes.small} ${classes.column}`}>
             <div className={classes.logowrapper}>
-              <Link legacyBehavior href={process.env.NEXT_PUBLIC_APP_URL}>
+              <Link legacyBehavior href={process.env.NEXT_PUBLIC_APP_URL ?? ''}>
                 <a>
                   <p className={classes.logo}>JBBeauty</p>
                 </a>
@@ -141,11 +141,11 @@ function MainNavigation() {
           </div>
           <div
             className={`${classes.small} ${classes.column}`}
-            style={{ flexFlow: "row-reverse" }}
+            style={{ flexFlow: 'row-reverse' }}
           >
             <div className={classes.secondaryarea}>
               <div className={classes.rightcontainers}>
-                <Link legacyBehavior href={"/search"}>
+                <Link legacyBehavior href={'/search'}>
                   <a>
                     <IconButton
                       aria-label="Search database"
@@ -168,7 +168,7 @@ function MainNavigation() {
                 <nav>
                   <ul className={classes.fullmenu}>
                     <li>
-                      <Link legacyBehavior href={"/blog"}>
+                      <Link legacyBehavior href={'/blog'}>
                         <a>
                           <Button size="sm" colorScheme="white" color="black">
                             <p>BLOG</p>
@@ -177,7 +177,7 @@ function MainNavigation() {
                       </Link>
                     </li>
                     <li>
-                      <Link legacyBehavior href={"/products"}>
+                      <Link legacyBehavior href={'/products'}>
                         <a>
                           <Button size="sm" colorScheme="white" color="black">
                             <p>PRODUITS</p>
@@ -186,7 +186,7 @@ function MainNavigation() {
                       </Link>
                     </li>
                     <li>
-                      <Link legacyBehavior href={"/about"}>
+                      <Link legacyBehavior href={'/about'}>
                         <a>
                           <Button size="sm" colorScheme="white" color="black">
                             <p>A PROPOS</p>
@@ -195,7 +195,7 @@ function MainNavigation() {
                       </Link>
                     </li>
                     <li>
-                      {status === "authenticated" ? (
+                      {status === 'authenticated' ? (
                         <Button
                           size="sm"
                           colorScheme="white"
@@ -206,7 +206,7 @@ function MainNavigation() {
                         </Button>
                       ) : (
                         <Button size="sm" colorScheme="white" color="black">
-                          <Link legacyBehavior href={"/auth/signin"}>
+                          <Link legacyBehavior href={'/auth/signin'}>
                             <a>
                               <p>SE CONNECTER</p>
                             </a>
@@ -225,5 +225,3 @@ function MainNavigation() {
   }
   return null;
 }
-
-export default MainNavigation;

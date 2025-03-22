@@ -1,22 +1,37 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
+import { GetStaticProps, GetStaticPaths, GetStaticPropsResult } from 'next';
+import BlogArticleDetail from '../../../components/blog/blog-detail/BlogArticleDetail';
+import BlogArticleDetailHeading from '../../../components/blog/blog-detail/BlogArticleDetailHeading';
+import BlogArticleAside from '../../../components/blog/blog-detail/BlogArticleAside';
+import { Container, Flex, useMediaQuery } from '@chakra-ui/react';
+import axios from 'axios';
+import qs from 'qs';
+import { urlStringFormatter } from '../../../lib/utils';
+import Head from 'next/head';
 import {
-  GetStaticProps,
-  GetStaticPaths,
-  InferGetStaticPropsType,
-} from "next";
-import BlogArticleDetail from "../../../components/blog/blog-detail/BlogArticleDetail";
-import BlogArticleDetailHeading from "../../../components/blog/blog-detail/BlogArticleDetailHeading";
-import BlogArticleAside from "../../../components/blog/blog-detail/BlogArticleAside";
-import { Container, Flex, useMediaQuery } from "@chakra-ui/react";
-import axios from "axios";
-import qs from "qs";
-import { urlStringFormatter } from "../../../lib/utils";
-import Head from "next/head";
-import { ApiResource, ApiResponse, BlogPost, BlogPostApi, BlogPostSmall, PostComment, PostCommentApi } from "../../../types";
+  ApiResource,
+  ApiResponse,
+  BlogPost,
+  BlogPostApi,
+  BlogPostSmall,
+  CategoryApi,
+  PostComment,
+  PostCommentApi,
+  PrevNextPost,
+  UserApi,
+} from '../../../types';
 
-function BlogDetailPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
-  const [isLargerThan960] = useMediaQuery("(min-width: 960px)");
-  const [isLargerThan600] = useMediaQuery("(min-width: 600px)");
+type BlogDetailPageProps = {
+  article: BlogPost;
+  recentArticles: BlogPostSmall[];
+  prevNextPosts: (PrevNextPost | null)[];
+  recommendedArticles: BlogPost[];
+  articleComments: PostComment[];
+};
+
+export default function BlogDetailPage(props: BlogDetailPageProps) {
+  const [isLargerThan960] = useMediaQuery('(min-width: 960px)');
+  const [isLargerThan600] = useMediaQuery('(min-width: 600px)');
   const [serverRendering, setServerRendering] = useState(true);
 
   useEffect(() => {
@@ -42,20 +57,20 @@ function BlogDetailPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
       </Head>
       <BlogArticleDetailHeading title={props.article.title} />
       <Container
-        pt={isLargerThan600 ? "50px" : "20px"}
-        pb={isLargerThan600 ? "50px" : "20px"}
+        pt={isLargerThan600 ? '50px' : '20px'}
+        pb={isLargerThan600 ? '50px' : '20px'}
         w="1200px"
-        maxW={isLargerThan600 ? "90%" : "100%"}
+        maxW={isLargerThan600 ? '90%' : '100%'}
         margin="0 auto"
       >
         <Flex
           flexDirection={
-            serverRendering ? "row" : isLargerThan960 ? "row" : "column"
+            serverRendering ? 'row' : isLargerThan960 ? 'row' : 'column'
           }
         >
           <BlogArticleDetail
             article={props.article}
-            prevNextArticles={props.prevNextArticles}
+            prevNextPosts={props.prevNextPosts}
             recommendedArticles={props.recommendedArticles}
             articleComments={props.articleComments}
           />
@@ -66,8 +81,13 @@ function BlogDetailPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
   );
 }
 
-export const getStaticProps: GetStaticProps = async (context) => {
-  const sortingFn = (a, b) => {
+export const getStaticProps: GetStaticProps = async ({
+  params,
+}): Promise<GetStaticPropsResult<BlogDetailPageProps>> => {
+  const sortingFn = (
+    a: ApiResource<BlogPostApi>,
+    b: ApiResource<BlogPostApi>
+  ): number => {
     const aDate = new Date(a.attributes.publishedAt);
     const bDate = new Date(b.attributes.publishedAt);
 
@@ -79,14 +99,15 @@ export const getStaticProps: GetStaticProps = async (context) => {
     }
     return 0;
   };
-  const aid = Number(
-    (context.params.blogArticleId as string).split("-").slice(-1),
-  );
+
+  const aid = Number((params!.blogArticleId as string).split('-').slice(-1));
   const res = await axios.get<ApiResponse<BlogPostApi>>(
     `${process.env.NEXT_PUBLIC_API_URL}/articles?populate=%2A&pagination[pageSize]=100&sort[0]=createdAt%3Adesc`
   );
   const data = res.data.data.sort(sortingFn);
   const article = data.find((article) => article.id === aid);
+  if (!article) throw new Error(`Article with ID '${aid}' not found`);
+
   const previousArticle =
     aid > 0 ? data.find((article) => article.id === aid - 1) : null;
   const nextArticle =
@@ -106,7 +127,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
       : null,
   ];
 
-  function formatData(post: ApiResource<BlogPostApi>): BlogPost {
+  const formatData = (post: ApiResource<BlogPostApi>): BlogPost => {
     return {
       id: post.id.toString(),
       title: post.attributes.Name,
@@ -119,9 +140,11 @@ export const getStaticProps: GetStaticProps = async (context) => {
         return category.attributes.Name;
       }),
     };
-  }
+  };
 
-  function getRecentArticles(data: ApiResource<BlogPostApi>[]): BlogPostSmall[] {
+  const getRecentArticles = (
+    data: ApiResource<BlogPostApi>[]
+  ): BlogPostSmall[] => {
     const max = data.length - 1;
     const articles = [];
     let idx = 0;
@@ -139,27 +162,32 @@ export const getStaticProps: GetStaticProps = async (context) => {
       idx += 1;
     }
     return articles;
-  }
+  };
 
-  function getRecommendedArticles(data: ApiResource<BlogPostApi>[], article: ApiResource<BlogPostApi>) {
-    let recommendedArticles = [];
+  const getRecommendedArticles = (
+    data: ApiResource<BlogPostApi>[],
+    article: ApiResource<BlogPostApi>
+  ): BlogPost[] => {
+    let recommendedArticles: ApiResource<BlogPostApi>[] = [];
     const articleCategories = article.attributes.article_categories.data.map(
       (category) => {
         return category.attributes.Name;
-      },
+      }
     );
-    function containsCategory(post) {
+    function containsCategory(post: ApiResource<BlogPostApi>) {
       if (post.id === aid) return false;
 
       let hasCategory = false;
-      post.attributes.article_categories.data.forEach((category) => {
-        if (
-          articleCategories.indexOf(category.attributes.Name) > -1 &&
-          !hasCategory
-        ) {
-          hasCategory = true;
+      post.attributes.article_categories.data.forEach(
+        (category: ApiResource<CategoryApi>) => {
+          if (
+            articleCategories.indexOf(category.attributes.Name) > -1 &&
+            !hasCategory
+          ) {
+            hasCategory = true;
+          }
         }
-      });
+      );
       return hasCategory;
     }
     recommendedArticles = data.filter(containsCategory);
@@ -169,11 +197,9 @@ export const getStaticProps: GetStaticProps = async (context) => {
       // const slicedArticlesArray = sameCategoryArticles.slice(2);
       recommendedArticles = recommendedArticles.slice(0, 3);
     } else if (recommendedArticles.length < 3) {
-      const takenIds = recommendedArticles.reduce((prev, curr) => {
-        return [...prev, curr.id];
-      }, []);
+      const takenIds = recommendedArticles.map((post) => post.id);
       const availableArticles = data.filter(
-        (article) => article.id !== aid && takenIds.indexOf(article.id) < 0,
+        (article) => article.id !== aid && takenIds.indexOf(article.id) < 0
       );
       let i = 0;
       while (i < 3 - recommendedArticles.length) {
@@ -182,7 +208,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
       }
     }
     return recommendedArticles.map(formatData);
-  }
+  };
 
   const recentArticles = getRecentArticles(data);
   const recommendedArticles = getRecommendedArticles(data, article);
@@ -221,22 +247,22 @@ export const getStaticProps: GetStaticProps = async (context) => {
       },
       {
         encodeValuesOnly: true,
-      },
+      }
     );
-    const usersRes = await axios.get(
+    const usersRes = await axios.get<UserApi[]>(
       `${process.env.NEXT_PUBLIC_API_URL}/users?${query}`,
       {
         headers: {
           Authorization: `Bearer ${process.env.NEXT_PUBLIC_API_TOKEN}`,
         },
-      },
+      }
     );
     const usersData = usersRes.data;
     // console.log("users data:", usersData);
 
     cleanComments.map((comment) => {
       const authorName = usersData.filter(
-        (user) => user.id === comment.AuthorID,
+        (user) => user.id === comment.AuthorID
       )[0].username;
 
       completeComments.push({
@@ -252,7 +278,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
     props: {
       article: formatData(article),
       recentArticles: recentArticles,
-      prevNextArticles: prevNextArticles,
+      prevNextPosts: prevNextArticles,
       recommendedArticles: recommendedArticles,
       articleComments: completeComments,
     },
@@ -276,5 +302,3 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
   return { paths, fallback: false };
 };
-
-export default BlogDetailPage;

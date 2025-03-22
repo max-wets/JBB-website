@@ -1,9 +1,20 @@
-import HomeComponent from "../components/home/HomeComponent";
-import { GetStaticProps, InferGetStaticPropsType } from "next";
-import axios from "axios";
-import { ApiResponse, BlogPostApi, ProductApi } from "../types";
+import HomeComponent from '../components/home/HomeComponent';
+import { GetStaticPropsResult } from 'next';
+import axios from 'axios';
+import {
+  ApiResponse,
+  BlogPost,
+  BlogPostApi,
+  Product,
+  ProductApi,
+} from '../types';
 
-const Home = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
+type HomeProps = {
+  recentProducts: Product[];
+  recentArticles: BlogPost[];
+};
+
+const Home = (props: HomeProps) => {
   // const number = useRandomNumber();
   return (
     <HomeComponent
@@ -13,7 +24,9 @@ const Home = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
   );
 };
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getStaticProps = async (): Promise<
+  GetStaticPropsResult<HomeProps>
+> => {
   const resProducts = await axios.get<ApiResponse<ProductApi>>(
     `${process.env.NEXT_PUBLIC_API_URL}/items?populate=%2A`
   );
@@ -24,7 +37,7 @@ export const getStaticProps: GetStaticProps = async () => {
   );
   const dataArticles = resArticles.data.data;
 
-  const sortingFn = (a, b) => {
+  const sortingFn = (a: Product | BlogPost, b: Product | BlogPost) => {
     const aDate = new Date(a.issueDate);
     const bDate = new Date(b.issueDate);
 
@@ -37,7 +50,7 @@ export const getStaticProps: GetStaticProps = async () => {
     return 0;
   };
 
-  const recentProducts = dataProducts
+  const recentProducts: Product[] = dataProducts
     .map((product) => ({
       id: product.id.toString(),
       name: product.attributes.Name,
@@ -52,7 +65,7 @@ export const getStaticProps: GetStaticProps = async () => {
     }))
     .sort(sortingFn);
 
-  const recentArticles = dataArticles
+  const recentArticles: BlogPost[] = dataArticles
     .map((article) => ({
       id: article.id.toString(),
       title: article.attributes.Name,

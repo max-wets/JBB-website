@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
-import MainNavigation from "./MainNavigation";
-import Footer from "./Footer";
-import StickyHeader from "./StickyHeader";
-import classes from "./Layout.module.css";
-import { useSession } from "next-auth/react";
-import { Alert, AlertIcon, CloseButton } from "@chakra-ui/react";
+import React, { useEffect, useState } from 'react';
+import MainNavigation from './MainNavigation';
+import Footer from './Footer';
+import StickyHeader from './StickyHeader';
+import classes from './Layout.module.css';
+import { useSession } from 'next-auth/react';
+import { Alert, AlertIcon, CloseButton } from '@chakra-ui/react';
 
 type Props = {
   children: React.ReactNode;
@@ -13,15 +13,17 @@ type Props = {
 let mounted = false;
 function Layout({ children }: Props) {
   const { status } = useSession();
-  const [connected, setConnected] = useState(null);
-  const [AlertMessage, setAlertMessage] = useState(null);
+  const [connected, setConnected] = useState<boolean>(false);
+  const [AlertMessage, setAlertMessage] = useState<React.ReactNode | null>(
+    null
+  );
 
   useEffect(() => {
     mounted = true;
   }, []);
 
   useEffect(() => {
-    if (status === "authenticated") {
+    if (status === 'authenticated') {
       setConnected(true);
       // console.log("you're authenticated");
     } else {
@@ -46,7 +48,7 @@ function Layout({ children }: Props) {
             top="-6px"
             onClick={() => setAlertMessage(null)}
           />
-        </Alert>,
+        </Alert>
       );
       setTimeout(() => setAlertMessage(null), 5000);
     }

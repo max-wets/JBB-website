@@ -1,11 +1,11 @@
-import Signup from "../../components/auth/Signup";
-import SignupHeading from "../../components/auth/SignupHeading";
-import { useState, useEffect } from "react";
-import { Alert, AlertIcon, CloseButton } from "@chakra-ui/react";
-import Head from "next/head";
+import Signup from '../../components/auth/Signup';
+import SignupHeading from '../../components/auth/SignupHeading';
+import { useState, useEffect } from 'react';
+import { Alert, AlertIcon, CloseButton } from '@chakra-ui/react';
+import Head from 'next/head';
 
 function SignupPage() {
-  const [error, setError] = useState(null);
+  const [error, setError] = useState('');
   const [displayAlert, setDisplayAlert] = useState(false);
 
   function AlertMessage() {
@@ -34,7 +34,7 @@ function SignupPage() {
     if (!displayAlert) {
       if (error) setDisplayAlert(true);
       setTimeout(() => {
-        setError(null);
+        setError('');
         setDisplayAlert(false);
       }, 5000);
     }

@@ -1,6 +1,6 @@
-import { useState, useRef, useEffect } from "react";
-import classes from "./Comment.module.css";
-import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
+import { useState, useRef, useEffect, Dispatch, SetStateAction } from 'react';
+import classes from './Comment.module.css';
+import { EditIcon, DeleteIcon } from '@chakra-ui/icons';
 import {
   Button,
   Spinner,
@@ -10,42 +10,47 @@ import {
   AlertDialogHeader,
   AlertDialogContent,
   AlertDialogOverlay,
-} from "@chakra-ui/react";
-import axios from "axios";
-import { newDate } from "../../../lib/utils/index";
+} from '@chakra-ui/react';
+import axios from 'axios';
+import { newDate } from '../../../lib/utils/index';
+import { Session } from 'next-auth';
+import { PostComment } from '../../../types';
 
-function Comment(props: {
-  idx;
-  id;
-  ArticleID;
-  AuthorID;
-  AuthorName;
-  Content;
-  issueDate;
-  sessionUser;
-  setComments;
-}) {
+type CommentProps = {
+  idx: number;
+  id: number;
+  ArticleID: number;
+  AuthorID: number;
+  AuthorName?: string;
+  Content: string;
+  issueDate: string;
+  sessionUser?: Session['user'];
+  setComments: Dispatch<SetStateAction<PostComment[]>>;
+};
+
+export default function Comment(props: CommentProps) {
   const [editOn, setEditOn] = useState(false);
   const [commentText, setCommentText] = useState(props.Content);
   const [postingComment, setPostingComment] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const inputRef = useRef<HTMLTextAreaElement>();
+  const inputRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
-    if (editOn) {
+    if (editOn && inputRef.current) {
       const end = inputRef.current.value.length;
       inputRef.current.setSelectionRange(end, end);
       inputRef.current.focus();
     }
   }, [editOn]);
 
-  function autoResize(el) {
+  function autoResize(el: HTMLElement) {
     // console.log(el);
-    el.style.height = "auto";
-    el.style.height = el.scrollHeight + 2 + "px";
+    el.style.height = 'auto';
+    el.style.height = el.scrollHeight + 2 + 'px';
   }
 
   async function updateComment() {
+    if (!props.sessionUser) return;
     setPostingComment(true);
 
     try {
@@ -60,7 +65,7 @@ function Comment(props: {
           headers: {
             Authorization: `Bearer ${props.sessionUser.accessToken}`,
           },
-        },
+        }
       );
     } catch (err) {
       console.error(err);
@@ -80,6 +85,8 @@ function Comment(props: {
   }
 
   async function deleteComment() {
+    if (!props.sessionUser) return;
+
     setPostingComment(true);
 
     try {
@@ -89,7 +96,7 @@ function Comment(props: {
           headers: {
             Authorization: `Bearer ${props.sessionUser.accessToken}`,
           },
-        },
+        }
       );
     } catch (err) {
       console.error(err);
@@ -103,7 +110,7 @@ function Comment(props: {
 
   function DeleteAlertDialog() {
     const onClose = () => setIsOpen(false);
-    const cancelRef = useRef();
+    const cancelRef = useRef(null);
 
     return (
       <>
@@ -135,7 +142,7 @@ function Comment(props: {
                   ml={3}
                   style={{ minWidth: 108 }}
                 >
-                  {postingComment ? <Spinner size="sm" /> : "Supprimer"}
+                  {postingComment ? <Spinner size="sm" /> : 'Supprimer'}
                 </Button>
               </AlertDialogFooter>
             </AlertDialogContent>
@@ -190,7 +197,7 @@ function Comment(props: {
                   disabled={commentText ? false : true}
                   onClick={() => updateComment()}
                 >
-                  {postingComment ? <Spinner size="sm" /> : "SAUVEGARDER"}
+                  {postingComment ? <Spinner size="sm" /> : 'SAUVEGARDER'}
                 </button>
               </div>
             </div>
@@ -202,5 +209,3 @@ function Comment(props: {
     </div>
   );
 }
-
-export default Comment;

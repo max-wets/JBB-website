@@ -1,27 +1,34 @@
-import classes from "./BlogArticleAside.module.css";
-import Link from "next/link";
-import { Icon } from "@chakra-ui/react";
-import Image from "next/image";
-import { Article } from "../BlogArticleItem";
-import {
-  BsFacebook,
-  BsInstagram,
-  BsYoutube,
-  BsFillEnvelopeFill,
-} from "react-icons/bs";
-import { urlStringFormatter, newDate } from "../../../lib/utils";
+import classes from './BlogArticleAside.module.css';
+import Link from 'next/link';
+import { Icon } from '@chakra-ui/react';
+import Image from 'next/image';
+import { BsFacebook, BsInstagram, BsFillEnvelopeFill } from 'react-icons/bs';
+import { urlStringFormatter, newDate } from '../../../lib/utils';
+import { BlogPostSmall } from '../../../types';
 
-function BlogAside(props: { articles: Article[] }) {
+type BlogAsideProps = {
+  articles: BlogPostSmall[];
+};
+
+type SideBlogDetailProps = {
+  article: BlogPostSmall;
+};
+
+export default function BlogAside(props: BlogAsideProps) {
   // const api_url = "https://jbb-admin.herokuapp.com";
 
-  function SideBlogDetail({ article }) {
+  function SideBlogDetail({ article }: SideBlogDetailProps) {
     const articleUrl = urlStringFormatter(article.title, article.id);
 
     return (
       <li>
         <Link legacyBehavior href={`/blog/${articleUrl}`}>
           <a className={classes.imgctr}>
-            <Image src={article.imageUrl} alt={article.title} fill={true} />
+            <Image
+              src={article.imageUrl ?? ''}
+              alt={article.title}
+              fill={true}
+            />
             <span className={classes.overlay}></span>
           </a>
         </Link>
@@ -96,5 +103,3 @@ function BlogAside(props: { articles: Article[] }) {
     </aside>
   );
 }
-
-export default BlogAside;

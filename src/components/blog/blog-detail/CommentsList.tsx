@@ -1,27 +1,36 @@
-import useSWR from "swr";
-import qs from "qs";
-import Comment from "./Comment";
-import { useEffect } from "react";
+import useSWR from 'swr';
+import qs from 'qs';
+import Comment from './Comment';
+import { Dispatch, SetStateAction, useEffect } from 'react';
+import {
+  ApiResource,
+  PostComment,
+  PostCommentApi,
+  UserApi,
+} from '../../../types';
+import { Session } from 'next-auth';
 
-const fetcher = (url) => fetch(url).then((res) => res.json());
+type CommentsListProps = {
+  articleID: number | string;
+  comments: PostComment[];
+  setComments: Dispatch<SetStateAction<PostComment[]>>;
+  sessionUser?: Session['user'];
+};
+
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
 const COMMENTS_URL = `${process.env.NEXT_PUBLIC_API_URL}/comments`;
 
-const CommentsList = (props: {
-  articleID;
-  comments;
-  setComments;
-  sessionUser;
-}) => {
+const CommentsList = (props: CommentsListProps) => {
   //   const [commentsList, setCommentsList] = useState([]);
   const filters = `?filters[ArticleID][$eq]=${props.articleID}&sort=publishedAt%3Adesc`;
   const { data } = useSWR(COMMENTS_URL + filters, fetcher);
 
   useEffect(() => {
-    const AuthorIdsArr = [];
-    const completeComments = [];
-    const cleanComments =
+    const AuthorIdsArr: number[] = [];
+    const completeComments: PostComment[] = [];
+    const cleanComments: PostComment[] =
       data &&
-      data.data.map((comment) => {
+      data.data.map((comment: ApiResource<PostCommentApi>): PostComment => {
         if (AuthorIdsArr.indexOf(comment.attributes.AuthorID) < 0)
           AuthorIdsArr.push(comment.attributes.AuthorID);
         return {
@@ -33,8 +42,7 @@ const CommentsList = (props: {
         };
       });
 
-    async function getUsers() {
-      // get users' names
+    const getUsers = async (): Promise<UserApi[]> => {
       const query = qs.stringify(
         {
           filters: {
@@ -45,21 +53,21 @@ const CommentsList = (props: {
         },
         {
           encodeValuesOnly: true,
-        },
+        }
       );
       const url = `${process.env.NEXT_PUBLIC_API_URL}/users?${query}`;
       const options = {
         headers: {
-          Authorization: `bearer ${process.env.NEXT_PUBLIC_API_TOKEN}`,
+          Authorization: `Bearer ${process.env.NEXT_PUBLIC_API_TOKEN}`,
         },
       };
       try {
         const res = await fetch(url, options);
         return await res.json();
       } catch (error) {
-        console.error(error);
+        throw new Error('Users fetching failed', { cause: error });
       }
-    }
+    };
 
     async function renderUsers() {
       const users = await getUsers();
@@ -67,7 +75,7 @@ const CommentsList = (props: {
 
       cleanComments?.map((comment) => {
         const authorName = users?.filter(
-          (user) => user.id === comment.AuthorID,
+          (user) => user.id === comment.AuthorID
         )[0].username;
 
         completeComments.push({

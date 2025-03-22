@@ -1,32 +1,40 @@
-import classes from "./CommentsSection.module.css";
-import Link from "next/link";
-import { Spinner } from "@chakra-ui/react";
-import { useRef, useState } from "react";
-import { useSession } from "next-auth/react";
-import { SessionUser } from "../../../types";
-import CommentsList from "./CommentsList";
-import axios from "axios";
+import classes from './CommentsSection.module.css';
+import Link from 'next/link';
+import { Spinner } from '@chakra-ui/react';
+import { Dispatch, SetStateAction, useRef, useState } from 'react';
+import { useSession } from 'next-auth/react';
+import { BlogPost, PostComment } from '../../../types';
+import CommentsList from './CommentsList';
+import axios from 'axios';
 
-const CommentsSection = (props: { article; comments; setComments }) => {
-  const [commentText, setCommentText] = useState("");
+type CommentsSectionProps = {
+  article: BlogPost;
+  comments: PostComment[];
+  setComments: Dispatch<SetStateAction<PostComment[]>>;
+};
+
+const CommentsSection = (props: CommentsSectionProps) => {
+  const [commentText, setCommentText] = useState('');
   const [postingComment, setPostingComment] = useState(false);
   //   const [comments, setComments] = useState([]);
   const { data: session } = useSession();
-  const inputRef = useRef<HTMLTextAreaElement>();
-  const commentBoxBtnsRef = useRef<HTMLDivElement>();
+  const inputRef = useRef<HTMLTextAreaElement>(null);
+  const commentBoxBtnsRef = useRef<HTMLDivElement>(null);
 
-  const sessionUser: SessionUser = session?.user;
+  const sessionUser = session?.user;
 
-  function autoResize(el) {
+  const autoResize = (el: HTMLElement) => {
     // console.log(el);
-    el.style.height = "auto";
-    el.style.height = el.scrollHeight + 2 + "px";
-  }
+    el.style.height = 'auto';
+    el.style.height = el.scrollHeight + 2 + 'px';
+  };
 
-  async function createComment() {
+  const createComment = async () => {
+    if (!sessionUser) return;
+
     setPostingComment(true);
 
-    let newComment;
+    let newComment: PostComment;
 
     try {
       const { data } = await axios.post(
@@ -42,7 +50,7 @@ const CommentsSection = (props: { article; comments; setComments }) => {
           headers: {
             Authorization: `Bearer ${sessionUser.accessToken}`,
           },
-        },
+        }
       );
 
       // console.log(data);
@@ -52,12 +60,12 @@ const CommentsSection = (props: { article; comments; setComments }) => {
         AuthorID: data.data.attributes.AuthorID,
         Content: data.data.attributes.Content,
         issueDate: data.data.attributes.publishedAt,
-        AuthorName: sessionUser.name,
+        AuthorName: sessionUser.name ?? '',
       };
       // console.log(newComment);
 
-      commentBoxBtnsRef.current.style.display = "none";
-      setCommentText("");
+      commentBoxBtnsRef.current!.style.display = 'none';
+      setCommentText('');
     } catch (err) {
       console.error(err);
     }
@@ -78,9 +86,9 @@ const CommentsSection = (props: { article; comments; setComments }) => {
     });
 
     setPostingComment(false);
-    commentBoxBtnsRef.current.style.display = "none";
-    setCommentText("");
-  }
+    commentBoxBtnsRef.current!.style.display = 'none';
+    setCommentText('');
+  };
 
   //    useEffect(() => {
   //      // console.log("blog detail comments:", props.articleComments);
@@ -108,7 +116,7 @@ const CommentsSection = (props: { article; comments; setComments }) => {
                     autoResize(e.target);
                   }}
                   onFocus={() =>
-                    (commentBoxBtnsRef.current.style.display = "flex")
+                    (commentBoxBtnsRef.current!.style.display = 'flex')
                   }
                 />
 
@@ -118,9 +126,9 @@ const CommentsSection = (props: { article; comments; setComments }) => {
                       className={classes.cancelbutton}
                       onClick={() => {
                         setPostingComment(false);
-                        setCommentText("");
-                        inputRef.current.style.height = "24px";
-                        commentBoxBtnsRef.current.style.display = "none";
+                        setCommentText('');
+                        inputRef.current!.style.height = '24px';
+                        commentBoxBtnsRef.current!.style.display = 'none';
                       }}
                     >
                       ANNULER
@@ -133,7 +141,7 @@ const CommentsSection = (props: { article; comments; setComments }) => {
                       {postingComment ? (
                         <Spinner size="sm" />
                       ) : (
-                        "AJOUTER UN COMMENTAIRE"
+                        'AJOUTER UN COMMENTAIRE'
                       )}
                     </button>
                   </div>
@@ -142,10 +150,10 @@ const CommentsSection = (props: { article; comments; setComments }) => {
             </div>
           ) : (
             <p className={classes.mustlogin}>
-              Vous devez être{" "}
-              <Link legacyBehavior href={"/auth/signin"}>
+              Vous devez être{' '}
+              <Link legacyBehavior href={'/auth/signin'}>
                 <a>connecté</a>
-              </Link>{" "}
+              </Link>{' '}
               pour publier un commentaire
             </p>
           )}

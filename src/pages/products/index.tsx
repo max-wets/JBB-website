@@ -1,23 +1,33 @@
-import { GetStaticProps, InferGetStaticPropsType } from "next";
-import ProductsList from "../../components/products/ProductsList";
-import ProductsAside from "../../components/products/ProductsAside";
-import { useEffect, useState } from "react";
-import { Container, Flex, Spinner, useMediaQuery } from "@chakra-ui/react";
-import ProductsHeading from "../../components/products/ProductsHeading";
-import { Product } from "../../components/products/ProductsList";
-import axios from "axios";
-import Head from "next/head";
+import { GetStaticProps, GetStaticPropsResult } from 'next';
+import ProductsList from '../../components/products/ProductsList';
+import ProductsAside from '../../components/products/ProductsAside';
+import { useEffect, useState } from 'react';
+import { Container, Flex, Spinner, useMediaQuery } from '@chakra-ui/react';
+import ProductsHeading from '../../components/products/ProductsHeading';
+import axios from 'axios';
+import Head from 'next/head';
+import {
+  ActiveCategories,
+  ApiResponse,
+  Product,
+  ProductApi,
+} from '../../types';
 
-function ProductsPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
+type ProductsPageProps = {
+  products: Product[];
+  activeCategories: ActiveCategories;
+};
+
+function ProductsPage(props: ProductsPageProps) {
   const [loadedProducts, setLoadedProducts] = useState<Product[]>([]);
-  const [selectedCategory, setSelectedCategory] = useState("Toutes");
-  const [filterRange, setFilterRange] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState('Toutes');
+  const [filterRange, setFilterRange] = useState<number[]>([]);
   const [loading, setLoading] = useState(true);
-  const [currentPage, setCurrentPage] = useState(null);
-  const [isLargerThan960] = useMediaQuery("(min-width: 960px)");
-  const [isLargerThan500] = useMediaQuery("(min-width: 500px)");
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [isLargerThan960] = useMediaQuery('(min-width: 960px)');
+  const [isLargerThan500] = useMediaQuery('(min-width: 500px)');
 
-  const sortingFn = (a, b) => {
+  const sortingFn = (a: Product, b: Product) => {
     const aDate = new Date(a.issueDate);
     const bDate = new Date(b.issueDate);
 
@@ -38,7 +48,7 @@ function ProductsPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
   }, [props.products]);
 
   useEffect(() => {
-    if (selectedCategory !== "Toutes") {
+    if (selectedCategory !== 'Toutes') {
       const productsByCategory = props.products
         .filter((product) => product.categories.includes(selectedCategory))
         .sort(sortingFn);
@@ -53,7 +63,7 @@ function ProductsPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
       const productsByPrice = props.products
         .filter(
           (product) =>
-            product.price >= filterRange[0] && product.price <= filterRange[1],
+            product.price >= filterRange[0] && product.price <= filterRange[1]
         )
         .sort(sortingFn);
       // console.log("products by price:", productsByPrice);
@@ -73,8 +83,8 @@ function ProductsPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
       <ProductsHeading />
       <Container pt="50px" pb="50px" w="1200px" maxW="90%" margin="0 auto">
         <Flex
-          display={loading ? "none" : "flex"}
-          flexDirection={isLargerThan960 ? "row" : "column"}
+          display={loading ? 'none' : 'flex'}
+          flexDirection={isLargerThan960 ? 'row' : 'column'}
         >
           <ProductsList
             products={loadedProducts}
@@ -90,7 +100,7 @@ function ProductsPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
           />
         </Flex>
         <Flex
-          display={loading ? "flex" : "none"}
+          display={loading ? 'flex' : 'none'}
           h="50vh"
           w="100%"
           justifyContent="center"
@@ -105,13 +115,15 @@ function ProductsPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
 
 export default ProductsPage;
 
-export const getStaticProps: GetStaticProps = async () => {
-  const res = await axios.get(
-    `${process.env.NEXT_PUBLIC_API_URL}/items?populate=%2A&pagination[pageSize]=100&sort[0]=createdAt%3Adesc`,
+export const getStaticProps: GetStaticProps = async (): Promise<
+  GetStaticPropsResult<ProductsPageProps>
+> => {
+  const res = await axios.get<ApiResponse<ProductApi>>(
+    `${process.env.NEXT_PUBLIC_API_URL}/items?populate=%2A&pagination[pageSize]=100&sort[0]=createdAt%3Adesc`
   );
   const data = res.data.data;
 
-  const products = data.map((article) => ({
+  const products: Product[] = data.map((article) => ({
     id: article.id.toString(),
     name: article.attributes.Name,
     intro: article.attributes.Intro,
@@ -124,17 +136,13 @@ export const getStaticProps: GetStaticProps = async () => {
     }),
   }));
 
-  interface Category {
-    [category: string]: number;
-  }
-
-  const activeCategories = {} as Category;
+  const activeCategories = {} as ActiveCategories;
   products.forEach((article) =>
     article.categories.forEach((category) => {
       activeCategories[category] = activeCategories[category]
         ? (activeCategories[category] += 1)
         : 1;
-    }),
+    })
   );
   return {
     props: {

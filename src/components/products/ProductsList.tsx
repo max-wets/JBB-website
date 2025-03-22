@@ -1,27 +1,25 @@
-import classes from "./ProductsList.module.css";
-import ProductItem from "./ProductItem";
-import Pagination from "../pagination/Pagination";
-import { Grid, GridItem, Flex } from "@chakra-ui/react";
-import { useEffect, useMemo, useState } from "react";
+import classes from './ProductsList.module.css';
+import ProductItem from './ProductItem';
+import Pagination from '../pagination/Pagination';
+import { Grid, GridItem, Flex } from '@chakra-ui/react';
+import { useEffect, useMemo, useState } from 'react';
+import { Product } from '../../types';
+
+type ProductsListProps = {
+  products: Product[];
+  currentPage: number;
+  setCurrentPage: (page: number) => void;
+  isLargerThan500: boolean;
+};
+
+type ViewSelectorProps = {
+  productsLength: number | string;
+  pageSize: number;
+};
 
 const PageSize = 12;
 
-export interface Product {
-  id: number;
-  name: string;
-  intro: string;
-  price: number;
-  description: string;
-  item_categories: string[];
-  imageUrl: string;
-}
-
-function ProductsList(props: {
-  products;
-  currentPage;
-  setCurrentPage;
-  isLargerThan500;
-}) {
+export default function ProductsList(props: ProductsListProps) {
   const [pageSize, setPageSize] = useState(PageSize);
 
   useEffect(() => {
@@ -42,8 +40,8 @@ function ProductsList(props: {
     return props.products.slice(firstPageIndex, lastPageIndex);
   }, [props.currentPage, props.products, pageSize]);
 
-  function ViewSelector(props: { productsLength; pageSize }) {
-    const nbrOfViews = Math.ceil(props.productsLength / props.pageSize);
+  function ViewSelector(props: ViewSelectorProps) {
+    const nbrOfViews = Math.ceil(Number(props.productsLength) / props.pageSize);
     const views = [];
     for (let i = 1; i < nbrOfViews + 1; i++) {
       views.push(i * props.pageSize);
@@ -52,11 +50,13 @@ function ProductsList(props: {
       <ul className={classes.resultcount}>
         <li className={classes.viewtitle}>Produits par page:</li>
         {views.map((view, idx) => (
-          <li key={idx} onClick={() => setPageSize(parseInt(view))}>
+          <li key={idx} onClick={() => setPageSize(parseInt(view.toString()))}>
             {view}
           </li>
         ))}
-        <li onClick={() => setPageSize(parseInt(props.productsLength))}>
+        <li
+          onClick={() => setPageSize(parseInt(props.productsLength.toString()))}
+        >
           Tous
         </li>
       </ul>
@@ -73,7 +73,7 @@ function ProductsList(props: {
       </Flex>
       <Grid
         templateColumns={
-          props.isLargerThan500 ? "repeat(3, 1fr)" : "repeat(1, 1fr)"
+          props.isLargerThan500 ? 'repeat(3, 1fr)' : 'repeat(1, 1fr)'
         }
         gap={6}
       >
@@ -88,10 +88,8 @@ function ProductsList(props: {
         currentPage={props.currentPage}
         totalCount={props.products.length}
         pageSize={pageSize}
-        onPageChange={(page) => props.setCurrentPage(page)}
+        onPageChange={(page) => props.setCurrentPage(Number(page))}
       />
     </div>
   );
 }
-
-export default ProductsList;

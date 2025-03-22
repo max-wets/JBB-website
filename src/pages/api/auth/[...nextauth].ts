@@ -1,63 +1,78 @@
-import CredentialsProvider from "next-auth/providers/credentials";
-import NextAuth from "next-auth/next";
+import CredentialsProvider from 'next-auth/providers/credentials';
+import NextAuth from 'next-auth/next';
+import { NextApiRequest, NextApiResponse } from 'next';
+import { AuthOptions, DefaultSession } from 'next-auth';
+import { SessionUser } from '../../../types';
+import { DefaultJWT } from 'next-auth/jwt';
 
-const options = {
+declare module 'next-auth' {
+  interface Session {
+    user: {
+      id: number;
+      accessToken: string;
+    } & DefaultSession['user'];
+  }
+  // eslint-disable-next-line @typescript-eslint/no-empty-object-type
+  export interface User extends SessionUser {}
+}
+
+declare module 'next-auth/jwt' {
+  export interface JWT extends Record<string, unknown>, DefaultJWT {
+    id: number;
+    name: string;
+    email: string;
+    accessToken: string;
+    iat: number;
+    exp: number;
+    jti: string;
+  }
+}
+
+const options: AuthOptions = {
   providers: [
     CredentialsProvider({
-      name: "Credentials",
+      name: 'Credentials',
       credentials: {
-        email: { label: "email", type: "email" },
-        password: { label: "password", type: "password" },
+        email: { label: 'email', type: 'email' },
+        password: { label: 'password', type: 'password' },
       },
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      async authorize(credentials, req) {
-        // console.log("req:", req.body);
-
+      async authorize(credentials, _req) {
         const reqBody = {
-          identifier: credentials.email,
-          password: credentials.password,
+          identifier: credentials!.email,
+          password: credentials!.password,
         };
-
-        // console.log("req body:", reqBody);
 
         const res = await fetch(
           `${process.env.NEXT_PUBLIC_API_URL}/auth/local`,
           {
-            method: "POST",
+            method: 'POST',
             body: JSON.stringify(reqBody),
-            headers: { "Content-Type": "application/json" },
-          },
+            headers: { 'Content-Type': 'application/json' },
+          }
         );
-        const user = await res.json();
 
         if (!res.ok) {
-          // console.log("res not ok");
-          // throw new Error(user.exception);
-          return user.exception;
+          throw new Error('Sign-in failed: wrong or missing credentials');
         }
         // If no error and we have user data, return it
-        if (res.ok && user) {
-          // console.log("res ok");
+        const user = await res.json();
+        if (user) {
           return user;
         }
 
-        // console.log("res null");
         return null;
       },
     }),
   ],
   secret: process.env.JWT_SECRET,
   pages: {
-    signIn: "/auth/signin",
+    signIn: '/auth/signin',
     // error: "/auth/signin",
   },
   callbacks: {
     async jwt({ token, user, account }) {
       if (account && user) {
-        // console.log("token:", token);
-        // console.log("user:", user);
-        // console.log("account:", account);
-
         return {
           ...token,
           id: user.user.id,
@@ -71,13 +86,19 @@ const options = {
     },
 
     async session({ session, token }) {
-      session.user.accessToken = token.accessToken;
-      session.user.id = token.id;
-      // console.log("session:", session);
-
-      return session;
+      return {
+        ...session,
+        user: {
+          ...session.user,
+          id: token.id,
+          accessToken: token.accessToken,
+        },
+      };
     },
   },
 };
 
-export default (req, res) => NextAuth(req, res, options);
+const nextAuthMiddleware = (req: NextApiRequest, res: NextApiResponse) =>
+  NextAuth(req, res, options);
+
+export default nextAuthMiddleware;

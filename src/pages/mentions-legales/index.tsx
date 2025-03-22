@@ -1,5 +1,5 @@
-import LegalNoticeComponent from "../../components/legal-notice/LegalNoticeComponent";
-import Head from "next/head";
+import LegalNoticeComponent from '../../components/legal-notice/LegalNoticeComponent';
+import Head from 'next/head';
 
 function LegalNoticePage() {
   return (

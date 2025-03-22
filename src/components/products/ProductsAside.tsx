@@ -1,5 +1,5 @@
-import classes from "./ProductsAside.module.css";
-import Link from "next/link";
+import classes from './ProductsAside.module.css';
+import Link from 'next/link';
 import {
   Icon,
   Button,
@@ -7,34 +7,33 @@ import {
   RangeSliderTrack,
   RangeSliderFilledTrack,
   RangeSliderThumb,
-} from "@chakra-ui/react";
-import Image from "next/image";
-import {
-  BsFillEnvelopeFill,
-  BsFacebook,
-  BsInstagram,
-  BsYoutube,
-} from "react-icons/bs";
-import { useEffect, useState } from "react";
-import { Product } from "./ProductsList";
+} from '@chakra-ui/react';
+import Image from 'next/image';
+import { BsFillEnvelopeFill, BsFacebook, BsInstagram } from 'react-icons/bs';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { ActiveCategories, Product } from '../../types';
 
-function BlogAside(props: {
+type BlogAsideProps = {
   products: Product[];
-  activeCategories: object;
-  setSelectedCategory;
-  setFilterRange;
-}) {
-  const [priceRange, setPriceRange] = useState([]);
+  activeCategories: ActiveCategories;
+  setSelectedCategory: Dispatch<SetStateAction<string>>;
+  setFilterRange: Dispatch<SetStateAction<number[]>>;
+};
+
+type SideProductDetailProps = {
+  product: Product;
+};
+
+function BlogAside(props: BlogAsideProps) {
+  const [priceRange, setPriceRange] = useState<number[]>([]);
   const [priceRangeCurrentValues, setPriceRangeCurrentValues] = useState([
     0, 20,
   ]);
   // const api_url = "https://jbb-admin.herokuapp.com/";
 
-  function getPriceRange(products) {
+  function getPriceRange(products: Product[]) {
     const priceRangeArr = [];
-    const pricesArr = products.reduce((prev, curr) => {
-      return [...prev, curr.price];
-    }, []);
+    const pricesArr = products.map((product) => product.price);
     priceRangeArr[0] = Math.min(...pricesArr);
     priceRangeArr[1] = Math.max(...pricesArr);
     // console.log("prices range array:", priceRangeArr);
@@ -56,24 +55,27 @@ function BlogAside(props: {
 
   // console.log("Blog Aside categories:", props.activeCategories);
 
-  const handleClick = (e) => {
-    props.setSelectedCategory(e.target.dataset.category);
+  const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (e.target) {
+      const target = e.target as HTMLElement;
+      props.setSelectedCategory(target.dataset.category || '');
+    }
   };
 
-  function priceFormat(num) {
+  function priceFormat(num: number) {
     let formattedNum;
 
-    if (!num.toString().includes(".")) {
-      formattedNum = num + ",00";
+    if (!num.toString().includes('.')) {
+      formattedNum = num + ',00';
     } else {
-      const splitArr = num.toString().split(".");
-      splitArr[1] = splitArr[1] < 10 ? splitArr[1] + "0" : splitArr[1];
-      formattedNum = splitArr.join(",");
+      const splitArr = num.toString().split('.');
+      splitArr[1] = Number(splitArr[1]) < 10 ? splitArr[1] + '0' : splitArr[1];
+      formattedNum = splitArr.join(',');
     }
-    return formattedNum + "€";
+    return formattedNum + '€';
   }
 
-  function SideProductDetail({ product }) {
+  function SideProductDetail({ product }: SideProductDetailProps) {
     return (
       <li key={product.id}>
         <Link legacyBehavior href={`/products/${product.id}`}>
@@ -130,16 +132,6 @@ function BlogAside(props: {
         <div className={classes.sidebox}>
           <h4 className={classes.socialtitle}>Me suivre</h4>
           <ul className={classes.socialicons}>
-            {/* <Link
-              legacyBehavior
-              href="https://www.youtube.com/channel/UCvVIi4gAhSC4x7sM3g9q53w"
-            >
-              <a target="_blank">
-                <li>
-                  <Icon as={BsYoutube} h={5} w={5} size="sm" />
-                </li>
-              </a>
-            </Link> */}
             <Link
               legacyBehavior
               href="https://www.facebook.com/groups/3136931483299677"
