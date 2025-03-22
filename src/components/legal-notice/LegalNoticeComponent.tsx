@@ -1,4 +1,4 @@
-import classes from './LegalNoticeComponent.module.css';
+import classes from "./LegalNoticeComponent.module.css";
 
 function LegalNoticeComponent() {
   return (
@@ -62,12 +62,12 @@ function LegalNoticeComponent() {
             </p>
             <ul>
               <li>
-                Sous Internet Explorer : Menu « Outils {'>'} Options Internet ».
+                Sous Internet Explorer : Menu « Outils {">"} Options Internet ».
                 Cliquez sur « Confidentialité » et choisissez « Bloquer tous les
                 cookies ». Validez sur « OK »
               </li>
               <li>
-                Sous Firefox : Menu « Outils {'>'} Options ». Cliquez sur
+                Sous Firefox : Menu « Outils {">"} Options ». Cliquez sur
                 l’option « Vie privée » puis désactivez les cookies dans la
                 rubrique « Cookies »
               </li>

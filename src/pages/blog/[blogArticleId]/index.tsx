@@ -1,13 +1,13 @@
-import { useEffect, useState } from 'react';
-import { GetStaticProps, GetStaticPaths, GetStaticPropsResult } from 'next';
-import BlogArticleDetail from '../../../components/blog/blog-detail/BlogArticleDetail';
-import BlogArticleDetailHeading from '../../../components/blog/blog-detail/BlogArticleDetailHeading';
-import BlogArticleAside from '../../../components/blog/blog-detail/BlogArticleAside';
-import { Container, Flex, useMediaQuery } from '@chakra-ui/react';
-import axios from 'axios';
-import qs from 'qs';
-import { urlStringFormatter } from '../../../lib/utils';
-import Head from 'next/head';
+import { useEffect, useState } from "react";
+import { GetStaticProps, GetStaticPaths, GetStaticPropsResult } from "next";
+import BlogArticleDetail from "../../../components/blog/blog-detail/BlogArticleDetail";
+import BlogArticleDetailHeading from "../../../components/blog/blog-detail/BlogArticleDetailHeading";
+import BlogArticleAside from "../../../components/blog/blog-detail/BlogArticleAside";
+import { Container, Flex, useMediaQuery } from "@chakra-ui/react";
+import axios from "axios";
+import qs from "qs";
+import { urlStringFormatter } from "../../../lib/utils";
+import Head from "next/head";
 import {
   ApiResource,
   ApiResponse,
@@ -19,7 +19,7 @@ import {
   PostCommentApi,
   PrevNextPost,
   UserApi,
-} from '../../../types';
+} from "../../../types";
 
 type BlogDetailPageProps = {
   article: BlogPost;
@@ -30,8 +30,8 @@ type BlogDetailPageProps = {
 };
 
 export default function BlogDetailPage(props: BlogDetailPageProps) {
-  const [isLargerThan960] = useMediaQuery('(min-width: 960px)');
-  const [isLargerThan600] = useMediaQuery('(min-width: 600px)');
+  const [isLargerThan960] = useMediaQuery("(min-width: 960px)");
+  const [isLargerThan600] = useMediaQuery("(min-width: 600px)");
   const [serverRendering, setServerRendering] = useState(true);
 
   useEffect(() => {
@@ -57,15 +57,15 @@ export default function BlogDetailPage(props: BlogDetailPageProps) {
       </Head>
       <BlogArticleDetailHeading title={props.article.title} />
       <Container
-        pt={isLargerThan600 ? '50px' : '20px'}
-        pb={isLargerThan600 ? '50px' : '20px'}
+        pt={isLargerThan600 ? "50px" : "20px"}
+        pb={isLargerThan600 ? "50px" : "20px"}
         w="1200px"
-        maxW={isLargerThan600 ? '90%' : '100%'}
+        maxW={isLargerThan600 ? "90%" : "100%"}
         margin="0 auto"
       >
         <Flex
           flexDirection={
-            serverRendering ? 'row' : isLargerThan960 ? 'row' : 'column'
+            serverRendering ? "row" : isLargerThan960 ? "row" : "column"
           }
         >
           <BlogArticleDetail
@@ -86,7 +86,7 @@ export const getStaticProps: GetStaticProps = async ({
 }): Promise<GetStaticPropsResult<BlogDetailPageProps>> => {
   const sortingFn = (
     a: ApiResource<BlogPostApi>,
-    b: ApiResource<BlogPostApi>
+    b: ApiResource<BlogPostApi>,
   ): number => {
     const aDate = new Date(a.attributes.publishedAt);
     const bDate = new Date(b.attributes.publishedAt);
@@ -100,9 +100,9 @@ export const getStaticProps: GetStaticProps = async ({
     return 0;
   };
 
-  const aid = Number((params!.blogArticleId as string).split('-').slice(-1));
+  const aid = Number((params!.blogArticleId as string).split("-").slice(-1));
   const res = await axios.get<ApiResponse<BlogPostApi>>(
-    `${process.env.NEXT_PUBLIC_API_URL}/articles?populate=%2A&pagination[pageSize]=100&sort[0]=createdAt%3Adesc`
+    `${process.env.NEXT_PUBLIC_API_URL}/articles?populate=%2A&pagination[pageSize]=100&sort[0]=createdAt%3Adesc`,
   );
   const data = res.data.data.sort(sortingFn);
   const article = data.find((article) => article.id === aid);
@@ -143,7 +143,7 @@ export const getStaticProps: GetStaticProps = async ({
   };
 
   const getRecentArticles = (
-    data: ApiResource<BlogPostApi>[]
+    data: ApiResource<BlogPostApi>[],
   ): BlogPostSmall[] => {
     const max = data.length - 1;
     const articles = [];
@@ -166,13 +166,13 @@ export const getStaticProps: GetStaticProps = async ({
 
   const getRecommendedArticles = (
     data: ApiResource<BlogPostApi>[],
-    article: ApiResource<BlogPostApi>
+    article: ApiResource<BlogPostApi>,
   ): BlogPost[] => {
     let recommendedArticles: ApiResource<BlogPostApi>[] = [];
     const articleCategories = article.attributes.article_categories.data.map(
       (category) => {
         return category.attributes.Name;
-      }
+      },
     );
     function containsCategory(post: ApiResource<BlogPostApi>) {
       if (post.id === aid) return false;
@@ -186,7 +186,7 @@ export const getStaticProps: GetStaticProps = async ({
           ) {
             hasCategory = true;
           }
-        }
+        },
       );
       return hasCategory;
     }
@@ -199,7 +199,7 @@ export const getStaticProps: GetStaticProps = async ({
     } else if (recommendedArticles.length < 3) {
       const takenIds = recommendedArticles.map((post) => post.id);
       const availableArticles = data.filter(
-        (article) => article.id !== aid && takenIds.indexOf(article.id) < 0
+        (article) => article.id !== aid && takenIds.indexOf(article.id) < 0,
       );
       let i = 0;
       while (i < 3 - recommendedArticles.length) {
@@ -215,7 +215,7 @@ export const getStaticProps: GetStaticProps = async ({
 
   // get article's comments
   const resComments = await axios.get<ApiResponse<PostCommentApi>>(
-    `${process.env.NEXT_PUBLIC_API_URL}/comments?filters[ArticleID][$eq]=${aid}&sort=publishedAt%3Adesc`
+    `${process.env.NEXT_PUBLIC_API_URL}/comments?filters[ArticleID][$eq]=${aid}&sort=publishedAt%3Adesc`,
   );
   const commentsData = resComments.data.data;
   const AuthorIdsArr: number[] = [];
@@ -247,7 +247,7 @@ export const getStaticProps: GetStaticProps = async ({
       },
       {
         encodeValuesOnly: true,
-      }
+      },
     );
     const usersRes = await axios.get<UserApi[]>(
       `${process.env.NEXT_PUBLIC_API_URL}/users?${query}`,
@@ -255,14 +255,14 @@ export const getStaticProps: GetStaticProps = async ({
         headers: {
           Authorization: `Bearer ${process.env.NEXT_PUBLIC_API_TOKEN}`,
         },
-      }
+      },
     );
     const usersData = usersRes.data;
     // console.log("users data:", usersData);
 
     cleanComments.map((comment) => {
       const authorName = usersData.filter(
-        (user) => user.id === comment.AuthorID
+        (user) => user.id === comment.AuthorID,
       )[0].username;
 
       completeComments.push({
@@ -288,7 +288,7 @@ export const getStaticProps: GetStaticProps = async ({
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const res = await axios.get<ApiResponse<BlogPostApi>>(
-    `${process.env.NEXT_PUBLIC_API_URL}/articles?pagination[pageSize]=100`
+    `${process.env.NEXT_PUBLIC_API_URL}/articles?pagination[pageSize]=100`,
   );
   const data = res.data.data;
 

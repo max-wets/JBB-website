@@ -1,20 +1,20 @@
-import useSWR from 'swr';
-import qs from 'qs';
-import Comment from './Comment';
-import { Dispatch, SetStateAction, useEffect } from 'react';
+import useSWR from "swr";
+import qs from "qs";
+import Comment from "./Comment";
+import { Dispatch, SetStateAction, useEffect } from "react";
 import {
   ApiResource,
   PostComment,
   PostCommentApi,
   UserApi,
-} from '../../../types';
-import { Session } from 'next-auth';
+} from "../../../types";
+import { Session } from "next-auth";
 
 type CommentsListProps = {
   articleID: number | string;
   comments: PostComment[];
   setComments: Dispatch<SetStateAction<PostComment[]>>;
-  sessionUser?: Session['user'];
+  sessionUser?: Session["user"];
 };
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
@@ -53,7 +53,7 @@ const CommentsList = (props: CommentsListProps) => {
         },
         {
           encodeValuesOnly: true,
-        }
+        },
       );
       const url = `${process.env.NEXT_PUBLIC_API_URL}/users?${query}`;
       const options = {
@@ -65,7 +65,7 @@ const CommentsList = (props: CommentsListProps) => {
         const res = await fetch(url, options);
         return await res.json();
       } catch (error) {
-        throw new Error('Users fetching failed', { cause: error });
+        throw new Error("Users fetching failed", { cause: error });
       }
     };
 
@@ -75,7 +75,7 @@ const CommentsList = (props: CommentsListProps) => {
 
       cleanComments?.map((comment) => {
         const authorName = users?.filter(
-          (user) => user.id === comment.AuthorID
+          (user) => user.id === comment.AuthorID,
         )[0].username;
 
         completeComments.push({

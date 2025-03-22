@@ -5,10 +5,20 @@ import classes from "./CustomHits.module.css";
 import Pagination from "../pagination/Pagination";
 import { useMemo, useState } from "react";
 import { urlStringFormatter } from "../../lib/utils";
+import { StateResultsProvided } from "react-instantsearch-core";
+
+type ResultHitProps = {
+  id: number;
+  title: string;
+  description: string;
+  imageUrl: string;
+};
+
+type HitsProps = StateResultsProvided<ResultHitProps>;
 
 const PageSize = 3;
 
-function Hits({ searchState, searchResults }) {
+function Hits({ searchState, searchResults }: HitsProps): JSX.Element {
   const [currentPage, setCurrentPage] = useState(1);
 
   const currentData = useMemo(() => {
@@ -17,7 +27,7 @@ function Hits({ searchState, searchResults }) {
     return searchResults?.hits.slice(firstPageIndex, lastPageIndex);
   }, [currentPage, searchResults]);
 
-  function ResultHit({ id, title, description, imageUrl }) {
+  function ResultHit({ id, title, description, imageUrl }: ResultHitProps) {
     const articleUrl = urlStringFormatter(title, id);
 
     return (
@@ -83,7 +93,7 @@ function Hits({ searchState, searchResults }) {
               currentPage={currentPage}
               totalCount={searchResults.hits.length}
               pageSize={PageSize}
-              onPageChange={(page) => setCurrentPage(page)}
+              onPageChange={(page) => setCurrentPage(Number(page))}
             />
           </div>
         </>

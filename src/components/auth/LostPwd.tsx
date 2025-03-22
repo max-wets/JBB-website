@@ -1,7 +1,7 @@
-import classes from './LostPwd.module.css';
-import { Field, Form, Formik, ErrorMessage } from 'formik';
-import axios, { AxiosError } from 'axios';
-import { Dispatch, SetStateAction } from 'react';
+import classes from "./LostPwd.module.css";
+import { Field, Form, Formik, ErrorMessage } from "formik";
+import axios, { AxiosError } from "axios";
+import { Dispatch, SetStateAction } from "react";
 
 interface Errors {
   [key: string]: unknown;
@@ -22,15 +22,15 @@ export default function LostPwd({ setError, setSuccess }: LostPwdProps) {
             email. Vous recevrez par mail un lien pour en créer un nouveau.
           </p>
           <Formik
-            initialValues={{ email: '' }}
+            initialValues={{ email: "" }}
             validate={(values) => {
               const errors = {} as Errors;
               if (!values.email) {
-                errors.email = 'Email obligatoire';
+                errors.email = "Email obligatoire";
               } else if (
                 !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
               ) {
-                errors.email = 'Adresse mail non valide';
+                errors.email = "Adresse mail non valide";
               }
               return errors;
             }}
@@ -43,20 +43,20 @@ export default function LostPwd({ setError, setSuccess }: LostPwdProps) {
                   },
                   {
                     headers: {
-                      'Content-Type': 'application/json; charset=utf-8',
-                      'Access-Control-Allow-Origin': '*',
+                      "Content-Type": "application/json; charset=utf-8",
+                      "Access-Control-Allow-Origin": "*",
                     },
-                  }
+                  },
                 );
                 setSubmitting(false);
-                setSuccess('Un email vous a été envoyé !');
+                setSuccess("Un email vous a été envoyé !");
               } catch (err) {
                 if (err instanceof AxiosError && err.response) {
                   const errMessage = err.response.data.error.message;
                   setError(errMessage);
                 }
                 console.error(err);
-                throw new Error('Something wrong happened!');
+                throw new Error("Something wrong happened!");
               }
             }}
           >
@@ -70,20 +70,20 @@ export default function LostPwd({ setError, setSuccess }: LostPwdProps) {
                     render={(msg) => (
                       <div
                         style={{
-                          color: 'red',
-                          fontWeight: '700',
-                          fontSize: '14px',
+                          color: "red",
+                          fontWeight: "700",
+                          fontSize: "14px",
                         }}
                       >
-                        {msg + ' !'}
+                        {msg + " !"}
                       </div>
                     )}
                   />
                 </p>
                 <button type="submit" disabled={formik.isSubmitting}>
                   {formik.isSubmitting
-                    ? 'Veuillez patienter...'
-                    : 'Réinitialiser mon mot de passe'}
+                    ? "Veuillez patienter..."
+                    : "Réinitialiser mon mot de passe"}
                 </button>
               </Form>
             )}

@@ -1,7 +1,7 @@
-import classes from './ProductItem.module.css';
-import Image from 'next/image';
-import Link from 'next/link';
-import { Product } from '../../types';
+import classes from "./ProductItem.module.css";
+import Image from "next/image";
+import Link from "next/link";
+import { Product } from "../../types";
 
 type ProductItemProps = {
   idx: number;
@@ -12,14 +12,14 @@ export default function ProductItem(props: ProductItemProps) {
   function priceFormat(num: number) {
     let formattedNum: string;
 
-    if (!num.toString().includes('.')) {
-      formattedNum = num + ',00';
+    if (!num.toString().includes(".")) {
+      formattedNum = num + ",00";
     } else {
-      const splitArr = num.toString().split('.');
-      splitArr[1] = Number(splitArr[1]) < 10 ? splitArr[1] + '0' : splitArr[1];
-      formattedNum = splitArr.join(',');
+      const splitArr = num.toString().split(".");
+      splitArr[1] = Number(splitArr[1]) < 10 ? splitArr[1] + "0" : splitArr[1];
+      formattedNum = splitArr.join(",");
     }
-    return formattedNum + '€';
+    return formattedNum + "€";
   }
 
   // useEffect(() => {

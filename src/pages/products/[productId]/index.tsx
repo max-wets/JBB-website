@@ -1,11 +1,11 @@
-import { GetStaticProps, GetStaticPaths, GetStaticPropsResult } from 'next';
-import ProductDetail from '../../../components/products/product-detail/ProductDetail';
-import ProductDetailHeading from '../../../components/products/product-detail/ProductDetailHeading';
-import ProductDetailAside from '../../../components/products/product-detail/ProductDetailAside';
-import axios from 'axios';
-import { Container, Flex } from '@chakra-ui/react';
-import { useMediaQuery } from '@chakra-ui/react';
-import Head from 'next/head';
+import { GetStaticProps, GetStaticPaths, GetStaticPropsResult } from "next";
+import ProductDetail from "../../../components/products/product-detail/ProductDetail";
+import ProductDetailHeading from "../../../components/products/product-detail/ProductDetailHeading";
+import ProductDetailAside from "../../../components/products/product-detail/ProductDetailAside";
+import axios from "axios";
+import { Container, Flex } from "@chakra-ui/react";
+import { useMediaQuery } from "@chakra-ui/react";
+import Head from "next/head";
 import {
   ApiResource,
   ApiResponse,
@@ -14,7 +14,7 @@ import {
   PrevNextProduct,
   Product,
   ProductApi,
-} from '../../../types';
+} from "../../../types";
 
 type ProductDetailPageProps = {
   product: Product;
@@ -24,7 +24,7 @@ type ProductDetailPageProps = {
 };
 
 function ProductDetailPage(props: ProductDetailPageProps) {
-  const [isLargerThan950] = useMediaQuery('(min-width: 950px)');
+  const [isLargerThan950] = useMediaQuery("(min-width: 950px)");
 
   // useEffect(() => {
   //   console.log("product detail:", props.product);
@@ -60,14 +60,14 @@ function ProductDetailPage(props: ProductDetailPageProps) {
 }
 
 export const getStaticProps: GetStaticProps = async (
-  context
+  context,
 ): Promise<GetStaticPropsResult<ProductDetailPageProps>> => {
   const pid = Number(context.params!.productId);
 
-  if (!pid) throw new Error('Product ID missing');
+  if (!pid) throw new Error("Product ID missing");
 
   const res = await axios.get<ApiResponse<ProductApi>>(
-    `${process.env.NEXT_PUBLIC_API_URL}/items?populate=%2A&pagination[pageSize]=100`
+    `${process.env.NEXT_PUBLIC_API_URL}/items?populate=%2A&pagination[pageSize]=100`,
   );
   const data = res.data.data;
 
@@ -114,7 +114,7 @@ export const getStaticProps: GetStaticProps = async (
 
   const getRecommendedProducts = (
     data: ApiResource<ProductApi>[],
-    product: Product
+    product: Product,
   ): ApiResource<ProductApi>[] => {
     let recommendedProducts: ApiResource<ProductApi>[] = [];
     // console.log("product:", product);
@@ -146,10 +146,10 @@ export const getStaticProps: GetStaticProps = async (
       recommendedProducts = recommendedProducts.slice(0, 3);
     } else if (recommendedProducts.length < 3) {
       const takenIds: number[] = recommendedProducts.map(
-        (productApi) => productApi.id
+        (productApi) => productApi.id,
       );
       const availableProducts = data.filter(
-        (product) => product.id !== pid && takenIds.indexOf(product.id) < 0
+        (product) => product.id !== pid && takenIds.indexOf(product.id) < 0,
       );
 
       let i = 0;
@@ -166,9 +166,9 @@ export const getStaticProps: GetStaticProps = async (
     let relatedPosts: BlogPost[] = [];
 
     try {
-      const sortParam = 'sort[0]=publishedAt%3Adesc';
+      const sortParam = "sort[0]=publishedAt%3Adesc";
       const res = await axios.get<ApiResponse<BlogPostApi>>(
-        `${process.env.NEXT_PUBLIC_API_URL}/articles?populate=%2A&${sortParam}&pagination[pageSize]=100`
+        `${process.env.NEXT_PUBLIC_API_URL}/articles?populate=%2A&${sortParam}&pagination[pageSize]=100`,
       );
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const dataPosts: Array<any> = res.data.data;
@@ -202,7 +202,7 @@ export const getStaticProps: GetStaticProps = async (
           categories: post.attributes.article_categories.data.map(
             (category) => {
               return category.attributes.Name;
-            }
+            },
           ),
         };
       }
@@ -215,7 +215,7 @@ export const getStaticProps: GetStaticProps = async (
       } else {
         const takenIds: number[] = relatedPosts.map((post) => Number(post.id));
         const availablePosts = dataPosts.filter(
-          (post) => takenIds.indexOf(post.id) < 0
+          (post) => takenIds.indexOf(post.id) < 0,
         );
 
         let i = 0;
@@ -228,13 +228,13 @@ export const getStaticProps: GetStaticProps = async (
       return relatedPosts;
     } catch (err) {
       console.error(err);
-      throw new Error('Blog posts fetching failed!');
+      throw new Error("Blog posts fetching failed!");
     }
   };
 
   const recommendedProducts: ApiResource<ProductApi>[] = getRecommendedProducts(
     data,
-    product
+    product,
   );
   const relatedArticles: BlogPost[] = await getRelatedPosts(product);
 
@@ -256,7 +256,7 @@ export const getStaticProps: GetStaticProps = async (
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const res = await axios.get<ApiResponse<ProductApi>>(
-    `${process.env.NEXT_PUBLIC_API_URL}/items?pagination[pageSize]=100`
+    `${process.env.NEXT_PUBLIC_API_URL}/items?pagination[pageSize]=100`,
   );
   const data = res.data.data;
 

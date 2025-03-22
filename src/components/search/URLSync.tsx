@@ -1,18 +1,19 @@
 import { useState, useEffect } from "react";
-import qs from "qs";
+import qs, { ParsedQs } from "qs";
+import { SearchAppProps } from "./SearchApp";
 
 const updateAfter = 700;
-const searchStateToUrl = (searchState: string): string | URL => {
+const searchStateToUrl = (searchState: ParsedQs): string | URL => {
   return searchState
     ? `${window.location.pathname}?${qs.stringify(searchState)}`
     : "";
 };
 // let debouncedSetState;
 
-const withUrlSync = (App) =>
+const withUrlSync = (App: React.ComponentType<SearchAppProps>) =>
   function WithURLSync() {
-    const [searchState, setSearchState] = useState({});
-    const [debouncedState, setDebouncedState] = useState(null);
+    const [searchState, setSearchState] = useState({} as ParsedQs);
+    const [debouncedState, setDebouncedState] = useState<number | null>(null);
 
     useEffect(() => {
       setSearchState(qs.parse(window.location.search.slice(1)));
@@ -20,25 +21,28 @@ const withUrlSync = (App) =>
 
     const { setTimeout, clearTimeout } = window;
 
-    const onPopState = (state) => setSearchState(state || null);
+    const onPopState = (state: PopStateEvent) => {
+      setSearchState(state.state || null);
+    };
 
     useEffect(() => {
       window.addEventListener("popstate", onPopState);
 
       return () => {
-        clearTimeout(debouncedState);
+        if (debouncedState) clearTimeout(debouncedState);
         window.removeEventListener("popstate", onPopState);
       };
     }, [clearTimeout, debouncedState]);
 
-    const onSearchStateChange = (searchState) => {
-      clearTimeout(debouncedState);
+    const onSearchStateChange = (searchState: ParsedQs) => {
+      console.log("search state: ", searchState);
+      if (debouncedState) clearTimeout(debouncedState);
 
       setDebouncedState(
         setTimeout(() => {
           window.history.pushState(
             searchState,
-            null,
+            "",
             searchStateToUrl(searchState),
           );
         }, updateAfter),
@@ -49,10 +53,9 @@ const withUrlSync = (App) =>
 
     return (
       <App
-        {...App.props}
         searchState={searchState}
         onSearchStateChange={onSearchStateChange}
-        createUrl={searchStateToUrl}
+        createURL={searchStateToUrl}
       />
     );
   };

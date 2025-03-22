@@ -1,20 +1,20 @@
-import classes from './ProductDetail.module.css';
-import Link from 'next/link';
-import Image from 'next/image';
+import classes from "./ProductDetail.module.css";
+import Link from "next/link";
+import Image from "next/image";
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
   ExternalLinkIcon,
-} from '@chakra-ui/icons';
-import { Tooltip, Button } from '@chakra-ui/react';
-import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
+} from "@chakra-ui/icons";
+import { Tooltip, Button } from "@chakra-ui/react";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import {
   ApiResource,
   PrevNextProduct,
   Product,
   ProductApi,
-} from '../../../types';
+} from "../../../types";
 
 type ProductDetailProps = {
   product: Product;
@@ -34,25 +34,25 @@ export default function ProductDetail(props: ProductDetailProps) {
   function getManufacturerLink(itemDescription: string): string {
     // /https?\:\/\/\w+\.[\w+-]+\.\w+(\/[\w+-]*)*/gm;
     const regex = new RegExp(
-      'https?\\:\\/\\/\\w+\\.[\\w+-]+\\.\\w+(\\/[\\w+-]*)*',
-      'gm'
+      "https?\\:\\/\\/\\w+\\.[\\w+-]+\\.\\w+(\\/[\\w+-]*)*",
+      "gm",
     );
     const regexMatch = itemDescription.match(regex);
-    const urlLink = regexMatch ? regexMatch[0] : '#';
+    const urlLink = regexMatch ? regexMatch[0] : "#";
     return urlLink;
   }
 
   function priceFormat(num: number) {
     let formattedNum;
 
-    if (!num?.toString().includes('.')) {
-      formattedNum = num + ',00';
+    if (!num?.toString().includes(".")) {
+      formattedNum = num + ",00";
     } else {
-      const splitArr = num.toString().split('.');
-      splitArr[1] = Number(splitArr[1]) < 10 ? splitArr[1] + '0' : splitArr[1];
-      formattedNum = splitArr.join(',');
+      const splitArr = num.toString().split(".");
+      splitArr[1] = Number(splitArr[1]) < 10 ? splitArr[1] + "0" : splitArr[1];
+      formattedNum = splitArr.join(",");
     }
-    return formattedNum + '€';
+    return formattedNum + "€";
   }
 
   function RelatedProduct({ productApi }: RelatedProductProps) {
@@ -82,7 +82,7 @@ export default function ProductDetail(props: ProductDetailProps) {
           </div>
           {productApi.attributes.Price && (
             <div className={classes.pricewrap}>
-              <span style={{ fontSize: '18px' }} className={classes.price}>
+              <span style={{ fontSize: "18px" }} className={classes.price}>
                 {priceFormat(productApi.attributes.Price)}
               </span>
             </div>
@@ -150,8 +150,8 @@ export default function ProductDetail(props: ProductDetailProps) {
               {props.product.categories.map((category, idx) => (
                 <span key={category}>
                   {category}
-                  <span style={{ fontSize: '16px' }}>
-                    {idx < props.product.categories.length - 1 ? ', ' : null}
+                  <span style={{ fontSize: "16px" }}>
+                    {idx < props.product.categories.length - 1 ? ", " : null}
                   </span>
                 </span>
               ))}

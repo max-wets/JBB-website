@@ -1,9 +1,10 @@
 import classes from "./CustomSearchBox.module.css";
 import { connectSearchBox } from "react-instantsearch-dom";
+import { SearchBoxProvided } from "react-instantsearch-core";
 import { InputGroup, InputLeftElement } from "@chakra-ui/react";
 import { SearchIcon } from "@chakra-ui/icons";
 
-function SearchBox({ refine }) {
+function SearchBox({ refine }: SearchBoxProvided) {
   return (
     <div className={classes.searchbox}>
       <form

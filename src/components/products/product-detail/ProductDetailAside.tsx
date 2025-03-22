@@ -1,10 +1,10 @@
-import classes from './ProductDetailAside.module.css';
-import Link from 'next/link';
-import { Icon } from '@chakra-ui/react';
-import Image from 'next/image';
-import { BsFillEnvelopeFill, BsFacebook, BsInstagram } from 'react-icons/bs';
-import { urlStringFormatter } from '../../../lib/utils';
-import { BlogPost } from '../../../types';
+import classes from "./ProductDetailAside.module.css";
+import Link from "next/link";
+import { Icon } from "@chakra-ui/react";
+import Image from "next/image";
+import { BsFillEnvelopeFill, BsFacebook, BsInstagram } from "react-icons/bs";
+import { urlStringFormatter } from "../../../lib/utils";
+import { BlogPost } from "../../../types";
 
 type BlogAsideProps = {
   relatedArticles: BlogPost[];
@@ -17,18 +17,18 @@ type SideBlogDetailProps = {
 function BlogAside(props: BlogAsideProps) {
   const newDate = (date: string) => {
     const mois = [
-      'Janvier',
-      'Février',
-      'Mars',
-      'Avril',
-      'Mai',
-      'Juin',
-      'Juillet',
-      'Août',
-      'Septembre',
-      'Octobre',
-      'Novembre',
-      'Décembre',
+      "Janvier",
+      "Février",
+      "Mars",
+      "Avril",
+      "Mai",
+      "Juin",
+      "Juillet",
+      "Août",
+      "Septembre",
+      "Octobre",
+      "Novembre",
+      "Décembre",
     ];
     const nDate = new Date(date);
     return `${nDate.getDate()} ${
@@ -50,7 +50,7 @@ function BlogAside(props: BlogAsideProps) {
         >
           <a className={classes.imgctr}>
             <Image
-              src={article.imageUrl ?? ''}
+              src={article.imageUrl ?? ""}
               alt={article.title}
               fill={true}
             />
@@ -81,7 +81,7 @@ function BlogAside(props: BlogAsideProps) {
               legacyBehavior
               href="https://www.facebook.com/groups/3136931483299677"
             >
-              <a target="_blank" key={'facebook-link'}>
+              <a target="_blank" key={"facebook-link"}>
                 <li>
                   <Icon as={BsFacebook} h={5} w={5} />
                 </li>
@@ -91,14 +91,14 @@ function BlogAside(props: BlogAsideProps) {
               legacyBehavior
               href="https://www.instagram.com/julie_baronnie/"
             >
-              <a target="_blank" key={'instagram-link'}>
+              <a target="_blank" key={"instagram-link"}>
                 <li>
                   <Icon as={BsInstagram} h={5} w={5} />
                 </li>
               </a>
             </Link>
             <Link legacyBehavior href="mailto:contact@juliebaronniebeauty.com">
-              <a target="_blank" key={'last-link'}>
+              <a target="_blank" key={"last-link"}>
                 <li>
                   <Icon as={BsFillEnvelopeFill} h={5} w={5} />
                 </li>

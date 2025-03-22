@@ -1,12 +1,12 @@
-import classes from './VideoEmbed.module.css';
-import React from 'react';
+import classes from "./VideoEmbed.module.css";
+import React from "react";
 
 export default function VideoEmbed({ source }: { source: string }) {
   if (!source) return null;
   // console.log("source URL:", source);
   const videoPathRegex = /^http.:\/\/odysee.com\/(.*)/;
   const videoPathMatches = source.match(videoPathRegex);
-  const videoPath = videoPathMatches ? videoPathMatches[1] : '';
+  const videoPath = videoPathMatches ? videoPathMatches[1] : "";
   // const isUrlMinimized = /^http.:\/\/youtu\.be\/.+/gm.test(source.trim());
   // const regex = isUrlMinimized ? /\.be\/(\w+)/i : /\/watch\?v=(.*)/i;
   // const embedId = source.match(regex)[1];

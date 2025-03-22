@@ -1,5 +1,5 @@
-import classes from './ProductsAside.module.css';
-import Link from 'next/link';
+import classes from "./ProductsAside.module.css";
+import Link from "next/link";
 import {
   Icon,
   Button,
@@ -7,11 +7,11 @@ import {
   RangeSliderTrack,
   RangeSliderFilledTrack,
   RangeSliderThumb,
-} from '@chakra-ui/react';
-import Image from 'next/image';
-import { BsFillEnvelopeFill, BsFacebook, BsInstagram } from 'react-icons/bs';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { ActiveCategories, Product } from '../../types';
+} from "@chakra-ui/react";
+import Image from "next/image";
+import { BsFillEnvelopeFill, BsFacebook, BsInstagram } from "react-icons/bs";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { ActiveCategories, Product } from "../../types";
 
 type BlogAsideProps = {
   products: Product[];
@@ -58,21 +58,21 @@ function BlogAside(props: BlogAsideProps) {
   const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target) {
       const target = e.target as HTMLElement;
-      props.setSelectedCategory(target.dataset.category || '');
+      props.setSelectedCategory(target.dataset.category || "");
     }
   };
 
   function priceFormat(num: number) {
     let formattedNum;
 
-    if (!num.toString().includes('.')) {
-      formattedNum = num + ',00';
+    if (!num.toString().includes(".")) {
+      formattedNum = num + ",00";
     } else {
-      const splitArr = num.toString().split('.');
-      splitArr[1] = Number(splitArr[1]) < 10 ? splitArr[1] + '0' : splitArr[1];
-      formattedNum = splitArr.join(',');
+      const splitArr = num.toString().split(".");
+      splitArr[1] = Number(splitArr[1]) < 10 ? splitArr[1] + "0" : splitArr[1];
+      formattedNum = splitArr.join(",");
     }
-    return formattedNum + '€';
+    return formattedNum + "€";
   }
 
   function SideProductDetail({ product }: SideProductDetailProps) {

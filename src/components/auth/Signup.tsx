@@ -1,10 +1,10 @@
-import classes from './Login.module.css';
-import Link from 'next/link';
-import { Field, Form, Formik, ErrorMessage } from 'formik';
-import { useRouter } from 'next/router';
-import { signIn } from 'next-auth/react';
-import axios, { AxiosError } from 'axios';
-import { Dispatch, SetStateAction } from 'react';
+import classes from "./Login.module.css";
+import Link from "next/link";
+import { Field, Form, Formik, ErrorMessage } from "formik";
+import { useRouter } from "next/router";
+import { signIn } from "next-auth/react";
+import axios, { AxiosError } from "axios";
+import { Dispatch, SetStateAction } from "react";
 
 interface Errors {
   [key: string]: unknown;
@@ -25,15 +25,15 @@ function Signup({ setError }: SignUpProps) {
         </div>
         <div className={classes.formwrap}>
           <Formik
-            initialValues={{ username: '', email: '', password: '' }}
+            initialValues={{ username: "", email: "", password: "" }}
             validate={(values) => {
               const errors = {} as Errors;
               if (!values.email) {
-                errors.email = 'Email obligatoire';
+                errors.email = "Email obligatoire";
               } else if (
                 !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
               ) {
-                errors.email = 'Adresse email non valide';
+                errors.email = "Adresse email non valide";
               }
               return errors;
             }}
@@ -49,14 +49,14 @@ function Signup({ setError }: SignUpProps) {
                     username: values.username,
                     email: values.email,
                     password: values.password,
-                  }
+                  },
                 );
                 // console.log("res data:", data);
                 setSubmitting(false);
-                setError('');
+                setError("");
                 if (res.data.user) {
                   try {
-                    const res = await signIn('credentials', {
+                    const res = await signIn("credentials", {
                       redirect: false,
                       email: values.email,
                       password: values.password,
@@ -68,7 +68,7 @@ function Signup({ setError }: SignUpProps) {
                       setError(err.message);
                     }
                     console.error(err);
-                    throw new Error('Something wrong happened!');
+                    throw new Error("Something wrong happened!");
                   }
                 }
               } catch (err) {
@@ -77,7 +77,7 @@ function Signup({ setError }: SignUpProps) {
                   setError(errMessage);
                 } else {
                   console.error(err);
-                  throw new Error('Somethign wrong happend!');
+                  throw new Error("Somethign wrong happend!");
                 }
               }
             }}
@@ -92,12 +92,12 @@ function Signup({ setError }: SignUpProps) {
                     render={(msg) => (
                       <div
                         style={{
-                          color: 'red',
-                          fontWeight: '700',
-                          fontSize: '14px',
+                          color: "red",
+                          fontWeight: "700",
+                          fontSize: "14px",
                         }}
                       >
-                        {msg + ' !'}
+                        {msg + " !"}
                       </div>
                     )}
                   />
@@ -110,12 +110,12 @@ function Signup({ setError }: SignUpProps) {
                     render={(msg) => (
                       <div
                         style={{
-                          color: 'red',
-                          fontWeight: '700',
-                          fontSize: '14px',
+                          color: "red",
+                          fontWeight: "700",
+                          fontSize: "14px",
                         }}
                       >
-                        {msg + ' !'}
+                        {msg + " !"}
                       </div>
                     )}
                   />
@@ -128,21 +128,21 @@ function Signup({ setError }: SignUpProps) {
                     render={(msg) => (
                       <div
                         style={{
-                          color: 'red',
-                          fontWeight: '700',
-                          fontSize: '14px',
+                          color: "red",
+                          fontWeight: "700",
+                          fontSize: "14px",
                         }}
                       >
-                        {msg + ' !'}
+                        {msg + " !"}
                       </div>
                     )}
                   />
                 </p>
                 <button type="submit">
-                  {formik.isSubmitting ? 'Veuillez patienter...' : "S'inscrire"}
+                  {formik.isSubmitting ? "Veuillez patienter..." : "S'inscrire"}
                 </button>
                 <p>
-                  Déjà inscrit ?{' '}
+                  Déjà inscrit ?{" "}
                   <Link legacyBehavior href={`/login`}>
                     <a>Se connecter</a>
                   </Link>

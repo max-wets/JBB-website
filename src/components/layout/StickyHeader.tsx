@@ -1,6 +1,6 @@
-import classes from './StickyHeader.module.css';
-import Link from 'next/link';
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import classes from "./StickyHeader.module.css";
+import Link from "next/link";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import {
   Button,
   IconButton,
@@ -13,41 +13,41 @@ import {
   DrawerHeader,
   DrawerBody,
   useMediaQuery,
-} from '@chakra-ui/react';
-import { GiHamburgerMenu } from 'react-icons/gi';
-import { useSession } from 'next-auth/react';
-import { signOut } from 'next-auth/react';
+} from "@chakra-ui/react";
+import { GiHamburgerMenu } from "react-icons/gi";
+import { useSession } from "next-auth/react";
+import { signOut } from "next-auth/react";
 
 function Header() {
   const oldScrollY = useRef(0);
-  const [direction, setDirection] = useState('top');
+  const [direction, setDirection] = useState("top");
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = useRef(null);
   const { status } = useSession();
-  const [isLargerThan415] = useMediaQuery('(min-width: 415px)');
+  const [isLargerThan415] = useMediaQuery("(min-width: 415px)");
 
   const controlDirection = useCallback(() => {
     if (window.scrollY > oldScrollY.current) {
-      setDirection('down');
+      setDirection("down");
     } else if (window.scrollY < 180) {
-      setDirection('top');
+      setDirection("top");
     } else {
-      setDirection('up');
+      setDirection("up");
     }
     oldScrollY.current = window.scrollY;
   }, []);
 
   useEffect(() => {
-    window.addEventListener('scroll', controlDirection);
+    window.addEventListener("scroll", controlDirection);
     return () => {
-      window.removeEventListener('scroll', controlDirection);
+      window.removeEventListener("scroll", controlDirection);
     };
   }, [controlDirection]);
 
   return (
     <header
       className={
-        direction === 'top' || direction === 'down'
+        direction === "top" || direction === "down"
           ? `${classes.header} ${classes.hide}`
           : classes.header
       }
@@ -74,7 +74,7 @@ function Header() {
               <DrawerCloseButton />
               <DrawerHeader
                 className={classes.logo}
-                style={{ fontSize: '34px' }}
+                style={{ fontSize: "34px" }}
                 borderBottomWidth="1px"
               >
                 JBBeauty
@@ -82,7 +82,7 @@ function Header() {
               <DrawerBody>
                 <ul className={classes.drawermenu}>
                   <li>
-                    <Link legacyBehavior href={'/blog'}>
+                    <Link legacyBehavior href={"/blog"}>
                       <a>
                         <Button
                           size="sm"
@@ -96,7 +96,7 @@ function Header() {
                     </Link>
                   </li>
                   <li>
-                    <Link legacyBehavior href={'/products'}>
+                    <Link legacyBehavior href={"/products"}>
                       <a>
                         <Button
                           size="sm"
@@ -110,7 +110,7 @@ function Header() {
                     </Link>
                   </li>
                   <li>
-                    <Link legacyBehavior href={'/about'}>
+                    <Link legacyBehavior href={"/about"}>
                       <a>
                         <Button
                           size="sm"
@@ -124,7 +124,7 @@ function Header() {
                     </Link>
                   </li>
                   <li>
-                    {status === 'authenticated' ? (
+                    {status === "authenticated" ? (
                       <Button
                         size="sm"
                         colorScheme="white"
@@ -135,7 +135,7 @@ function Header() {
                       </Button>
                     ) : (
                       <Button size="sm" colorScheme="white" color="black">
-                        <Link legacyBehavior href={'/auth/signin'}>
+                        <Link legacyBehavior href={"/auth/signin"}>
                           <a>
                             <p>SE CONNECTER</p>
                           </a>
@@ -154,7 +154,7 @@ function Header() {
               <nav>
                 <ul className={classes.fullmenu}>
                   <li>
-                    <Link legacyBehavior href={'/blog'}>
+                    <Link legacyBehavior href={"/blog"}>
                       <a>
                         <Button size="sm" colorScheme="white" color="black">
                           <p>BLOG</p>
@@ -163,7 +163,7 @@ function Header() {
                     </Link>
                   </li>
                   <li>
-                    <Link legacyBehavior href={'/products'}>
+                    <Link legacyBehavior href={"/products"}>
                       <a>
                         <Button size="sm" colorScheme="white" color="black">
                           <p>PRODUITS</p>
@@ -172,7 +172,7 @@ function Header() {
                     </Link>
                   </li>
                   <li>
-                    <Link legacyBehavior href={'/about'}>
+                    <Link legacyBehavior href={"/about"}>
                       <a>
                         <Button size="sm" colorScheme="white" color="black">
                           <p>A PROPOS</p>
@@ -181,7 +181,7 @@ function Header() {
                     </Link>
                   </li>
                   <li>
-                    {status === 'authenticated' ? (
+                    {status === "authenticated" ? (
                       <Button
                         size="sm"
                         colorScheme="white"
@@ -192,7 +192,7 @@ function Header() {
                       </Button>
                     ) : (
                       <Button size="sm" colorScheme="white" color="black">
-                        <Link legacyBehavior href={'/auth/signin'}>
+                        <Link legacyBehavior href={"/auth/signin"}>
                           <a>
                             <p>SE CONNECTER</p>
                           </a>

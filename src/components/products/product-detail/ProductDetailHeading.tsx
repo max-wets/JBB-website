@@ -1,12 +1,12 @@
-import classes from './ProductDetailHeading.module.css';
+import classes from "./ProductDetailHeading.module.css";
 import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
   Icon,
-} from '@chakra-ui/react';
-import { ChevronRightIcon } from '@chakra-ui/icons';
-import { BiHomeHeart } from 'react-icons/bi';
+} from "@chakra-ui/react";
+import { ChevronRightIcon } from "@chakra-ui/icons";
+import { BiHomeHeart } from "react-icons/bi";
 
 type BlogHeadingProps = {
   name: string;
@@ -22,7 +22,7 @@ function BlogHeading(props: BlogHeadingProps) {
           separator={<ChevronRightIcon color="gray.500" />}
         >
           <BreadcrumbItem h="24px" position="relative" top="3px">
-            <BreadcrumbLink href="/" _hover={{ color: '#D93644' }}>
+            <BreadcrumbLink href="/" _hover={{ color: "#D93644" }}>
               <Icon as={BiHomeHeart} h={6} w={6} size="sm" pt="4px" />
             </BreadcrumbLink>
           </BreadcrumbItem>
@@ -31,7 +31,7 @@ function BlogHeading(props: BlogHeadingProps) {
             <BreadcrumbLink
               fontSize="13px"
               href="/products"
-              _hover={{ textDecoration: 'none', color: '#D93644' }}
+              _hover={{ textDecoration: "none", color: "#D93644" }}
             >
               Produits
             </BreadcrumbLink>
@@ -41,7 +41,7 @@ function BlogHeading(props: BlogHeadingProps) {
             <BreadcrumbLink
               fontSize="13px"
               href="#"
-              _hover={{ textDecoration: 'none', color: '#D93644' }}
+              _hover={{ textDecoration: "none", color: "#D93644" }}
             >
               {props.name}
             </BreadcrumbLink>

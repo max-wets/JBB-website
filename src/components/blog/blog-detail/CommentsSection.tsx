@@ -1,11 +1,11 @@
-import classes from './CommentsSection.module.css';
-import Link from 'next/link';
-import { Spinner } from '@chakra-ui/react';
-import { Dispatch, SetStateAction, useRef, useState } from 'react';
-import { useSession } from 'next-auth/react';
-import { BlogPost, PostComment } from '../../../types';
-import CommentsList from './CommentsList';
-import axios from 'axios';
+import classes from "./CommentsSection.module.css";
+import Link from "next/link";
+import { Spinner } from "@chakra-ui/react";
+import { Dispatch, SetStateAction, useRef, useState } from "react";
+import { useSession } from "next-auth/react";
+import { BlogPost, PostComment } from "../../../types";
+import CommentsList from "./CommentsList";
+import axios from "axios";
 
 type CommentsSectionProps = {
   article: BlogPost;
@@ -14,7 +14,7 @@ type CommentsSectionProps = {
 };
 
 const CommentsSection = (props: CommentsSectionProps) => {
-  const [commentText, setCommentText] = useState('');
+  const [commentText, setCommentText] = useState("");
   const [postingComment, setPostingComment] = useState(false);
   //   const [comments, setComments] = useState([]);
   const { data: session } = useSession();
@@ -25,8 +25,8 @@ const CommentsSection = (props: CommentsSectionProps) => {
 
   const autoResize = (el: HTMLElement) => {
     // console.log(el);
-    el.style.height = 'auto';
-    el.style.height = el.scrollHeight + 2 + 'px';
+    el.style.height = "auto";
+    el.style.height = el.scrollHeight + 2 + "px";
   };
 
   const createComment = async () => {
@@ -50,7 +50,7 @@ const CommentsSection = (props: CommentsSectionProps) => {
           headers: {
             Authorization: `Bearer ${sessionUser.accessToken}`,
           },
-        }
+        },
       );
 
       // console.log(data);
@@ -60,12 +60,12 @@ const CommentsSection = (props: CommentsSectionProps) => {
         AuthorID: data.data.attributes.AuthorID,
         Content: data.data.attributes.Content,
         issueDate: data.data.attributes.publishedAt,
-        AuthorName: sessionUser.name ?? '',
+        AuthorName: sessionUser.name ?? "",
       };
       // console.log(newComment);
 
-      commentBoxBtnsRef.current!.style.display = 'none';
-      setCommentText('');
+      commentBoxBtnsRef.current!.style.display = "none";
+      setCommentText("");
     } catch (err) {
       console.error(err);
     }
@@ -86,8 +86,8 @@ const CommentsSection = (props: CommentsSectionProps) => {
     });
 
     setPostingComment(false);
-    commentBoxBtnsRef.current!.style.display = 'none';
-    setCommentText('');
+    commentBoxBtnsRef.current!.style.display = "none";
+    setCommentText("");
   };
 
   //    useEffect(() => {
@@ -116,7 +116,7 @@ const CommentsSection = (props: CommentsSectionProps) => {
                     autoResize(e.target);
                   }}
                   onFocus={() =>
-                    (commentBoxBtnsRef.current!.style.display = 'flex')
+                    (commentBoxBtnsRef.current!.style.display = "flex")
                   }
                 />
 
@@ -126,9 +126,9 @@ const CommentsSection = (props: CommentsSectionProps) => {
                       className={classes.cancelbutton}
                       onClick={() => {
                         setPostingComment(false);
-                        setCommentText('');
-                        inputRef.current!.style.height = '24px';
-                        commentBoxBtnsRef.current!.style.display = 'none';
+                        setCommentText("");
+                        inputRef.current!.style.height = "24px";
+                        commentBoxBtnsRef.current!.style.display = "none";
                       }}
                     >
                       ANNULER
@@ -141,7 +141,7 @@ const CommentsSection = (props: CommentsSectionProps) => {
                       {postingComment ? (
                         <Spinner size="sm" />
                       ) : (
-                        'AJOUTER UN COMMENTAIRE'
+                        "AJOUTER UN COMMENTAIRE"
                       )}
                     </button>
                   </div>
@@ -150,10 +150,10 @@ const CommentsSection = (props: CommentsSectionProps) => {
             </div>
           ) : (
             <p className={classes.mustlogin}>
-              Vous devez être{' '}
-              <Link legacyBehavior href={'/auth/signin'}>
+              Vous devez être{" "}
+              <Link legacyBehavior href={"/auth/signin"}>
                 <a>connecté</a>
-              </Link>{' '}
+              </Link>{" "}
               pour publier un commentaire
             </p>
           )}

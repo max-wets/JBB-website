@@ -1,11 +1,11 @@
-import classes from './Login.module.css';
-import Link from 'next/link';
-import { Dispatch, SetStateAction, useEffect, useRef } from 'react';
-import { useRouter } from 'next/router';
-import { Field, Formik, ErrorMessage } from 'formik';
-import { signIn } from 'next-auth/react';
-import { useSession } from 'next-auth/react';
-import { signOut } from 'next-auth/react';
+import classes from "./Login.module.css";
+import Link from "next/link";
+import { Dispatch, SetStateAction, useEffect, useRef } from "react";
+import { useRouter } from "next/router";
+import { Field, Formik, ErrorMessage } from "formik";
+import { signIn } from "next-auth/react";
+import { useSession } from "next-auth/react";
+import { signOut } from "next-auth/react";
 
 interface Errors {
   [key: string]: unknown;
@@ -19,16 +19,16 @@ type LoginProps = {
 export default function Login({ crsfToken, setError }: LoginProps) {
   const router = useRouter();
   const { data: session } = useSession();
-  const previousPath = useRef('');
+  const previousPath = useRef("");
 
   useEffect(() => {
-    router.prefetch('/');
+    router.prefetch("/");
     if (previousPath.current) router.prefetch(previousPath.current);
   }, [router]);
 
   useEffect(() => {
     // console.log("previous path:", previousPath.current);
-    const prevPath = globalThis.sessionStorage.getItem('prevPath');
+    const prevPath = globalThis.sessionStorage.getItem("prevPath");
     if (prevPath) {
       previousPath.current = prevPath;
     }
@@ -42,15 +42,15 @@ export default function Login({ crsfToken, setError }: LoginProps) {
         </div>
         <div className={classes.formwrap}>
           <Formik
-            initialValues={{ email: '', password: '' }}
+            initialValues={{ email: "", password: "" }}
             validate={(values) => {
               const errors = {} as Errors;
               if (!values.email) {
-                errors.email = 'Email obligatoire';
+                errors.email = "Email obligatoire";
               } else if (
                 !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
               ) {
-                errors.email = 'Adresse email non valide';
+                errors.email = "Adresse email non valide";
               }
               return errors;
             }}
@@ -59,7 +59,7 @@ export default function Login({ crsfToken, setError }: LoginProps) {
               const callbackUrl =
                 `${window.location.origin}` + previousPath.current;
 
-              const res = await signIn('credentials', {
+              const res = await signIn("credentials", {
                 redirect: false,
                 email: values.email,
                 password: values.password,
@@ -69,12 +69,12 @@ export default function Login({ crsfToken, setError }: LoginProps) {
               if (res && !res.ok) {
                 if (res.error)
                   setError(
-                    'Email et/ou mot de passe non valide(s). Veuillez réessayer.'
+                    "Email et/ou mot de passe non valide(s). Veuillez réessayer.",
                   );
               } else if (res) {
                 // console.log(callbackUrl);
                 if (res.url) router.push(callbackUrl);
-                setError('');
+                setError("");
                 setSubmitting(false);
               }
             }}
@@ -95,12 +95,12 @@ export default function Login({ crsfToken, setError }: LoginProps) {
                     render={(msg) => (
                       <div
                         style={{
-                          color: 'red',
-                          fontWeight: '700',
-                          fontSize: '14px',
+                          color: "red",
+                          fontWeight: "700",
+                          fontSize: "14px",
                         }}
                       >
-                        {msg + ' !'}
+                        {msg + " !"}
                       </div>
                     )}
                   />
@@ -113,28 +113,28 @@ export default function Login({ crsfToken, setError }: LoginProps) {
                     render={(msg) => (
                       <div
                         style={{
-                          color: 'red',
-                          fontWeight: '700',
-                          fontSize: '14px',
+                          color: "red",
+                          fontWeight: "700",
+                          fontSize: "14px",
                         }}
                       >
-                        {msg + ' !'}
+                        {msg + " !"}
                       </div>
                     )}
                   />
                 </p>
                 <button type="submit">
                   {formik.isSubmitting
-                    ? 'Veuillez patienter...'
-                    : 'Se connecter'}
+                    ? "Veuillez patienter..."
+                    : "Se connecter"}
                 </button>
-                <p className={classes.lostpassword} style={{ width: '85%' }}>
+                <p className={classes.lostpassword} style={{ width: "85%" }}>
                   <Link legacyBehavior href={`/login/lost-password`}>
                     <a>Mot de passe oublié ?</a>
                   </Link>
                 </p>
                 <p>
-                  Pas encore inscrit ?{' '}
+                  Pas encore inscrit ?{" "}
                   <Link legacyBehavior href={`/signup`}>
                     <a>S&apos;enregistrer</a>
                   </Link>

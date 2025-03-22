@@ -1,11 +1,11 @@
-import classes from './BlogAside.module.css';
-import Link from 'next/link';
-import { Icon } from '@chakra-ui/react';
-import Image from 'next/image';
-import { BsFillEnvelopeFill, BsFacebook, BsInstagram } from 'react-icons/bs';
-import { urlStringFormatter } from '../../lib/utils';
-import { ActiveCategories, BlogPost } from '../../types';
-import React, { Dispatch, SetStateAction } from 'react';
+import classes from "./BlogAside.module.css";
+import Link from "next/link";
+import { Icon } from "@chakra-ui/react";
+import Image from "next/image";
+import { BsFillEnvelopeFill, BsFacebook, BsInstagram } from "react-icons/bs";
+import { urlStringFormatter } from "../../lib/utils";
+import { ActiveCategories, BlogPost } from "../../types";
+import React, { Dispatch, SetStateAction } from "react";
 
 type BlogAsideProps = {
   articles: BlogPost[];
@@ -22,18 +22,18 @@ function BlogAside(props: BlogAsideProps) {
   // const api_url = "https://jbb-admin.herokuapp.com";
   const newDate = (date: string) => {
     const mois = [
-      'Janvier',
-      'Février',
-      'Mars',
-      'Avril',
-      'Mai',
-      'Juin',
-      'Juillet',
-      'Août',
-      'Septembre',
-      'Octobre',
-      'Novembre',
-      'Décembre',
+      "Janvier",
+      "Février",
+      "Mars",
+      "Avril",
+      "Mai",
+      "Juin",
+      "Juillet",
+      "Août",
+      "Septembre",
+      "Octobre",
+      "Novembre",
+      "Décembre",
     ];
     const nDate = new Date(date);
     return `${nDate.getDate()} ${
@@ -46,7 +46,7 @@ function BlogAside(props: BlogAsideProps) {
   const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target) {
       const target = e.target as HTMLElement;
-      props.setSelectedCategory(target.dataset.category || '');
+      props.setSelectedCategory(target.dataset.category || "");
     }
   };
 
@@ -58,7 +58,7 @@ function BlogAside(props: BlogAsideProps) {
         <Link legacyBehavior href={`/blog/${articleUrl}`}>
           <a className={classes.imgctr}>
             <Image
-              src={article.imageUrl ?? ''}
+              src={article.imageUrl ?? ""}
               alt={article.title}
               fill={true}
             />
@@ -131,7 +131,7 @@ function BlogAside(props: BlogAsideProps) {
                   </div>
                   <span>{`(${qty})`}</span>
                 </li>
-              )
+              ),
             )}
             <li>
               <div data-category="Toutes" onClick={(e) => handleClick(e)}>

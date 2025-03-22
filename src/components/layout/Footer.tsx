@@ -1,7 +1,7 @@
-import classes from './Footer.module.css';
-import Link from 'next/link';
-import { IconButton, Icon } from '@chakra-ui/react';
-import { BsFacebook } from 'react-icons/bs';
+import classes from "./Footer.module.css";
+import Link from "next/link";
+import { IconButton, Icon } from "@chakra-ui/react";
+import { BsFacebook } from "react-icons/bs";
 
 function Footer() {
   return (
@@ -32,7 +32,7 @@ function Footer() {
                       color="black"
                       size="sm"
                       icon={<Icon as={BsFacebook} w={5} h={5} />}
-                      _hover={{ color: '#D93644' }}
+                      _hover={{ color: "#D93644" }}
                     />
                   </a>
                 </Link>
@@ -43,12 +43,12 @@ function Footer() {
         <div className={classes.footerbottom}>
           <div className={classes.footerbottominner}>
             <div className={classes.copyright}>
-              Tous droits réservés -{' '}
-              <Link legacyBehavior href={'/mentions-legales'}>
+              Tous droits réservés -{" "}
+              <Link legacyBehavior href={"/mentions-legales"}>
                 <a>
                   <span>Mentions légales</span>
                 </a>
-              </Link>{' '}
+              </Link>{" "}
               - 2025
             </div>
           </div>
