@@ -71,7 +71,7 @@ function HomeComponent(props: { recentProducts; recentArticles }) {
           <title>Accueil - Julie Baronnie Beauty</title>
           <meta
             name="description"
-            content="Bienvenue sur Julie Baronnie Beauty, ici vous trouverez toutes mes techniques anti âge que vous pouvez retrouver sur ma chaine Youtube Julie Baronnie"
+            content="Bienvenue sur Julie Baronnie Beauty, ici vous trouverez toutes mes techniques anti âge que vous pouvez retrouver sur ma chaîne Odysee Julie Baronnie"
           />
           <meta property="og:title" content="Accueil - Julie Baronnie Beauty" />
           <meta

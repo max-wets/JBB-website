@@ -48,7 +48,7 @@ function AboutComponent() {
         <div className={classes.textcol}>
           <div className={classes.textrow}>
             <p>
-              Je partage ici via les vidéos de ma chaine youtube, mes techniques
+              Je partage ici via les vidéos de ma chaîne Odysee, mes techniques
               anti âge que je pratique depuis longtemps sur moi-même,
               injections, mésotherapie, microneedling, fils tenseurs, botox.
               J’utilise uniquement des produits professionnels que j’achète chez

@@ -23,7 +23,7 @@ function Footer() {
 
             <div className={classes.footerbox}>
               <div>
-                <Link
+                {/* <Link
                   legacyBehavior
                   href="https://www.youtube.com/channel/UCvVIi4gAhSC4x7sM3g9q53w"
                 >
@@ -37,14 +37,14 @@ function Footer() {
                       _hover={{ color: "#D93644" }}
                     />
                   </a>
-                </Link>
+                </Link> */}
                 <Link
                   legacyBehavior
                   href="https://www.facebook.com/groups/3136931483299677"
                 >
                   <a target="_blank">
                     <IconButton
-                      aria-label="lien youtube"
+                      aria-label="lien facebook"
                       colorScheme="white"
                       color="black"
                       size="sm"

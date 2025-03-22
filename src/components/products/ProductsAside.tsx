@@ -139,7 +139,7 @@ function BlogAside(props: {
         <div className={classes.sidebox}>
           <h4 className={classes.socialtitle}>Me suivre</h4>
           <ul className={classes.socialicons}>
-            <Link
+            {/* <Link
               legacyBehavior
               href="https://www.youtube.com/channel/UCvVIi4gAhSC4x7sM3g9q53w"
             >
@@ -148,7 +148,7 @@ function BlogAside(props: {
                   <Icon as={BsYoutube} h={5} w={5} size="sm" />
                 </li>
               </a>
-            </Link>
+            </Link> */}
             <Link
               legacyBehavior
               href="https://www.facebook.com/groups/3136931483299677"
