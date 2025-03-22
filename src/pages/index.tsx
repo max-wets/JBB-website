@@ -1,6 +1,7 @@
 import HomeComponent from "../components/home/HomeComponent";
 import { GetStaticProps, InferGetStaticPropsType } from "next";
 import axios from "axios";
+import { ApiResponse, BlogPostApi, ProductApi } from "../types";
 
 const Home = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
   // const number = useRandomNumber();
@@ -13,12 +14,12 @@ const Home = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
 };
 
 export const getStaticProps: GetStaticProps = async () => {
-  const resProducts = await axios.get(
+  const resProducts = await axios.get<ApiResponse<ProductApi>>(
     `${process.env.NEXT_PUBLIC_API_URL}/items?populate=%2A`
   );
   const dataProducts = resProducts.data.data;
 
-  const resArticles = await axios.get(
+  const resArticles = await axios.get<ApiResponse<BlogPostApi>>(
     `${process.env.NEXT_PUBLIC_API_URL}/articles?populate=%2A`
   );
   const dataArticles = resArticles.data.data;

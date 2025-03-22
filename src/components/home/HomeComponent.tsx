@@ -149,7 +149,7 @@ function HomeComponent(props: { recentProducts; recentArticles }) {
                     Botox.
                     <br />
                     Toutes mes techniques anti âge que vous pouvez retrouver sur
-                    ma chaine Youtube Julie Baronnie
+                    ma chaîne Odysee Julie Baronnie
                   </p>
                 </div>
               </div>

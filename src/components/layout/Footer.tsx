@@ -66,7 +66,7 @@ function Footer() {
                   <span>Mentions légales</span>
                 </a>
               </Link>{" "}
-              - 2022
+              - 2025
             </div>
           </div>
         </div>

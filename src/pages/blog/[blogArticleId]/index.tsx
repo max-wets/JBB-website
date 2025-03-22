@@ -15,6 +15,7 @@ import axios from "axios";
 import qs from "qs";
 import { urlStringFormatter } from "../../../lib/utils";
 import Head from "next/head";
+import { ApiResource, ApiResponse, BlogPost, BlogPostApi, BlogPostSmall, PostComment, PostCommentApi } from "../../../types";
 
 function BlogDetailPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
   const [isLargerThan960] = useMediaQuery("(min-width: 960px)");
@@ -84,7 +85,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
   const aid = Number(
     (context.params.blogArticleId as string).split("-").slice(-1)
   );
-  const res = await axios.get(
+  const res = await axios.get<ApiResponse<BlogPostApi>>(
     `${process.env.NEXT_PUBLIC_API_URL}/articles?populate=%2A&pagination[pageSize]=100&sort[0]=createdAt%3Adesc`
   );
   const data = res.data.data.sort(sortingFn);
@@ -108,13 +109,13 @@ export const getStaticProps: GetStaticProps = async (context) => {
       : null,
   ];
 
-  function formatData(post) {
+  function formatData(post: ApiResource<BlogPostApi>): BlogPost {
     return {
       id: post.id.toString(),
       title: post.attributes.Name,
       intro: post.attributes.Intro,
       description: post.attributes.Description,
-      issueDate: post.attributes.publishedAt,
+      issueDate: post.attributes.updatedAt,
       videoUrl: post.attributes.Video_URL,
       imageUrl: post.attributes.Image.data.attributes.url,
       categories: post.attributes.article_categories.data.map((category) => {
@@ -123,7 +124,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
     };
   }
 
-  function getRecentArticles(data) {
+  function getRecentArticles(data: ApiResource<BlogPostApi>[]): BlogPostSmall[] {
     const max = data.length - 1;
     const articles = [];
     let idx = 0;
@@ -132,7 +133,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
         articles.push({
           id: data[idx].id,
           title: data[idx].attributes.Name,
-          issueDate: data[idx].attributes.publishedAt,
+          issueDate: data[idx].attributes.updatedAt,
           imageUrl: data[idx].attributes.Image.data
             ? data[idx].attributes.Image.data.attributes.url
             : null,
@@ -143,7 +144,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
     return articles;
   }
 
-  function getRecommendedArticles(data, article) {
+  function getRecommendedArticles(data: ApiResource<BlogPostApi>[], article: ApiResource<BlogPostApi>) {
     let recommendedArticles = [];
     const articleCategories = article.attributes.article_categories.data.map(
       (category) => {
@@ -187,12 +188,12 @@ export const getStaticProps: GetStaticProps = async (context) => {
   const recommendedArticles = getRecommendedArticles(data, article);
 
   // get article's comments
-  const resComments = await axios.get(
+  const resComments = await axios.get<ApiResponse<PostCommentApi>>(
     `${process.env.NEXT_PUBLIC_API_URL}/comments?filters[ArticleID][$eq]=${aid}&sort=publishedAt%3Adesc`
   );
   const commentsData = resComments.data.data;
-  const AuthorIdsArr = [];
-  const completeComments = [];
+  const AuthorIdsArr: number[] = [];
+  const completeComments: PostComment[] = [];
   const cleanComments = commentsData.map((comment) => {
     if (AuthorIdsArr.indexOf(comment.attributes.AuthorID) < 0)
       AuthorIdsArr.push(comment.attributes.AuthorID);
@@ -260,7 +261,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const res = await axios.get(
+  const res = await axios.get<ApiResponse<BlogPostApi>>(
     `${process.env.NEXT_PUBLIC_API_URL}/articles?pagination[pageSize]=100`
   );
   const data = res.data.data;
