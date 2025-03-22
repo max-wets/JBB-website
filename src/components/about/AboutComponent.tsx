@@ -31,7 +31,6 @@ function AboutComponent() {
                   </div>
                 </div>
                 <div className={classes.textctr}>
-                  <h2>2022 l’année de mes 60 printemps !</h2>
                   <p>
                     Comédienne, cinéma, tv ou théâtre, animatrice tv, on peut
                     dire que j'ai eu plusieurs vies en une seule, artiste dans
@@ -69,10 +68,10 @@ function AboutComponent() {
             <p>
               Pensez à suivre mes actualités et à vous abonner à ma{" "}
               <a
-                href="https://www.youtube.com/channel/UCvVIi4gAhSC4x7sM3g9q53w"
+                href="https://odysee.com/@JulieBaronnieBeauty:7"
                 target="_blank"
               >
-                chaîne YouTube
+                chaîne Odysee
               </a>{" "}
               afin d’être avertis.
             </p>

@@ -8,6 +8,7 @@ import { Article } from "../../components/blog/BlogArticleItem";
 import { Container, Flex, Spinner, useMediaQuery } from "@chakra-ui/react";
 import { BsTwitter } from "react-icons/bs";
 import Head from "next/head";
+import { ApiResponse, BlogPostApi } from "../../types";
 
 function BlogPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
   const [loadedArticles, setLoadedArticles] = useState<Article[]>([]);
@@ -98,7 +99,7 @@ export const getStaticProps: GetStaticProps = async () => {
   // );
   // const data = res.data.data;
 
-  const res = await axios.get(
+  const res = await axios.get<ApiResponse<BlogPostApi>>(
     `${process.env.NEXT_PUBLIC_API_URL}/articles?populate=%2A&pagination[pageSize]=100&sort[0]=createdAt%3Adesc`
   );
   const data = res.data.data;
@@ -123,7 +124,7 @@ export const getStaticProps: GetStaticProps = async () => {
     title: article.attributes.Name,
     intro: article.attributes.Intro,
     description: article.attributes.Description,
-    issueDate: article.attributes.publishedAt,
+    issueDate: article.attributes.updatedAt,
     videoUrl: article.attributes.Video_URL,
     imageUrl: article.attributes.Image.data
       ? article.attributes.Image.data.attributes.url
