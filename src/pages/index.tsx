@@ -1,13 +1,13 @@
-import HomeComponent from "../components/home/HomeComponent";
-import { GetStaticPropsResult } from "next";
-import axios from "axios";
+import HomeComponent from '../components/home/HomeComponent';
+import { GetStaticPropsResult } from 'next';
+import axios from 'axios';
 import {
   ApiResponse,
   BlogPost,
   BlogPostApi,
   Product,
   ProductApi,
-} from "../types";
+} from '../types';
 
 type HomeProps = {
   recentProducts: Product[];
@@ -28,12 +28,12 @@ export const getStaticProps = async (): Promise<
   GetStaticPropsResult<HomeProps>
 > => {
   const resProducts = await axios.get<ApiResponse<ProductApi>>(
-    `${process.env.NEXT_PUBLIC_API_URL}/items?populate=%2A`,
+    `${process.env.NEXT_PUBLIC_API_URL}/items?populate=%2A`
   );
   const dataProducts = resProducts.data.data;
 
   const resArticles = await axios.get<ApiResponse<BlogPostApi>>(
-    `${process.env.NEXT_PUBLIC_API_URL}/articles?populate=%2A`,
+    `${process.env.NEXT_PUBLIC_API_URL}/articles?populate=%2A`
   );
   const dataArticles = resArticles.data.data;
 
