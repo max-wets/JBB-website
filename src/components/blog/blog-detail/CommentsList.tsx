@@ -1,28 +1,33 @@
-import useSWR from "swr";
-import qs from "qs";
-import Comment from "./Comment";
-import { Dispatch, SetStateAction, useEffect } from "react";
+import useSWR from 'swr';
+import qs from 'qs';
+import Comment from './Comment';
+import { Dispatch, SetStateAction, useEffect } from 'react';
 import {
   ApiResource,
   PostComment,
   PostCommentApi,
   UserApi,
-} from "../../../types";
-import { Session } from "next-auth";
+} from '../../../types';
+import { Session } from 'next-auth';
 
 type CommentsListProps = {
   articleID: number | string;
   comments: PostComment[];
   setComments: Dispatch<SetStateAction<PostComment[]>>;
-  sessionUser?: Session["user"];
+  sessionUser?: Session['user'];
 };
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 const COMMENTS_URL = `${process.env.NEXT_PUBLIC_API_URL}/comments`;
 
-const CommentsList = (props: CommentsListProps) => {
+const CommentsList = ({
+  articleID,
+  comments,
+  setComments,
+  sessionUser,
+}: CommentsListProps) => {
   //   const [commentsList, setCommentsList] = useState([]);
-  const filters = `?filters[ArticleID][$eq]=${props.articleID}&sort=publishedAt%3Adesc`;
+  const filters = `?filters[ArticleID][$eq]=${articleID}&sort=publishedAt%3Adesc`;
   const { data } = useSWR(COMMENTS_URL + filters, fetcher);
 
   useEffect(() => {
@@ -53,7 +58,7 @@ const CommentsList = (props: CommentsListProps) => {
         },
         {
           encodeValuesOnly: true,
-        },
+        }
       );
       const url = `${process.env.NEXT_PUBLIC_API_URL}/users?${query}`;
       const options = {
@@ -65,17 +70,17 @@ const CommentsList = (props: CommentsListProps) => {
         const res = await fetch(url, options);
         return await res.json();
       } catch (error) {
-        throw new Error("Users fetching failed", { cause: error });
+        throw new Error('Users fetching failed', { cause: error });
       }
     };
 
     async function renderUsers() {
       const users = await getUsers();
-      // console.log("users:", users);
+      // console.log('users:', users);
 
       cleanComments?.map((comment) => {
         const authorName = users?.filter(
-          (user) => user.id === comment.AuthorID,
+          (user) => user.id === comment.AuthorID
         )[0].username;
 
         completeComments.push({
@@ -84,15 +89,15 @@ const CommentsList = (props: CommentsListProps) => {
         });
       });
       // console.log("complete comments:", completeComments);
-      props.setComments(completeComments);
+      setComments(completeComments);
     }
 
     renderUsers();
-  }, [data, props]);
+  }, [data, setComments]);
 
   return (
     <div>
-      {props.comments.map((com, idx) => (
+      {comments.map((com, idx) => (
         <Comment
           key={com.id}
           idx={idx}
@@ -102,8 +107,8 @@ const CommentsList = (props: CommentsListProps) => {
           AuthorName={com.AuthorName}
           Content={com.Content}
           issueDate={com.issueDate}
-          sessionUser={props.sessionUser}
-          setComments={props.setComments}
+          sessionUser={sessionUser}
+          setComments={setComments}
         />
       ))}
     </div>
