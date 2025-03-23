@@ -1,10 +1,10 @@
-import classes from "./BlogArticleAside.module.css";
-import Link from "next/link";
-import { Icon } from "@chakra-ui/react";
-import Image from "next/image";
-import { BsFacebook, BsInstagram, BsFillEnvelopeFill } from "react-icons/bs";
-import { urlStringFormatter, newDate } from "../../../lib/utils";
-import { BlogPostSmall } from "../../../types";
+import classes from './BlogArticleAside.module.css';
+import Link from 'next/link';
+import { Icon } from '@chakra-ui/react';
+import Image from 'next/image';
+import { BsFacebook, BsInstagram, BsFillEnvelopeFill } from 'react-icons/bs';
+import { urlStringFormatter, newDate } from '../../../lib/utils';
+import { BlogPostSmall } from '../../../types';
 
 type BlogAsideProps = {
   articles: BlogPostSmall[];
@@ -14,9 +14,7 @@ type SideBlogDetailProps = {
   article: BlogPostSmall;
 };
 
-export default function BlogAside(props: BlogAsideProps) {
-  // const api_url = "https://jbb-admin.herokuapp.com";
-
+export default function BlogAside({ articles }: BlogAsideProps) {
   function SideBlogDetail({ article }: SideBlogDetailProps) {
     const articleUrl = urlStringFormatter(article.title, article.id);
 
@@ -25,7 +23,7 @@ export default function BlogAside(props: BlogAsideProps) {
         <Link legacyBehavior href={`/blog/${articleUrl}`}>
           <a className={classes.imgctr}>
             <Image
-              src={article.imageUrl ?? ""}
+              src={article.imageUrl ?? ''}
               alt={article.title}
               fill={true}
             />
@@ -94,9 +92,9 @@ export default function BlogAside(props: BlogAsideProps) {
         <div className={classes.sidebox}>
           <h4 className={classes.socialtitle}>Articles récents</h4>
           <ul className={classes.sidebarlist}>
-            <SideBlogDetail article={props.articles[0]} />
-            <SideBlogDetail article={props.articles[1]} />
-            <SideBlogDetail article={props.articles[2]} />
+            <SideBlogDetail article={articles[0]} />
+            <SideBlogDetail article={articles[1]} />
+            <SideBlogDetail article={articles[2]} />
           </ul>
         </div>
       </div>

@@ -1,20 +1,20 @@
-import classes from "./ProductDetail.module.css";
-import Link from "next/link";
-import Image from "next/image";
+import classes from './ProductDetail.module.css';
+import Link from 'next/link';
+import Image from 'next/image';
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
   ExternalLinkIcon,
-} from "@chakra-ui/icons";
-import { Tooltip, Button } from "@chakra-ui/react";
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
+} from '@chakra-ui/icons';
+import { Tooltip, Button } from '@chakra-ui/react';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import {
   ApiResource,
   PrevNextProduct,
   Product,
   ProductApi,
-} from "../../../types";
+} from '../../../types';
 
 type ProductDetailProps = {
   product: Product;
@@ -26,33 +26,33 @@ type RelatedProductProps = {
   productApi: ApiResource<ProductApi>;
 };
 
-export default function ProductDetail(props: ProductDetailProps) {
-  // useEffect(() => {
-  //   console.log("product: ", props.product);
-  // }, []);
-
+export default function ProductDetail({
+  product,
+  prevNextProducts,
+  recommendedProducts,
+}: ProductDetailProps) {
   function getManufacturerLink(itemDescription: string): string {
     // /https?\:\/\/\w+\.[\w+-]+\.\w+(\/[\w+-]*)*/gm;
     const regex = new RegExp(
-      "https?\\:\\/\\/\\w+\\.[\\w+-]+\\.\\w+(\\/[\\w+-]*)*",
-      "gm",
+      'https?\\:\\/\\/\\w+\\.[\\w+-]+\\.\\w+(\\/[\\w+-]*)*',
+      'gm'
     );
     const regexMatch = itemDescription.match(regex);
-    const urlLink = regexMatch ? regexMatch[0] : "#";
+    const urlLink = regexMatch ? regexMatch[0] : '#';
     return urlLink;
   }
 
   function priceFormat(num: number) {
     let formattedNum;
 
-    if (!num?.toString().includes(".")) {
-      formattedNum = num + ",00";
+    if (!num?.toString().includes('.')) {
+      formattedNum = num + ',00';
     } else {
-      const splitArr = num.toString().split(".");
-      splitArr[1] = Number(splitArr[1]) < 10 ? splitArr[1] + "0" : splitArr[1];
-      formattedNum = splitArr.join(",");
+      const splitArr = num.toString().split('.');
+      splitArr[1] = Number(splitArr[1]) < 10 ? splitArr[1] + '0' : splitArr[1];
+      formattedNum = splitArr.join(',');
     }
-    return formattedNum + "€";
+    return formattedNum + '€';
   }
 
   function RelatedProduct({ productApi }: RelatedProductProps) {
@@ -82,7 +82,7 @@ export default function ProductDetail(props: ProductDetailProps) {
           </div>
           {productApi.attributes.Price && (
             <div className={classes.pricewrap}>
-              <span style={{ fontSize: "18px" }} className={classes.price}>
+              <span style={{ fontSize: '18px' }} className={classes.price}>
                 {priceFormat(productApi.attributes.Price)}
               </span>
             </div>
@@ -96,28 +96,22 @@ export default function ProductDetail(props: ProductDetailProps) {
     <article className={classes.entrycontent}>
       <div className={classes.prevnextctr}>
         <ul>
-          {props.prevNextProducts[0] ? (
-            <li key={props.prevNextProducts[0].id}>
-              <Link
-                legacyBehavior
-                href={`/products/${props.prevNextProducts[0].id}`}
-              >
+          {prevNextProducts[0] ? (
+            <li key={prevNextProducts[0].id}>
+              <Link legacyBehavior href={`/products/${prevNextProducts[0].id}`}>
                 <a>
-                  <Tooltip label={props.prevNextProducts[0].title}>
+                  <Tooltip label={prevNextProducts[0].title}>
                     <ChevronLeftIcon w={5} h={5} />
                   </Tooltip>
                 </a>
               </Link>
             </li>
           ) : null}
-          {props.prevNextProducts[1] ? (
-            <li key={props.prevNextProducts[1].id}>
-              <Link
-                legacyBehavior
-                href={`/products/${props.prevNextProducts[1].id}`}
-              >
+          {prevNextProducts[1] ? (
+            <li key={prevNextProducts[1].id}>
+              <Link legacyBehavior href={`/products/${prevNextProducts[1].id}`}>
                 <a>
-                  <Tooltip label={props.prevNextProducts[1].title}>
+                  <Tooltip label={prevNextProducts[1].title}>
                     <ChevronRightIcon w={5} h={5} />
                   </Tooltip>
                 </a>
@@ -129,29 +123,29 @@ export default function ProductDetail(props: ProductDetailProps) {
       <div className={classes.prodctr}>
         <div className={classes.productimg}>
           <Image
-            src={props.product.imageUrl}
-            alt={props.product.name}
+            src={product.imageUrl}
+            alt={product.name}
             width={370}
             height={370}
             objectFit="cover"
           />
         </div>
         <div className={classes.summary}>
-          <h2>{props.product.name.toLowerCase()}</h2>
-          {props.product.price && (
-            <p className={classes.price}>{priceFormat(props.product.price)}</p>
+          <h2>{product.name.toLowerCase()}</h2>
+          {product.price && (
+            <p className={classes.price}>{priceFormat(product.price)}</p>
           )}
           <div className={classes.intro}>
-            <ReactMarkdown>{props.product.intro}</ReactMarkdown>
+            <ReactMarkdown>{product.intro}</ReactMarkdown>
           </div>
           <div className={classes.categories}>
             <div>
               <span>Categories: </span>
-              {props.product.categories.map((category, idx) => (
+              {product.categories.map((category, idx) => (
                 <span key={category}>
                   {category}
-                  <span style={{ fontSize: "16px" }}>
-                    {idx < props.product.categories.length - 1 ? ", " : null}
+                  <span style={{ fontSize: '16px' }}>
+                    {idx < product.categories.length - 1 ? ', ' : null}
                   </span>
                 </span>
               ))}
@@ -160,7 +154,7 @@ export default function ProductDetail(props: ProductDetailProps) {
           <div className={classes.itemlink}>
             <Link
               legacyBehavior
-              href={getManufacturerLink(props.product.description)}
+              href={getManufacturerLink(product.description)}
             >
               <a target="_blank">
                 <Button size="sm" colorScheme="red">
@@ -179,14 +173,14 @@ export default function ProductDetail(props: ProductDetailProps) {
             className={classes.descriptioncontent}
             remarkPlugins={[remarkGfm]}
           >
-            {props.product.description}
+            {product.description}
           </ReactMarkdown>
         </div>
       </div>
       <section className={classes.relatedproducts}>
         <h2>Produits associés</h2>
         <ul className={classes.productslist}>
-          {props.recommendedProducts.map((productApi) => (
+          {recommendedProducts.map((productApi) => (
             <RelatedProduct key={productApi.id} productApi={productApi} />
           ))}
         </ul>

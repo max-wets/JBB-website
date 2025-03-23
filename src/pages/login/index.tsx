@@ -1,16 +1,16 @@
-import { CtxOrReq } from "next-auth/client/_utils";
-import Login from "../../components/auth/Login";
-import LoginHeading from "../../components/auth/LoginHeading";
-import { getCsrfToken } from "next-auth/react";
-import Head from "next/head";
-import { useState } from "react";
+import { CtxOrReq } from 'next-auth/client/_utils';
+import Login from '../../components/auth/Login';
+import LoginHeading from '../../components/auth/LoginHeading';
+import { getCsrfToken } from 'next-auth/react';
+import Head from 'next/head';
+import { useState } from 'react';
 
 type LoginPageProps = {
   crsfToken?: string;
 };
 
-function LoginPage(props: LoginPageProps) {
-  const [, setError] = useState("");
+function LoginPage({ crsfToken }: LoginPageProps) {
+  const [, setError] = useState('');
 
   return (
     <>
@@ -22,7 +22,7 @@ function LoginPage(props: LoginPageProps) {
         />
       </Head>
       <LoginHeading />
-      <Login crsfToken={props.crsfToken} setError={setError} />
+      <Login crsfToken={crsfToken} setError={setError} />
     </>
   );
 }

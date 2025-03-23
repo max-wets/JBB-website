@@ -1,33 +1,40 @@
-import classes from "./BlogArticleItem.module.css";
-import Image from "next/image";
-import Link from "next/link";
-import { Icon, Button, useMediaQuery } from "@chakra-ui/react";
-import { BiUser } from "react-icons/bi";
-import { FiClock } from "react-icons/fi";
-import { BsFolder } from "react-icons/bs";
-import { BiComment } from "react-icons/bi";
-import { urlStringFormatter } from "../../lib/utils";
-import { BlogPost } from "../../types";
+import classes from './BlogArticleItem.module.css';
+import Image from 'next/image';
+import Link from 'next/link';
+import { Icon, Button, useMediaQuery } from '@chakra-ui/react';
+import { BiUser } from 'react-icons/bi';
+import { FiClock } from 'react-icons/fi';
+import { BsFolder } from 'react-icons/bs';
+import { BiComment } from 'react-icons/bi';
+import { urlStringFormatter } from '../../lib/utils';
+import { BlogPost } from '../../types';
 
-function BlogArticle(props: BlogPost) {
+function BlogArticle({
+  id,
+  title,
+  issueDate,
+  imageUrl,
+  intro,
+  categories,
+}: BlogPost) {
   // const api_url = "https://jbb-admin.herokuapp.com";
-  const [isLargerThan600] = useMediaQuery("(min-width: 600px)");
-  const articleUrl = urlStringFormatter(props.title, props.id);
+  const [isLargerThan600] = useMediaQuery('(min-width: 600px)');
+  const articleUrl = urlStringFormatter(title, id);
 
   const newDate = (date: string) => {
     const mois = [
-      "Janvier",
-      "Février",
-      "Mars",
-      "Avril",
-      "Mai",
-      "Juin",
-      "Juillet",
-      "Août",
-      "Septembre",
-      "Octobre",
-      "Novembre",
-      "Décembre",
+      'Janvier',
+      'Février',
+      'Mars',
+      'Avril',
+      'Mai',
+      'Juin',
+      'Juillet',
+      'Août',
+      'Septembre',
+      'Octobre',
+      'Novembre',
+      'Décembre',
     ];
     const nDate = new Date(date);
     return `${nDate.getDate()} ${
@@ -43,8 +50,8 @@ function BlogArticle(props: BlogPost) {
             <Image
               width={833}
               height={430}
-              src={props.imageUrl ?? ""}
-              alt={props.title}
+              src={imageUrl ?? ''}
+              alt={title}
               layout="responsive"
               objectFit="cover"
             />
@@ -55,7 +62,7 @@ function BlogArticle(props: BlogPost) {
       <header className={classes.blogentryheader}>
         <h2>
           <Link legacyBehavior href={`/blog/${articleUrl}`}>
-            <a>{props.title}</a>
+            <a>{title}</a>
           </Link>
         </h2>
       </header>
@@ -65,7 +72,7 @@ function BlogArticle(props: BlogPost) {
             as={BiUser}
             h={isLargerThan600 ? 6 : 4}
             w={isLargerThan600 ? 6 : 4}
-            size={isLargerThan600 ? "sm" : "xs"}
+            size={isLargerThan600 ? 'sm' : 'xs'}
             mr="4px"
           />
           Julie
@@ -75,24 +82,24 @@ function BlogArticle(props: BlogPost) {
             as={FiClock}
             h={isLargerThan600 ? 5 : 4}
             w={isLargerThan600 ? 5 : 4}
-            size={isLargerThan600 ? "sm" : "xs"}
+            size={isLargerThan600 ? 'sm' : 'xs'}
             mt="2px"
           />
-          <div>{newDate(props.issueDate)}</div>
+          <div>{newDate(issueDate)}</div>
         </li>
         <li>
           <Icon
             as={BsFolder}
             h={isLargerThan600 ? 6 : 4}
             w={isLargerThan600 ? 6 : 4}
-            size={isLargerThan600 ? "sm" : "xs"}
+            size={isLargerThan600 ? 'sm' : 'xs'}
             mr="4px"
           />
-          {props.categories.map((category, idx) => (
+          {categories.map((category, idx) => (
             <>
               {category}
-              <span style={{ fontSize: "16px" }}>
-                {idx < props.categories.length - 1 ? ", " : null}
+              <span style={{ fontSize: '16px' }}>
+                {idx < categories.length - 1 ? ', ' : null}
               </span>
             </>
           ))}
@@ -102,13 +109,13 @@ function BlogArticle(props: BlogPost) {
             as={BiComment}
             h={isLargerThan600 ? 6 : 4}
             w={isLargerThan600 ? 6 : 4}
-            size={isLargerThan600 ? "sm" : "xs"}
+            size={isLargerThan600 ? 'sm' : 'xs'}
           />
 
           <a>0 Commentaires</a>
         </li>
       </ul>
-      <div className={classes.blogentrysummary}>{props.intro}</div>
+      <div className={classes.blogentrysummary}>{intro}</div>
       <div className={classes.blogentryreadmore}>
         <Link legacyBehavior href={`/blog/${articleUrl}`}>
           <a>
@@ -116,8 +123,8 @@ function BlogArticle(props: BlogPost) {
               colorScheme="white"
               color="black"
               variant="outline"
-              size={isLargerThan600 ? "md" : "sm"}
-              _hover={{ color: "#D93644" }}
+              size={isLargerThan600 ? 'md' : 'sm'}
+              _hover={{ color: '#D93644' }}
             >
               Lire la suite...
             </Button>

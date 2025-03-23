@@ -26,7 +26,6 @@ const CommentsList = ({
   setComments,
   sessionUser,
 }: CommentsListProps) => {
-  //   const [commentsList, setCommentsList] = useState([]);
   const filters = `?filters[ArticleID][$eq]=${articleID}&sort=publishedAt%3Adesc`;
   const { data } = useSWR(COMMENTS_URL + filters, fetcher);
 

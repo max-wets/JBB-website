@@ -1,17 +1,17 @@
-import Login from "../../components/auth/Login";
-import LoginHeading from "../../components/auth/LoginHeading";
-import { getCsrfToken } from "next-auth/react";
-import { useState, useEffect } from "react";
-import { Alert, AlertIcon, CloseButton } from "@chakra-ui/react";
-import Head from "next/head";
-import { CtxOrReq } from "next-auth/client/_utils";
+import Login from '../../components/auth/Login';
+import LoginHeading from '../../components/auth/LoginHeading';
+import { getCsrfToken } from 'next-auth/react';
+import { useState, useEffect } from 'react';
+import { Alert, AlertIcon, CloseButton } from '@chakra-ui/react';
+import Head from 'next/head';
+import { CtxOrReq } from 'next-auth/client/_utils';
 
 type SignInPageProps = {
   crsfToken?: string;
 };
 
-export default function SignInPage(props: SignInPageProps) {
-  const [error, setError] = useState("");
+export default function SignInPage({ crsfToken }: SignInPageProps) {
+  const [error, setError] = useState('');
   const [displayAlert, setDisplayAlert] = useState(false);
 
   function AlertMessage() {
@@ -38,7 +38,7 @@ export default function SignInPage(props: SignInPageProps) {
     if (!displayAlert) {
       if (error) setDisplayAlert(true);
       setTimeout(() => {
-        setError("");
+        setError('');
         setDisplayAlert(false);
       }, 5000);
     }
@@ -46,7 +46,7 @@ export default function SignInPage(props: SignInPageProps) {
 
   return (
     <>
-      {" "}
+      {' '}
       <Head>
         <title>Connexion - JBBeauty</title>
         <meta
@@ -56,7 +56,7 @@ export default function SignInPage(props: SignInPageProps) {
       </Head>
       {displayAlert ? <AlertMessage /> : null}
       <LoginHeading />
-      <Login crsfToken={props.crsfToken} setError={setError} />
+      <Login crsfToken={crsfToken} setError={setError} />
     </>
   );
 }

@@ -1,6 +1,6 @@
-import { useState, useRef, useEffect, Dispatch, SetStateAction } from "react";
-import classes from "./Comment.module.css";
-import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
+import { useState, useRef, useEffect, Dispatch, SetStateAction } from 'react';
+import classes from './Comment.module.css';
+import { EditIcon, DeleteIcon } from '@chakra-ui/icons';
 import {
   Button,
   Spinner,
@@ -10,11 +10,11 @@ import {
   AlertDialogHeader,
   AlertDialogContent,
   AlertDialogOverlay,
-} from "@chakra-ui/react";
-import axios from "axios";
-import { newDate } from "../../../lib/utils/index";
-import { Session } from "next-auth";
-import { PostComment } from "../../../types";
+} from '@chakra-ui/react';
+import axios from 'axios';
+import { newDate } from '../../../lib/utils/index';
+import { Session } from 'next-auth';
+import { PostComment } from '../../../types';
 
 type CommentProps = {
   idx: number;
@@ -24,13 +24,22 @@ type CommentProps = {
   AuthorName?: string;
   Content: string;
   issueDate: string;
-  sessionUser?: Session["user"];
+  sessionUser?: Session['user'];
   setComments: Dispatch<SetStateAction<PostComment[]>>;
 };
 
-export default function Comment(props: CommentProps) {
+export default function Comment({
+  idx,
+  id,
+  AuthorID,
+  AuthorName,
+  Content,
+  issueDate,
+  sessionUser,
+  setComments,
+}: CommentProps) {
   const [editOn, setEditOn] = useState(false);
-  const [commentText, setCommentText] = useState(props.Content);
+  const [commentText, setCommentText] = useState(Content);
   const [postingComment, setPostingComment] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const inputRef = useRef<HTMLTextAreaElement>(null);
@@ -45,17 +54,17 @@ export default function Comment(props: CommentProps) {
 
   function autoResize(el: HTMLElement) {
     // console.log(el);
-    el.style.height = "auto";
-    el.style.height = el.scrollHeight + 2 + "px";
+    el.style.height = 'auto';
+    el.style.height = el.scrollHeight + 2 + 'px';
   }
 
   async function updateComment() {
-    if (!props.sessionUser) return;
+    if (!sessionUser) return;
     setPostingComment(true);
 
     try {
       await axios.put(
-        `${process.env.NEXT_PUBLIC_API_URL}/comments/${props.id}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/comments/${id}`,
         {
           data: {
             Content: commentText,
@@ -63,20 +72,20 @@ export default function Comment(props: CommentProps) {
         },
         {
           headers: {
-            Authorization: `Bearer ${props.sessionUser.accessToken}`,
+            Authorization: `Bearer ${sessionUser.accessToken}`,
           },
-        },
+        }
       );
     } catch (err) {
       console.error(err);
     }
 
-    props.setComments((prev) => {
+    setComments((prev) => {
       //   console.log(newCom);
       return [
-        ...prev.slice(0, props.idx),
-        { ...prev[props.idx], Content: commentText },
-        ...prev.slice(props.idx + 1),
+        ...prev.slice(0, idx),
+        { ...prev[idx], Content: commentText },
+        ...prev.slice(idx + 1),
       ];
     });
 
@@ -85,19 +94,16 @@ export default function Comment(props: CommentProps) {
   }
 
   async function deleteComment() {
-    if (!props.sessionUser) return;
+    if (!sessionUser) return;
 
     setPostingComment(true);
 
     try {
-      await axios.delete(
-        `${process.env.NEXT_PUBLIC_API_URL}/comments/${props.id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${props.sessionUser.accessToken}`,
-          },
+      await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/comments/${id}`, {
+        headers: {
+          Authorization: `Bearer ${sessionUser.accessToken}`,
         },
-      );
+      });
     } catch (err) {
       console.error(err);
     }
@@ -105,7 +111,7 @@ export default function Comment(props: CommentProps) {
     setPostingComment(false);
     setIsOpen(false);
 
-    props.setComments((prev) => prev.filter((com) => com.id !== props.id));
+    setComments((prev) => prev.filter((com) => com.id !== id));
   }
 
   function DeleteAlertDialog() {
@@ -142,7 +148,7 @@ export default function Comment(props: CommentProps) {
                   ml={3}
                   style={{ minWidth: 108 }}
                 >
-                  {postingComment ? <Spinner size="sm" /> : "Supprimer"}
+                  {postingComment ? <Spinner size="sm" /> : 'Supprimer'}
                 </Button>
               </AlertDialogFooter>
             </AlertDialogContent>
@@ -153,8 +159,8 @@ export default function Comment(props: CommentProps) {
   }
 
   return (
-    <div key={props.id} className={classes.commenttext}>
-      {!editOn && props.sessionUser?.id === props.AuthorID ? (
+    <div key={id} className={classes.commenttext}>
+      {!editOn && sessionUser?.id === AuthorID ? (
         <div className={classes.commentbtns}>
           <EditIcon onClick={() => setEditOn(true)} />
           <DeleteIcon onClick={() => setIsOpen(true)} />
@@ -162,9 +168,9 @@ export default function Comment(props: CommentProps) {
         </div>
       ) : null}
       <p className={classes.meta}>
-        <strong className={classes.author}>{props.AuthorName}</strong>
+        <strong className={classes.author}>{AuthorName}</strong>
         <span>-</span>
-        <time dateTime={props.issueDate}>{newDate(props.issueDate)}</time>
+        <time dateTime={issueDate}>{newDate(issueDate)}</time>
       </p>
       <div className={classes.description}>
         {editOn ? (
@@ -185,7 +191,7 @@ export default function Comment(props: CommentProps) {
                   className={classes.cancelbutton}
                   onClick={() => {
                     setPostingComment(false);
-                    setCommentText(props.Content);
+                    setCommentText(Content);
                     // inputRef.current.style.height = "24px";
                     setEditOn(false);
                   }}
@@ -197,7 +203,7 @@ export default function Comment(props: CommentProps) {
                   disabled={commentText ? false : true}
                   onClick={() => updateComment()}
                 >
-                  {postingComment ? <Spinner size="sm" /> : "SAUVEGARDER"}
+                  {postingComment ? <Spinner size="sm" /> : 'SAUVEGARDER'}
                 </button>
               </div>
             </div>

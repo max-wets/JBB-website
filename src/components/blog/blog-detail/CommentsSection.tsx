@@ -1,11 +1,11 @@
-import classes from "./CommentsSection.module.css";
-import Link from "next/link";
-import { Spinner } from "@chakra-ui/react";
-import { Dispatch, SetStateAction, useRef, useState } from "react";
-import { useSession } from "next-auth/react";
-import { BlogPost, PostComment } from "../../../types";
-import CommentsList from "./CommentsList";
-import axios from "axios";
+import classes from './CommentsSection.module.css';
+import Link from 'next/link';
+import { Spinner } from '@chakra-ui/react';
+import { Dispatch, SetStateAction, useRef, useState } from 'react';
+import { useSession } from 'next-auth/react';
+import { BlogPost, PostComment } from '../../../types';
+import CommentsList from './CommentsList';
+import axios from 'axios';
 
 type CommentsSectionProps = {
   article: BlogPost;
@@ -13,10 +13,13 @@ type CommentsSectionProps = {
   setComments: Dispatch<SetStateAction<PostComment[]>>;
 };
 
-const CommentsSection = (props: CommentsSectionProps) => {
-  const [commentText, setCommentText] = useState("");
+const CommentsSection = ({
+  article,
+  comments,
+  setComments,
+}: CommentsSectionProps) => {
+  const [commentText, setCommentText] = useState('');
   const [postingComment, setPostingComment] = useState(false);
-  //   const [comments, setComments] = useState([]);
   const { data: session } = useSession();
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const commentBoxBtnsRef = useRef<HTMLDivElement>(null);
@@ -24,9 +27,8 @@ const CommentsSection = (props: CommentsSectionProps) => {
   const sessionUser = session?.user;
 
   const autoResize = (el: HTMLElement) => {
-    // console.log(el);
-    el.style.height = "auto";
-    el.style.height = el.scrollHeight + 2 + "px";
+    el.style.height = 'auto';
+    el.style.height = el.scrollHeight + 2 + 'px';
   };
 
   const createComment = async () => {
@@ -41,7 +43,7 @@ const CommentsSection = (props: CommentsSectionProps) => {
         `${process.env.NEXT_PUBLIC_API_URL}/comments`,
         {
           data: {
-            ArticleID: props.article.id,
+            ArticleID: article.id,
             AuthorID: sessionUser.id,
             Content: commentText,
           },
@@ -50,50 +52,32 @@ const CommentsSection = (props: CommentsSectionProps) => {
           headers: {
             Authorization: `Bearer ${sessionUser.accessToken}`,
           },
-        },
+        }
       );
 
-      // console.log(data);
       newComment = {
         id: data.data.id,
         ArticleID: data.data.attributes.ArticleID,
         AuthorID: data.data.attributes.AuthorID,
         Content: data.data.attributes.Content,
         issueDate: data.data.attributes.publishedAt,
-        AuthorName: sessionUser.name ?? "",
+        AuthorName: sessionUser.name ?? '',
       };
-      // console.log(newComment);
 
-      commentBoxBtnsRef.current!.style.display = "none";
-      setCommentText("");
+      commentBoxBtnsRef.current!.style.display = 'none';
+      setCommentText('');
     } catch (err) {
       console.error(err);
     }
 
-    // newComment = {
-    //   id: 20,
-    //   ArticleID: Number(props.article.id),
-    //   AuthorID: sessionUser.id,
-    //   Content: commentText,
-    //   issueDate: "2016-04-26T17:14:08+00:00",
-    //   AuthorName: sessionUser.name,
-    // };
-
-    // console.log(newComment);
-
-    props.setComments((prev) => {
+    setComments((prev) => {
       return [...prev, newComment];
     });
 
     setPostingComment(false);
-    commentBoxBtnsRef.current!.style.display = "none";
-    setCommentText("");
+    commentBoxBtnsRef.current!.style.display = 'none';
+    setCommentText('');
   };
-
-  //    useEffect(() => {
-  //      // console.log("blog detail comments:", props.articleComments);
-  //      setComments(props.articleComments);
-  //    }, []);
 
   return (
     <section className={classes.commentsarea}>
@@ -116,7 +100,7 @@ const CommentsSection = (props: CommentsSectionProps) => {
                     autoResize(e.target);
                   }}
                   onFocus={() =>
-                    (commentBoxBtnsRef.current!.style.display = "flex")
+                    (commentBoxBtnsRef.current!.style.display = 'flex')
                   }
                 />
 
@@ -126,9 +110,9 @@ const CommentsSection = (props: CommentsSectionProps) => {
                       className={classes.cancelbutton}
                       onClick={() => {
                         setPostingComment(false);
-                        setCommentText("");
-                        inputRef.current!.style.height = "24px";
-                        commentBoxBtnsRef.current!.style.display = "none";
+                        setCommentText('');
+                        inputRef.current!.style.height = '24px';
+                        commentBoxBtnsRef.current!.style.display = 'none';
                       }}
                     >
                       ANNULER
@@ -141,7 +125,7 @@ const CommentsSection = (props: CommentsSectionProps) => {
                       {postingComment ? (
                         <Spinner size="sm" />
                       ) : (
-                        "AJOUTER UN COMMENTAIRE"
+                        'AJOUTER UN COMMENTAIRE'
                       )}
                     </button>
                   </div>
@@ -150,19 +134,19 @@ const CommentsSection = (props: CommentsSectionProps) => {
             </div>
           ) : (
             <p className={classes.mustlogin}>
-              Vous devez être{" "}
-              <Link legacyBehavior href={"/auth/signin"}>
+              Vous devez être{' '}
+              <Link legacyBehavior href={'/auth/signin'}>
                 <a>connecté</a>
-              </Link>{" "}
+              </Link>{' '}
               pour publier un commentaire
             </p>
           )}
         </>
       </div>
       <CommentsList
-        articleID={props.article.id}
-        setComments={props.setComments}
-        comments={props.comments}
+        articleID={article.id}
+        setComments={setComments}
+        comments={comments}
         sessionUser={sessionUser}
       />
     </section>

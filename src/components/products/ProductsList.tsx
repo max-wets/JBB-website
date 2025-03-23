@@ -1,9 +1,9 @@
-import classes from "./ProductsList.module.css";
-import ProductItem from "./ProductItem";
-import Pagination from "../pagination/Pagination";
-import { Grid, GridItem, Flex } from "@chakra-ui/react";
-import { useEffect, useMemo, useState } from "react";
-import { Product } from "../../types";
+import classes from './ProductsList.module.css';
+import ProductItem from './ProductItem';
+import Pagination from '../pagination/Pagination';
+import { Grid, GridItem, Flex } from '@chakra-ui/react';
+import { useEffect, useMemo, useState } from 'react';
+import { Product } from '../../types';
 
 type ProductsListProps = {
   products: Product[];
@@ -19,32 +19,29 @@ type ViewSelectorProps = {
 
 const PageSize = 12;
 
-export default function ProductsList(props: ProductsListProps) {
+export default function ProductsList({
+  products,
+  currentPage,
+  setCurrentPage,
+  isLargerThan500,
+}: ProductsListProps) {
   const [pageSize, setPageSize] = useState(PageSize);
 
   useEffect(() => {
-    // console.log("Products list items:");
-    // props.products.map((product) => {
-    //   console.log(product);
-    // });
-  }, []);
-
-  useEffect(() => {
-    props.setCurrentPage(1);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    setCurrentPage(1);
+  }, [setCurrentPage]);
 
   const currentData = useMemo(() => {
-    const firstPageIndex = (props.currentPage - 1) * pageSize;
+    const firstPageIndex = (currentPage - 1) * pageSize;
     const lastPageIndex = firstPageIndex + pageSize;
-    return props.products.slice(firstPageIndex, lastPageIndex);
-  }, [props.currentPage, props.products, pageSize]);
+    return products.slice(firstPageIndex, lastPageIndex);
+  }, [currentPage, products, pageSize]);
 
-  function ViewSelector(props: ViewSelectorProps) {
-    const nbrOfViews = Math.ceil(Number(props.productsLength) / props.pageSize);
+  function ViewSelector({ productsLength, pageSize }: ViewSelectorProps) {
+    const nbrOfViews = Math.ceil(Number(productsLength) / pageSize);
     const views = [];
     for (let i = 1; i < nbrOfViews + 1; i++) {
-      views.push(i * props.pageSize);
+      views.push(i * pageSize);
     }
     return (
       <ul className={classes.resultcount}>
@@ -54,9 +51,7 @@ export default function ProductsList(props: ProductsListProps) {
             {view}
           </li>
         ))}
-        <li
-          onClick={() => setPageSize(parseInt(props.productsLength.toString()))}
-        >
+        <li onClick={() => setPageSize(parseInt(productsLength.toString()))}>
           Tous
         </li>
       </ul>
@@ -66,15 +61,10 @@ export default function ProductsList(props: ProductsListProps) {
   return (
     <div className={classes.productlist}>
       <Flex flexDirection="row-reverse">
-        <ViewSelector
-          productsLength={props.products.length}
-          pageSize={PageSize}
-        />
+        <ViewSelector productsLength={products.length} pageSize={PageSize} />
       </Flex>
       <Grid
-        templateColumns={
-          props.isLargerThan500 ? "repeat(3, 1fr)" : "repeat(1, 1fr)"
-        }
+        templateColumns={isLargerThan500 ? 'repeat(3, 1fr)' : 'repeat(1, 1fr)'}
         gap={6}
       >
         {currentData.map((product, idx) => (
@@ -85,10 +75,10 @@ export default function ProductsList(props: ProductsListProps) {
       </Grid>
       <Pagination
         className={classes.paginationbar}
-        currentPage={props.currentPage}
-        totalCount={props.products.length}
+        currentPage={currentPage}
+        totalCount={products.length}
         pageSize={pageSize}
-        onPageChange={(page) => props.setCurrentPage(Number(page))}
+        onPageChange={(page) => setCurrentPage(Number(page))}
       />
     </div>
   );

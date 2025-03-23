@@ -1,5 +1,5 @@
-import classes from "./ProductsAside.module.css";
-import Link from "next/link";
+import classes from './ProductsAside.module.css';
+import Link from 'next/link';
 import {
   Icon,
   Button,
@@ -7,11 +7,11 @@ import {
   RangeSliderTrack,
   RangeSliderFilledTrack,
   RangeSliderThumb,
-} from "@chakra-ui/react";
-import Image from "next/image";
-import { BsFillEnvelopeFill, BsFacebook, BsInstagram } from "react-icons/bs";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { ActiveCategories, Product } from "../../types";
+} from '@chakra-ui/react';
+import Image from 'next/image';
+import { BsFillEnvelopeFill, BsFacebook, BsInstagram } from 'react-icons/bs';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { ActiveCategories, Product } from '../../types';
 
 type BlogAsideProps = {
   products: Product[];
@@ -24,7 +24,12 @@ type SideProductDetailProps = {
   product: Product;
 };
 
-function BlogAside(props: BlogAsideProps) {
+function BlogAside({
+  products,
+  activeCategories,
+  setSelectedCategory,
+  setFilterRange,
+}: BlogAsideProps) {
   const [priceRange, setPriceRange] = useState<number[]>([]);
   const [priceRangeCurrentValues, setPriceRangeCurrentValues] = useState([
     0, 20,
@@ -41,38 +46,28 @@ function BlogAside(props: BlogAsideProps) {
   }
 
   useEffect(() => {
-    const priceRange = getPriceRange(props.products);
+    const priceRange = getPriceRange(products);
     setPriceRange(priceRange);
-    // setPriceRangeCurrentValues([
-    //   ((priceRange[1] - priceRange[0]) * 4) / 10,
-    //   ((priceRange[1] - priceRange[0]) * 6) / 10,
-    // ]);
-  }, [props.products]);
-
-  // useEffect(() => {
-  //   console.log("price range current values:", priceRangeCurrentValues);
-  // }, [priceRangeCurrentValues]);
-
-  // console.log("Blog Aside categories:", props.activeCategories);
+  }, [products]);
 
   const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target) {
       const target = e.target as HTMLElement;
-      props.setSelectedCategory(target.dataset.category || "");
+      setSelectedCategory(target.dataset.category || '');
     }
   };
 
   function priceFormat(num: number) {
     let formattedNum;
 
-    if (!num.toString().includes(".")) {
-      formattedNum = num + ",00";
+    if (!num.toString().includes('.')) {
+      formattedNum = num + ',00';
     } else {
-      const splitArr = num.toString().split(".");
-      splitArr[1] = Number(splitArr[1]) < 10 ? splitArr[1] + "0" : splitArr[1];
-      formattedNum = splitArr.join(",");
+      const splitArr = num.toString().split('.');
+      splitArr[1] = Number(splitArr[1]) < 10 ? splitArr[1] + '0' : splitArr[1];
+      formattedNum = splitArr.join(',');
     }
-    return formattedNum + "€";
+    return formattedNum + '€';
   }
 
   function SideProductDetail({ product }: SideProductDetailProps) {
@@ -123,7 +118,7 @@ function BlogAside(props: BlogAsideProps) {
             <Button
               size="xs"
               colorScheme="red"
-              onClick={() => props.setFilterRange(priceRangeCurrentValues)}
+              onClick={() => setFilterRange(priceRangeCurrentValues)}
             >
               Filtrer
             </Button>
@@ -201,7 +196,7 @@ function BlogAside(props: BlogAsideProps) {
         <div className={classes.sidebox}>
           <h4 className={classes.socialtitle}>Catégories</h4>
           <div className={classes.blogcategories}>
-            {Object.entries(props.activeCategories).map(([category, qty]) => (
+            {Object.entries(activeCategories).map(([category, qty]) => (
               <li key={category}>
                 <div data-category={category} onClick={(e) => handleClick(e)}>
                   {category}
@@ -213,16 +208,16 @@ function BlogAside(props: BlogAsideProps) {
               <div data-category="Toutes" onClick={(e) => handleClick(e)}>
                 Toutes catégories
               </div>
-              <span>{`(${props.products.length})`}</span>
+              <span>{`(${products.length})`}</span>
             </li>
           </div>
         </div>
         <div className={classes.sidebox}>
           <h4 className={classes.socialtitle}>Produits récents</h4>
           <ul className={classes.sidebarlist}>
-            <SideProductDetail product={props.products[0]} />
-            <SideProductDetail product={props.products[1]} />
-            <SideProductDetail product={props.products[2]} />
+            <SideProductDetail product={products[0]} />
+            <SideProductDetail product={products[1]} />
+            <SideProductDetail product={products[2]} />
           </ul>
         </div>
       </div>

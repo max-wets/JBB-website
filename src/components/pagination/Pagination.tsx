@@ -1,7 +1,7 @@
-import React from "react";
-import classnames from "classnames";
-import { usePagination, DOTS } from "../../hooks/usePagination";
-import classes from "./Pagination.module.css";
+import React from 'react';
+import classnames from 'classnames';
+import { usePagination, DOTS } from '../../hooks/usePagination';
+import classes from './Pagination.module.css';
 
 type PaginationProps = {
   onPageChange: (pageNumber: number | string) => void;
@@ -12,16 +12,14 @@ type PaginationProps = {
   className: string;
 };
 
-const Pagination = (props: PaginationProps) => {
-  const {
-    onPageChange,
-    totalCount,
-    siblingCount = 1,
-    currentPage,
-    pageSize,
-    className,
-  } = props;
-
+const Pagination = ({
+  onPageChange,
+  totalCount,
+  siblingCount = 1,
+  currentPage,
+  pageSize,
+  className,
+}: PaginationProps) => {
   const paginationRange = usePagination({
     currentPage: Number(currentPage),
     totalCount,

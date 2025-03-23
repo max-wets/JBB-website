@@ -1,11 +1,11 @@
-import classes from "./BlogAside.module.css";
-import Link from "next/link";
-import { Icon } from "@chakra-ui/react";
-import Image from "next/image";
-import { BsFillEnvelopeFill, BsFacebook, BsInstagram } from "react-icons/bs";
-import { urlStringFormatter } from "../../lib/utils";
-import { ActiveCategories, BlogPost } from "../../types";
-import React, { Dispatch, SetStateAction } from "react";
+import classes from './BlogAside.module.css';
+import Link from 'next/link';
+import { Icon } from '@chakra-ui/react';
+import Image from 'next/image';
+import { BsFillEnvelopeFill, BsFacebook, BsInstagram } from 'react-icons/bs';
+import { urlStringFormatter } from '../../lib/utils';
+import { ActiveCategories, BlogPost } from '../../types';
+import React, { Dispatch, SetStateAction } from 'react';
 
 type BlogAsideProps = {
   articles: BlogPost[];
@@ -18,22 +18,26 @@ type SideBlogDetailProps = {
   article: BlogPost;
 };
 
-function BlogAside(props: BlogAsideProps) {
+function BlogAside({
+  articles,
+  activeCategories,
+  setSelectedCategory,
+}: BlogAsideProps) {
   // const api_url = "https://jbb-admin.herokuapp.com";
   const newDate = (date: string) => {
     const mois = [
-      "Janvier",
-      "Février",
-      "Mars",
-      "Avril",
-      "Mai",
-      "Juin",
-      "Juillet",
-      "Août",
-      "Septembre",
-      "Octobre",
-      "Novembre",
-      "Décembre",
+      'Janvier',
+      'Février',
+      'Mars',
+      'Avril',
+      'Mai',
+      'Juin',
+      'Juillet',
+      'Août',
+      'Septembre',
+      'Octobre',
+      'Novembre',
+      'Décembre',
     ];
     const nDate = new Date(date);
     return `${nDate.getDate()} ${
@@ -41,12 +45,10 @@ function BlogAside(props: BlogAsideProps) {
     } ${nDate.getFullYear()}`;
   };
 
-  // console.log("Blog Aside categories:", props.activeCategories);
-
   const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target) {
       const target = e.target as HTMLElement;
-      props.setSelectedCategory(target.dataset.category || "");
+      setSelectedCategory(target.dataset.category || '');
     }
   };
 
@@ -58,7 +60,7 @@ function BlogAside(props: BlogAsideProps) {
         <Link legacyBehavior href={`/blog/${articleUrl}`}>
           <a className={classes.imgctr}>
             <Image
-              src={article.imageUrl ?? ""}
+              src={article.imageUrl ?? ''}
               alt={article.title}
               fill={true}
             />
@@ -123,30 +125,28 @@ function BlogAside(props: BlogAsideProps) {
         <div className={classes.sidebox}>
           <h4 className={classes.socialtitle}>Catégories</h4>
           <div className={classes.blogcategories}>
-            {Object.entries(props.activeCategories).map(
-              ([category, qty], idx) => (
-                <li key={idx}>
-                  <div data-category={category} onClick={(e) => handleClick(e)}>
-                    {category}
-                  </div>
-                  <span>{`(${qty})`}</span>
-                </li>
-              ),
-            )}
+            {Object.entries(activeCategories).map(([category, qty], idx) => (
+              <li key={idx}>
+                <div data-category={category} onClick={(e) => handleClick(e)}>
+                  {category}
+                </div>
+                <span>{`(${qty})`}</span>
+              </li>
+            ))}
             <li>
               <div data-category="Toutes" onClick={(e) => handleClick(e)}>
                 Toutes catégories
               </div>
-              <span>{`(${props.articles.length})`}</span>
+              <span>{`(${articles.length})`}</span>
             </li>
           </div>
         </div>
         <div className={classes.sidebox}>
           <h4 className={classes.socialtitle}>Articles récents</h4>
           <ul className={classes.sidebarlist}>
-            <SideBlogDetail idx={1} article={props.articles[0]} />
-            <SideBlogDetail idx={2} article={props.articles[1]} />
-            <SideBlogDetail idx={3} article={props.articles[2]} />
+            <SideBlogDetail idx={1} article={articles[0]} />
+            <SideBlogDetail idx={2} article={articles[1]} />
+            <SideBlogDetail idx={3} article={articles[2]} />
           </ul>
         </div>
       </div>
