@@ -12,7 +12,7 @@
 
 .bgpicture {
   position: relative;
-  background-image: url("../../../public/jbbeauty_home_pic_2025.jpeg");
+  background-image: url('../../../../public/jbbeauty_home_pic_2025.jpeg');
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;

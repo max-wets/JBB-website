@@ -3,8 +3,8 @@ import Link from 'next/link';
 import { Icon } from '@chakra-ui/react';
 import Image from 'next/image';
 import { BsFacebook, BsInstagram, BsFillEnvelopeFill } from 'react-icons/bs';
-import { urlStringFormatter, newDate } from '../../../lib/utils';
-import { BlogPostSmall } from '../../../types';
+import { BlogPostSmall } from '@/domain/types';
+import { newDate, urlStringFormatter } from '@/application/utils';
 
 type BlogAsideProps = {
   articles: BlogPostSmall[];

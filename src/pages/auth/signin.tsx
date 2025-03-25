@@ -1,5 +1,5 @@
-import Login from '../../components/auth/Login';
-import LoginHeading from '../../components/auth/LoginHeading';
+import Login from '@/application/components/auth/Login';
+import LoginHeading from '@/application/components/auth/LoginHeading';
 import { getCsrfToken } from 'next-auth/react';
 import { useState, useEffect } from 'react';
 import { Alert, AlertIcon, CloseButton } from '@chakra-ui/react';

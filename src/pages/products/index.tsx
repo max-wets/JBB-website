@@ -1,9 +1,9 @@
 import { GetStaticProps, GetStaticPropsResult } from 'next';
-import ProductsList from '../../components/products/ProductsList';
-import ProductsAside from '../../components/products/ProductsAside';
+import ProductsList from '@/application/components/products/ProductsList';
+import ProductsAside from '@/application/components/products/ProductsAside';
 import { useEffect, useState } from 'react';
 import { Container, Flex, Spinner, useMediaQuery } from '@chakra-ui/react';
-import ProductsHeading from '../../components/products/ProductsHeading';
+import ProductsHeading from '@/application/components/products/ProductsHeading';
 import axios from 'axios';
 import Head from 'next/head';
 import {
@@ -11,7 +11,7 @@ import {
   ApiResponse,
   Product,
   ProductApi,
-} from '../../types';
+} from '@/domain/types';
 
 type ProductsPageProps = {
   products: Product[];

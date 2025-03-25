@@ -1,7 +1,7 @@
 import React from 'react';
 import classnames from 'classnames';
-import { usePagination, DOTS } from '../../hooks/usePagination';
 import classes from './Pagination.module.css';
+import { DOTS, usePagination } from '@/application/hooks/usePagination';
 
 type PaginationProps = {
   onPageChange: (pageNumber: number | string) => void;

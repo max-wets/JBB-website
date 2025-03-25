@@ -1,6 +1,6 @@
-import BlogHeading from '../../components/blog/BlogHeading';
-import BlogArticlesList from '../../components/blog/BlogArticlesList';
-import BlogAside from '../../components/blog/BlogAside';
+import BlogHeading from '@/application/components/blog/BlogHeading';
+import BlogArticlesList from '@/application/components/blog/BlogArticlesList';
+import BlogAside from '@/application/components/blog/BlogAside';
 import { GetStaticProps, GetStaticPropsResult } from 'next';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
@@ -11,7 +11,7 @@ import {
   ApiResponse,
   BlogPost,
   BlogPostApi,
-} from '../../types';
+} from '@/domain/types';
 
 type BlogPageProps = {
   articles: BlogPost[];

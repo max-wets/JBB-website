@@ -14,7 +14,7 @@ import {
   PrevNextProduct,
   Product,
   ProductApi,
-} from '../../../types';
+} from '@/domain/types';
 
 type ProductDetailProps = {
   product: Product;

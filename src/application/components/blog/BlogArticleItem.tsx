@@ -6,8 +6,8 @@ import { BiUser } from 'react-icons/bi';
 import { FiClock } from 'react-icons/fi';
 import { BsFolder } from 'react-icons/bs';
 import { BiComment } from 'react-icons/bi';
-import { urlStringFormatter } from '../../lib/utils';
-import { BlogPost } from '../../types';
+import { urlStringFormatter } from '@/application/utils';
+import { BlogPost } from '@/domain/types';
 
 function BlogArticle({
   id,

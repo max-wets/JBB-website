@@ -1,21 +1,21 @@
-import algoliasearch from "algoliasearch";
-import "dotenv/config";
-import axios from "axios";
-import { ApiResponse, BlogPost, BlogPostApi } from "../../types";
-import { NextApiRequest, NextApiResponse } from "next";
+import algoliasearch from 'algoliasearch';
+import 'dotenv/config';
+import axios from 'axios';
+import { ApiResponse, BlogPost, BlogPostApi } from '@/domain/types';
+import { NextApiRequest, NextApiResponse } from 'next';
 
 const client = algoliasearch(
   process.env.NEXT_PUBLIC_ALGOLIA_APP_ID!,
-  process.env.NEXT_PUBLIC_ALGOLIA_SEARCH_API_KEY!,
+  process.env.NEXT_PUBLIC_ALGOLIA_SEARCH_API_KEY!
 );
 const indexArticles = client.initIndex(
-  process.env.ALGOLIA_ARTICLES_INDEX_NAME!,
+  process.env.ALGOLIA_ARTICLES_INDEX_NAME!
 );
 
 const fetchArticlesFromDatabase = async (): Promise<BlogPost[]> => {
   try {
     const articles = await axios.get<ApiResponse<BlogPostApi>>(
-      `${process.env.NEXT_PUBLIC_API_URL}/articles?populate=%2A&pagination[pageSize]=100`,
+      `${process.env.NEXT_PUBLIC_API_URL}/articles?populate=%2A&pagination[pageSize]=100`
     ); // Fetch data from your database
     const cleanArticles: BlogPost[] = articles.data.data.map((article) => ({
       id: article.id.toString(),
@@ -31,13 +31,13 @@ const fetchArticlesFromDatabase = async (): Promise<BlogPost[]> => {
     }));
     return cleanArticles;
   } catch (err) {
-    throw new Error("Blog posts fetching failed", { cause: err });
+    throw new Error('Blog posts fetching failed', { cause: err });
   }
 };
 
 export default async function handler(
   _req: NextApiRequest,
-  res: NextApiResponse,
+  res: NextApiResponse
 ) {
   try {
     const articleRecords = await fetchArticlesFromDatabase();

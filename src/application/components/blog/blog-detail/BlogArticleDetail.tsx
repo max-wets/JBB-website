@@ -25,9 +25,9 @@ import {
   ArrowRightIcon,
   ChevronRightIcon,
 } from '@chakra-ui/icons';
-import { urlStringFormatter, newDate } from '../../../lib/utils';
 import CommentsSection from './CommentsSection';
-import { BlogPost, PostComment, PrevNextPost } from '../../../types';
+import { BlogPost, PostComment, PrevNextPost } from '@/domain/types';
+import { newDate, urlStringFormatter } from '@/application/utils';
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL;
 

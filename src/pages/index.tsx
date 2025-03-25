@@ -1,4 +1,4 @@
-import HomeComponent from '../components/home/HomeComponent';
+import HomeComponent from '@/application/components/home/HomeComponent';
 import { GetStaticPropsResult } from 'next';
 import axios from 'axios';
 import {
@@ -7,7 +7,7 @@ import {
   BlogPostApi,
   Product,
   ProductApi,
-} from '../types';
+} from '@/domain/types';
 
 type HomeProps = {
   recentProducts: Product[];

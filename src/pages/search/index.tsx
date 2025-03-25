@@ -1,5 +1,5 @@
-import SearchApp from "../../components/search/SearchApp";
-import Head from "next/head";
+import SearchApp from '@/application/components/search/SearchApp';
+import Head from 'next/head';
 
 const SearchPage = () => {
   return (

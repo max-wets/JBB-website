@@ -3,7 +3,7 @@ import ProductItem from './ProductItem';
 import Pagination from '../pagination/Pagination';
 import { Grid, GridItem, Flex } from '@chakra-ui/react';
 import { useEffect, useMemo, useState } from 'react';
-import { Product } from '../../types';
+import { Product } from '@/domain/types';
 
 type ProductsListProps = {
   products: Product[];

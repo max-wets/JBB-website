@@ -2,13 +2,13 @@ import useSWR from 'swr';
 import qs from 'qs';
 import Comment from './Comment';
 import { Dispatch, SetStateAction, useEffect } from 'react';
+import { Session } from 'next-auth';
 import {
   ApiResource,
   PostComment,
   PostCommentApi,
   UserApi,
-} from '../../../types';
-import { Session } from 'next-auth';
+} from '@/domain/types';
 
 type CommentsListProps = {
   articleID: number | string;

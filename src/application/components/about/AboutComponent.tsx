@@ -1,6 +1,6 @@
-import classes from "./AboutComponent.module.css";
-import Image from "next/image";
-import aboutPic from "../../../public/julieb-pic.jpg";
+import classes from './AboutComponent.module.css';
+import Image from 'next/image';
+import aboutPic from '../../../../public/julieb-pic.jpg';
 
 function AboutComponent() {
   return (
@@ -67,13 +67,13 @@ function AboutComponent() {
               De temps en temps il y a des offres ponctuelles pendant 3 jours.
             </p>
             <p>
-              Pensez à suivre mes actualités et à vous abonner à ma{" "}
+              Pensez à suivre mes actualités et à vous abonner à ma{' '}
               <a
                 href="https://odysee.com/@JulieBaronnieBeauty:7"
                 target="_blank"
               >
                 chaîne Odysee
-              </a>{" "}
+              </a>{' '}
               afin d’être avertis.
             </p>
             <p>

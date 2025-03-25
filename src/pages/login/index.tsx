@@ -1,6 +1,6 @@
 import { CtxOrReq } from 'next-auth/client/_utils';
-import Login from '../../components/auth/Login';
-import LoginHeading from '../../components/auth/LoginHeading';
+import Login from '@/application/components/auth/Login';
+import LoginHeading from '@/application/components/auth/LoginHeading';
 import { getCsrfToken } from 'next-auth/react';
 import Head from 'next/head';
 import { useState } from 'react';
