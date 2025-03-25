@@ -33,3 +33,4 @@ yarn-error.log*
 
 .now
 .vscode
+tsconfig.tsbuildinfo
