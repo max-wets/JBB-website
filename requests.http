@@ -1,26 +1,30 @@
+### 
+@host = http://localhost:1337
+@token = abc123
+
 ### Get item categories list
-GET https://jbb-admin.osc-fr1.scalingo.io/api/item-categories
+GET {{host}}/api/item-categories
 
 ### Get items list
-GET https://jbb-admin.osc-fr1.scalingo.io/api/items
+GET {{host}}/api/items
 
 ### Get items list (with attributes)
-GET https://jbb-admin.osc-fr1.scalingo.io/api/items?populate=%2A&pagination[pageSize]=100
+GET {{host}}/api/items?populate=%2A&pagination[pageSize]=100
 
 ### Get a given item
-GET https://jbb-admin.osc-fr1.scalingo.io/api/items/22?populate=%2A
+GET {{host}}/api/items/22?populate=%2A
 
 ### Get article categories list
-GET https://jbb-admin.osc-fr1.scalingo.io/api/article-categories
+GET {{host}}/api/article-categories
 
 ### Get articles list
-GET https://jbb-admin.osc-fr1.scalingo.io/api/articles?populate=%2A&pagination[pageSize]=100
+GET {{host}}/api/articles?populate=%2A&pagination[pageSize]=100
 
 ### Get articles list (with attributes) sorted by date
-GET https://jbb-admin.osc-fr1.scalingo.io/api/articles?populate=%2A&sort[0]=createdAt%3Adesc
+GET {{host}}/api/articles?populate=%2A&sort[0]=createdAt%3Adesc
 
 ### Get a given article
-GET https://jbb-admin.osc-fr1.scalingo.io/api/articles/41?populate=%2A
+GET {{host}}/api/articles/41?populate=%2A
 
 
 
@@ -36,7 +40,7 @@ GET http://localhost:3000/api/articles-index
 
 ######## AUTHENTICATION ########
 ### Create user
-POST https://jbb-admin.osc-fr1.scalingo.io/api/auth/local/register
+POST {{host}}/api/auth/local/register
 Content-Type: application/json
 
 {
@@ -46,7 +50,7 @@ Content-Type: application/json
 }
 
 ### Sign in as a registered user
-POST https://jbb-admin.osc-fr1.scalingo.io/api/auth/local
+POST {{host}}/api/auth/local
 Content-Type: application/json
 
 {
@@ -55,10 +59,10 @@ Content-Type: application/json
 }
 
 ### Get users
-GET https://jbb-admin.osc-fr1.scalingo.io/api/users/me
+GET {{host}}/api/users/me
 
 ### Forgot password
-POST https://jbb-admin.osc-fr1.scalingo.io/api/auth/forgot-password
+POST {{host}}/api/auth/forgot-password
 Content-Type: application/json
 
 {
@@ -67,7 +71,7 @@ Content-Type: application/json
 
 
 ### Create comment
-POST https://jbb-admin.osc-fr1.scalingo.io/api/comments
+POST {{host}}/api/comments
 Content-Type: application/json
 
 {
@@ -79,7 +83,7 @@ Content-Type: application/json
 }
 
 ### Update comment
-PUT https://jbb-admin.osc-fr1.scalingo.io/api/comments/1
+PUT {{host}}/api/comments/1
 
 {
     "data": {
@@ -88,14 +92,14 @@ PUT https://jbb-admin.osc-fr1.scalingo.io/api/comments/1
 }
 
 ### Get comments
-GET https://jbb-admin.osc-fr1.scalingo.io/api/comments
+GET {{host}}/api/comments
 
 ### get filtered comments
-GET https://jbb-admin.osc-fr1.scalingo.io/api/comments?filters[ArticleID][$eq]=14
+GET {{host}}/api/comments?filters[ArticleID][$eq]=14
 
 ### get users 
-GET https://jbb-admin.osc-fr1.scalingo.io/api/users
-Authorization: Bearer b94d30f2ba968948cedd9a0ee79f1abe60d9e403103d202152ae7c46c5d3fb976482228d0df84efdbee8053a17fedc165b4edb5e8503669646cfcaa0b4ed1b506f11465b1581378e7a7f7476a1a6509e64c50740944e21e3d622d7dbc25b4e40590aed2aecd602a74cf7cec2d07ff3cf4124f0b210398608acb5ab734992a9ed
+GET {{host}}/api/users
+Authorization: Bearer {{token}}
 
 ### create sitemap for blog posts
 GET http://localhost:3000/blog
