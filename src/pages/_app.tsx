@@ -18,7 +18,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   // useEffect(() => console.log(router), [])
 
   useEffect(() => {
-    const handleRouteChange = (url) => {
+    const handleRouteChange = (url: string) => {
       ga.pageview(url);
     };
     //When the component is mounted, subscribe to router changes

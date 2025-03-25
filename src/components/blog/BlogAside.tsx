@@ -1,47 +1,43 @@
-import classes from "./BlogAside.module.css";
-import Link from "next/link";
-import { Field, Form, Formik } from "formik";
-import {
-  Icon,
-  Button,
-  FormControl,
-  FormLabel,
-  Input,
-  InputGroup,
-  InputRightElement,
-} from "@chakra-ui/react";
-import Image from "next/image";
-import { Article } from "./BlogArticleItem";
-import {
-  BsFillEnvelopeFill,
-  BsFacebook,
-  BsInstagram,
-  BsYoutube,
-} from "react-icons/bs";
-import { FaRss } from "react-icons/fa";
-import { useState } from "react";
-import { urlStringFormatter } from "../../lib/utils";
+import classes from './BlogAside.module.css';
+import Link from 'next/link';
+import { Icon } from '@chakra-ui/react';
+import Image from 'next/image';
+import { BsFillEnvelopeFill, BsFacebook, BsInstagram } from 'react-icons/bs';
+import { urlStringFormatter } from '../../lib/utils';
+import { ActiveCategories, BlogPost } from '../../types';
+import React, { Dispatch, SetStateAction } from 'react';
 
-function BlogAside(props: {
-  articles: Article[];
-  activeCategories: Object;
-  setSelectedCategory;
-}) {
+type BlogAsideProps = {
+  articles: BlogPost[];
+  activeCategories: ActiveCategories;
+  setSelectedCategory: Dispatch<SetStateAction<string>>;
+};
+
+type SideBlogDetailProps = {
+  idx: number;
+  article: BlogPost;
+};
+
+function BlogAside({
+  articles,
+  activeCategories,
+  setSelectedCategory,
+}: BlogAsideProps) {
   // const api_url = "https://jbb-admin.herokuapp.com";
-  const newDate = (date) => {
+  const newDate = (date: string) => {
     const mois = [
-      "Janvier",
-      "Février",
-      "Mars",
-      "Avril",
-      "Mai",
-      "Juin",
-      "Juillet",
-      "Août",
-      "Septembre",
-      "Octobre",
-      "Novembre",
-      "Décembre",
+      'Janvier',
+      'Février',
+      'Mars',
+      'Avril',
+      'Mai',
+      'Juin',
+      'Juillet',
+      'Août',
+      'Septembre',
+      'Octobre',
+      'Novembre',
+      'Décembre',
     ];
     const nDate = new Date(date);
     return `${nDate.getDate()} ${
@@ -49,20 +45,25 @@ function BlogAside(props: {
     } ${nDate.getFullYear()}`;
   };
 
-  // console.log("Blog Aside categories:", props.activeCategories);
-
-  const handleClick = (e) => {
-    props.setSelectedCategory(e.target.dataset.category);
+  const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (e.target) {
+      const target = e.target as HTMLElement;
+      setSelectedCategory(target.dataset.category || '');
+    }
   };
 
-  function SideBlogDetail({ idx, article }) {
+  function SideBlogDetail({ idx, article }: SideBlogDetailProps) {
     const articleUrl = urlStringFormatter(article.title, article.id);
 
     return (
       <li key={idx}>
         <Link legacyBehavior href={`/blog/${articleUrl}`}>
           <a className={classes.imgctr}>
-            <Image src={article.imageUrl} alt={article.title} fill={true} />
+            <Image
+              src={article.imageUrl ?? ''}
+              alt={article.title}
+              fill={true}
+            />
             <span className={classes.overlay}></span>
           </a>
         </Link>
@@ -86,17 +87,6 @@ function BlogAside(props: {
         <div className={classes.sidebox}>
           <h4 className={classes.socialtitle}>Me suivre</h4>
           <ul className={classes.socialicons}>
-            {/* <Link
-              legacyBehavior
-              key={1}
-              href="https://www.youtube.com/channel/UCvVIi4gAhSC4x7sM3g9q53w"
-            >
-              <a target="_blank">
-                <li>
-                  <Icon as={BsYoutube} h={5} w={5} size="sm" />
-                </li>
-              </a>
-            </Link> */}
             <Link
               legacyBehavior
               key={2}
@@ -135,30 +125,28 @@ function BlogAside(props: {
         <div className={classes.sidebox}>
           <h4 className={classes.socialtitle}>Catégories</h4>
           <div className={classes.blogcategories}>
-            {Object.entries(props.activeCategories).map(
-              ([category, qty], idx) => (
-                <li key={idx}>
-                  <div data-category={category} onClick={(e) => handleClick(e)}>
-                    {category}
-                  </div>
-                  <span>{`(${qty})`}</span>
-                </li>
-              )
-            )}
+            {Object.entries(activeCategories).map(([category, qty], idx) => (
+              <li key={idx}>
+                <div data-category={category} onClick={(e) => handleClick(e)}>
+                  {category}
+                </div>
+                <span>{`(${qty})`}</span>
+              </li>
+            ))}
             <li>
               <div data-category="Toutes" onClick={(e) => handleClick(e)}>
                 Toutes catégories
               </div>
-              <span>{`(${props.articles.length})`}</span>
+              <span>{`(${articles.length})`}</span>
             </li>
           </div>
         </div>
         <div className={classes.sidebox}>
           <h4 className={classes.socialtitle}>Articles récents</h4>
           <ul className={classes.sidebarlist}>
-            <SideBlogDetail idx={1} article={props.articles[0]} />
-            <SideBlogDetail idx={2} article={props.articles[1]} />
-            <SideBlogDetail idx={3} article={props.articles[2]} />
+            <SideBlogDetail idx={1} article={articles[0]} />
+            <SideBlogDetail idx={2} article={articles[1]} />
+            <SideBlogDetail idx={3} article={articles[2]} />
           </ul>
         </div>
       </div>

@@ -1,61 +1,57 @@
-import classes from "./ProductsList.module.css";
-import ProductItem from "./ProductItem";
-import Pagination from "../pagination/Pagination";
-import { Grid, GridItem, Flex, useMediaQuery } from "@chakra-ui/react";
-import { useEffect, useMemo, useState } from "react";
+import classes from './ProductsList.module.css';
+import ProductItem from './ProductItem';
+import Pagination from '../pagination/Pagination';
+import { Grid, GridItem, Flex } from '@chakra-ui/react';
+import { useEffect, useMemo, useState } from 'react';
+import { Product } from '../../types';
 
-let PageSize = 12;
+type ProductsListProps = {
+  products: Product[];
+  currentPage: number;
+  setCurrentPage: (page: number) => void;
+  isLargerThan500: boolean;
+};
 
-export interface Product {
-  id: number;
-  name: string;
-  intro: string;
-  price: number;
-  description: string;
-  item_categories: string[];
-  imageUrl: string;
-}
+type ViewSelectorProps = {
+  productsLength: number | string;
+  pageSize: number;
+};
 
-function ProductsList(props: {
-  products;
-  currentPage;
-  setCurrentPage;
-  isLargerThan500;
-}) {
+const PageSize = 12;
+
+export default function ProductsList({
+  products,
+  currentPage,
+  setCurrentPage,
+  isLargerThan500,
+}: ProductsListProps) {
   const [pageSize, setPageSize] = useState(PageSize);
 
   useEffect(() => {
-    // console.log("Products list items:");
-    // props.products.map((product) => {
-    //   console.log(product);
-    // });
-  }, []);
-
-  useEffect(() => {
-    props.setCurrentPage(1);
-  }, []);
+    setCurrentPage(1);
+  }, [setCurrentPage]);
 
   const currentData = useMemo(() => {
-    const firstPageIndex = (props.currentPage - 1) * pageSize;
+    const firstPageIndex = (currentPage - 1) * pageSize;
     const lastPageIndex = firstPageIndex + pageSize;
-    return props.products.slice(firstPageIndex, lastPageIndex);
-  }, [props.currentPage, props.products, pageSize]);
+    return products.slice(firstPageIndex, lastPageIndex);
+  }, [currentPage, products, pageSize]);
 
-  function ViewSelector(props: { productsLength; pageSize }) {
-    const nbrOfViews = Math.ceil(props.productsLength / props.pageSize);
+  function ViewSelector({ productsLength, pageSize }: ViewSelectorProps) {
+    const nbrOfViews = Math.ceil(Number(productsLength) / pageSize);
     const views = [];
     for (let i = 1; i < nbrOfViews + 1; i++) {
-      views.push(i * props.pageSize);
+      views.push(i * pageSize);
     }
     return (
       <ul className={classes.resultcount}>
         <li className={classes.viewtitle}>Produits par page:</li>
         {views.map((view, idx) => (
-          <li key={idx} onClick={() => setPageSize(parseInt(view))}>
+          <li key={idx} onClick={() => setPageSize(parseInt(view.toString()))}>
             {view}
           </li>
         ))}
-        <li onClick={() => setPageSize(parseInt(props.productsLength))}>
+        <li onClick={() => setPageSize(parseInt(productsLength.toString()))}>
           Tous
         </li>
       </ul>
@@ -65,15 +61,10 @@ function ProductsList(props: {
   return (
     <div className={classes.productlist}>
       <Flex flexDirection="row-reverse">
-        <ViewSelector
-          productsLength={props.products.length}
-          pageSize={PageSize}
-        />
+        <ViewSelector productsLength={products.length} pageSize={PageSize} />
       </Flex>
       <Grid
-        templateColumns={
-          props.isLargerThan500 ? "repeat(3, 1fr)" : "repeat(1, 1fr)"
-        }
+        templateColumns={isLargerThan500 ? 'repeat(3, 1fr)' : 'repeat(1, 1fr)'}
         gap={6}
       >
         {currentData.map((product, idx) => (
@@ -84,13 +75,11 @@ function ProductsList(props: {
       </Grid>
       <Pagination
         className={classes.paginationbar}
-        currentPage={props.currentPage}
-        totalCount={props.products.length}
+        currentPage={currentPage}
+        totalCount={products.length}
         pageSize={pageSize}
-        onPageChange={(page) => props.setCurrentPage(page)}
+        onPageChange={(page) => setCurrentPage(Number(page))}
       />
     </div>
   );
 }
-
-export default ProductsList;

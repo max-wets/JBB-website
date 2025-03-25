@@ -3,7 +3,6 @@ import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
-  BreadcrumbSeparator,
   Icon,
 } from "@chakra-ui/react";
 import { ChevronRightIcon } from "@chakra-ui/icons";
@@ -32,7 +31,7 @@ function LoginHeading() {
               href="#"
               _hover={{ textDecoration: "none", color: "#D93644" }}
             >
-              S'inscrire
+              S&apos;inscrire
             </BreadcrumbLink>
           </BreadcrumbItem>
         </Breadcrumb>

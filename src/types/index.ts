@@ -6,6 +6,11 @@ export interface SessionUser {
   accessToken?: string;
 }
 
+export interface SessionUser {
+  user: UserApi;
+  jwt: string;
+}
+
 export interface ImageFormatApi {
   ext: string;
   url: string;
@@ -23,7 +28,7 @@ export interface ImageFormatsApi {
   small: ImageFormatApi;
   thumbnail: ImageFormatApi;
   large?: ImageFormatApi;
-  medium?: ImageFormatApi
+  medium?: ImageFormatApi;
 }
 
 export interface ImageApi {
@@ -60,8 +65,8 @@ export interface ProductApi {
   createdAt: string;
   updatedAt: string;
   publishedAt: string;
-  Image: ApiData<ImageApi>
-  item_categories: ApiDataArray<CategoryApi>
+  Image: ApiData<ImageApi>;
+  item_categories: ApiDataArray<CategoryApi>;
 }
 
 export interface PostCommentApi {
@@ -90,7 +95,7 @@ export interface ApiPagination {
   page: number;
   pageSize: number;
   pageCount: number;
-  total: number
+  total: number;
 }
 
 export interface ApiMetadata {
@@ -98,20 +103,20 @@ export interface ApiMetadata {
 }
 
 export interface ApiData<T> {
-  data: ApiResource<T>
+  data: ApiResource<T>;
 }
 
 export interface ApiDataArray<T> {
-  data: ApiResource<T>[]
+  data: ApiResource<T>[];
 }
 
 export interface ApiResource<T> {
   id: number;
-  attributes: T
+  attributes: T;
 }
 
 export interface ApiResponse<T> extends ApiDataArray<T> {
-  meta: ApiMetadata
+  meta: ApiMetadata;
 }
 
 export interface BlogPostSmall {
@@ -122,17 +127,54 @@ export interface BlogPostSmall {
 }
 
 export interface BlogPost extends BlogPostSmall {
-  intro: string;
+  intro: string | null;
   description: string;
   videoUrl: string;
   categories: string[];
 }
 
+export type PrevNextPost = {
+  id: number;
+  title: string;
+};
+
 export interface PostComment {
-  id: number; 
+  id: number;
   ArticleID: number;
   AuthorID: number;
   Content: string;
   issueDate: string;
-  AuthorName: string;
+  AuthorName?: string;
 }
+
+export interface UserApi {
+  id: number;
+  username: string;
+  email: string;
+  provider: string;
+  confirmed: boolean;
+  blocked: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export type ActiveCategories = {
+  [category: string]: number;
+};
+
+export interface Product {
+  id: string;
+  name: string;
+  intro: string | null;
+  description: string;
+  price: number;
+  issueDate: string;
+  imageUrl: string;
+  categories: string[];
+}
+
+export type PrevNextProduct = {
+  id: number;
+  title: string;
+  imageUrl: string;
+};

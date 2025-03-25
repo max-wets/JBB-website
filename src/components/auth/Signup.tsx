@@ -3,13 +3,18 @@ import Link from "next/link";
 import { Field, Form, Formik, ErrorMessage } from "formik";
 import { useRouter } from "next/router";
 import { signIn } from "next-auth/react";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
+import { Dispatch, SetStateAction } from "react";
 
 interface Errors {
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
-function Signup({ setError }) {
+type SignUpProps = {
+  setError: Dispatch<SetStateAction<string>>;
+};
+
+function Signup({ setError }: SignUpProps) {
   const router = useRouter();
 
   return (
@@ -44,12 +49,11 @@ function Signup({ setError }) {
                     username: values.username,
                     email: values.email,
                     password: values.password,
-                  }
+                  },
                 );
-                const data = res.data;
                 // console.log("res data:", data);
                 setSubmitting(false);
-                setError(null);
+                setError("");
                 if (res.data.user) {
                   try {
                     const res = await signIn("credentials", {
@@ -58,16 +62,23 @@ function Signup({ setError }) {
                       password: values.password,
                       callbackUrl: `${window.location.origin}`,
                     });
-                    if (res.url) router.push(res.url);
+                    if (res && res.url) router.push(res.url);
                   } catch (err) {
-                    console.error("login error:", err);
-                    setError(err.message);
+                    if (err instanceof Error && err.message) {
+                      setError(err.message);
+                    }
+                    console.error(err);
+                    throw new Error("Something wrong happened!");
                   }
                 }
               } catch (err) {
-                const errMessage = err.response.data.error.message;
-                console.error("is error:", errMessage);
-                setError(errMessage);
+                if (err instanceof AxiosError && err.response) {
+                  const errMessage = err.response.data.error.message;
+                  setError(errMessage);
+                } else {
+                  console.error(err);
+                  throw new Error("Somethign wrong happend!");
+                }
               }
             }}
           >

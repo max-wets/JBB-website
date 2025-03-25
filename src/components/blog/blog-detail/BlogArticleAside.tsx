@@ -1,39 +1,32 @@
-import classes from "./BlogArticleAside.module.css";
-import Link from "next/link";
-import { Field, Form, Formik } from "formik";
-import {
-  Icon,
-  Button,
-  FormControl,
-  FormLabel,
-  Input,
-  InputGroup,
-  InputRightElement,
-} from "@chakra-ui/react";
-import Image from "next/image";
-import { Article } from "../BlogArticleItem";
-import {
-  BsTwitter,
-  BsFacebook,
-  BsInstagram,
-  BsYoutube,
-  BsFillEnvelopeFill,
-} from "react-icons/bs";
-import { FaRss } from "react-icons/fa";
-import { useState } from "react";
-import { urlStringFormatter, newDate } from "../../../lib/utils";
+import classes from './BlogArticleAside.module.css';
+import Link from 'next/link';
+import { Icon } from '@chakra-ui/react';
+import Image from 'next/image';
+import { BsFacebook, BsInstagram, BsFillEnvelopeFill } from 'react-icons/bs';
+import { urlStringFormatter, newDate } from '../../../lib/utils';
+import { BlogPostSmall } from '../../../types';
 
-function BlogAside(props: { articles: Article[] }) {
-  // const api_url = "https://jbb-admin.herokuapp.com";
+type BlogAsideProps = {
+  articles: BlogPostSmall[];
+};
 
-  function SideBlogDetail({ article }) {
+type SideBlogDetailProps = {
+  article: BlogPostSmall;
+};
+
+export default function BlogAside({ articles }: BlogAsideProps) {
+  function SideBlogDetail({ article }: SideBlogDetailProps) {
     const articleUrl = urlStringFormatter(article.title, article.id);
 
     return (
       <li>
         <Link legacyBehavior href={`/blog/${articleUrl}`}>
           <a className={classes.imgctr}>
-            <Image src={article.imageUrl} alt={article.title} fill={true} />
+            <Image
+              src={article.imageUrl ?? ''}
+              alt={article.title}
+              fill={true}
+            />
             <span className={classes.overlay}></span>
           </a>
         </Link>
@@ -99,14 +92,12 @@ function BlogAside(props: { articles: Article[] }) {
         <div className={classes.sidebox}>
           <h4 className={classes.socialtitle}>Articles récents</h4>
           <ul className={classes.sidebarlist}>
-            <SideBlogDetail article={props.articles[0]} />
-            <SideBlogDetail article={props.articles[1]} />
-            <SideBlogDetail article={props.articles[2]} />
+            <SideBlogDetail article={articles[0]} />
+            <SideBlogDetail article={articles[1]} />
+            <SideBlogDetail article={articles[2]} />
           </ul>
         </div>
       </div>
     </aside>
   );
 }
-
-export default BlogAside;

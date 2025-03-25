@@ -12,9 +12,11 @@ type Props = {
 
 let mounted = false;
 function Layout({ children }: Props) {
-  const { data: session, status } = useSession();
-  const [connected, setConnected] = useState(null);
-  const [AlertMessage, setAlertMessage] = useState(null);
+  const { status } = useSession();
+  const [connected, setConnected] = useState<boolean>(false);
+  const [AlertMessage, setAlertMessage] = useState<React.ReactNode | null>(
+    null,
+  );
 
   useEffect(() => {
     mounted = true;
@@ -46,7 +48,7 @@ function Layout({ children }: Props) {
             top="-6px"
             onClick={() => setAlertMessage(null)}
           />
-        </Alert>
+        </Alert>,
       );
       setTimeout(() => setAlertMessage(null), 5000);
     }

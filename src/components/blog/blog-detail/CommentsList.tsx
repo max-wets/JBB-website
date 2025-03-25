@@ -1,31 +1,40 @@
-import useSWR from "swr";
-import axios from "axios";
-import qs from "qs";
-import Comment from "./Comment";
-import { useEffect, useState } from "react";
-import { useSession } from "next-auth/react";
-import { SessionUser } from "../../../types";
-import CommentsSection from "./CommentsSection";
+import useSWR from 'swr';
+import qs from 'qs';
+import Comment from './Comment';
+import { Dispatch, SetStateAction, useEffect } from 'react';
+import {
+  ApiResource,
+  PostComment,
+  PostCommentApi,
+  UserApi,
+} from '../../../types';
+import { Session } from 'next-auth';
 
-const fetcher = (url) => fetch(url).then((res) => res.json());
+type CommentsListProps = {
+  articleID: number | string;
+  comments: PostComment[];
+  setComments: Dispatch<SetStateAction<PostComment[]>>;
+  sessionUser?: Session['user'];
+};
+
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
 const COMMENTS_URL = `${process.env.NEXT_PUBLIC_API_URL}/comments`;
 
-const CommentsList = (props: {
-  articleID;
-  comments;
-  setComments;
-  sessionUser;
-}) => {
-  //   const [commentsList, setCommentsList] = useState([]);
-  const filters = `?filters[ArticleID][$eq]=${props.articleID}&sort=publishedAt%3Adesc`;
-  const { data, error } = useSWR(COMMENTS_URL + filters, fetcher);
+const CommentsList = ({
+  articleID,
+  comments,
+  setComments,
+  sessionUser,
+}: CommentsListProps) => {
+  const filters = `?filters[ArticleID][$eq]=${articleID}&sort=publishedAt%3Adesc`;
+  const { data } = useSWR(COMMENTS_URL + filters, fetcher);
 
   useEffect(() => {
-    const AuthorIdsArr = [];
-    let completeComments = [];
-    let cleanComments =
+    const AuthorIdsArr: number[] = [];
+    const completeComments: PostComment[] = [];
+    const cleanComments: PostComment[] =
       data &&
-      data.data.map((comment) => {
+      data.data.map((comment: ApiResource<PostCommentApi>): PostComment => {
         if (AuthorIdsArr.indexOf(comment.attributes.AuthorID) < 0)
           AuthorIdsArr.push(comment.attributes.AuthorID);
         return {
@@ -37,8 +46,7 @@ const CommentsList = (props: {
         };
       });
 
-    async function getUsers() {
-      // get users' names
+    const getUsers = async (): Promise<UserApi[]> => {
       const query = qs.stringify(
         {
           filters: {
@@ -54,20 +62,20 @@ const CommentsList = (props: {
       const url = `${process.env.NEXT_PUBLIC_API_URL}/users?${query}`;
       const options = {
         headers: {
-          Authorization: `bearer ${process.env.NEXT_PUBLIC_API_TOKEN}`,
+          Authorization: `Bearer ${process.env.NEXT_PUBLIC_API_TOKEN}`,
         },
       };
       try {
-        let res = await fetch(url, options);
+        const res = await fetch(url, options);
         return await res.json();
       } catch (error) {
-        console.error(error);
+        throw new Error('Users fetching failed', { cause: error });
       }
-    }
+    };
 
     async function renderUsers() {
-      let users = await getUsers();
-      // console.log("users:", users);
+      const users = await getUsers();
+      // console.log('users:', users);
 
       cleanComments?.map((comment) => {
         const authorName = users?.filter(
@@ -80,16 +88,17 @@ const CommentsList = (props: {
         });
       });
       // console.log("complete comments:", completeComments);
-      props.setComments(completeComments);
+      setComments(completeComments);
     }
 
     renderUsers();
-  }, [data]);
+  }, [data, setComments]);
 
   return (
     <div>
-      {props.comments.map((com, idx) => (
+      {comments.map((com, idx) => (
         <Comment
+          key={com.id}
           idx={idx}
           id={com.id}
           AuthorID={com.AuthorID}
@@ -97,8 +106,8 @@ const CommentsList = (props: {
           AuthorName={com.AuthorName}
           Content={com.Content}
           issueDate={com.issueDate}
-          sessionUser={props.sessionUser}
-          setComments={props.setComments}
+          sessionUser={sessionUser}
+          setComments={setComments}
         />
       ))}
     </div>

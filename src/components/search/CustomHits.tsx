@@ -5,10 +5,20 @@ import classes from "./CustomHits.module.css";
 import Pagination from "../pagination/Pagination";
 import { useMemo, useState } from "react";
 import { urlStringFormatter } from "../../lib/utils";
+import { StateResultsProvided } from "react-instantsearch-core";
 
-let PageSize = 3;
+type ResultHitProps = {
+  id: number;
+  title: string;
+  description: string;
+  imageUrl: string;
+};
 
-function Hits({ searchState, searchResults }) {
+type HitsProps = StateResultsProvided<ResultHitProps>;
+
+const PageSize = 3;
+
+function Hits({ searchState, searchResults }: HitsProps): JSX.Element {
   const [currentPage, setCurrentPage] = useState(1);
 
   const currentData = useMemo(() => {
@@ -17,7 +27,7 @@ function Hits({ searchState, searchResults }) {
     return searchResults?.hits.slice(firstPageIndex, lastPageIndex);
   }, [currentPage, searchResults]);
 
-  function ResultHit({ id, title, description, imageUrl }) {
+  function ResultHit({ id, title, description, imageUrl }: ResultHitProps) {
     const articleUrl = urlStringFormatter(title, id);
 
     return (
@@ -68,6 +78,7 @@ function Hits({ searchState, searchResults }) {
             <ul>
               {currentData.map((hit) => (
                 <ResultHit
+                  key={hit.id}
                   id={hit.id}
                   title={hit.title}
                   description={hit.description}
@@ -82,14 +93,14 @@ function Hits({ searchState, searchResults }) {
               currentPage={currentPage}
               totalCount={searchResults.hits.length}
               pageSize={PageSize}
-              onPageChange={(page) => setCurrentPage(page)}
+              onPageChange={(page) => setCurrentPage(Number(page))}
             />
           </div>
         </>
       ) : (
         <p>
-          0 résultat. Désolé, nous n'avons rien trouvé qui corresponde à votre
-          recherche: &quot;<span>{searchState.query}</span>&quot;
+          0 résultat. Désolé, nous n&apos;avons rien trouvé qui corresponde à
+          votre recherche: &quot;<span>{searchState.query}</span>&quot;
         </p>
       )}
     </div>

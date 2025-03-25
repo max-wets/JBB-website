@@ -1,39 +1,35 @@
-import classes from "./ProductItem.module.css";
-import Image from "next/image";
-import ProductsList from "./ProductsList";
-import Link from "next/link";
-import { useEffect } from "react";
+import classes from './ProductItem.module.css';
+import Image from 'next/image';
+import Link from 'next/link';
+import { Product } from '../../types';
 
-const myLoader = ({ src }) => {
-  return `../public/items/${src}`;
+type ProductItemProps = {
+  idx: number;
+  product: Product;
 };
 
-function ProductItem(props: { idx; product }) {
-  function priceFormat(num) {
-    let formattedNum;
+export default function ProductItem({ idx, product }: ProductItemProps) {
+  function priceFormat(num: number) {
+    let formattedNum: string;
 
-    if (!num.toString().includes(".")) {
-      formattedNum = num + ",00";
+    if (!num.toString().includes('.')) {
+      formattedNum = num + ',00';
     } else {
-      const splitArr = num.toString().split(".");
-      Number(splitArr[1]) < 10 ? (splitArr[1] = splitArr[1] + "0") : null;
-      formattedNum = splitArr.join(",");
+      const splitArr = num.toString().split('.');
+      splitArr[1] = Number(splitArr[1]) < 10 ? splitArr[1] + '0' : splitArr[1];
+      formattedNum = splitArr.join(',');
     }
-    return formattedNum + "€";
+    return formattedNum + '€';
   }
 
-  // useEffect(() => {
-  //   console.log("Product item:", props.product);
-  // }, []);
-
   return (
-    <div key={props.idx} className={classes.productctr}>
+    <div key={idx} className={classes.productctr}>
       <div className={classes.imgctr}>
-        <Link legacyBehavior href={`/products/${props.product.id.toString()}`}>
+        <Link legacyBehavior href={`/products/${product.id.toString()}`}>
           <a>
             <Image
-              src={props.product.imageUrl}
-              alt={props.product.name}
+              src={product.imageUrl}
+              alt={product.name}
               width={300}
               height={300}
             />
@@ -41,19 +37,15 @@ function ProductItem(props: { idx; product }) {
           </a>
         </Link>
       </div>
-      <Link legacyBehavior href={`/products/${props.product.id.toString()}`}>
+      <Link legacyBehavior href={`/products/${product.id.toString()}`}>
         <a>
-          <h3>{props.product.name}</h3>
+          <h3>{product.name}</h3>
         </a>
       </Link>
       <div className={classes.aftertitle}>
-        <div className={classes.shopprice}>
-          {priceFormat(props.product.price)}
-        </div>
+        <div className={classes.shopprice}>{priceFormat(product.price)}</div>
         <div className={classes.shopbuttons}></div>
       </div>
     </div>
   );
 }
-
-export default ProductItem;

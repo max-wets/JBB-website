@@ -1,15 +1,14 @@
-import classes from "./BlogArticleDetail.module.css";
-import { Article } from "../BlogArticleItem";
-import Image from "next/image";
-import Link from "next/link";
-import { Icon, useMediaQuery } from "@chakra-ui/react";
-import { BiUser, BiComment } from "react-icons/bi";
-import { FiClock } from "react-icons/fi";
-import { BsFolder } from "react-icons/bs";
-import { useState } from "react";
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
-import VideoEmbed from "./VideoEmbed";
+import classes from './BlogArticleDetail.module.css';
+import Image from 'next/image';
+import Link from 'next/link';
+import { Icon, useMediaQuery } from '@chakra-ui/react';
+import { BiUser, BiComment } from 'react-icons/bi';
+import { FiClock } from 'react-icons/fi';
+import { BsFolder } from 'react-icons/bs';
+import { useState } from 'react';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+import VideoEmbed from './VideoEmbed';
 import {
   EmailShareButton,
   EmailIcon,
@@ -19,43 +18,49 @@ import {
   TwitterIcon,
   WhatsappShareButton,
   WhatsappIcon,
-} from "react-share";
-import { useRouter } from "next/router";
+} from 'react-share';
+import { useRouter } from 'next/router';
 import {
   ArrowLeftIcon,
   ArrowRightIcon,
   ChevronRightIcon,
-} from "@chakra-ui/icons";
-import { urlStringFormatter, newDate } from "../../../lib/utils";
-import CommentsSection from "./CommentsSection";
+} from '@chakra-ui/icons';
+import { urlStringFormatter, newDate } from '../../../lib/utils';
+import CommentsSection from './CommentsSection';
+import { BlogPost, PostComment, PrevNextPost } from '../../../types';
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL;
 
-function BlogArticleDetail(props: {
-  article: Article;
-  prevNextArticles;
-  recommendedArticles;
-  articleComments;
-}) {
-  // const api_url = "https://jbb-admin.herokuapp.com";
+type BlogArticleDetailProps = {
+  article: BlogPost;
+  prevNextPosts: (PrevNextPost | null)[];
+  recommendedArticles: BlogPost[];
+  articleComments: PostComment[];
+};
+
+function BlogArticleDetail({
+  article,
+  prevNextPosts,
+  recommendedArticles,
+}: BlogArticleDetailProps) {
   const router = useRouter();
-  const [isLargerThan750] = useMediaQuery("(min-width: 750px)");
-  const [isLargerThan600] = useMediaQuery("(min-width: 600px)");
-  const [comments, setComments] = useState([]);
+  const [isLargerThan750] = useMediaQuery('(min-width: 750px)');
+  const [isLargerThan600] = useMediaQuery('(min-width: 600px)');
+  const [comments, setComments] = useState<PostComment[]>([]);
 
   return (
     <article className={classes.primary}>
       <div className={classes.thumbnail}>
         <Image
-          src={props.article.imageUrl}
-          alt={props.article.title}
+          src={article.imageUrl ?? ''}
+          alt={article.title}
           width={833}
           height={430}
           objectFit="cover"
         />
       </div>
       <header>
-        <h2 className={classes.entrytitle}>{props.article.title}</h2>
+        <h2 className={classes.entrytitle}>{article.title}</h2>
       </header>
       <div className={classes.meta}>
         <ul>
@@ -64,7 +69,7 @@ function BlogArticleDetail(props: {
               as={BiUser}
               h={isLargerThan600 ? 6 : 4}
               w={isLargerThan600 ? 6 : 4}
-              size={isLargerThan600 ? "sm" : "sx"}
+              size={isLargerThan600 ? 'sm' : 'sx'}
             />
             <Link legacyBehavior href="">
               <a>Julie</a>
@@ -75,27 +80,25 @@ function BlogArticleDetail(props: {
               as={FiClock}
               h={isLargerThan600 ? 5 : 3}
               w={isLargerThan600 ? 5 : 3}
-              size={isLargerThan600 ? "sm" : "sx"}
+              size={isLargerThan600 ? 'sm' : 'sx'}
               mt="2px"
             />
-            <div>{newDate(props.article.issueDate)}</div>
+            <div>{newDate(article.issueDate)}</div>
           </li>
           <li>
             <Icon
               as={BsFolder}
               h={isLargerThan600 ? 6 : 4}
               w={isLargerThan600 ? 6 : 4}
-              size={isLargerThan600 ? "sm" : "sx"}
+              size={isLargerThan600 ? 'sm' : 'sx'}
               mr="4px"
             />
-            {props.article.categories.map((category, idx) => (
+            {article.categories.map((category, idx) => (
               <>
-                <span style={idx > 0 ? { marginLeft: "4px" } : null}>
+                <span style={idx > 0 ? { marginLeft: '4px' } : undefined}>
                   {category}
                 </span>
-                <span>
-                  {idx < props.article.categories.length - 1 ? "," : null}
-                </span>
+                <span>{idx < article.categories.length - 1 ? ',' : null}</span>
               </>
             ))}
           </li>
@@ -104,26 +107,26 @@ function BlogArticleDetail(props: {
               as={BiComment}
               h={isLargerThan600 ? 6 : 4}
               w={isLargerThan600 ? 6 : 4}
-              size={isLargerThan600 ? "sm" : "sx"}
+              size={isLargerThan600 ? 'sm' : 'sx'}
               mr="4px"
             />
             <span>
               {comments
                 ? `${comments.length} Commentaire${
-                    comments.length > 1 ? "s" : ""
+                    comments.length > 1 ? 's' : ''
                   }`
-                : "0 Commentaires"}
+                : '0 Commentaires'}
             </span>
           </li>
         </ul>
         <div className={classes.entrycontent}>
           <ReactMarkdown remarkPlugins={[remarkGfm]}>
-            {props.article.description}
+            {article.description}
           </ReactMarkdown>
         </div>
-        {props.article.videoUrl ? (
-          <div style={{ marginTop: "30px" }}>
-            <VideoEmbed source={props.article.videoUrl} />
+        {article.videoUrl ? (
+          <div style={{ marginTop: '30px' }}>
+            <VideoEmbed source={article.videoUrl} />
           </div>
         ) : null}
       </div>
@@ -134,7 +137,7 @@ function BlogArticleDetail(props: {
             <EmailShareButton
               url={APP_URL + router.asPath}
               subject="Pour vous, un article de Julie Baronnie Beauty"
-              body={`Voici un article à partager sur le thème suivant: ${props.article.title} \n\n`}
+              body={`Voici un article à partager sur le thème suivant: ${article.title} \n\n`}
             >
               <EmailIcon size={40} borderRadius={6} />
             </EmailShareButton>
@@ -142,7 +145,7 @@ function BlogArticleDetail(props: {
           <li>
             <FacebookShareButton
               url={APP_URL + router.asPath}
-              hashtag={`Voici un article à lire sur le thème suivant: ${props.article.title} \n\n`}
+              hashtag={`Voici un article à lire sur le thème suivant: ${article.title} \n\n`}
             >
               <FacebookIcon size={40} borderRadius={6} />
             </FacebookShareButton>
@@ -150,7 +153,7 @@ function BlogArticleDetail(props: {
           <li>
             <TwitterShareButton
               url={APP_URL + router.asPath}
-              title={`Voici un article à lire sur le thème suivant: ${props.article.title} \n\n`}
+              title={`Voici un article à lire sur le thème suivant: ${article.title} \n\n`}
             >
               <TwitterIcon size={40} borderRadius={6} />
             </TwitterShareButton>
@@ -158,7 +161,7 @@ function BlogArticleDetail(props: {
           <li>
             <WhatsappShareButton
               url={APP_URL + router.asPath}
-              title={`Voici un article à lire sur le thème suivant: ${props.article.title} \n\n`}
+              title={`Voici un article à lire sur le thème suivant: ${article.title} \n\n`}
             >
               <WhatsappIcon size={40} borderRadius={6} />
             </WhatsappShareButton>
@@ -166,13 +169,13 @@ function BlogArticleDetail(props: {
         </ul>
       </div>
       <nav className={classes.postnavigation}>
-        {props.prevNextArticles[0] ? (
+        {prevNextPosts[0] ? (
           <div className={classes.navprevious}>
             <Link
               legacyBehavior
               href={`/blog/${urlStringFormatter(
-                props.prevNextArticles[0].title,
-                props.prevNextArticles[0].id
+                prevNextPosts[0].title,
+                prevNextPosts[0].id
               )}`}
             >
               <a>
@@ -181,21 +184,21 @@ function BlogArticleDetail(props: {
                   <span>Article Précédent</span>
                 </div>
                 <div className={classes.prevtext}>
-                  {props.prevNextArticles[0].title.length > 40
-                    ? props.prevNextArticles[0].title.slice(0, 40) + "..."
-                    : props.prevNextArticles[0].title}
+                  {prevNextPosts[0].title.length > 40
+                    ? prevNextPosts[0].title.slice(0, 40) + '...'
+                    : prevNextPosts[0].title}
                 </div>
               </a>
             </Link>
           </div>
         ) : null}
-        {props.prevNextArticles[1] ? (
+        {prevNextPosts[1] ? (
           <div className={classes.navnext}>
             <Link
               legacyBehavior
               href={`/blog/${urlStringFormatter(
-                props.prevNextArticles[1].title,
-                props.prevNextArticles[1].id
+                prevNextPosts[1].title,
+                prevNextPosts[1].id
               )}`}
             >
               <a>
@@ -204,9 +207,9 @@ function BlogArticleDetail(props: {
                   <span>Article Suivant</span>
                 </div>
                 <div className={classes.nexttext}>
-                  {props.prevNextArticles[1].title.length > 40
-                    ? props.prevNextArticles[1].title.slice(0, 40) + "..."
-                    : props.prevNextArticles[1].title}
+                  {prevNextPosts[1].title.length > 40
+                    ? prevNextPosts[1].title.slice(0, 40) + '...'
+                    : prevNextPosts[1].title}
                 </div>
               </a>
             </Link>
@@ -219,8 +222,8 @@ function BlogArticleDetail(props: {
           <h3>ARTICLES RECOMMANDES</h3>
         </div>
         <div className={classes.relatedpostsentry}>
-          {props.recommendedArticles.map((article) => (
-            <article>
+          {recommendedArticles.map((article) => (
+            <article key={article.id}>
               <div className={classes.thumbnail}>
                 <Link
                   legacyBehavior
@@ -231,7 +234,7 @@ function BlogArticleDetail(props: {
                 >
                   <a>
                     <Image
-                      src={article.imageUrl}
+                      src={article.imageUrl ?? ''}
                       alt={article.title}
                       width={isLargerThan750 ? 239 : 667}
                       height={isLargerThan750 ? 124 : 347}
@@ -248,21 +251,21 @@ function BlogArticleDetail(props: {
                 <a>
                   <h3>
                     {article.title.length > 40
-                      ? article.title.slice(0, 39) + "..."
+                      ? article.title.slice(0, 39) + '...'
                       : article.title}
                   </h3>
                 </a>
               </Link>
               <time className="published" dateTime={article.issueDate}>
                 <Icon as={FiClock} h={3} w={3} size="md" mr="4px" />
-                <div>{newDate(props.article.issueDate)}</div>
+                <div>{newDate(article.issueDate)}</div>
               </time>
             </article>
           ))}
         </div>
       </section>
       <CommentsSection
-        article={props.article}
+        article={article}
         comments={comments}
         setComments={setComments}
       />

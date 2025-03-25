@@ -1,6 +1,6 @@
-import { useState, useRef, useEffect } from "react";
-import classes from "./Comment.module.css";
-import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
+import { useState, useRef, useEffect, Dispatch, SetStateAction } from 'react';
+import classes from './Comment.module.css';
+import { EditIcon, DeleteIcon } from '@chakra-ui/icons';
 import {
   Button,
   Spinner,
@@ -10,47 +10,61 @@ import {
   AlertDialogHeader,
   AlertDialogContent,
   AlertDialogOverlay,
-} from "@chakra-ui/react";
-import axios from "axios";
-import { newDate } from "../../../lib/utils/index";
+} from '@chakra-ui/react';
+import axios from 'axios';
+import { newDate } from '../../../lib/utils/index';
+import { Session } from 'next-auth';
+import { PostComment } from '../../../types';
 
-function Comment(props: {
-  idx;
-  id;
-  ArticleID;
-  AuthorID;
-  AuthorName;
-  Content;
-  issueDate;
-  sessionUser;
-  setComments;
-}) {
+type CommentProps = {
+  idx: number;
+  id: number;
+  ArticleID: number;
+  AuthorID: number;
+  AuthorName?: string;
+  Content: string;
+  issueDate: string;
+  sessionUser?: Session['user'];
+  setComments: Dispatch<SetStateAction<PostComment[]>>;
+};
+
+export default function Comment({
+  idx,
+  id,
+  AuthorID,
+  AuthorName,
+  Content,
+  issueDate,
+  sessionUser,
+  setComments,
+}: CommentProps) {
   const [editOn, setEditOn] = useState(false);
-  const [commentText, setCommentText] = useState(props.Content);
+  const [commentText, setCommentText] = useState(Content);
   const [postingComment, setPostingComment] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const inputRef = useRef<HTMLTextAreaElement>();
+  const inputRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
-    if (editOn) {
+    if (editOn && inputRef.current) {
       const end = inputRef.current.value.length;
       inputRef.current.setSelectionRange(end, end);
       inputRef.current.focus();
     }
   }, [editOn]);
 
-  function autoResize(el) {
+  function autoResize(el: HTMLElement) {
     // console.log(el);
-    el.style.height = "auto";
-    el.style.height = el.scrollHeight + 2 + "px";
+    el.style.height = 'auto';
+    el.style.height = el.scrollHeight + 2 + 'px';
   }
 
   async function updateComment() {
+    if (!sessionUser) return;
     setPostingComment(true);
 
     try {
-      const { data } = await axios.put(
-        `${process.env.NEXT_PUBLIC_API_URL}/comments/${props.id}`,
+      await axios.put(
+        `${process.env.NEXT_PUBLIC_API_URL}/comments/${id}`,
         {
           data: {
             Content: commentText,
@@ -58,7 +72,7 @@ function Comment(props: {
         },
         {
           headers: {
-            Authorization: `Bearer ${props.sessionUser.accessToken}`,
+            Authorization: `Bearer ${sessionUser.accessToken}`,
           },
         }
       );
@@ -66,13 +80,12 @@ function Comment(props: {
       console.error(err);
     }
 
-    props.setComments((prev) => {
-      const newCom = { ...prev[props.idx], Content: commentText };
+    setComments((prev) => {
       //   console.log(newCom);
       return [
-        ...prev.slice(0, props.idx),
-        { ...prev[props.idx], Content: commentText },
-        ...prev.slice(props.idx + 1),
+        ...prev.slice(0, idx),
+        { ...prev[idx], Content: commentText },
+        ...prev.slice(idx + 1),
       ];
     });
 
@@ -81,17 +94,16 @@ function Comment(props: {
   }
 
   async function deleteComment() {
+    if (!sessionUser) return;
+
     setPostingComment(true);
 
     try {
-      const { data } = await axios.delete(
-        `${process.env.NEXT_PUBLIC_API_URL}/comments/${props.id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${props.sessionUser.accessToken}`,
-          },
-        }
-      );
+      await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/comments/${id}`, {
+        headers: {
+          Authorization: `Bearer ${sessionUser.accessToken}`,
+        },
+      });
     } catch (err) {
       console.error(err);
     }
@@ -99,12 +111,12 @@ function Comment(props: {
     setPostingComment(false);
     setIsOpen(false);
 
-    props.setComments((prev) => prev.filter((com) => com.id !== props.id));
+    setComments((prev) => prev.filter((com) => com.id !== id));
   }
 
   function DeleteAlertDialog() {
     const onClose = () => setIsOpen(false);
-    const cancelRef = useRef();
+    const cancelRef = useRef(null);
 
     return (
       <>
@@ -136,7 +148,7 @@ function Comment(props: {
                   ml={3}
                   style={{ minWidth: 108 }}
                 >
-                  {postingComment ? <Spinner size="sm" /> : "Supprimer"}
+                  {postingComment ? <Spinner size="sm" /> : 'Supprimer'}
                 </Button>
               </AlertDialogFooter>
             </AlertDialogContent>
@@ -147,8 +159,8 @@ function Comment(props: {
   }
 
   return (
-    <div key={props.id} className={classes.commenttext}>
-      {!editOn && props.sessionUser?.id === props.AuthorID ? (
+    <div key={id} className={classes.commenttext}>
+      {!editOn && sessionUser?.id === AuthorID ? (
         <div className={classes.commentbtns}>
           <EditIcon onClick={() => setEditOn(true)} />
           <DeleteIcon onClick={() => setIsOpen(true)} />
@@ -156,9 +168,9 @@ function Comment(props: {
         </div>
       ) : null}
       <p className={classes.meta}>
-        <strong className={classes.author}>{props.AuthorName}</strong>
+        <strong className={classes.author}>{AuthorName}</strong>
         <span>-</span>
-        <time dateTime={props.issueDate}>{newDate(props.issueDate)}</time>
+        <time dateTime={issueDate}>{newDate(issueDate)}</time>
       </p>
       <div className={classes.description}>
         {editOn ? (
@@ -179,7 +191,7 @@ function Comment(props: {
                   className={classes.cancelbutton}
                   onClick={() => {
                     setPostingComment(false);
-                    setCommentText(props.Content);
+                    setCommentText(Content);
                     // inputRef.current.style.height = "24px";
                     setEditOn(false);
                   }}
@@ -191,7 +203,7 @@ function Comment(props: {
                   disabled={commentText ? false : true}
                   onClick={() => updateComment()}
                 >
-                  {postingComment ? <Spinner size="sm" /> : "SAUVEGARDER"}
+                  {postingComment ? <Spinner size="sm" /> : 'SAUVEGARDER'}
                 </button>
               </div>
             </div>
@@ -203,5 +215,3 @@ function Comment(props: {
     </div>
   );
 }
-
-export default Comment;

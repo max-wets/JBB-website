@@ -5,7 +5,7 @@ import { Alert, AlertIcon, CloseButton } from "@chakra-ui/react";
 import Head from "next/head";
 
 function SignupPage() {
-  const [error, setError] = useState(null);
+  const [error, setError] = useState("");
   const [displayAlert, setDisplayAlert] = useState(false);
 
   function AlertMessage() {
@@ -34,11 +34,11 @@ function SignupPage() {
     if (!displayAlert) {
       if (error) setDisplayAlert(true);
       setTimeout(() => {
-        setError(null);
+        setError("");
         setDisplayAlert(false);
       }, 5000);
     }
-  }, [error]);
+  }, [displayAlert, error]);
 
   return (
     <>

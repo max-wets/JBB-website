@@ -1,18 +1,30 @@
-import classes from "./HomeComponent.module.css";
-import Image from "next/image";
-import Link from "next/link";
-import bgPicture from "../../../public/bg-picture.jpg";
-import ProductItem from "../products/ProductItem";
-import { useEffect, useState } from "react";
-import { Grid, GridItem, useMediaQuery, Tooltip, Icon } from "@chakra-ui/react";
-import { FiClock } from "react-icons/fi";
-import { BiComment } from "react-icons/bi";
-import Head from "next/head";
-import { urlStringFormatter, newDate } from "../../lib/utils";
+import classes from './HomeComponent.module.css';
+import Image from 'next/image';
+import Link from 'next/link';
+import ProductItem from '../products/ProductItem';
+import { useEffect, useState } from 'react';
+import { Grid, GridItem, useMediaQuery, Tooltip, Icon } from '@chakra-ui/react';
+import { FiClock } from 'react-icons/fi';
+import Head from 'next/head';
+import { urlStringFormatter, newDate } from '../../lib/utils';
+import { BlogPost, Product } from '../../types';
 
-function HomeComponent(props: { recentProducts; recentArticles }) {
-  const [isLargerThan1000] = useMediaQuery("(min-width: 1000px)");
-  const [isLargerThan750] = useMediaQuery("(min-width: 750px)");
+type HomeComponentProps = {
+  recentProducts: Product[];
+  recentArticles: BlogPost[];
+};
+
+type ArticleItem = {
+  idx: number;
+  article: BlogPost;
+};
+
+export default function HomeComponent({
+  recentProducts,
+  recentArticles,
+}: HomeComponentProps) {
+  const [isLargerThan1000] = useMediaQuery('(min-width: 1000px)');
+  const [isLargerThan750] = useMediaQuery('(min-width: 750px)');
   const [serverRendering, setServerRendering] = useState(true);
 
   useEffect(() => {
@@ -22,33 +34,30 @@ function HomeComponent(props: { recentProducts; recentArticles }) {
   }, []);
 
   function determineItemGridDisplay() {
-    if (isLargerThan1000) return "repeat(4, 1fr)";
-    if (isLargerThan750) return "repeat(3, 1fr)";
-    return "repeat(1, 1fr)";
+    if (isLargerThan1000) return 'repeat(4, 1fr)';
+    if (isLargerThan750) return 'repeat(3, 1fr)';
+    return 'repeat(1, 1fr)';
   }
 
   function determineArticleGridDisplay() {
-    if (isLargerThan1000) return "repeat(3, 1fr)";
-    if (isLargerThan750) return "repeat(2, 1fr)";
-    return "repeat(1, 1fr)";
+    if (isLargerThan1000) return 'repeat(3, 1fr)';
+    if (isLargerThan750) return 'repeat(2, 1fr)';
+    return 'repeat(1, 1fr)';
   }
 
-  function ArticleItem(props: { idx; article }) {
+  function ArticleItem({ idx, article }: ArticleItem) {
     // console.log(props.article.description);
-    const [descriptionExcerpt, setDescriptionExcerpt] = useState("");
-    const articleUrl = urlStringFormatter(
-      props.article.title,
-      props.article.id
-    );
+    const [descriptionExcerpt, setDescriptionExcerpt] = useState('');
+    const articleUrl = urlStringFormatter(article.title, article.id);
 
     useEffect(() => {
       let cleanExcerpt;
 
-      if (props.article.description?.length > 100) {
-        const excerpt = props.article.description.substring(0, 100);
-        const regex = new RegExp("\\n", "g");
+      if (article.description?.length > 100) {
+        const excerpt = article.description.substring(0, 100);
+        const regex = new RegExp('\\n', 'g');
         cleanExcerpt = excerpt
-          .split(" ")
+          .split(' ')
           .map((segment) => {
             if (regex.test(segment)) {
               const newSegment = segment.replace(regex, ` `);
@@ -56,14 +65,13 @@ function HomeComponent(props: { recentProducts; recentArticles }) {
             }
             return segment;
           })
-          .join(" ");
-        // console.log(cleanExcerpt);
+          .join(' ');
       } else {
-        cleanExcerpt = props.article.description;
+        cleanExcerpt = article.description;
       }
 
       setDescriptionExcerpt(cleanExcerpt);
-    }, []);
+    }, [article.description]);
 
     return (
       <>
@@ -78,16 +86,16 @@ function HomeComponent(props: { recentProducts; recentArticles }) {
             property="og:description"
             content="Bienvenue sur Julie Baronnie Beauty, ici vous trouverez toutes mes techniques anti âge"
           />
-          <meta property="og:image" content={"/bg-picture.jpg"} />
+          <meta property="og:image" content={'/bg-picture.jpg'} />
         </Head>
 
-        <div key={props.idx} className={classes.articlectr}>
+        <div key={idx} className={classes.articlectr}>
           <div className={classes.thumbnail}>
             <Link legacyBehavior href={`/blog/${articleUrl}`}>
               <a>
                 <Image
-                  src={props.article.imageUrl}
-                  alt={props.article.title}
+                  src={article.imageUrl ?? ''}
+                  alt={article.title}
                   width={351}
                   height={181}
                   layout="responsive"
@@ -103,14 +111,14 @@ function HomeComponent(props: { recentProducts; recentArticles }) {
             <Link legacyBehavior href={`/blog/${articleUrl}`}>
               <a>
                 <Tooltip
-                  label={props.article.title}
+                  label={article.title}
                   aria-label="article title"
                   openDelay={300}
                 >
                   <h2>
-                    {props.article.title.length > 30
-                      ? props.article.title.substring(0, 30) + "..."
-                      : props.article.title}
+                    {article.title.length > 30
+                      ? article.title.substring(0, 30) + '...'
+                      : article.title}
                   </h2>
                 </Tooltip>
               </a>
@@ -120,7 +128,7 @@ function HomeComponent(props: { recentProducts; recentArticles }) {
           <ul className={classes.meta}>
             <li>
               <Icon as={FiClock} h={5} w={5} size="sm" mt="2px" mr="2px" />
-              <div>{newDate(props.article.issueDate)}</div>
+              <div>{newDate(article.issueDate)}</div>
             </li>
           </ul>
         </div>
@@ -170,12 +178,12 @@ function HomeComponent(props: { recentProducts; recentArticles }) {
                   <Grid
                     templateColumns={
                       serverRendering
-                        ? "repeat(4, 1fr)"
+                        ? 'repeat(4, 1fr)'
                         : determineItemGridDisplay()
                     }
                     gap={4}
                   >
-                    {props.recentProducts.map((product, idx) => (
+                    {recentProducts.map((product, idx) => (
                       <GridItem key={idx} w="100%" border="1px solid #e9e9e9">
                         <ProductItem product={product} idx={idx} />
                       </GridItem>
@@ -200,14 +208,14 @@ function HomeComponent(props: { recentProducts; recentArticles }) {
                   <Grid
                     templateColumns={
                       serverRendering
-                        ? "repeat(3, 3fr)"
+                        ? 'repeat(3, 3fr)'
                         : determineArticleGridDisplay()
                     }
                     gap={4}
                     maxW="94vw"
                     margin="auto"
                   >
-                    {props.recentArticles.map((article, idx) => (
+                    {recentArticles.map((article, idx) => (
                       <GridItem
                         key={idx}
                         w="100%"
@@ -228,5 +236,3 @@ function HomeComponent(props: { recentProducts; recentArticles }) {
     </main>
   );
 }
-
-export default HomeComponent;

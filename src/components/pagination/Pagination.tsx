@@ -1,20 +1,27 @@
-import React from "react";
-import classnames from "classnames";
-import { usePagination, DOTS } from "../../hooks/usePagination";
-import classes from "./Pagination.module.css";
+import React from 'react';
+import classnames from 'classnames';
+import { usePagination, DOTS } from '../../hooks/usePagination';
+import classes from './Pagination.module.css';
 
-const Pagination = (props) => {
-  const {
-    onPageChange,
-    totalCount,
-    siblingCount = 1,
-    currentPage,
-    pageSize,
-    className,
-  } = props;
+type PaginationProps = {
+  onPageChange: (pageNumber: number | string) => void;
+  totalCount: number;
+  siblingCount?: number;
+  currentPage: number | string;
+  pageSize: number;
+  className: string;
+};
 
+const Pagination = ({
+  onPageChange,
+  totalCount,
+  siblingCount = 1,
+  currentPage,
+  pageSize,
+  className,
+}: PaginationProps) => {
   const paginationRange = usePagination({
-    currentPage,
+    currentPage: Number(currentPage),
     totalCount,
     siblingCount,
     pageSize,
@@ -25,17 +32,17 @@ const Pagination = (props) => {
     return null;
   }
 
-  let lastPage = paginationRange[paginationRange.length - 1];
+  const lastPage = paginationRange[paginationRange.length - 1];
 
   const onNext = () => {
     if (currentPage < lastPage) {
-      onPageChange(currentPage + 1);
+      onPageChange(Number(currentPage) + 1);
     }
   };
 
   const onPrevious = () => {
-    if (currentPage > 1) {
-      onPageChange(currentPage - 1);
+    if (Number(currentPage) > 1) {
+      onPageChange(Number(currentPage) - 1);
     }
   };
 

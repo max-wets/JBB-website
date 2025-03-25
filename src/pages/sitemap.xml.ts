@@ -1,9 +1,14 @@
+import { GetServerSideProps } from "next";
 import { urlStringFormatter } from "../lib/utils";
+import { ApiResource, ApiResponse, BlogPostApi, ProductApi } from "../types";
 
 const EXTERNAL_DATA_URL = process.env.NEXT_PUBLIC_API_URL;
 const APP_URL = "https://www.juliebaronniebeauty.com";
 
-function generateSiteMap(posts, items) {
+function generateSiteMap(
+  posts: ApiResource<BlogPostApi>[],
+  items: ApiResource<ProductApi>[],
+) {
   return `<?xml version="1.0" encoding="UTF-8"?>
    <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
      <url>
@@ -18,7 +23,7 @@ function generateSiteMap(posts, items) {
        <url>
            <loc>${`${APP_URL}/blog/${urlStringFormatter(
              attributes.Name,
-             id
+             id,
            )}`}</loc>
        </url>
      `;
@@ -74,20 +79,20 @@ function SiteMap() {
   // getServerSideProps will do the heavy lifting
 }
 
-export async function getServerSideProps({ res }) {
+export const getServerSideProps: GetServerSideProps = async ({ res }) => {
   // We make an API call to gather the URLs for our site
   // posts
   const requestPosts = await fetch(
-    `${EXTERNAL_DATA_URL}/articles?pagination[pageSize]=100`
+    `${EXTERNAL_DATA_URL}/articles?pagination[pageSize]=100`,
   );
-  const responsePosts = await requestPosts.json();
+  const responsePosts: ApiResponse<BlogPostApi> = await requestPosts.json();
   const posts = responsePosts.data;
 
   // items
   const requestItems = await fetch(
-    `${EXTERNAL_DATA_URL}/items?pagination[pageSize]=100`
+    `${EXTERNAL_DATA_URL}/items?pagination[pageSize]=100`,
   );
-  const responseItems = await requestItems.json();
+  const responseItems: ApiResponse<ProductApi> = await requestItems.json();
   const items = responseItems.data;
 
   // We generate the XML sitemap with the posts data
@@ -101,6 +106,6 @@ export async function getServerSideProps({ res }) {
   return {
     props: {},
   };
-}
+};
 
 export default SiteMap;

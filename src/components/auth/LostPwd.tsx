@@ -1,13 +1,18 @@
 import classes from "./LostPwd.module.css";
-import Link from "next/link";
 import { Field, Form, Formik, ErrorMessage } from "formik";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
+import { Dispatch, SetStateAction } from "react";
 
 interface Errors {
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
-function Signup({ setError, setSuccess }) {
+type LostPwdProps = {
+  setError: Dispatch<SetStateAction<string>>;
+  setSuccess: Dispatch<SetStateAction<string>>;
+};
+
+export default function LostPwd({ setError, setSuccess }: LostPwdProps) {
   return (
     <div className={classes.container}>
       <div className={classes.contentarea}>
@@ -30,12 +35,8 @@ function Signup({ setError, setSuccess }) {
               return errors;
             }}
             onSubmit={async (values, { setSubmitting }) => {
-              // setTimeout(() => {
-              //   alert(JSON.stringify(values, null, 2));
-              //   setSubmitting(false);
-              // }, 400);
               try {
-                const res = await axios.post(
+                await axios.post(
                   `${process.env.NEXT_PUBLIC_API_URL}/auth/forgot-password`,
                   {
                     email: values.email,
@@ -45,16 +46,17 @@ function Signup({ setError, setSuccess }) {
                       "Content-Type": "application/json; charset=utf-8",
                       "Access-Control-Allow-Origin": "*",
                     },
-                  }
+                  },
                 );
-                const data = res.data;
-                // if (res.data) console.log(data);
                 setSubmitting(false);
                 setSuccess("Un email vous a été envoyé !");
               } catch (err) {
-                const errMessage = err.response.data.error.message;
-                console.error("is error:", errMessage);
-                setError(errMessage);
+                if (err instanceof AxiosError && err.response) {
+                  const errMessage = err.response.data.error.message;
+                  setError(errMessage);
+                }
+                console.error(err);
+                throw new Error("Something wrong happened!");
               }
             }}
           >
@@ -91,5 +93,3 @@ function Signup({ setError, setSuccess }) {
     </div>
   );
 }
-
-export default Signup;

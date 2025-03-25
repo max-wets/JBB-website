@@ -1,33 +1,37 @@
-import classes from "./BlogArticlesList.module.css";
-import { Article } from "./BlogArticleItem";
-import BlogArticle from "./BlogArticleItem";
-import Pagination from "../pagination/Pagination";
-import { useState, useMemo, useEffect } from "react";
-import { Spinner } from "@chakra-ui/react";
+import classes from './BlogArticlesList.module.css';
+import BlogArticle from './BlogArticleItem';
+import Pagination from '../pagination/Pagination';
+import { useState, useMemo, useEffect } from 'react';
+import { BlogPost } from '../../types';
 
-let PageSize = 3;
-
-function BlogArticlesList(props: {
-  articles: Article[];
+type BlogArticlesListProps = {
+  articles: BlogPost[];
   currentPage: number;
-  setCurrentPage: (arg0: any) => any;
-}) {
-  const [loadedArticles, setLoadedArticles] = useState(props.articles);
+  setCurrentPage: (page: number) => void;
+};
+
+const PageSize = 3;
+
+function BlogArticlesList({
+  articles,
+  currentPage,
+  setCurrentPage,
+}: BlogArticlesListProps) {
+  const [loadedArticles, setLoadedArticles] = useState(articles);
 
   useEffect(() => {
-    setLoadedArticles(props.articles);
-    // console.log("Blog List articles:", loadedArticles);
-  }, [props.articles]);
+    setLoadedArticles(articles);
+  }, [articles]);
 
   useEffect(() => {
-    props.setCurrentPage(1);
-  }, []);
+    setCurrentPage(1);
+  }, [setCurrentPage]);
 
   const currentData = useMemo(() => {
-    const firstPageIndex = (props.currentPage - 1) * PageSize;
+    const firstPageIndex = (currentPage - 1) * PageSize;
     const lastPageIndex = firstPageIndex + PageSize;
     return loadedArticles.slice(firstPageIndex, lastPageIndex);
-  }, [props.currentPage, loadedArticles]);
+  }, [currentPage, loadedArticles]);
 
   return (
     <div className={classes.contentarea}>
@@ -47,10 +51,10 @@ function BlogArticlesList(props: {
         ))}
         <Pagination
           className={classes.paginationbar}
-          currentPage={props.currentPage}
+          currentPage={currentPage}
           totalCount={loadedArticles.length}
           pageSize={PageSize}
-          onPageChange={(page) => props.setCurrentPage(page)}
+          onPageChange={(page) => setCurrentPage(Number(page))}
         />
       </div>
     </div>

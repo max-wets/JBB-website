@@ -1,29 +1,37 @@
 import classes from "./Login.module.css";
 import Link from "next/link";
-import { useState, useEffect, useRef } from "react";
+import { Dispatch, SetStateAction, useEffect, useRef } from "react";
 import { useRouter } from "next/router";
-import { Field, Form, Formik, ErrorMessage } from "formik";
-import { signIn, getCsrfToken } from "next-auth/react";
+import { Field, Formik, ErrorMessage } from "formik";
+import { signIn } from "next-auth/react";
 import { useSession } from "next-auth/react";
 import { signOut } from "next-auth/react";
 
 interface Errors {
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
-function Login({ crsfToken, setError }) {
+type LoginProps = {
+  crsfToken?: string;
+  setError: Dispatch<SetStateAction<string>>;
+};
+
+export default function Login({ crsfToken, setError }: LoginProps) {
   const router = useRouter();
-  const { data: session, status } = useSession();
-  const previousPath = useRef(null);
+  const { data: session } = useSession();
+  const previousPath = useRef("");
 
   useEffect(() => {
     router.prefetch("/");
     if (previousPath.current) router.prefetch(previousPath.current);
-  }, []);
+  }, [router]);
 
   useEffect(() => {
     // console.log("previous path:", previousPath.current);
-    previousPath.current = globalThis.sessionStorage.getItem("prevPath");
+    const prevPath = globalThis.sessionStorage.getItem("prevPath");
+    if (prevPath) {
+      previousPath.current = prevPath;
+    }
   }, [router.asPath]);
 
   return (
@@ -58,15 +66,15 @@ function Login({ crsfToken, setError }) {
                 callbackUrl: callbackUrl,
               });
 
-              if (res?.error) {
-                if (!res.ok)
+              if (res && !res.ok) {
+                if (res.error)
                   setError(
-                    "Email et/ou mot de passe non valide(s). Veuillez réessayer."
+                    "Email et/ou mot de passe non valide(s). Veuillez réessayer.",
                   );
-              } else {
+              } else if (res) {
                 // console.log(callbackUrl);
                 if (res.url) router.push(callbackUrl);
-                setError(null);
+                setError("");
                 setSubmitting(false);
               }
             }}
@@ -128,7 +136,7 @@ function Login({ crsfToken, setError }) {
                 <p>
                   Pas encore inscrit ?{" "}
                   <Link legacyBehavior href={`/signup`}>
-                    <a>S'enregistrer</a>
+                    <a>S&apos;enregistrer</a>
                   </Link>
                 </p>
               </form>
@@ -139,5 +147,3 @@ function Login({ crsfToken, setError }) {
     </div>
   );
 }
-
-export default Login;

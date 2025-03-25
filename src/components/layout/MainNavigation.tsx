@@ -20,12 +20,11 @@ import { useSession } from "next-auth/react";
 import { signOut } from "next-auth/react";
 
 let mounted = false;
-function MainNavigation() {
+export default function MainNavigation() {
   const [isLargerThan1024] = useMediaQuery("(min-width: 1024px)");
-  const [isLargerThan750] = useMediaQuery("(min-width: 750px)");
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const btnRef = useRef();
-  const { data: session, status } = useSession();
+  const btnRef = useRef(null);
+  const { status } = useSession();
 
   useEffect(() => {
     mounted = true;
@@ -133,7 +132,7 @@ function MainNavigation() {
           </div>
           <div className={`${classes.small} ${classes.column}`}>
             <div className={classes.logowrapper}>
-              <Link legacyBehavior href={process.env.NEXT_PUBLIC_APP_URL}>
+              <Link legacyBehavior href={process.env.NEXT_PUBLIC_APP_URL ?? ""}>
                 <a>
                   <p className={classes.logo}>JBBeauty</p>
                 </a>
@@ -226,5 +225,3 @@ function MainNavigation() {
   }
   return null;
 }
-
-export default MainNavigation;
