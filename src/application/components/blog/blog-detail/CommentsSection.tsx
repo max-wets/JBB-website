@@ -3,9 +3,9 @@ import Link from 'next/link';
 import { Spinner } from '@chakra-ui/react';
 import { Dispatch, SetStateAction, useRef, useState } from 'react';
 import { useSession } from 'next-auth/react';
-import { BlogPost, PostComment } from '../../../types';
 import CommentsList from './CommentsList';
 import axios from 'axios';
+import { BlogPost, PostComment } from '@/domain/types';
 
 type CommentsSectionProps = {
   article: BlogPost;

@@ -1,13 +1,18 @@
-import { GetServerSideProps } from "next";
-import { urlStringFormatter } from "../lib/utils";
-import { ApiResource, ApiResponse, BlogPostApi, ProductApi } from "../types";
+import { GetServerSideProps } from 'next';
+import { urlStringFormatter } from '../application/utils';
+import {
+  ApiResource,
+  ApiResponse,
+  BlogPostApi,
+  ProductApi,
+} from '@/domain/types';
 
 const EXTERNAL_DATA_URL = process.env.NEXT_PUBLIC_API_URL;
-const APP_URL = "https://www.juliebaronniebeauty.com";
+const APP_URL = 'https://www.juliebaronniebeauty.com';
 
 function generateSiteMap(
   posts: ApiResource<BlogPostApi>[],
-  items: ApiResource<ProductApi>[],
+  items: ApiResource<ProductApi>[]
 ) {
   return `<?xml version="1.0" encoding="UTF-8"?>
    <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
@@ -23,12 +28,12 @@ function generateSiteMap(
        <url>
            <loc>${`${APP_URL}/blog/${urlStringFormatter(
              attributes.Name,
-             id,
+             id
            )}`}</loc>
        </url>
      `;
        })
-       .join("")}
+       .join('')}
        <url>
         <loc>${APP_URL}/products</loc>
        </url>
@@ -40,7 +45,7 @@ function generateSiteMap(
        </url>
      `;
          })
-         .join("")}
+         .join('')}
         <url>
             <loc>${APP_URL}/login</loc>
        </url>
@@ -83,14 +88,14 @@ export const getServerSideProps: GetServerSideProps = async ({ res }) => {
   // We make an API call to gather the URLs for our site
   // posts
   const requestPosts = await fetch(
-    `${EXTERNAL_DATA_URL}/articles?pagination[pageSize]=100`,
+    `${EXTERNAL_DATA_URL}/articles?pagination[pageSize]=100`
   );
   const responsePosts: ApiResponse<BlogPostApi> = await requestPosts.json();
   const posts = responsePosts.data;
 
   // items
   const requestItems = await fetch(
-    `${EXTERNAL_DATA_URL}/items?pagination[pageSize]=100`,
+    `${EXTERNAL_DATA_URL}/items?pagination[pageSize]=100`
   );
   const responseItems: ApiResponse<ProductApi> = await requestItems.json();
   const items = responseItems.data;
@@ -98,7 +103,7 @@ export const getServerSideProps: GetServerSideProps = async ({ res }) => {
   // We generate the XML sitemap with the posts data
   const sitemap = generateSiteMap(posts, items);
 
-  res.setHeader("Content-Type", "text/xml");
+  res.setHeader('Content-Type', 'text/xml');
   // we send the XML to the browser
   res.write(sitemap);
   res.end();

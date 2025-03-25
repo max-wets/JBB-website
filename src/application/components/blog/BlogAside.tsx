@@ -3,9 +3,9 @@ import Link from 'next/link';
 import { Icon } from '@chakra-ui/react';
 import Image from 'next/image';
 import { BsFillEnvelopeFill, BsFacebook, BsInstagram } from 'react-icons/bs';
-import { urlStringFormatter } from '../../lib/utils';
-import { ActiveCategories, BlogPost } from '../../types';
 import React, { Dispatch, SetStateAction } from 'react';
+import { urlStringFormatter } from '@/application/utils';
+import { ActiveCategories, BlogPost } from '@/domain/types';
 
 type BlogAsideProps = {
   articles: BlogPost[];

@@ -1,11 +1,11 @@
-import Image from "next/image";
-import Link from "next/link";
-import { connectStateResults } from "react-instantsearch-dom";
-import classes from "./CustomHits.module.css";
-import Pagination from "../pagination/Pagination";
-import { useMemo, useState } from "react";
-import { urlStringFormatter } from "../../lib/utils";
-import { StateResultsProvided } from "react-instantsearch-core";
+import Image from 'next/image';
+import Link from 'next/link';
+import { connectStateResults } from 'react-instantsearch-dom';
+import classes from './CustomHits.module.css';
+import Pagination from '../pagination/Pagination';
+import { useMemo, useState } from 'react';
+import { StateResultsProvided } from 'react-instantsearch-core';
+import { urlStringFormatter } from '@/application/utils';
 
 type ResultHitProps = {
   id: number;
@@ -57,7 +57,7 @@ function Hits({ searchState, searchResults }: HitsProps): JSX.Element {
               </h2>
             </header>
             <div className={classes.contentsummary}>
-              <p>{description.slice(0, 200) + "..."}</p>
+              <p>{description.slice(0, 200) + '...'}</p>
             </div>
             <div className={classes.readmore}>
               <Link legacyBehavior href={`/blog/${articleUrl}`}>

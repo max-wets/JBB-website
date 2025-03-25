@@ -11,7 +11,7 @@ import {
 import Image from 'next/image';
 import { BsFillEnvelopeFill, BsFacebook, BsInstagram } from 'react-icons/bs';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { ActiveCategories, Product } from '../../types';
+import { ActiveCategories, Product } from '@/domain/types';
 
 type BlogAsideProps = {
   products: Product[];

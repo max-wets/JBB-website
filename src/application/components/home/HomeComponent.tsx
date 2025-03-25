@@ -6,8 +6,8 @@ import { useEffect, useState } from 'react';
 import { Grid, GridItem, useMediaQuery, Tooltip, Icon } from '@chakra-ui/react';
 import { FiClock } from 'react-icons/fi';
 import Head from 'next/head';
-import { urlStringFormatter, newDate } from '../../lib/utils';
-import { BlogPost, Product } from '../../types';
+import { BlogPost, Product } from '@/domain/types';
+import { newDate, urlStringFormatter } from '@/application/utils';
 
 type HomeComponentProps = {
   recentProducts: Product[];

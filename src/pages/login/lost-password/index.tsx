@@ -1,18 +1,18 @@
-import LostPwdHeading from "../../../components/auth/LostPwdHeading";
-import { useState, useEffect } from "react";
-import { Alert, AlertIcon, CloseButton } from "@chakra-ui/react";
-import Head from "next/head";
-import LostPwd from "../../../components/auth/LostPwd";
+import LostPwdHeading from '@/application/components/auth/LostPwdHeading';
+import { useState, useEffect } from 'react';
+import { Alert, AlertIcon, CloseButton } from '@chakra-ui/react';
+import Head from 'next/head';
+import LostPwd from '@/application/components/auth/LostPwd';
 
 function LostPwdPage() {
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
   const [displayAlert, setDisplayAlert] = useState(false);
 
   function AlertMessage() {
     return (
       <Alert
-        status={error ? "error" : "success"}
+        status={error ? 'error' : 'success'}
         position="fixed"
         top="0"
         zIndex="99"
@@ -33,7 +33,7 @@ function LostPwdPage() {
     if (!displayAlert) {
       if (error) setDisplayAlert(true);
       setTimeout(() => {
-        setError("");
+        setError('');
         setDisplayAlert(false);
       }, 5000);
     }
@@ -43,7 +43,7 @@ function LostPwdPage() {
     if (!displayAlert) {
       if (success) setDisplayAlert(true);
       setTimeout(() => {
-        setSuccess("");
+        setSuccess('');
         setDisplayAlert(false);
       }, 5000);
     }

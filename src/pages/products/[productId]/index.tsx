@@ -1,7 +1,7 @@
 import { GetStaticProps, GetStaticPaths, GetStaticPropsResult } from 'next';
-import ProductDetail from '../../../components/products/product-detail/ProductDetail';
-import ProductDetailHeading from '../../../components/products/product-detail/ProductDetailHeading';
-import ProductDetailAside from '../../../components/products/product-detail/ProductDetailAside';
+import ProductDetail from '@/application/components/products/product-detail/ProductDetail';
+import ProductDetailHeading from '@/application/components/products/product-detail/ProductDetailHeading';
+import ProductDetailAside from '@/application/components/products/product-detail/ProductDetailAside';
 import axios from 'axios';
 import { Container, Flex } from '@chakra-ui/react';
 import { useMediaQuery } from '@chakra-ui/react';
@@ -14,7 +14,7 @@ import {
   PrevNextProduct,
   Product,
   ProductApi,
-} from '../../../types';
+} from '@/domain/types';
 
 type ProductDetailPageProps = {
   product: Product;

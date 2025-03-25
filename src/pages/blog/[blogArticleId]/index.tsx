@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import { GetStaticProps, GetStaticPaths, GetStaticPropsResult } from 'next';
-import BlogArticleDetail from '../../../components/blog/blog-detail/BlogArticleDetail';
-import BlogArticleDetailHeading from '../../../components/blog/blog-detail/BlogArticleDetailHeading';
-import BlogArticleAside from '../../../components/blog/blog-detail/BlogArticleAside';
+import BlogArticleDetail from '@/application/components/blog/blog-detail/BlogArticleDetail';
+import BlogArticleDetailHeading from '@/application/components/blog/blog-detail/BlogArticleDetailHeading';
+import BlogArticleAside from '@/application/components/blog/blog-detail/BlogArticleAside';
 import { Container, Flex, useMediaQuery } from '@chakra-ui/react';
 import axios from 'axios';
 import qs from 'qs';
-import { urlStringFormatter } from '../../../lib/utils';
+import { urlStringFormatter } from '../../../application/utils';
 import Head from 'next/head';
 import {
   ApiResource,
@@ -19,7 +19,7 @@ import {
   PostCommentApi,
   PrevNextPost,
   UserApi,
-} from '../../../types';
+} from '@/domain/types';
 
 type BlogDetailPageProps = {
   article: BlogPost;

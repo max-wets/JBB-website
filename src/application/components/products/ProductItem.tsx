@@ -1,7 +1,7 @@
+import { Product } from '@/domain/types';
 import classes from './ProductItem.module.css';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Product } from '../../types';
 
 type ProductItemProps = {
   idx: number;

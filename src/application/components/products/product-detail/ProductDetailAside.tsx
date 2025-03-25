@@ -3,8 +3,8 @@ import Link from 'next/link';
 import { Icon } from '@chakra-ui/react';
 import Image from 'next/image';
 import { BsFillEnvelopeFill, BsFacebook, BsInstagram } from 'react-icons/bs';
-import { urlStringFormatter } from '../../../lib/utils';
-import { BlogPost } from '../../../types';
+import { BlogPost } from '@/domain/types';
+import { urlStringFormatter } from '@/application/utils';
 
 type BlogAsideProps = {
   relatedArticles: BlogPost[];

@@ -12,9 +12,9 @@ import {
   AlertDialogOverlay,
 } from '@chakra-ui/react';
 import axios from 'axios';
-import { newDate } from '../../../lib/utils/index';
 import { Session } from 'next-auth';
-import { PostComment } from '../../../types';
+import { PostComment } from '@/domain/types';
+import { newDate } from '@/application/utils';
 
 type CommentProps = {
   idx: number;
