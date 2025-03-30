@@ -1,9 +1,9 @@
-import classes from './ProductsList.module.css';
-import ProductItem from './ProductItem';
-import Pagination from '../pagination/Pagination';
-import { Grid, GridItem, Flex } from '@chakra-ui/react';
-import { useEffect, useMemo, useState } from 'react';
-import { Product } from '../../types';
+import classes from "./ProductsList.module.css";
+import ProductItem from "./ProductItem";
+import Pagination from "../pagination/Pagination";
+import { Grid, GridItem, Flex } from "@chakra-ui/react";
+import { useEffect, useMemo, useState } from "react";
+import { Product } from "../../types";
 
 type ProductsListProps = {
   products: Product[];
@@ -64,7 +64,7 @@ export default function ProductsList({
         <ViewSelector productsLength={products.length} pageSize={PageSize} />
       </Flex>
       <Grid
-        templateColumns={isLargerThan500 ? 'repeat(3, 1fr)' : 'repeat(1, 1fr)'}
+        templateColumns={isLargerThan500 ? "repeat(3, 1fr)" : "repeat(1, 1fr)"}
         gap={6}
       >
         {currentData.map((product, idx) => (

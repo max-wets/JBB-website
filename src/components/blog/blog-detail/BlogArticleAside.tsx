@@ -1,10 +1,10 @@
-import classes from './BlogArticleAside.module.css';
-import Link from 'next/link';
-import { Icon } from '@chakra-ui/react';
-import Image from 'next/image';
-import { BsFacebook, BsInstagram, BsFillEnvelopeFill } from 'react-icons/bs';
-import { urlStringFormatter, newDate } from '../../../lib/utils';
-import { BlogPostSmall } from '../../../types';
+import classes from "./BlogArticleAside.module.css";
+import Link from "next/link";
+import { Icon } from "@chakra-ui/react";
+import Image from "next/image";
+import { BsFacebook, BsInstagram, BsFillEnvelopeFill } from "react-icons/bs";
+import { urlStringFormatter, newDate } from "../../../lib/utils";
+import { BlogPostSmall } from "../../../types";
 
 type BlogAsideProps = {
   articles: BlogPostSmall[];
@@ -16,14 +16,14 @@ type SideBlogDetailProps = {
 
 export default function BlogAside({ articles }: BlogAsideProps) {
   function SideBlogDetail({ article }: SideBlogDetailProps) {
-    const articleUrl = urlStringFormatter(article.title, article.id);
+    const articleUrl = urlStringFormatter(article.title, article.documentId);
 
     return (
       <li>
         <Link legacyBehavior href={`/blog/${articleUrl}`}>
           <a className={classes.imgctr}>
             <Image
-              src={article.imageUrl ?? ''}
+              src={article.imageUrl ?? ""}
               alt={article.title}
               fill={true}
             />

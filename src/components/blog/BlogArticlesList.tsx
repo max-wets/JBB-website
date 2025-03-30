@@ -1,8 +1,8 @@
-import classes from './BlogArticlesList.module.css';
-import BlogArticle from './BlogArticleItem';
-import Pagination from '../pagination/Pagination';
-import { useState, useMemo, useEffect } from 'react';
-import { BlogPost } from '../../types';
+import classes from "./BlogArticlesList.module.css";
+import BlogArticle from "./BlogArticleItem";
+import Pagination from "../pagination/Pagination";
+import { useState, useMemo, useEffect } from "react";
+import { BlogPost } from "../../types";
 
 type BlogArticlesListProps = {
   articles: BlogPost[];
@@ -40,6 +40,7 @@ function BlogArticlesList({
           <BlogArticle
             key={article.id}
             id={article.id}
+            documentId={article.documentId}
             title={article.title}
             description={article.description}
             issueDate={article.issueDate}

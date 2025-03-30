@@ -1,14 +1,11 @@
 import { GetServerSideProps } from "next";
 import { urlStringFormatter } from "../lib/utils";
-import { ApiResource, ApiResponse, BlogPostApi, ProductApi } from "../types";
+import { ApiResponse, BlogPostApi, ProductApi } from "../types";
 
 const EXTERNAL_DATA_URL = process.env.NEXT_PUBLIC_API_URL;
 const APP_URL = "https://www.juliebaronniebeauty.com";
 
-function generateSiteMap(
-  posts: ApiResource<BlogPostApi>[],
-  items: ApiResource<ProductApi>[],
-) {
+function generateSiteMap(posts: BlogPostApi[], items: ProductApi[]) {
   return `<?xml version="1.0" encoding="UTF-8"?>
    <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
      <url>
@@ -18,12 +15,12 @@ function generateSiteMap(
        <loc>${APP_URL}/blog</loc>
      </url>
      ${posts
-       .map(({ id, attributes }) => {
+       .map(({ documentId, Name }) => {
          return `
        <url>
            <loc>${`${APP_URL}/blog/${urlStringFormatter(
-             attributes.Name,
-             id,
+             Name,
+             documentId,
            )}`}</loc>
        </url>
      `;
@@ -33,10 +30,10 @@ function generateSiteMap(
         <loc>${APP_URL}/products</loc>
        </url>
        ${items
-         .map(({ id }) => {
+         .map(({ documentId }) => {
            return `
        <url>
-           <loc>${`${APP_URL}/products/${id}`}</loc>
+           <loc>${`${APP_URL}/products/${documentId}`}</loc>
        </url>
      `;
          })

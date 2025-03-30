@@ -9,6 +9,7 @@ import { StateResultsProvided } from "react-instantsearch-core";
 
 type ResultHitProps = {
   id: number;
+  documentId: string;
   title: string;
   description: string;
   imageUrl: string;
@@ -27,8 +28,14 @@ function Hits({ searchState, searchResults }: HitsProps): JSX.Element {
     return searchResults?.hits.slice(firstPageIndex, lastPageIndex);
   }, [currentPage, searchResults]);
 
-  function ResultHit({ id, title, description, imageUrl }: ResultHitProps) {
-    const articleUrl = urlStringFormatter(title, id);
+  function ResultHit({
+    id,
+    documentId,
+    title,
+    description,
+    imageUrl,
+  }: ResultHitProps) {
+    const articleUrl = urlStringFormatter(title, documentId);
 
     return (
       <article key={id} className={classes.resulthit}>
@@ -80,6 +87,7 @@ function Hits({ searchState, searchResults }: HitsProps): JSX.Element {
                 <ResultHit
                   key={hit.id}
                   id={hit.id}
+                  documentId={hit.documentId}
                   title={hit.title}
                   description={hit.description}
                   imageUrl={hit.imageUrl}

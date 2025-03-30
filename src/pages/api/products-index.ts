@@ -15,18 +15,19 @@ const indexProducts = client.initIndex(
 const fetchProductsFromDatabase = async (): Promise<Product[]> => {
   try {
     const products = await axios.get<ApiResponse<ProductApi>>(
-      `${process.env.NEXT_PUBLIC_API_URL}/items?populate=%2A`,
+      `${process.env.NEXT_PUBLIC_API_URL}/items?populate=%2A&pagination[pageSize]=100`,
     ); // Fetch data from your database
     const cleanProducts: Product[] = products.data.data.map((article) => ({
       id: article.id.toString(),
-      name: article.attributes.Name,
-      intro: article.attributes.Intro,
-      description: article.attributes.Description,
-      price: article.attributes.Price,
-      issueDate: article.attributes.publishedAt,
-      imageUrl: article.attributes.Image.data.attributes.url,
-      categories: article.attributes.item_categories.data.map((category) => {
-        return category.attributes.Name;
+      documentId: article.documentId,
+      name: article.Name,
+      intro: article.Intro,
+      description: article.Description,
+      price: article.Price,
+      issueDate: article.publishedAt,
+      imageUrl: article.Image.url,
+      categories: article.item_categories.map((category) => {
+        return category.Name;
       }),
     }));
     return cleanProducts;

@@ -1,25 +1,24 @@
-import { GetStaticProps, GetStaticPaths, GetStaticPropsResult } from 'next';
-import ProductDetail from '../../../components/products/product-detail/ProductDetail';
-import ProductDetailHeading from '../../../components/products/product-detail/ProductDetailHeading';
-import ProductDetailAside from '../../../components/products/product-detail/ProductDetailAside';
-import axios from 'axios';
-import { Container, Flex } from '@chakra-ui/react';
-import { useMediaQuery } from '@chakra-ui/react';
-import Head from 'next/head';
+import { GetStaticProps, GetStaticPaths, GetStaticPropsResult } from "next";
+import ProductDetail from "../../../components/products/product-detail/ProductDetail";
+import ProductDetailHeading from "../../../components/products/product-detail/ProductDetailHeading";
+import ProductDetailAside from "../../../components/products/product-detail/ProductDetailAside";
+import axios from "axios";
+import { Container, Flex } from "@chakra-ui/react";
+import { useMediaQuery } from "@chakra-ui/react";
+import Head from "next/head";
 import {
-  ApiResource,
   ApiResponse,
   BlogPost,
   BlogPostApi,
   PrevNextProduct,
   Product,
   ProductApi,
-} from '../../../types';
+} from "../../../types";
 
 type ProductDetailPageProps = {
   product: Product;
   prevNextProducts: (PrevNextProduct | null)[];
-  recommendedProducts: ApiResource<ProductApi>[];
+  recommendedProducts: ProductApi[];
   relatedArticles: BlogPost[];
 };
 
@@ -29,14 +28,7 @@ function ProductDetailPage({
   recommendedProducts,
   relatedArticles,
 }: ProductDetailPageProps) {
-  const [isLargerThan950] = useMediaQuery('(min-width: 950px)');
-
-  // useEffect(() => {
-  //   console.log("product detail:", props.product);
-  //   console.log("prev next products:", props.prevNextProducts);
-  //   console.log("recommended products:", props.recommendedProducts);
-  //   console.log("related articles:", props.relatedArticles);
-  // }, []);
+  const [isLargerThan950] = useMediaQuery("(min-width: 950px)");
 
   return (
     <>
@@ -65,29 +57,34 @@ function ProductDetailPage({
 }
 
 export const getStaticProps: GetStaticProps = async (
-  context
+  context,
 ): Promise<GetStaticPropsResult<ProductDetailPageProps>> => {
-  const pid = Number(context.params!.productId);
+  const productDocumentId = context.params!.productId;
 
-  if (!pid) throw new Error('Product ID missing');
+  if (!productDocumentId) throw new Error("Product ID missing");
 
   const res = await axios.get<ApiResponse<ProductApi>>(
-    `${process.env.NEXT_PUBLIC_API_URL}/items?populate=%2A&pagination[pageSize]=100`
+    `${process.env.NEXT_PUBLIC_API_URL}/items?populate=%2A&pagination[pageSize]=100`,
   );
   const data = res.data.data;
 
-  const rawProduct = data.filter((item) => item.id === pid)[0];
-  const productIdx = data.findIndex((item) => item.id === pid);
+  const rawProduct = data.filter(
+    (item) => item.documentId === productDocumentId,
+  )[0];
+  const productIdx = data.findIndex(
+    (item) => item.documentId === productDocumentId,
+  );
   const product: Product = {
     id: rawProduct.id.toString(),
-    name: rawProduct.attributes.Name,
-    intro: rawProduct.attributes.Intro,
-    price: rawProduct.attributes.Price,
-    description: rawProduct.attributes.Description,
-    issueDate: rawProduct.attributes.publishedAt,
-    imageUrl: rawProduct.attributes.Image.data.attributes.url,
-    categories: rawProduct.attributes.item_categories.data.map((category) => {
-      return category.attributes.Name;
+    documentId: rawProduct.documentId,
+    name: rawProduct.Name,
+    intro: rawProduct.Intro,
+    price: rawProduct.Price,
+    description: rawProduct.Description,
+    issueDate: rawProduct.publishedAt,
+    imageUrl: rawProduct.Image.url,
+    categories: rawProduct.item_categories.map((category) => {
+      return category.Name;
     }),
   };
 
@@ -104,39 +101,38 @@ export const getStaticProps: GetStaticProps = async (
     previousProduct
       ? {
           id: previousProduct.id,
-          title: previousProduct.attributes.Name,
-          imageUrl: previousProduct.attributes.Image.data.attributes.url,
+          documentId: previousProduct.documentId,
+          title: previousProduct.Name,
+          imageUrl: previousProduct.Image.url,
         }
       : null,
     nextProduct
       ? {
           id: nextProduct.id,
-          title: nextProduct.attributes.Name,
-          imageUrl: nextProduct.attributes.Image.data.attributes.url,
+          documentId: nextProduct.documentId,
+          title: nextProduct.Name,
+          imageUrl: nextProduct.Image.url,
         }
       : null,
   ];
 
   const getRecommendedProducts = (
-    data: ApiResource<ProductApi>[],
-    product: Product
-  ): ApiResource<ProductApi>[] => {
-    let recommendedProducts: ApiResource<ProductApi>[] = [];
+    data: ProductApi[],
+    product: Product,
+  ): ProductApi[] => {
+    let recommendedProducts: ProductApi[] = [];
     // console.log("product:", product);
 
     if (product.categories?.length > 0) {
       const productCategories = product.categories;
 
-      function containsCategory(productApi: ApiResource<ProductApi>) {
-        if (productApi.id === pid) return false;
+      function containsCategory(productApi: ProductApi) {
+        if (productApi.documentId === productDocumentId) return false;
 
         let hasCategory = false;
-        productApi.attributes.item_categories.data.forEach((category) => {
+        productApi.item_categories.forEach((category) => {
           // console.log(category.attributes.Name);
-          if (
-            productCategories.indexOf(category.attributes.Name) > -1 &&
-            !hasCategory
-          ) {
+          if (productCategories.indexOf(category.Name) > -1 && !hasCategory) {
             hasCategory = true;
           }
         });
@@ -151,10 +147,12 @@ export const getStaticProps: GetStaticProps = async (
       recommendedProducts = recommendedProducts.slice(0, 3);
     } else if (recommendedProducts.length < 3) {
       const takenIds: number[] = recommendedProducts.map(
-        (productApi) => productApi.id
+        (productApi) => productApi.id,
       );
       const availableProducts = data.filter(
-        (product) => product.id !== pid && takenIds.indexOf(product.id) < 0
+        (product) =>
+          product.documentId !== productDocumentId &&
+          takenIds.indexOf(product.id) < 0,
       );
 
       let i = 0;
@@ -171,9 +169,9 @@ export const getStaticProps: GetStaticProps = async (
     let relatedPosts: BlogPost[] = [];
 
     try {
-      const sortParam = 'sort[0]=publishedAt%3Adesc';
+      const sortParam = "sort[0]=publishedAt%3Adesc";
       const res = await axios.get<ApiResponse<BlogPostApi>>(
-        `${process.env.NEXT_PUBLIC_API_URL}/articles?populate=%2A&${sortParam}&pagination[pageSize]=100`
+        `${process.env.NEXT_PUBLIC_API_URL}/articles?populate=%2A&${sortParam}&pagination[pageSize]=100`,
       );
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const dataPosts: Array<any> = res.data.data;
@@ -182,33 +180,29 @@ export const getStaticProps: GetStaticProps = async (
 
       const productCategories = product.categories;
 
-      function containsCategory(post: ApiResource<BlogPostApi>) {
+      function containsCategory(post: BlogPostApi) {
         let hasCategory = false;
-        post.attributes.article_categories.data.forEach((category) => {
-          if (
-            productCategories.indexOf(category.attributes.Name) > -1 &&
-            !hasCategory
-          ) {
+        post.article_categories.forEach((category) => {
+          if (productCategories.indexOf(category.Name) > -1 && !hasCategory) {
             hasCategory = true;
           }
         });
         return hasCategory;
       }
 
-      function formatData(post: ApiResource<BlogPostApi>): BlogPost {
+      function formatData(post: BlogPostApi): BlogPost {
         return {
           id: post.id.toString(),
-          title: post.attributes.Name,
-          intro: post.attributes.Intro,
-          description: post.attributes.Description,
-          issueDate: post.attributes.publishedAt,
-          videoUrl: post.attributes.Video_URL,
-          imageUrl: post.attributes.Image.data.attributes.url,
-          categories: post.attributes.article_categories.data.map(
-            (category) => {
-              return category.attributes.Name;
-            }
-          ),
+          documentId: post.documentId,
+          title: post.Name,
+          intro: post.Intro,
+          description: post.Description,
+          issueDate: post.publishedAt,
+          videoUrl: post.Video_URL,
+          imageUrl: post.Image.url,
+          categories: post.article_categories.map((category) => {
+            return category.Name;
+          }),
         };
       }
 
@@ -220,7 +214,7 @@ export const getStaticProps: GetStaticProps = async (
       } else {
         const takenIds: number[] = relatedPosts.map((post) => Number(post.id));
         const availablePosts = dataPosts.filter(
-          (post) => takenIds.indexOf(post.id) < 0
+          (post) => takenIds.indexOf(post.id) < 0,
         );
 
         let i = 0;
@@ -233,20 +227,15 @@ export const getStaticProps: GetStaticProps = async (
       return relatedPosts;
     } catch (err) {
       console.error(err);
-      throw new Error('Blog posts fetching failed!');
+      throw new Error("Blog posts fetching failed!");
     }
   };
 
-  const recommendedProducts: ApiResource<ProductApi>[] = getRecommendedProducts(
+  const recommendedProducts: ProductApi[] = getRecommendedProducts(
     data,
-    product
+    product,
   );
   const relatedArticles: BlogPost[] = await getRelatedPosts(product);
-
-  // console.log("posts:", relatedArticles);
-  // console.log("product:", product);
-  // console.log("prev next products:", prevNextProducts);
-  // console.log("recommended products:", recommendedProducts);
 
   return {
     props: {
@@ -261,15 +250,15 @@ export const getStaticProps: GetStaticProps = async (
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const res = await axios.get<ApiResponse<ProductApi>>(
-    `${process.env.NEXT_PUBLIC_API_URL}/items?pagination[pageSize]=100`
+    `${process.env.NEXT_PUBLIC_API_URL}/items?pagination[pageSize]=20`,
   );
   const data = res.data.data;
 
   const paths = data.map((item) => ({
-    params: { productId: item.id.toString() },
+    params: { productId: item.documentId },
   }));
 
-  return { paths, fallback: false };
+  return { paths, fallback: true };
 };
 
 export default ProductDetailPage;
