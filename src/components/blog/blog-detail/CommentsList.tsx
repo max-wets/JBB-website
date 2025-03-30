@@ -1,20 +1,15 @@
-import useSWR from 'swr';
-import qs from 'qs';
-import Comment from './Comment';
-import { Dispatch, SetStateAction, useEffect } from 'react';
-import {
-  ApiResource,
-  PostComment,
-  PostCommentApi,
-  UserApi,
-} from '../../../types';
-import { Session } from 'next-auth';
+import useSWR from "swr";
+import qs from "qs";
+import Comment from "./Comment";
+import { Dispatch, SetStateAction, useEffect } from "react";
+import { PostComment, PostCommentApi, UserApi } from "../../../types";
+import { Session } from "next-auth";
 
 type CommentsListProps = {
   articleID: number | string;
   comments: PostComment[];
   setComments: Dispatch<SetStateAction<PostComment[]>>;
-  sessionUser?: Session['user'];
+  sessionUser?: Session["user"];
 };
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
@@ -34,15 +29,15 @@ const CommentsList = ({
     const completeComments: PostComment[] = [];
     const cleanComments: PostComment[] =
       data &&
-      data.data.map((comment: ApiResource<PostCommentApi>): PostComment => {
-        if (AuthorIdsArr.indexOf(comment.attributes.AuthorID) < 0)
-          AuthorIdsArr.push(comment.attributes.AuthorID);
+      data.data.map((comment: PostCommentApi): PostComment => {
+        if (AuthorIdsArr.indexOf(comment.AuthorID) < 0)
+          AuthorIdsArr.push(comment.AuthorID);
         return {
           id: comment.id,
-          ArticleID: comment.attributes.ArticleID,
-          AuthorID: comment.attributes.AuthorID,
-          Content: comment.attributes.Content,
-          issueDate: comment.attributes.publishedAt,
+          ArticleID: comment.ArticleID,
+          AuthorID: comment.AuthorID,
+          Content: comment.Content,
+          issueDate: comment.publishedAt,
         };
       });
 
@@ -57,7 +52,7 @@ const CommentsList = ({
         },
         {
           encodeValuesOnly: true,
-        }
+        },
       );
       const url = `${process.env.NEXT_PUBLIC_API_URL}/users?${query}`;
       const options = {
@@ -69,7 +64,7 @@ const CommentsList = ({
         const res = await fetch(url, options);
         return await res.json();
       } catch (error) {
-        throw new Error('Users fetching failed', { cause: error });
+        throw new Error("Users fetching failed", { cause: error });
       }
     };
 
@@ -79,7 +74,7 @@ const CommentsList = ({
 
       cleanComments?.map((comment) => {
         const authorName = users?.filter(
-          (user) => user.id === comment.AuthorID
+          (user) => user.id === comment.AuthorID,
         )[0].username;
 
         completeComments.push({
@@ -87,11 +82,12 @@ const CommentsList = ({
           AuthorName: authorName,
         });
       });
-      // console.log("complete comments:", completeComments);
       setComments(completeComments);
     }
 
-    renderUsers();
+    if (AuthorIdsArr.length) {
+      renderUsers();
+    }
   }, [data, setComments]);
 
   return (

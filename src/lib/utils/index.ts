@@ -1,18 +1,14 @@
-export const urlStringFormatter = (title: string, id: number | string) => {
-  const urlArr = title.toLocaleLowerCase().split(" ");
-  const regex = new RegExp("\\w+");
-  const filteredUrlArr = urlArr.filter((str) => regex.test(str));
-  const cleanedUrlArr = filteredUrlArr.map((str) => {
-    let newStr = "";
-    const bannedCharsRegex = new RegExp("[,\\.']");
-    for (const char of str) {
-      if (!bannedCharsRegex.test(char)) {
-        newStr += char;
-      }
-    }
-    return newStr;
-  });
-  return cleanedUrlArr.join("-").concat(`-${id}`);
+export const urlStringFormatter = (title: string, documentId: string) => {
+  const formattedName = title
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/\s+/g, "-")
+    .replace(/[^a-z0-9-]/g, "")
+    .replace(/-+/g, "-")
+    .replace(/^-|-$/g, "");
+
+  return `${formattedName}-${documentId}`;
 };
 
 export const newDate = (date: string): string => {

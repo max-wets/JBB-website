@@ -1,17 +1,17 @@
-import { GetStaticProps, GetStaticPropsResult } from 'next';
-import ProductsList from '../../components/products/ProductsList';
-import ProductsAside from '../../components/products/ProductsAside';
-import { useEffect, useState } from 'react';
-import { Container, Flex, Spinner, useMediaQuery } from '@chakra-ui/react';
-import ProductsHeading from '../../components/products/ProductsHeading';
-import axios from 'axios';
-import Head from 'next/head';
+import { GetStaticProps, GetStaticPropsResult } from "next";
+import ProductsList from "../../components/products/ProductsList";
+import ProductsAside from "../../components/products/ProductsAside";
+import { useEffect, useState } from "react";
+import { Container, Flex, Spinner, useMediaQuery } from "@chakra-ui/react";
+import ProductsHeading from "../../components/products/ProductsHeading";
+import axios from "axios";
+import Head from "next/head";
 import {
   ActiveCategories,
   ApiResponse,
   Product,
   ProductApi,
-} from '../../types';
+} from "../../types";
 
 type ProductsPageProps = {
   products: Product[];
@@ -20,12 +20,12 @@ type ProductsPageProps = {
 
 function ProductsPage({ products, activeCategories }: ProductsPageProps) {
   const [loadedProducts, setLoadedProducts] = useState<Product[]>([]);
-  const [selectedCategory, setSelectedCategory] = useState('Toutes');
+  const [selectedCategory, setSelectedCategory] = useState("Toutes");
   const [filterRange, setFilterRange] = useState<number[]>([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [isLargerThan960] = useMediaQuery('(min-width: 960px)');
-  const [isLargerThan500] = useMediaQuery('(min-width: 500px)');
+  const [isLargerThan960] = useMediaQuery("(min-width: 960px)");
+  const [isLargerThan500] = useMediaQuery("(min-width: 500px)");
 
   const sortingFn = (a: Product, b: Product) => {
     const aDate = new Date(a.issueDate);
@@ -46,7 +46,7 @@ function ProductsPage({ products, activeCategories }: ProductsPageProps) {
   }, [products]);
 
   useEffect(() => {
-    if (selectedCategory !== 'Toutes') {
+    if (selectedCategory !== "Toutes") {
       const productsByCategory = products
         .filter((product) => product.categories.includes(selectedCategory))
         .sort(sortingFn);
@@ -61,7 +61,7 @@ function ProductsPage({ products, activeCategories }: ProductsPageProps) {
       const productsByPrice = products
         .filter(
           (product) =>
-            product.price >= filterRange[0] && product.price <= filterRange[1]
+            product.price >= filterRange[0] && product.price <= filterRange[1],
         )
         .sort(sortingFn);
       // console.log("products by price:", productsByPrice);
@@ -81,8 +81,8 @@ function ProductsPage({ products, activeCategories }: ProductsPageProps) {
       <ProductsHeading />
       <Container pt="50px" pb="50px" w="1200px" maxW="90%" margin="0 auto">
         <Flex
-          display={loading ? 'none' : 'flex'}
-          flexDirection={isLargerThan960 ? 'row' : 'column'}
+          display={loading ? "none" : "flex"}
+          flexDirection={isLargerThan960 ? "row" : "column"}
         >
           <ProductsList
             products={loadedProducts}
@@ -98,7 +98,7 @@ function ProductsPage({ products, activeCategories }: ProductsPageProps) {
           />
         </Flex>
         <Flex
-          display={loading ? 'flex' : 'none'}
+          display={loading ? "flex" : "none"}
           h="50vh"
           w="100%"
           justifyContent="center"
@@ -117,20 +117,21 @@ export const getStaticProps: GetStaticProps = async (): Promise<
   GetStaticPropsResult<ProductsPageProps>
 > => {
   const res = await axios.get<ApiResponse<ProductApi>>(
-    `${process.env.NEXT_PUBLIC_API_URL}/items?populate=%2A&pagination[pageSize]=100&sort[0]=createdAt%3Adesc`
+    `${process.env.NEXT_PUBLIC_API_URL}/items?populate=%2A&pagination[pageSize]=100&sort[0]=createdAt%3Adesc`,
   );
   const data = res.data.data;
 
   const products: Product[] = data.map((article) => ({
     id: article.id.toString(),
-    name: article.attributes.Name,
-    intro: article.attributes.Intro,
-    description: article.attributes.Description,
-    price: article.attributes.Price,
-    issueDate: article.attributes.publishedAt,
-    imageUrl: article.attributes.Image.data.attributes.url,
-    categories: article.attributes.item_categories.data.map((category) => {
-      return category.attributes.Name;
+    documentId: article.documentId,
+    name: article.Name,
+    intro: article.Intro,
+    description: article.Description,
+    price: article.Price,
+    issueDate: article.publishedAt,
+    imageUrl: article.Image.url,
+    categories: article.item_categories.map((category) => {
+      return category.Name;
     }),
   }));
 
@@ -140,7 +141,7 @@ export const getStaticProps: GetStaticProps = async (): Promise<
       activeCategories[category] = activeCategories[category]
         ? (activeCategories[category] += 1)
         : 1;
-    })
+    }),
   );
   return {
     props: {

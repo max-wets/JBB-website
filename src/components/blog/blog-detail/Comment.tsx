@@ -1,6 +1,6 @@
-import { useState, useRef, useEffect, Dispatch, SetStateAction } from 'react';
-import classes from './Comment.module.css';
-import { EditIcon, DeleteIcon } from '@chakra-ui/icons';
+import { useState, useRef, useEffect, Dispatch, SetStateAction } from "react";
+import classes from "./Comment.module.css";
+import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
 import {
   Button,
   Spinner,
@@ -10,11 +10,11 @@ import {
   AlertDialogHeader,
   AlertDialogContent,
   AlertDialogOverlay,
-} from '@chakra-ui/react';
-import axios from 'axios';
-import { newDate } from '../../../lib/utils/index';
-import { Session } from 'next-auth';
-import { PostComment } from '../../../types';
+} from "@chakra-ui/react";
+import axios from "axios";
+import { newDate } from "../../../lib/utils/index";
+import { Session } from "next-auth";
+import { PostComment } from "../../../types";
 
 type CommentProps = {
   idx: number;
@@ -24,7 +24,7 @@ type CommentProps = {
   AuthorName?: string;
   Content: string;
   issueDate: string;
-  sessionUser?: Session['user'];
+  sessionUser?: Session["user"];
   setComments: Dispatch<SetStateAction<PostComment[]>>;
 };
 
@@ -54,8 +54,8 @@ export default function Comment({
 
   function autoResize(el: HTMLElement) {
     // console.log(el);
-    el.style.height = 'auto';
-    el.style.height = el.scrollHeight + 2 + 'px';
+    el.style.height = "auto";
+    el.style.height = el.scrollHeight + 2 + "px";
   }
 
   async function updateComment() {
@@ -74,7 +74,7 @@ export default function Comment({
           headers: {
             Authorization: `Bearer ${sessionUser.accessToken}`,
           },
-        }
+        },
       );
     } catch (err) {
       console.error(err);
@@ -148,7 +148,7 @@ export default function Comment({
                   ml={3}
                   style={{ minWidth: 108 }}
                 >
-                  {postingComment ? <Spinner size="sm" /> : 'Supprimer'}
+                  {postingComment ? <Spinner size="sm" /> : "Supprimer"}
                 </Button>
               </AlertDialogFooter>
             </AlertDialogContent>
@@ -203,7 +203,7 @@ export default function Comment({
                   disabled={commentText ? false : true}
                   onClick={() => updateComment()}
                 >
-                  {postingComment ? <Spinner size="sm" /> : 'SAUVEGARDER'}
+                  {postingComment ? <Spinner size="sm" /> : "SAUVEGARDER"}
                 </button>
               </div>
             </div>

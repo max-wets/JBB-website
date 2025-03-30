@@ -1,9 +1,9 @@
-import classes from './SearchApp.module.css';
-import algoliasearch from 'algoliasearch';
-import { InstantSearch } from 'react-instantsearch-dom';
-import CustomSearchBox from './CustomSearchBox';
-import CustomHits from './CustomHits';
-import withUrlSync from './URLSync';
+import classes from "./SearchApp.module.css";
+import algoliasearch from "algoliasearch";
+import { InstantSearch } from "react-instantsearch-dom";
+import CustomSearchBox from "./CustomSearchBox";
+import CustomHits from "./CustomHits";
+import withUrlSync from "./URLSync";
 
 const searchClient = algoliasearch(
   process.env.NEXT_PUBLIC_ALGOLIA_APP_ID!,
@@ -25,7 +25,7 @@ function Search({
     <>
       <InstantSearch
         searchClient={searchClient}
-        indexName="jbb_articles"
+        indexName={process.env.NEXT_PUBLIC_ALGOLIA_ARTICLES_INDEX_NAME!}
         searchState={searchState}
         createURL={createURL}
         onSearchStateChange={onSearchStateChange}

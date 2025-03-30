@@ -1,29 +1,24 @@
-import classes from './ProductDetail.module.css';
-import Link from 'next/link';
-import Image from 'next/image';
+import classes from "./ProductDetail.module.css";
+import Link from "next/link";
+import Image from "next/image";
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
   ExternalLinkIcon,
-} from '@chakra-ui/icons';
-import { Tooltip, Button } from '@chakra-ui/react';
-import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
-import {
-  ApiResource,
-  PrevNextProduct,
-  Product,
-  ProductApi,
-} from '../../../types';
+} from "@chakra-ui/icons";
+import { Tooltip, Button } from "@chakra-ui/react";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import { PrevNextProduct, Product, ProductApi } from "../../../types";
 
 type ProductDetailProps = {
   product: Product;
   prevNextProducts: (PrevNextProduct | null)[];
-  recommendedProducts: ApiResource<ProductApi>[];
+  recommendedProducts: ProductApi[];
 };
 
 type RelatedProductProps = {
-  productApi: ApiResource<ProductApi>;
+  productApi: ProductApi;
 };
 
 export default function ProductDetail({
@@ -34,25 +29,25 @@ export default function ProductDetail({
   function getManufacturerLink(itemDescription: string): string {
     // /https?\:\/\/\w+\.[\w+-]+\.\w+(\/[\w+-]*)*/gm;
     const regex = new RegExp(
-      'https?\\:\\/\\/\\w+\\.[\\w+-]+\\.\\w+(\\/[\\w+-]*)*',
-      'gm'
+      "https?\\:\\/\\/\\w+\\.[\\w+-]+\\.\\w+(\\/[\\w+-]*)*",
+      "gm",
     );
     const regexMatch = itemDescription.match(regex);
-    const urlLink = regexMatch ? regexMatch[0] : '#';
+    const urlLink = regexMatch ? regexMatch[0] : "#";
     return urlLink;
   }
 
   function priceFormat(num: number) {
     let formattedNum;
 
-    if (!num?.toString().includes('.')) {
-      formattedNum = num + ',00';
+    if (!num?.toString().includes(".")) {
+      formattedNum = num + ",00";
     } else {
-      const splitArr = num.toString().split('.');
-      splitArr[1] = Number(splitArr[1]) < 10 ? splitArr[1] + '0' : splitArr[1];
-      formattedNum = splitArr.join(',');
+      const splitArr = num.toString().split(".");
+      splitArr[1] = Number(splitArr[1]) < 10 ? splitArr[1] + "0" : splitArr[1];
+      formattedNum = splitArr.join(",");
     }
-    return formattedNum + '€';
+    return formattedNum + "€";
   }
 
   function RelatedProduct({ productApi }: RelatedProductProps) {
@@ -60,11 +55,11 @@ export default function ProductDetail({
       <li key={productApi.id} className={classes.listentry}>
         <div className={classes.productinner}>
           <div className={classes.thumbnail}>
-            <Link legacyBehavior href={`/products/${productApi.id}`}>
+            <Link legacyBehavior href={`/products/${productApi.documentId}`}>
               <a>
                 <Image
-                  src={productApi.attributes.Image.data.attributes.url}
-                  alt={productApi.attributes.Name}
+                  src={productApi.Image.url}
+                  alt={productApi.Name}
                   height={294}
                   width={235}
                   objectFit="contain"
@@ -75,15 +70,15 @@ export default function ProductDetail({
           </div>
           <div className={classes.productname}>
             <h2>
-              <Link legacyBehavior href={`/products/${productApi.id}`}>
-                <a>{productApi.attributes.Name}</a>
+              <Link legacyBehavior href={`/products/${productApi.documentId}`}>
+                <a>{productApi.Name}</a>
               </Link>
             </h2>
           </div>
-          {productApi.attributes.Price && (
+          {productApi.Price && (
             <div className={classes.pricewrap}>
-              <span style={{ fontSize: '18px' }} className={classes.price}>
-                {priceFormat(productApi.attributes.Price)}
+              <span style={{ fontSize: "18px" }} className={classes.price}>
+                {priceFormat(productApi.Price)}
               </span>
             </div>
           )}
@@ -144,8 +139,8 @@ export default function ProductDetail({
               {product.categories.map((category, idx) => (
                 <span key={category}>
                   {category}
-                  <span style={{ fontSize: '16px' }}>
-                    {idx < product.categories.length - 1 ? ', ' : null}
+                  <span style={{ fontSize: "16px" }}>
+                    {idx < product.categories.length - 1 ? ", " : null}
                   </span>
                 </span>
               ))}

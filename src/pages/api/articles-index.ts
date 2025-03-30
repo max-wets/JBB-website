@@ -6,27 +6,28 @@ import { NextApiRequest, NextApiResponse } from "next";
 
 const client = algoliasearch(
   process.env.NEXT_PUBLIC_ALGOLIA_APP_ID!,
-  process.env.NEXT_PUBLIC_ALGOLIA_SEARCH_API_KEY!,
+  process.env.NEXT_PUBLIC_ALGOLIA_SEARCH_API_KEY!
 );
 const indexArticles = client.initIndex(
-  process.env.ALGOLIA_ARTICLES_INDEX_NAME!,
+  process.env.NEXT_PUBLIC_ALGOLIA_ARTICLES_INDEX_NAME!
 );
 
 const fetchArticlesFromDatabase = async (): Promise<BlogPost[]> => {
   try {
     const articles = await axios.get<ApiResponse<BlogPostApi>>(
-      `${process.env.NEXT_PUBLIC_API_URL}/articles?populate=%2A&pagination[pageSize]=100`,
+      `${process.env.NEXT_PUBLIC_API_URL}/articles?populate=%2A&pagination[pageSize]=100`
     ); // Fetch data from your database
     const cleanArticles: BlogPost[] = articles.data.data.map((article) => ({
       id: article.id.toString(),
-      title: article.attributes.Name,
-      intro: article.attributes.Intro,
-      description: article.attributes.Description,
-      issueDate: article.attributes.publishedAt,
-      videoUrl: article.attributes.Video_URL,
-      imageUrl: article.attributes.Image.data.attributes.url,
-      categories: article.attributes.article_categories.data.map((category) => {
-        return category.attributes.Name;
+      documentId: article.documentId,
+      title: article.Name,
+      intro: article.Intro,
+      description: article.Description,
+      issueDate: article.publishedAt,
+      videoUrl: article.Video_URL,
+      imageUrl: article.Image.url,
+      categories: article.article_categories.map((category) => {
+        return category.Name;
       }),
     }));
     return cleanArticles;
@@ -37,7 +38,7 @@ const fetchArticlesFromDatabase = async (): Promise<BlogPost[]> => {
 
 export default async function handler(
   _req: NextApiRequest,
-  res: NextApiResponse,
+  res: NextApiResponse
 ) {
   try {
     const articleRecords = await fetchArticlesFromDatabase();

@@ -1,13 +1,13 @@
-import classes from './HomeComponent.module.css';
-import Image from 'next/image';
-import Link from 'next/link';
-import ProductItem from '../products/ProductItem';
-import { useEffect, useState } from 'react';
-import { Grid, GridItem, useMediaQuery, Tooltip, Icon } from '@chakra-ui/react';
-import { FiClock } from 'react-icons/fi';
-import Head from 'next/head';
-import { urlStringFormatter, newDate } from '../../lib/utils';
-import { BlogPost, Product } from '../../types';
+import classes from "./HomeComponent.module.css";
+import Image from "next/image";
+import Link from "next/link";
+import ProductItem from "../products/ProductItem";
+import { useEffect, useState } from "react";
+import { Grid, GridItem, useMediaQuery, Tooltip, Icon } from "@chakra-ui/react";
+import { FiClock } from "react-icons/fi";
+import Head from "next/head";
+import { urlStringFormatter, newDate } from "../../lib/utils";
+import { BlogPost, Product } from "../../types";
 
 type HomeComponentProps = {
   recentProducts: Product[];
@@ -23,8 +23,8 @@ export default function HomeComponent({
   recentProducts,
   recentArticles,
 }: HomeComponentProps) {
-  const [isLargerThan1000] = useMediaQuery('(min-width: 1000px)');
-  const [isLargerThan750] = useMediaQuery('(min-width: 750px)');
+  const [isLargerThan1000] = useMediaQuery("(min-width: 1000px)");
+  const [isLargerThan750] = useMediaQuery("(min-width: 750px)");
   const [serverRendering, setServerRendering] = useState(true);
 
   useEffect(() => {
@@ -34,30 +34,30 @@ export default function HomeComponent({
   }, []);
 
   function determineItemGridDisplay() {
-    if (isLargerThan1000) return 'repeat(4, 1fr)';
-    if (isLargerThan750) return 'repeat(3, 1fr)';
-    return 'repeat(1, 1fr)';
+    if (isLargerThan1000) return "repeat(4, 1fr)";
+    if (isLargerThan750) return "repeat(3, 1fr)";
+    return "repeat(1, 1fr)";
   }
 
   function determineArticleGridDisplay() {
-    if (isLargerThan1000) return 'repeat(3, 1fr)';
-    if (isLargerThan750) return 'repeat(2, 1fr)';
-    return 'repeat(1, 1fr)';
+    if (isLargerThan1000) return "repeat(3, 1fr)";
+    if (isLargerThan750) return "repeat(2, 1fr)";
+    return "repeat(1, 1fr)";
   }
 
   function ArticleItem({ idx, article }: ArticleItem) {
     // console.log(props.article.description);
-    const [descriptionExcerpt, setDescriptionExcerpt] = useState('');
-    const articleUrl = urlStringFormatter(article.title, article.id);
+    const [descriptionExcerpt, setDescriptionExcerpt] = useState("");
+    const articleUrl = urlStringFormatter(article.title, article.documentId);
 
     useEffect(() => {
       let cleanExcerpt;
 
       if (article.description?.length > 100) {
         const excerpt = article.description.substring(0, 100);
-        const regex = new RegExp('\\n', 'g');
+        const regex = new RegExp("\\n", "g");
         cleanExcerpt = excerpt
-          .split(' ')
+          .split(" ")
           .map((segment) => {
             if (regex.test(segment)) {
               const newSegment = segment.replace(regex, ` `);
@@ -65,7 +65,7 @@ export default function HomeComponent({
             }
             return segment;
           })
-          .join(' ');
+          .join(" ");
       } else {
         cleanExcerpt = article.description;
       }
@@ -86,7 +86,7 @@ export default function HomeComponent({
             property="og:description"
             content="Bienvenue sur Julie Baronnie Beauty, ici vous trouverez toutes mes techniques anti âge"
           />
-          <meta property="og:image" content={'/bg-picture.jpg'} />
+          <meta property="og:image" content={"/bg-picture.jpg"} />
         </Head>
 
         <div key={idx} className={classes.articlectr}>
@@ -94,7 +94,7 @@ export default function HomeComponent({
             <Link legacyBehavior href={`/blog/${articleUrl}`}>
               <a>
                 <Image
-                  src={article.imageUrl ?? ''}
+                  src={article.imageUrl ?? ""}
                   alt={article.title}
                   width={351}
                   height={181}
@@ -117,7 +117,7 @@ export default function HomeComponent({
                 >
                   <h2>
                     {article.title.length > 30
-                      ? article.title.substring(0, 30) + '...'
+                      ? article.title.substring(0, 30) + "..."
                       : article.title}
                   </h2>
                 </Tooltip>
@@ -178,7 +178,7 @@ export default function HomeComponent({
                   <Grid
                     templateColumns={
                       serverRendering
-                        ? 'repeat(4, 1fr)'
+                        ? "repeat(4, 1fr)"
                         : determineItemGridDisplay()
                     }
                     gap={4}
@@ -208,7 +208,7 @@ export default function HomeComponent({
                   <Grid
                     templateColumns={
                       serverRendering
-                        ? 'repeat(3, 3fr)'
+                        ? "repeat(3, 3fr)"
                         : determineArticleGridDisplay()
                     }
                     gap={4}

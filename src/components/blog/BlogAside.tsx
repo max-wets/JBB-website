@@ -1,11 +1,11 @@
-import classes from './BlogAside.module.css';
-import Link from 'next/link';
-import { Icon } from '@chakra-ui/react';
-import Image from 'next/image';
-import { BsFillEnvelopeFill, BsFacebook, BsInstagram } from 'react-icons/bs';
-import { urlStringFormatter } from '../../lib/utils';
-import { ActiveCategories, BlogPost } from '../../types';
-import React, { Dispatch, SetStateAction } from 'react';
+import classes from "./BlogAside.module.css";
+import Link from "next/link";
+import { Icon } from "@chakra-ui/react";
+import Image from "next/image";
+import { BsFillEnvelopeFill, BsFacebook, BsInstagram } from "react-icons/bs";
+import { urlStringFormatter } from "../../lib/utils";
+import { ActiveCategories, BlogPost } from "../../types";
+import React, { Dispatch, SetStateAction } from "react";
 
 type BlogAsideProps = {
   articles: BlogPost[];
@@ -26,18 +26,18 @@ function BlogAside({
   // const api_url = "https://jbb-admin.herokuapp.com";
   const newDate = (date: string) => {
     const mois = [
-      'Janvier',
-      'Février',
-      'Mars',
-      'Avril',
-      'Mai',
-      'Juin',
-      'Juillet',
-      'Août',
-      'Septembre',
-      'Octobre',
-      'Novembre',
-      'Décembre',
+      "Janvier",
+      "Février",
+      "Mars",
+      "Avril",
+      "Mai",
+      "Juin",
+      "Juillet",
+      "Août",
+      "Septembre",
+      "Octobre",
+      "Novembre",
+      "Décembre",
     ];
     const nDate = new Date(date);
     return `${nDate.getDate()} ${
@@ -48,19 +48,19 @@ function BlogAside({
   const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target) {
       const target = e.target as HTMLElement;
-      setSelectedCategory(target.dataset.category || '');
+      setSelectedCategory(target.dataset.category || "");
     }
   };
 
   function SideBlogDetail({ idx, article }: SideBlogDetailProps) {
-    const articleUrl = urlStringFormatter(article.title, article.id);
+    const articleUrl = urlStringFormatter(article.title, article.documentId);
 
     return (
       <li key={idx}>
         <Link legacyBehavior href={`/blog/${articleUrl}`}>
           <a className={classes.imgctr}>
             <Image
-              src={article.imageUrl ?? ''}
+              src={article.imageUrl ?? ""}
               alt={article.title}
               fill={true}
             />

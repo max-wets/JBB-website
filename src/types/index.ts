@@ -11,6 +11,11 @@ export interface SessionUser {
   jwt: string;
 }
 
+export interface ApiResource {
+  id: number;
+  documentId: string;
+}
+
 export interface ImageFormatApi {
   ext: string;
   url: string;
@@ -31,7 +36,7 @@ export interface ImageFormatsApi {
   medium?: ImageFormatApi;
 }
 
-export interface ImageApi {
+export interface ImageApi extends ApiResource {
   name: string;
   alternativeText: string | null;
   caption: string | null;
@@ -50,14 +55,14 @@ export interface ImageApi {
   updatedAt: string;
 }
 
-export interface CategoryApi {
+export interface CategoryApi extends ApiResource {
   Name: string;
   createdAt: string;
   updatedAt: string;
   publishedAt: string;
 }
 
-export interface ProductApi {
+export interface ProductApi extends ApiResource {
   Name: string;
   Intro: string | null;
   Price: number;
@@ -65,11 +70,11 @@ export interface ProductApi {
   createdAt: string;
   updatedAt: string;
   publishedAt: string;
-  Image: ApiData<ImageApi>;
-  item_categories: ApiDataArray<CategoryApi>;
+  Image: ImageApi;
+  item_categories: CategoryApi[];
 }
 
-export interface PostCommentApi {
+export interface PostCommentApi extends ApiResource {
   ArticleID: number;
   AuthorID: number;
   Content: string;
@@ -78,7 +83,7 @@ export interface PostCommentApi {
   publishedAt: string;
 }
 
-export interface BlogPostApi {
+export interface BlogPostApi extends ApiResource {
   Name: string;
   Intro: string | null;
   Description: string;
@@ -86,9 +91,9 @@ export interface BlogPostApi {
   createdAt: string;
   updatedAt: string;
   publishedAt: string;
-  Image: ApiData<ImageApi>;
-  article_categories: ApiDataArray<CategoryApi>;
-  comments: ApiData<PostCommentApi>;
+  Image: ImageApi;
+  article_categories: CategoryApi[];
+  comments: PostCommentApi[];
 }
 
 export interface ApiPagination {
@@ -103,16 +108,11 @@ export interface ApiMetadata {
 }
 
 export interface ApiData<T> {
-  data: ApiResource<T>;
+  data: T;
 }
 
 export interface ApiDataArray<T> {
-  data: ApiResource<T>[];
-}
-
-export interface ApiResource<T> {
-  id: number;
-  attributes: T;
+  data: T[];
 }
 
 export interface ApiResponse<T> extends ApiDataArray<T> {
@@ -121,6 +121,7 @@ export interface ApiResponse<T> extends ApiDataArray<T> {
 
 export interface BlogPostSmall {
   id: number | string;
+  documentId: string;
   title: string;
   issueDate: string;
   imageUrl: string | null;
@@ -135,6 +136,7 @@ export interface BlogPost extends BlogPostSmall {
 
 export type PrevNextPost = {
   id: number;
+  documentId: string;
   title: string;
 };
 
@@ -164,6 +166,7 @@ export type ActiveCategories = {
 
 export interface Product {
   id: string;
+  documentId: string;
   name: string;
   intro: string | null;
   description: string;
@@ -175,6 +178,7 @@ export interface Product {
 
 export type PrevNextProduct = {
   id: number;
+  documentId: string;
   title: string;
   imageUrl: string;
 };
