@@ -57,22 +57,22 @@ function ProductDetailPage({
 }
 
 export const getStaticProps: GetStaticProps = async (
-  context,
+  context
 ): Promise<GetStaticPropsResult<ProductDetailPageProps>> => {
   const productDocumentId = context.params!.productId;
 
   if (!productDocumentId) throw new Error("Product ID missing");
 
   const res = await axios.get<ApiResponse<ProductApi>>(
-    `${process.env.NEXT_PUBLIC_API_URL}/items?populate=%2A&pagination[pageSize]=100`,
+    `${process.env.NEXT_PUBLIC_API_URL}/items?populate=%2A&pagination[pageSize]=100`
   );
   const data = res.data.data;
 
   const rawProduct = data.filter(
-    (item) => item.documentId === productDocumentId,
+    (item) => item.documentId === productDocumentId
   )[0];
   const productIdx = data.findIndex(
-    (item) => item.documentId === productDocumentId,
+    (item) => item.documentId === productDocumentId
   );
   const product: Product = {
     id: rawProduct.id.toString(),
@@ -118,7 +118,7 @@ export const getStaticProps: GetStaticProps = async (
 
   const getRecommendedProducts = (
     data: ProductApi[],
-    product: Product,
+    product: Product
   ): ProductApi[] => {
     let recommendedProducts: ProductApi[] = [];
     // console.log("product:", product);
@@ -147,12 +147,12 @@ export const getStaticProps: GetStaticProps = async (
       recommendedProducts = recommendedProducts.slice(0, 3);
     } else if (recommendedProducts.length < 3) {
       const takenIds: number[] = recommendedProducts.map(
-        (productApi) => productApi.id,
+        (productApi) => productApi.id
       );
       const availableProducts = data.filter(
         (product) =>
           product.documentId !== productDocumentId &&
-          takenIds.indexOf(product.id) < 0,
+          takenIds.indexOf(product.id) < 0
       );
 
       let i = 0;
@@ -171,7 +171,7 @@ export const getStaticProps: GetStaticProps = async (
     try {
       const sortParam = "sort[0]=publishedAt%3Adesc";
       const res = await axios.get<ApiResponse<BlogPostApi>>(
-        `${process.env.NEXT_PUBLIC_API_URL}/articles?populate=%2A&${sortParam}&pagination[pageSize]=100`,
+        `${process.env.NEXT_PUBLIC_API_URL}/articles?populate=%2A&${sortParam}&pagination[pageSize]=100`
       );
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const dataPosts: Array<any> = res.data.data;
@@ -214,7 +214,7 @@ export const getStaticProps: GetStaticProps = async (
       } else {
         const takenIds: number[] = relatedPosts.map((post) => Number(post.id));
         const availablePosts = dataPosts.filter(
-          (post) => takenIds.indexOf(post.id) < 0,
+          (post) => takenIds.indexOf(post.id) < 0
         );
 
         let i = 0;
@@ -233,7 +233,7 @@ export const getStaticProps: GetStaticProps = async (
 
   const recommendedProducts: ProductApi[] = getRecommendedProducts(
     data,
-    product,
+    product
   );
   const relatedArticles: BlogPost[] = await getRelatedPosts(product);
 
@@ -250,7 +250,7 @@ export const getStaticProps: GetStaticProps = async (
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const res = await axios.get<ApiResponse<ProductApi>>(
-    `${process.env.NEXT_PUBLIC_API_URL}/items?pagination[pageSize]=20`,
+    `${process.env.NEXT_PUBLIC_API_URL}/items?pagination[pageSize]=100`
   );
   const data = res.data.data;
 

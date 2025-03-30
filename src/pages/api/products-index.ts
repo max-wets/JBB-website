@@ -6,16 +6,16 @@ import { NextApiRequest, NextApiResponse } from "next";
 
 const client = algoliasearch(
   process.env.NEXT_PUBLIC_ALGOLIA_APP_ID!,
-  process.env.NEXT_PUBLIC_ALGOLIA_SEARCH_API_KEY!,
+  process.env.NEXT_PUBLIC_ALGOLIA_SEARCH_API_KEY!
 );
 const indexProducts = client.initIndex(
-  process.env.ALGOLIA_PRODUCTS_INDEX_NAME!,
+  process.env.NEXT_PUBLIC_ALGOLIA_PRODUCTS_INDEX_NAME!
 );
 
 const fetchProductsFromDatabase = async (): Promise<Product[]> => {
   try {
     const products = await axios.get<ApiResponse<ProductApi>>(
-      `${process.env.NEXT_PUBLIC_API_URL}/items?populate=%2A&pagination[pageSize]=100`,
+      `${process.env.NEXT_PUBLIC_API_URL}/items?populate=%2A&pagination[pageSize]=100`
     ); // Fetch data from your database
     const cleanProducts: Product[] = products.data.data.map((article) => ({
       id: article.id.toString(),
@@ -38,7 +38,7 @@ const fetchProductsFromDatabase = async (): Promise<Product[]> => {
 
 export default async function handler(
   _req: NextApiRequest,
-  res: NextApiResponse,
+  res: NextApiResponse
 ) {
   try {
     const productRecords = await fetchProductsFromDatabase();
