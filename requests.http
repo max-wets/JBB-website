@@ -1,46 +1,47 @@
 ### 
-@host = http://localhost:1337
+@host_api = http://localhost:1337
+@host_front = http://localhost:3000
 @token = abc123
 
 ### Get item categories list
-GET {{host}}/api/item-categories
+GET {{host_api}}/api/item-categories
 
 ### Get items list
-GET {{host}}/api/items
+GET {{host_api}}/api/items
 
 ### Get items list (with attributes)
-GET {{host}}/api/items?populate=%2A&pagination[pageSize]=100
+GET {{host_api}}/api/items?populate=%2A&pagination[pageSize]=100
 
 ### Get a given item
-GET {{host}}/api/items/22?populate=%2A
+GET {{host_api}}/api/items/22?populate=%2A
 
 ### Get article categories list
-GET {{host}}/api/article-categories
+GET {{host_api}}/api/article-categories
 
 ### Get articles list
-GET {{host}}/api/articles?populate=%2A&pagination[pageSize]=100
+GET {{host_api}}/api/articles?populate=%2A&pagination[pageSize]=100
 
 ### Get articles list (with attributes) sorted by date
-GET {{host}}/api/articles?populate=%2A&sort[0]=createdAt%3Adesc
+GET {{host_api}}/api/articles?populate=%2A&sort[0]=createdAt%3Adesc
 
 ### Get a given article
-GET {{host}}/api/articles/41?populate=%2A
+GET {{host_api}}/api/articles/41?populate=%2A
 
 
 
 
 ### Feed algolia products search index
-GET http://localhost:3000/api/products-index
+GET {{host_front}}/api/products-index
 
 ### Feed algolia articles search index
-GET http://localhost:3000/api/articles-index
+GET {{host_front}}/api/articles-index
 
 
 
 
 ######## AUTHENTICATION ########
 ### Create user
-POST {{host}}/api/auth/local/register
+POST {{host_api}}/api/auth/local/register
 Content-Type: application/json
 
 {
@@ -50,7 +51,7 @@ Content-Type: application/json
 }
 
 ### Sign in as a registered user
-POST {{host}}/api/auth/local
+POST {{host_api}}/api/auth/local
 Content-Type: application/json
 
 {
@@ -59,10 +60,10 @@ Content-Type: application/json
 }
 
 ### Get users
-GET {{host}}/api/users/me
+GET {{host_api}}/api/users/me
 
 ### Forgot password
-POST {{host}}/api/auth/forgot-password
+POST {{host_api}}/api/auth/forgot-password
 Content-Type: application/json
 
 {
@@ -71,7 +72,7 @@ Content-Type: application/json
 
 
 ### Create comment
-POST {{host}}/api/comments
+POST {{host_api}}/api/comments
 Content-Type: application/json
 
 {
@@ -83,7 +84,7 @@ Content-Type: application/json
 }
 
 ### Update comment
-PUT {{host}}/api/comments/1
+PUT {{host_api}}/api/comments/1
 
 {
     "data": {
@@ -92,15 +93,15 @@ PUT {{host}}/api/comments/1
 }
 
 ### Get comments
-GET {{host}}/api/comments
+GET {{host_api}}/api/comments
 
 ### get filtered comments
-GET {{host}}/api/comments?filters[ArticleID][$eq]=14
+GET {{host_api}}/api/comments?filters[ArticleID][$eq]=14
 
 ### get users 
-GET {{host}}/api/users
+GET {{host_api}}/api/users
 Authorization: Bearer {{token}}
 
 ### create sitemap for blog posts
-GET http://localhost:3000/blog
+GET {{host_front}}/blog
 

@@ -1,21 +1,16 @@
-import Image from "next/image";
 import Link from "next/link";
 import { connectStateResults } from "react-instantsearch-dom";
+import Image from "next/image";
 import classes from "./CustomHits.module.css";
 import Pagination from "../pagination/Pagination";
 import { useMemo, useState } from "react";
 import { urlStringFormatter } from "../../lib/utils";
 import { StateResultsProvided } from "react-instantsearch-core";
+import { BlogPostApi } from "../../types";
 
-type ResultHitProps = {
-  id: number;
-  documentId: string;
-  title: string;
-  description: string;
-  imageUrl: string;
-};
+type ArticleResultHitProps = BlogPostApi & { objectID: string };
 
-type HitsProps = StateResultsProvided<ResultHitProps>;
+type HitsProps = StateResultsProvided<ArticleResultHitProps>;
 
 const PageSize = 3;
 
@@ -31,11 +26,11 @@ function Hits({ searchState, searchResults }: HitsProps): JSX.Element {
   function ResultHit({
     id,
     documentId,
-    title,
-    description,
-    imageUrl,
-  }: ResultHitProps) {
-    const articleUrl = urlStringFormatter(title, documentId);
+    Name,
+    Description,
+    Image: articleImage,
+  }: ArticleResultHitProps) {
+    const articleUrl = urlStringFormatter(Name, documentId);
 
     return (
       <article key={id} className={classes.resulthit}>
@@ -46,8 +41,8 @@ function Hits({ searchState, searchResults }: HitsProps): JSX.Element {
                 <Image
                   width={120}
                   height={80}
-                  alt={title}
-                  src={imageUrl}
+                  alt={Name}
+                  src={articleImage.url ?? ""}
                   layout="responsive"
                   placeholder="blur"
                   blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mO88uRJPQAITQMdakdKKAAAAABJRU5ErkJggg=="
@@ -59,12 +54,12 @@ function Hits({ searchState, searchResults }: HitsProps): JSX.Element {
             <header className={classes.contentheader}>
               <h2>
                 <Link legacyBehavior href={`/blog/${articleUrl}`}>
-                  <a>{title}</a>
+                  <a>{Name}</a>
                 </Link>
               </h2>
             </header>
             <div className={classes.contentsummary}>
-              <p>{description.slice(0, 200) + "..."}</p>
+              <p>{Description.slice(0, 200) + "..."}</p>
             </div>
             <div className={classes.readmore}>
               <Link legacyBehavior href={`/blog/${articleUrl}`}>
@@ -85,12 +80,8 @@ function Hits({ searchState, searchResults }: HitsProps): JSX.Element {
             <ul>
               {currentData.map((hit) => (
                 <ResultHit
-                  key={hit.id}
-                  id={hit.id}
-                  documentId={hit.documentId}
-                  title={hit.title}
-                  description={hit.description}
-                  imageUrl={hit.imageUrl}
+                  key={`jbb_article_search_${hit.id}_${hit.documentId}`}
+                  {...hit}
                 />
               ))}
             </ul>
