@@ -14,11 +14,12 @@ import {
 import axios from "axios";
 import { newDate } from "../../../lib/utils/index";
 import { Session } from "next-auth";
-import { PostComment } from "../../../types";
+import { ApiUpdateResponse, PostComment, PostCommentApi } from "../../../types";
 
 type CommentProps = {
   idx: number;
   id: number;
+  documentId: string;
   ArticleID: number;
   AuthorID: number;
   AuthorName?: string;
@@ -31,6 +32,7 @@ type CommentProps = {
 export default function Comment({
   idx,
   id,
+  documentId,
   AuthorID,
   AuthorName,
   Content,
@@ -63,8 +65,8 @@ export default function Comment({
     setPostingComment(true);
 
     try {
-      await axios.put(
-        `${process.env.NEXT_PUBLIC_API_URL}/comments/${id}`,
+      await axios.put<ApiUpdateResponse<PostCommentApi>>(
+        `${process.env.NEXT_PUBLIC_API_URL}/comments/${documentId}`,
         {
           data: {
             Content: commentText,
@@ -74,7 +76,7 @@ export default function Comment({
           headers: {
             Authorization: `Bearer ${sessionUser.accessToken}`,
           },
-        },
+        }
       );
     } catch (err) {
       console.error(err);
@@ -99,11 +101,14 @@ export default function Comment({
     setPostingComment(true);
 
     try {
-      await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/comments/${id}`, {
-        headers: {
-          Authorization: `Bearer ${sessionUser.accessToken}`,
-        },
-      });
+      await axios.delete<void>(
+        `${process.env.NEXT_PUBLIC_API_URL}/comments/${documentId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${sessionUser.accessToken}`,
+          },
+        }
+      );
     } catch (err) {
       console.error(err);
     }
