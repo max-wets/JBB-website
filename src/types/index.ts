@@ -75,6 +75,8 @@ export interface ProductApi extends ApiResource {
 }
 
 export interface PostCommentApi extends ApiResource {
+  id: number;
+  documentId: string;
   ArticleID: number;
   AuthorID: number;
   Content: string;
@@ -119,6 +121,10 @@ export interface ApiResponse<T> extends ApiDataArray<T> {
   meta: ApiMetadata;
 }
 
+export interface ApiUpdateResponse<T> extends ApiData<T> {
+  meta: ApiMetadata;
+}
+
 export interface BlogPostSmall {
   id: number | string;
   documentId: string;
@@ -142,6 +148,7 @@ export type PrevNextPost = {
 
 export interface PostComment {
   id: number;
+  documentId: string;
   ArticleID: number;
   AuthorID: number;
   Content: string;

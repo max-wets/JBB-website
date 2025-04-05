@@ -34,6 +34,7 @@ const CommentsList = ({
           AuthorIdsArr.push(comment.AuthorID);
         return {
           id: comment.id,
+          documentId: comment.documentId,
           ArticleID: comment.ArticleID,
           AuthorID: comment.AuthorID,
           Content: comment.Content,
@@ -52,7 +53,7 @@ const CommentsList = ({
         },
         {
           encodeValuesOnly: true,
-        },
+        }
       );
       const url = `${process.env.NEXT_PUBLIC_API_URL}/users?${query}`;
       const options = {
@@ -74,7 +75,7 @@ const CommentsList = ({
 
       cleanComments?.map((comment) => {
         const authorName = users?.filter(
-          (user) => user.id === comment.AuthorID,
+          (user) => user.id === comment.AuthorID
         )[0].username;
 
         completeComments.push({
@@ -97,6 +98,7 @@ const CommentsList = ({
           key={com.id}
           idx={idx}
           id={com.id}
+          documentId={com.documentId}
           AuthorID={com.AuthorID}
           ArticleID={com.ArticleID}
           AuthorName={com.AuthorName}

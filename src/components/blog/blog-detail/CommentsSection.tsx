@@ -3,7 +3,12 @@ import Link from "next/link";
 import { Spinner } from "@chakra-ui/react";
 import { Dispatch, SetStateAction, useRef, useState } from "react";
 import { useSession } from "next-auth/react";
-import { BlogPost, PostComment } from "../../../types";
+import {
+  ApiUpdateResponse,
+  BlogPost,
+  PostComment,
+  PostCommentApi,
+} from "../../../types";
 import CommentsList from "./CommentsList";
 import axios from "axios";
 
@@ -39,7 +44,7 @@ const CommentsSection = ({
     let newComment: PostComment;
 
     try {
-      const { data } = await axios.post(
+      const { data } = await axios.post<ApiUpdateResponse<PostCommentApi>>(
         `${process.env.NEXT_PUBLIC_API_URL}/comments`,
         {
           data: {
@@ -52,15 +57,16 @@ const CommentsSection = ({
           headers: {
             Authorization: `Bearer ${sessionUser.accessToken}`,
           },
-        },
+        }
       );
 
       newComment = {
         id: data.data.id,
-        ArticleID: data.data.attributes.ArticleID,
-        AuthorID: data.data.attributes.AuthorID,
-        Content: data.data.attributes.Content,
-        issueDate: data.data.attributes.publishedAt,
+        documentId: data.data.documentId,
+        ArticleID: data.data.ArticleID,
+        AuthorID: data.data.AuthorID,
+        Content: data.data.Content,
+        issueDate: data.data.publishedAt,
         AuthorName: sessionUser.name ?? "",
       };
 
