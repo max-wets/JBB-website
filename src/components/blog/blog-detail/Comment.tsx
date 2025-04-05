@@ -14,7 +14,7 @@ import {
 import axios from "axios";
 import { newDate } from "../../../lib/utils/index";
 import { Session } from "next-auth";
-import { PostComment } from "../../../types";
+import { ApiUpdateResponse, PostComment, PostCommentApi } from "../../../types";
 
 type CommentProps = {
   idx: number;
@@ -65,7 +65,7 @@ export default function Comment({
     setPostingComment(true);
 
     try {
-      await axios.put(
+      await axios.put<ApiUpdateResponse<PostCommentApi>>(
         `${process.env.NEXT_PUBLIC_API_URL}/comments/${documentId}`,
         {
           data: {
@@ -101,7 +101,7 @@ export default function Comment({
     setPostingComment(true);
 
     try {
-      await axios.delete(
+      await axios.delete<void>(
         `${process.env.NEXT_PUBLIC_API_URL}/comments/${documentId}`,
         {
           headers: {
