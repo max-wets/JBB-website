@@ -22,7 +22,7 @@ type CommentProps = {
   documentId: string;
   ArticleID: number;
   AuthorID: number;
-  AuthorName?: string;
+  AuthorName: string | null;
   Content: string;
   issueDate: string;
   sessionUser?: Session["user"];

@@ -5,7 +5,6 @@ import BlogArticleDetailHeading from "../../../components/blog/blog-detail/BlogA
 import BlogArticleAside from "../../../components/blog/blog-detail/BlogArticleAside";
 import { Container, Flex, useMediaQuery } from "@chakra-ui/react";
 import axios from "axios";
-import qs from "qs";
 import { urlStringFormatter } from "../../../lib/utils";
 import Head from "next/head";
 import {
@@ -17,7 +16,6 @@ import {
   PostComment,
   PostCommentApi,
   PrevNextPost,
-  UserApi,
 } from "../../../types";
 
 type BlogDetailPageProps = {
@@ -210,60 +208,20 @@ export const getStaticProps: GetStaticProps = async ({
   const recommendedArticles = getRecommendedArticles(data, article);
 
   // get article's comments
-  const resComments = await axios.get<ApiResponse<PostCommentApi>>(
-    `${process.env.NEXT_PUBLIC_API_URL}/comments?filters[ArticleID][$eq]=${article.id}&sort=publishedAt%3Adesc`
-  );
-  const commentsData = resComments.data.data;
-  const AuthorIdsArr: number[] = [];
-  const completeComments: PostComment[] = [];
-  const cleanComments = commentsData.map((comment) => {
-    if (AuthorIdsArr.indexOf(comment.AuthorID) < 0)
-      AuthorIdsArr.push(comment.AuthorID);
+  const url = `${process.env.NEXT_PUBLIC_API_URL}/comments-full?filters[ArticleID][$eq]=${article.id}&sort=updatedAt%3Adesc`;
+  const resComments = await axios.get<PostCommentApi[]>(url);
+  const commentsData = resComments.data;
+  const cleanComments: PostComment[] = commentsData.map((comment) => {
     return {
       id: comment.id,
       documentId: comment.documentId,
       ArticleID: comment.ArticleID,
       AuthorID: comment.AuthorID,
       Content: comment.Content,
-      issueDate: comment.publishedAt,
+      issueDate: comment.updatedAt,
+      AuthorName: comment.authorUsername,
     };
   });
-
-  // get users' names
-  if (AuthorIdsArr.length > 0) {
-    const query = qs.stringify(
-      {
-        filters: {
-          id: {
-            $in: AuthorIdsArr,
-          },
-        },
-      },
-      {
-        encodeValuesOnly: true,
-      }
-    );
-    const usersRes = await axios.get<UserApi[]>(
-      `${process.env.NEXT_PUBLIC_API_URL}/users?${query}`,
-      {
-        headers: {
-          Authorization: `Bearer ${process.env.NEXT_PUBLIC_API_TOKEN}`,
-        },
-      }
-    );
-    const usersData = usersRes.data;
-
-    cleanComments.map((comment) => {
-      const authorName = usersData.filter(
-        (user) => user.id === comment.AuthorID
-      )[0].username;
-
-      completeComments.push({
-        ...comment,
-        AuthorName: authorName,
-      });
-    });
-  }
 
   return {
     props: {
@@ -271,7 +229,7 @@ export const getStaticProps: GetStaticProps = async ({
       recentArticles: recentArticles,
       prevNextPosts: prevNextArticles,
       recommendedArticles: recommendedArticles,
-      articleComments: completeComments,
+      articleComments: cleanComments,
     },
     revalidate: 3600,
   };
