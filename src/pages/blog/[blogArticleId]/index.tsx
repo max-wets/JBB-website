@@ -124,25 +124,6 @@ export const getStaticProps: GetStaticProps = async ({
     };
   };
 
-  const getRecentArticles = (data: BlogPostApi[]): BlogPostSmall[] => {
-    const max = data.length - 1;
-    const articles: BlogPostSmall[] = [];
-    let idx = 0;
-    while (articles.length < max) {
-      if (data[idx].id != article.id) {
-        articles.push({
-          id: data[idx].id,
-          documentId: data[idx].documentId,
-          title: data[idx].Name,
-          issueDate: data[idx].updatedAt,
-          imageUrl: data[idx].Image ? data[idx].Image.url : null,
-        });
-      }
-      idx += 1;
-    }
-    return articles;
-  };
-
   const getRecommendedArticles = (
     data: BlogPostApi[],
     pageBlogPost: BlogPostApi
@@ -181,7 +162,6 @@ export const getStaticProps: GetStaticProps = async ({
     return recommendedArticles.map(formatData);
   };
 
-  const recentArticles = getRecentArticles(data);
   const recommendedArticles = getRecommendedArticles(data, article);
 
   // get article's comments
@@ -203,7 +183,7 @@ export const getStaticProps: GetStaticProps = async ({
   return {
     props: {
       article: formatData(article),
-      recentArticles: recentArticles,
+      recentArticles: await getRecentBlogPosts(article.documentId),
       prevNextPosts: await getPreviousAndNextBlogPosts(article.updatedAt),
       recommendedArticles: recommendedArticles,
       articleComments: cleanComments,
@@ -225,6 +205,48 @@ export const getStaticPaths: GetStaticPaths = async () => {
   }));
 
   return { paths, fallback: true };
+};
+
+const getRecentBlogPosts = async (
+  currentBlogPostDocumentId: string,
+  count: number = 3
+): Promise<BlogPostSmall[]> => {
+  try {
+    const query = qs.stringify(
+      {
+        populate: ["Image"],
+        filters: {
+          documentId: {
+            $ne: currentBlogPostDocumentId,
+          },
+        },
+        sort: ["updatedAt:desc"],
+        pagination: {
+          pageSize: count,
+          page: 1,
+        },
+      },
+      {
+        encodeValuesOnly: true,
+      }
+    );
+    const { data } = await axios.get<ApiResponse<BlogPostApi>>(
+      `${process.env.NEXT_PUBLIC_API_URL}/articles?${query}`
+    );
+    if (!data || data.data.length < 1) return [];
+    return data.data.map((blogPostApi) => ({
+      id: blogPostApi.id,
+      documentId: blogPostApi.documentId,
+      title: blogPostApi.Name,
+      issueDate: blogPostApi.updatedAt,
+      imageUrl: blogPostApi.Image ? blogPostApi.Image.url : "",
+    }));
+  } catch (e) {
+    throw new Error(
+      "Something wrong happened while fetching the recent blog posts details",
+      { cause: e }
+    );
+  }
 };
 
 const getPreviousAndNextBlogPosts = async (
