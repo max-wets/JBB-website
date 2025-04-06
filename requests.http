@@ -25,7 +25,7 @@ GET {{host_api}}/api/articles?populate=%2A&pagination[pageSize]=100
 GET {{host_api}}/api/articles?populate=%2A&sort[0]=createdAt%3Adesc
 
 ### Get a given article
-GET {{host_api}}/api/articles/41?populate=%2A
+GET {{host_api}}/api/articles/c112iqav35qd4du4l2krnnvb?populate=article_categories
 
 
 

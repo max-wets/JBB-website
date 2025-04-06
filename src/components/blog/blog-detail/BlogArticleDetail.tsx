@@ -27,13 +27,17 @@ import {
 } from "@chakra-ui/icons";
 import { urlStringFormatter, newDate } from "../../../lib/utils";
 import CommentsSection from "./CommentsSection";
-import { BlogPost, PostComment, PrevNextPost } from "../../../types";
+import {
+  BlogPost,
+  PostComment,
+  PreviousAndNextBlogPosts,
+} from "../../../types";
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL;
 
 type BlogArticleDetailProps = {
   article: BlogPost;
-  prevNextPosts: (PrevNextPost | null)[];
+  prevNextPosts: PreviousAndNextBlogPosts;
   recommendedArticles: BlogPost[];
   articleComments: PostComment[];
 };
@@ -170,13 +174,13 @@ function BlogArticleDetail({
         </ul>
       </div>
       <nav className={classes.postnavigation}>
-        {prevNextPosts[0] ? (
+        {prevNextPosts.previousPost ? (
           <div className={classes.navprevious}>
             <Link
               legacyBehavior
               href={`/blog/${urlStringFormatter(
-                prevNextPosts[0].title,
-                prevNextPosts[0].documentId
+                prevNextPosts.previousPost.title,
+                prevNextPosts.previousPost.documentId
               )}`}
             >
               <a>
@@ -185,21 +189,21 @@ function BlogArticleDetail({
                   <span>Article Précédent</span>
                 </div>
                 <div className={classes.prevtext}>
-                  {prevNextPosts[0].title.length > 40
-                    ? prevNextPosts[0].title.slice(0, 40) + "..."
-                    : prevNextPosts[0].title}
+                  {prevNextPosts.previousPost.title.length > 40
+                    ? prevNextPosts.previousPost.title.slice(0, 40) + "..."
+                    : prevNextPosts.previousPost.title}
                 </div>
               </a>
             </Link>
           </div>
         ) : null}
-        {prevNextPosts[1] ? (
+        {prevNextPosts.nextPost ? (
           <div className={classes.navnext}>
             <Link
               legacyBehavior
               href={`/blog/${urlStringFormatter(
-                prevNextPosts[1].title,
-                prevNextPosts[1].documentId
+                prevNextPosts.nextPost.title,
+                prevNextPosts.nextPost.documentId
               )}`}
             >
               <a>
@@ -208,9 +212,9 @@ function BlogArticleDetail({
                   <span>Article Suivant</span>
                 </div>
                 <div className={classes.nexttext}>
-                  {prevNextPosts[1].title.length > 40
-                    ? prevNextPosts[1].title.slice(0, 40) + "..."
-                    : prevNextPosts[1].title}
+                  {prevNextPosts.nextPost.title.length > 40
+                    ? prevNextPosts.nextPost.title.slice(0, 40) + "..."
+                    : prevNextPosts.nextPost.title}
                 </div>
               </a>
             </Link>
@@ -223,46 +227,47 @@ function BlogArticleDetail({
           <h3>ARTICLES RECOMMANDES</h3>
         </div>
         <div className={classes.relatedpostsentry}>
-          {recommendedArticles.map((article) => (
-            <article key={article.id}>
-              <div className={classes.thumbnail}>
+          {recommendedArticles.length &&
+            recommendedArticles.map((article) => (
+              <article key={article.id}>
+                <div className={classes.thumbnail}>
+                  <Link
+                    legacyBehavior
+                    href={`/blog/${urlStringFormatter(
+                      article.title,
+                      article.documentId
+                    )}`}
+                  >
+                    <a>
+                      <Image
+                        src={article.imageUrl ?? ""}
+                        alt={article.title}
+                        width={isLargerThan750 ? 239 : 667}
+                        height={isLargerThan750 ? 124 : 347}
+                        objectFit="cover"
+                      />
+                      <span className={classes.overlay}></span>
+                    </a>
+                  </Link>
+                </div>
                 <Link
                   legacyBehavior
-                  href={`/blog/${urlStringFormatter(
-                    article.title,
-                    article.documentId
-                  )}`}
+                  href={`/blog/${urlStringFormatter(article.title, article.documentId)}`}
                 >
                   <a>
-                    <Image
-                      src={article.imageUrl ?? ""}
-                      alt={article.title}
-                      width={isLargerThan750 ? 239 : 667}
-                      height={isLargerThan750 ? 124 : 347}
-                      objectFit="cover"
-                    />
-                    <span className={classes.overlay}></span>
+                    <h3>
+                      {article.title.length > 40
+                        ? article.title.slice(0, 39) + "..."
+                        : article.title}
+                    </h3>
                   </a>
                 </Link>
-              </div>
-              <Link
-                legacyBehavior
-                href={`/blog/${urlStringFormatter(article.title, article.documentId)}`}
-              >
-                <a>
-                  <h3>
-                    {article.title.length > 40
-                      ? article.title.slice(0, 39) + "..."
-                      : article.title}
-                  </h3>
-                </a>
-              </Link>
-              <time className="published" dateTime={article.issueDate}>
-                <Icon as={FiClock} h={3} w={3} size="md" mr="4px" />
-                <div>{newDate(article.issueDate)}</div>
-              </time>
-            </article>
-          ))}
+                <time className="published" dateTime={article.issueDate}>
+                  <Icon as={FiClock} h={3} w={3} size="md" mr="4px" />
+                  <div>{newDate(article.issueDate)}</div>
+                </time>
+              </article>
+            ))}
         </div>
       </section>
       <CommentsSection
