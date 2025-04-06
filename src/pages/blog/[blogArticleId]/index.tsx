@@ -15,13 +15,15 @@ import {
   CategoryApi,
   PostComment,
   PostCommentApi,
+  PreviousAndNextBlogPosts,
   PrevNextPost,
 } from "../../../types";
+import qs from "qs";
 
 type BlogDetailPageProps = {
   article: BlogPost;
   recentArticles: BlogPostSmall[];
-  prevNextPosts: (PrevNextPost | null)[];
+  prevNextPosts: PreviousAndNextBlogPosts;
   recommendedArticles: BlogPost[];
   articleComments: PostComment[];
 };
@@ -105,31 +107,6 @@ export const getStaticProps: GetStaticProps = async ({
     throw new Error(
       `Article with Document ID '${blogPostDocumentId}' not found`
     );
-
-  const previousArticle =
-    article.id > 0
-      ? data.find((article) => article.id === article.id - 1)
-      : null;
-  const nextArticle =
-    article.id < data.length
-      ? data.find((article) => article.id === article.id + 1)
-      : null;
-  const prevNextArticles: (PrevNextPost | null)[] = [
-    previousArticle
-      ? {
-          id: previousArticle.id,
-          documentId: previousArticle.documentId,
-          title: previousArticle.Name,
-        }
-      : null,
-    nextArticle
-      ? {
-          id: nextArticle.id,
-          documentId: nextArticle.documentId,
-          title: nextArticle.Name,
-        }
-      : null,
-  ];
 
   const formatData = (post: BlogPostApi): BlogPost => {
     return {
@@ -227,7 +204,7 @@ export const getStaticProps: GetStaticProps = async ({
     props: {
       article: formatData(article),
       recentArticles: recentArticles,
-      prevNextPosts: prevNextArticles,
+      prevNextPosts: await getPreviousAndNextBlogPosts(article.updatedAt),
       recommendedArticles: recommendedArticles,
       articleComments: cleanComments,
     },
@@ -248,4 +225,55 @@ export const getStaticPaths: GetStaticPaths = async () => {
   }));
 
   return { paths, fallback: true };
+};
+
+const getPreviousAndNextBlogPosts = async (
+  currentBlogPostUpdateDate: string
+): Promise<PreviousAndNextBlogPosts> => {
+  return {
+    previousPost: await getClosestBlogPostInTime(
+      currentBlogPostUpdateDate,
+      false
+    ),
+    nextPost: await getClosestBlogPostInTime(currentBlogPostUpdateDate, true),
+  };
+};
+const getClosestBlogPostInTime = async (
+  currentBlogPostUpdateDate: string,
+  isNext: boolean
+): Promise<PrevNextPost | null> => {
+  try {
+    const query = qs.stringify(
+      {
+        filters: {
+          updatedAt: {
+            [isNext ? "$gt" : "$lt"]: currentBlogPostUpdateDate,
+          },
+        },
+        sort: [`updatedAt:${isNext ? "asc" : "desc"}`],
+        pagination: {
+          pageSize: 1,
+          page: 1,
+        },
+      },
+      {
+        encodeValuesOnly: true,
+      }
+    );
+    const { data } = await axios.get<ApiResponse<BlogPostApi>>(
+      `${process.env.NEXT_PUBLIC_API_URL}/articles?${query}`
+    );
+    if (!data || data.data.length < 1) return null;
+    const nextBlogPostApi = data.data[0];
+    return {
+      id: nextBlogPostApi.id,
+      documentId: nextBlogPostApi.documentId,
+      title: nextBlogPostApi.Name,
+    };
+  } catch (e) {
+    throw new Error(
+      `Something wrong happened while fetching the ${isNext ? "next" : "previous"} article details...`,
+      { cause: e }
+    );
+  }
 };

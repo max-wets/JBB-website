@@ -27,13 +27,17 @@ import {
 } from "@chakra-ui/icons";
 import { urlStringFormatter, newDate } from "../../../lib/utils";
 import CommentsSection from "./CommentsSection";
-import { BlogPost, PostComment, PrevNextPost } from "../../../types";
+import {
+  BlogPost,
+  PostComment,
+  PreviousAndNextBlogPosts,
+} from "../../../types";
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL;
 
 type BlogArticleDetailProps = {
   article: BlogPost;
-  prevNextPosts: (PrevNextPost | null)[];
+  prevNextPosts: PreviousAndNextBlogPosts;
   recommendedArticles: BlogPost[];
   articleComments: PostComment[];
 };
@@ -170,13 +174,13 @@ function BlogArticleDetail({
         </ul>
       </div>
       <nav className={classes.postnavigation}>
-        {prevNextPosts[0] ? (
+        {prevNextPosts.previousPost ? (
           <div className={classes.navprevious}>
             <Link
               legacyBehavior
               href={`/blog/${urlStringFormatter(
-                prevNextPosts[0].title,
-                prevNextPosts[0].documentId
+                prevNextPosts.previousPost.title,
+                prevNextPosts.previousPost.documentId
               )}`}
             >
               <a>
@@ -185,21 +189,21 @@ function BlogArticleDetail({
                   <span>Article Précédent</span>
                 </div>
                 <div className={classes.prevtext}>
-                  {prevNextPosts[0].title.length > 40
-                    ? prevNextPosts[0].title.slice(0, 40) + "..."
-                    : prevNextPosts[0].title}
+                  {prevNextPosts.previousPost.title.length > 40
+                    ? prevNextPosts.previousPost.title.slice(0, 40) + "..."
+                    : prevNextPosts.previousPost.title}
                 </div>
               </a>
             </Link>
           </div>
         ) : null}
-        {prevNextPosts[1] ? (
+        {prevNextPosts.nextPost ? (
           <div className={classes.navnext}>
             <Link
               legacyBehavior
               href={`/blog/${urlStringFormatter(
-                prevNextPosts[1].title,
-                prevNextPosts[1].documentId
+                prevNextPosts.nextPost.title,
+                prevNextPosts.nextPost.documentId
               )}`}
             >
               <a>
@@ -208,9 +212,9 @@ function BlogArticleDetail({
                   <span>Article Suivant</span>
                 </div>
                 <div className={classes.nexttext}>
-                  {prevNextPosts[1].title.length > 40
-                    ? prevNextPosts[1].title.slice(0, 40) + "..."
-                    : prevNextPosts[1].title}
+                  {prevNextPosts.nextPost.title.length > 40
+                    ? prevNextPosts.nextPost.title.slice(0, 40) + "..."
+                    : prevNextPosts.nextPost.title}
                 </div>
               </a>
             </Link>

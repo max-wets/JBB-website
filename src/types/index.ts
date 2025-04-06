@@ -190,3 +190,8 @@ export type PrevNextProduct = {
   title: string;
   imageUrl: string;
 };
+
+export type PreviousAndNextBlogPosts = {
+  previousPost: PrevNextPost | null;
+  nextPost: PrevNextPost | null;
+};
