@@ -227,46 +227,47 @@ function BlogArticleDetail({
           <h3>ARTICLES RECOMMANDES</h3>
         </div>
         <div className={classes.relatedpostsentry}>
-          {recommendedArticles.map((article) => (
-            <article key={article.id}>
-              <div className={classes.thumbnail}>
+          {recommendedArticles.length &&
+            recommendedArticles.map((article) => (
+              <article key={article.id}>
+                <div className={classes.thumbnail}>
+                  <Link
+                    legacyBehavior
+                    href={`/blog/${urlStringFormatter(
+                      article.title,
+                      article.documentId
+                    )}`}
+                  >
+                    <a>
+                      <Image
+                        src={article.imageUrl ?? ""}
+                        alt={article.title}
+                        width={isLargerThan750 ? 239 : 667}
+                        height={isLargerThan750 ? 124 : 347}
+                        objectFit="cover"
+                      />
+                      <span className={classes.overlay}></span>
+                    </a>
+                  </Link>
+                </div>
                 <Link
                   legacyBehavior
-                  href={`/blog/${urlStringFormatter(
-                    article.title,
-                    article.documentId
-                  )}`}
+                  href={`/blog/${urlStringFormatter(article.title, article.documentId)}`}
                 >
                   <a>
-                    <Image
-                      src={article.imageUrl ?? ""}
-                      alt={article.title}
-                      width={isLargerThan750 ? 239 : 667}
-                      height={isLargerThan750 ? 124 : 347}
-                      objectFit="cover"
-                    />
-                    <span className={classes.overlay}></span>
+                    <h3>
+                      {article.title.length > 40
+                        ? article.title.slice(0, 39) + "..."
+                        : article.title}
+                    </h3>
                   </a>
                 </Link>
-              </div>
-              <Link
-                legacyBehavior
-                href={`/blog/${urlStringFormatter(article.title, article.documentId)}`}
-              >
-                <a>
-                  <h3>
-                    {article.title.length > 40
-                      ? article.title.slice(0, 39) + "..."
-                      : article.title}
-                  </h3>
-                </a>
-              </Link>
-              <time className="published" dateTime={article.issueDate}>
-                <Icon as={FiClock} h={3} w={3} size="md" mr="4px" />
-                <div>{newDate(article.issueDate)}</div>
-              </time>
-            </article>
-          ))}
+                <time className="published" dateTime={article.issueDate}>
+                  <Icon as={FiClock} h={3} w={3} size="md" mr="4px" />
+                  <div>{newDate(article.issueDate)}</div>
+                </time>
+              </article>
+            ))}
         </div>
       </section>
       <CommentsSection

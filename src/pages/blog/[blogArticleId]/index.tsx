@@ -118,75 +118,20 @@ export const getStaticProps: GetStaticProps = async ({
       issueDate: post.updatedAt,
       videoUrl: post.Video_URL,
       imageUrl: post.Image.url,
-      categories: post.article_categories.map((category) => {
-        return category.Name;
-      }),
+      categories: post.article_categories.map(
+        (category: CategoryApi) => category.Name
+      ),
     };
   };
-
-  const getRecommendedArticles = (
-    data: BlogPostApi[],
-    pageBlogPost: BlogPostApi
-  ): BlogPost[] => {
-    let recommendedArticles: BlogPostApi[] = [];
-    const articleCategories = article.article_categories.map((category) => {
-      return category.Name;
-    });
-    function containsCategory(post: BlogPostApi) {
-      if (post.id === pageBlogPost.id) return false;
-
-      let hasCategory = false;
-      post.article_categories.forEach((category: CategoryApi) => {
-        if (articleCategories.indexOf(category.Name) > -1 && !hasCategory) {
-          hasCategory = true;
-        }
-      });
-      return hasCategory;
-    }
-    recommendedArticles = data.filter(containsCategory);
-
-    if (recommendedArticles.length > 3) {
-      recommendedArticles = recommendedArticles.slice(0, 3);
-    } else if (recommendedArticles.length < 3) {
-      const takenIds = recommendedArticles.map((post) => post.id);
-      const availableArticles = data.filter(
-        (article) =>
-          article.id !== pageBlogPost.id && takenIds.indexOf(article.id) < 0
-      );
-      let i = 0;
-      while (i < 3 - recommendedArticles.length) {
-        recommendedArticles.push(availableArticles[i]);
-        i++;
-      }
-    }
-    return recommendedArticles.map(formatData);
-  };
-
-  const recommendedArticles = getRecommendedArticles(data, article);
-
-  // get article's comments
-  const url = `${process.env.NEXT_PUBLIC_API_URL}/comments-full?filters[ArticleID][$eq]=${article.id}&sort=updatedAt%3Adesc`;
-  const resComments = await axios.get<PostCommentApi[]>(url);
-  const commentsData = resComments.data;
-  const cleanComments: PostComment[] = commentsData.map((comment) => {
-    return {
-      id: comment.id,
-      documentId: comment.documentId,
-      ArticleID: comment.ArticleID,
-      AuthorID: comment.AuthorID,
-      Content: comment.Content,
-      issueDate: comment.updatedAt,
-      AuthorName: comment.authorUsername,
-    };
-  });
 
   return {
     props: {
       article: formatData(article),
       recentArticles: await getRecentBlogPosts(article.documentId),
       prevNextPosts: await getPreviousAndNextBlogPosts(article.updatedAt),
-      recommendedArticles: recommendedArticles,
-      articleComments: cleanComments,
+      recommendedArticles:
+        await getRecommendedBlogPostsWithSameCategories(article),
+      articleComments: await getBlogPostComments(article.id),
     },
     revalidate: 3600,
   };
@@ -205,6 +150,62 @@ export const getStaticPaths: GetStaticPaths = async () => {
   }));
 
   return { paths, fallback: true };
+};
+
+const getRecommendedBlogPostsWithSameCategories = async (
+  currentBlogPost: BlogPostApi,
+  count: number = 3
+): Promise<BlogPost[]> => {
+  try {
+    const blogPostCategories = currentBlogPost.article_categories.map(
+      (category) => category.Name
+    );
+    const query = qs.stringify(
+      {
+        populate: ["Image", "article_categories"],
+        filters: {
+          documentId: {
+            $ne: currentBlogPost.documentId,
+          },
+          article_categories: {
+            Name: {
+              in: blogPostCategories,
+            },
+          },
+        },
+        sort: ["updatedAt:desc"],
+        pagination: {
+          pageSize: count,
+          page: 1,
+        },
+      },
+      {
+        encodeValuesOnly: true,
+      }
+    );
+    const { data } = await axios.get<ApiResponse<BlogPostApi>>(
+      `${process.env.NEXT_PUBLIC_API_URL}/articles?${query}`
+    );
+    if (!data || data.data.length < 1) return [];
+    return data.data.map((blogPostApi) => ({
+      id: blogPostApi.id,
+      documentId: blogPostApi.documentId,
+      title: blogPostApi.Name,
+      description: blogPostApi.Description,
+      intro: blogPostApi.Intro,
+      issueDate: blogPostApi.updatedAt,
+      imageUrl: blogPostApi.Image ? blogPostApi.Image.url : null,
+      videoUrl: blogPostApi.Video_URL,
+      categories: blogPostApi.article_categories.map(
+        (category: CategoryApi) => category.Name
+      ),
+    }));
+  } catch (e) {
+    throw new Error(
+      "Something wrong happened while fetching blog posts recommendations...",
+      { cause: e }
+    );
+  }
 };
 
 const getRecentBlogPosts = async (
@@ -297,5 +298,28 @@ const getClosestBlogPostInTime = async (
       `Something wrong happened while fetching the ${isNext ? "next" : "previous"} article details...`,
       { cause: e }
     );
+  }
+};
+
+const getBlogPostComments = async (
+  blogPostID: number
+): Promise<PostComment[]> => {
+  try {
+    const url = `${process.env.NEXT_PUBLIC_API_URL}/comments-full?filters[ArticleID][$eq]=${blogPostID}&sort=updatedAt%3Adesc`;
+    const { data } = await axios.get<PostCommentApi[]>(url);
+    if (!data || data.length < 1) return [];
+    return data.map((comment) => ({
+      id: comment.id,
+      documentId: comment.documentId,
+      ArticleID: comment.ArticleID,
+      AuthorID: comment.AuthorID,
+      Content: comment.Content,
+      issueDate: comment.updatedAt,
+      AuthorName: comment.authorUsername,
+    }));
+  } catch (e) {
+    throw new Error("Something wrong happened while fetching comments...", {
+      cause: e,
+    });
   }
 };
