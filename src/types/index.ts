@@ -83,6 +83,7 @@ export interface PostCommentApi extends ApiResource {
   createdAt: string;
   updatedAt: string;
   publishedAt: string;
+  authorUsername: string | null;
 }
 
 export interface BlogPostApi extends ApiResource {
@@ -153,7 +154,7 @@ export interface PostComment {
   AuthorID: number;
   Content: string;
   issueDate: string;
-  AuthorName?: string;
+  AuthorName: string | null;
 }
 
 export interface UserApi {

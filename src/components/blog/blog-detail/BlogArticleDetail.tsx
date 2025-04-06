@@ -42,11 +42,12 @@ function BlogArticleDetail({
   article,
   prevNextPosts,
   recommendedArticles,
+  articleComments,
 }: BlogArticleDetailProps) {
   const router = useRouter();
   const [isLargerThan750] = useMediaQuery("(min-width: 750px)");
   const [isLargerThan600] = useMediaQuery("(min-width: 600px)");
-  const [comments, setComments] = useState<PostComment[]>([]);
+  const [comments, setComments] = useState<PostComment[]>(articleComments);
 
   return (
     <article className={classes.primary}>
@@ -175,7 +176,7 @@ function BlogArticleDetail({
               legacyBehavior
               href={`/blog/${urlStringFormatter(
                 prevNextPosts[0].title,
-                prevNextPosts[0].documentId,
+                prevNextPosts[0].documentId
               )}`}
             >
               <a>
@@ -198,7 +199,7 @@ function BlogArticleDetail({
               legacyBehavior
               href={`/blog/${urlStringFormatter(
                 prevNextPosts[1].title,
-                prevNextPosts[1].documentId,
+                prevNextPosts[1].documentId
               )}`}
             >
               <a>
@@ -229,7 +230,7 @@ function BlogArticleDetail({
                   legacyBehavior
                   href={`/blog/${urlStringFormatter(
                     article.title,
-                    article.documentId,
+                    article.documentId
                   )}`}
                 >
                   <a>

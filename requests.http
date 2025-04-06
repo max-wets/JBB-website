@@ -74,17 +74,19 @@ Content-Type: application/json
 ### Create comment
 POST {{host_api}}/api/comments
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 {
     "data": {
         "ArticleID": 1,
-        "AuthorID": 3,
-        "Content": "C'est le deuxième commentaire de Maxime sur l'article Botox Botulax"
+        "AuthorID": 1,
+        "Content": "C'est le nouveau commentaire de Matsoow sur l'article Botox Botulax"
     }
 }
 
 ### Update comment
 PUT {{host_api}}/api/comments/1
+Authorization: Bearer {{token}}
 
 {
     "data": {
@@ -95,8 +97,14 @@ PUT {{host_api}}/api/comments/1
 ### Get comments
 GET {{host_api}}/api/comments
 
+### Get comments with author's username
+GET {{host_api}}/api/comments-full
+
 ### get filtered comments
 GET {{host_api}}/api/comments?filters[ArticleID][$eq]=14
+
+### Get filtered comments with author's username
+GET {{host_api}}/api/comments-full?filters[ArticleID][$eq]=149&sort=updatedAt%3Adesc
 
 ### get users 
 GET {{host_api}}/api/users
